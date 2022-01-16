@@ -1,6 +1,7 @@
 ﻿namespace FitnessBuddy.Data
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using System.Threading;
@@ -23,6 +24,14 @@
             : base(options)
         {
         }
+
+        public DbSet<Food> Foods { get; set; }
+
+        public DbSet<Meal> Meals { get; set; }
+
+        public DbSet<MealFood> MealsFoods { get; set; }
+
+        public DbSet<FoodName> FoodsNames { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
@@ -70,6 +79,22 @@
             {
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
+
+            // Has bug that doesn't set properties names for "UsersFavoriteFoods" table. This fixes the problem.
+            builder.SharedTypeEntity<Dictionary<string, object>>("UsersFavoriteFoods", builder =>
+            {
+                builder.Property<int>("FoodId");
+                builder.Property<string>("UserId");
+            });
+
+            // Set Mapping table name, and properties names
+            builder.Entity<ApplicationUser>()
+            .HasMany(x => x.FavoriteUserFoods)
+            .WithMany(x => x.FavoriteUsersFood)
+            .UsingEntity<Dictionary<string, object>>(
+                "UsersFavoriteFoods",
+                x => x.HasOne<Food>().WithMany().HasForeignKey("FoodId"),
+                x => x.HasOne<ApplicationUser>().WithMany().HasForeignKey("UserId"));
         }
 
         private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)
