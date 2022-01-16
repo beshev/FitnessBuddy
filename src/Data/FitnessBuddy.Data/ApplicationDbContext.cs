@@ -80,13 +80,6 @@
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
 
-            // Has bug that doesn't set properties names as primary keys for the "UsersFavoriteFoods" table. This fixes the problem.
-            builder.SharedTypeEntity<Dictionary<string, object>>("UsersFavoriteFoods", builder =>
-            {
-                builder.Property<int>("FoodId");
-                builder.Property<string>("UserId");
-            });
-
             // Set Mapping table name, and properties names
             builder.Entity<ApplicationUser>()
             .HasMany(x => x.FavoriteUserFoods)
@@ -94,7 +87,8 @@
             .UsingEntity<Dictionary<string, object>>(
                 "UsersFavoriteFoods",
                 x => x.HasOne<Food>().WithMany().HasForeignKey("FoodId"),
-                x => x.HasOne<ApplicationUser>().WithMany().HasForeignKey("UserId"));
+                x => x.HasOne<ApplicationUser>().WithMany().HasForeignKey("UserId"),
+                x => x.HasKey("FoodId", "UserId"));
         }
 
         private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)
