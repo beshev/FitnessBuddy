@@ -80,7 +80,7 @@
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
 
-            // Has bug that doesn't set properties names for "UsersFavoriteFoods" table. This fixes the problem.
+            // Has bug that doesn't set properties names as primary keys for the "UsersFavoriteFoods" table. This fixes the problem.
             builder.SharedTypeEntity<Dictionary<string, object>>("UsersFavoriteFoods", builder =>
             {
                 builder.Property<int>("FoodId");
