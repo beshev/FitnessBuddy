@@ -3,6 +3,7 @@ namespace FitnessBuddy.Data.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     using FitnessBuddy.Data.Common.Models;
 
@@ -16,7 +17,27 @@ namespace FitnessBuddy.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
+
+            this.Meals = new HashSet<Meal>();
+            this.AddedFoods = new HashSet<Food>();
+            this.FavoriteUserFoods = new HashSet<Food>();
         }
+
+        public double WeightInKg { get; set; }
+
+        public double GoalWeightInKg { get; set; }
+
+        public string ProfilePicture { get; set; }
+
+        public double HeightInCm { get; set; }
+
+        public double DailyProteinGoal { get; set; }
+
+        public double DailyCarbohydratesGoal { get; set; }
+
+        public double DailyFatGoal { get; set; }
+
+        public string AboutMe { get; set; }
 
         // Audit info
         public DateTime CreatedOn { get; set; }
@@ -27,6 +48,13 @@ namespace FitnessBuddy.Data.Models
         public bool IsDeleted { get; set; }
 
         public DateTime? DeletedOn { get; set; }
+
+        public virtual ICollection<Meal> Meals { get; set; }
+
+        [InverseProperty("AddedByUser")]
+        public virtual ICollection<Food> AddedFoods { get; set; }
+
+        public virtual ICollection<Food> FavoriteUserFoods { get; set; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
