@@ -6,7 +6,7 @@
     using System.Reflection;
     using System.Threading;
     using System.Threading.Tasks;
-
+    using FitnessBuddy.Common;
     using FitnessBuddy.Data.Common.Models;
     using FitnessBuddy.Data.Models;
 
@@ -85,10 +85,10 @@
             .HasMany(x => x.FavoriteUserFoods)
             .WithMany(x => x.FavoriteUsersFood)
             .UsingEntity<Dictionary<string, object>>(
-                "UsersFavoriteFoods",
-                x => x.HasOne<Food>().WithMany().HasForeignKey("FoodId"),
-                x => x.HasOne<ApplicationUser>().WithMany().HasForeignKey("UserId"),
-                x => x.HasKey("FoodId", "UserId"));
+                DataConstants.UserFavoriteFoodTableName,
+                x => x.HasOne<Food>().WithMany().HasForeignKey(DataConstants.FoodIdPropertyName),
+                x => x.HasOne<ApplicationUser>().WithMany().HasForeignKey(DataConstants.UserIdPropertyName),
+                x => x.HasKey(DataConstants.FoodIdPropertyName, DataConstants.UserIdPropertyName));
         }
 
         private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)
