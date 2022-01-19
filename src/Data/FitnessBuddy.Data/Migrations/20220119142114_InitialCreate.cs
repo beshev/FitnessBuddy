@@ -32,6 +32,7 @@ namespace FitnessBuddy.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: false),
                     WeightInKg = table.Column<double>(type: "float", nullable: false),
                     GoalWeightInKg = table.Column<double>(type: "float", nullable: false),
                     ProfilePicture = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -39,7 +40,7 @@ namespace FitnessBuddy.Data.Migrations
                     DailyProteinGoal = table.Column<double>(type: "float", nullable: false),
                     DailyCarbohydratesGoal = table.Column<double>(type: "float", nullable: false),
                     DailyFatGoal = table.Column<double>(type: "float", nullable: false),
-                    AboutMe = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AboutMe = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -70,7 +71,7 @@ namespace FitnessBuddy.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -193,11 +194,11 @@ namespace FitnessBuddy.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     TargetProtein = table.Column<double>(type: "float", nullable: false),
                     TargetCarbs = table.Column<double>(type: "float", nullable: false),
                     TargetFat = table.Column<double>(type: "float", nullable: false),
-                    ForUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ForUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -210,7 +211,8 @@ namespace FitnessBuddy.Data.Migrations
                         name: "FK_Meals_AspNetUsers_ForUserId",
                         column: x => x.ForUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -220,13 +222,13 @@ namespace FitnessBuddy.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FoodNameId = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     ProteinIn100Grams = table.Column<double>(type: "float", nullable: false),
                     CarbohydratesIn100Grams = table.Column<double>(type: "float", nullable: false),
                     FatIn100Grams = table.Column<double>(type: "float", nullable: false),
                     Sodium = table.Column<double>(type: "float", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AddedByUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    AddedByUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -239,7 +241,8 @@ namespace FitnessBuddy.Data.Migrations
                         name: "FK_Foods_AspNetUsers_AddedByUserId",
                         column: x => x.AddedByUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Foods_FoodsNames_FoodNameId",
                         column: x => x.FoodNameId,

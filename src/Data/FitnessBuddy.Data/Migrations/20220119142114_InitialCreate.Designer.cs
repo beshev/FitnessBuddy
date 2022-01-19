@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessBuddy.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220116093854_InitialCreate")]
+    [Migration("20220119142114_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,7 +71,8 @@ namespace FitnessBuddy.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AboutMe")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -101,6 +102,9 @@ namespace FitnessBuddy.Data.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
 
                     b.Property<double>("GoalWeightInKg")
                         .HasColumnType("float");
@@ -177,6 +181,7 @@ namespace FitnessBuddy.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("AddedByUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<double>("CarbohydratesIn100Grams")
@@ -189,7 +194,9 @@ namespace FitnessBuddy.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<double>("FatIn100Grams")
                         .HasColumnType("float");
@@ -244,7 +251,9 @@ namespace FitnessBuddy.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -268,6 +277,7 @@ namespace FitnessBuddy.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ForUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
@@ -277,7 +287,9 @@ namespace FitnessBuddy.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<double>("TargetCarbs")
                         .HasColumnType("float");
@@ -462,7 +474,9 @@ namespace FitnessBuddy.Data.Migrations
                 {
                     b.HasOne("FitnessBuddy.Data.Models.ApplicationUser", "AddedByUser")
                         .WithMany("AddedFoods")
-                        .HasForeignKey("AddedByUserId");
+                        .HasForeignKey("AddedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("FitnessBuddy.Data.Models.FoodName", "FoodName")
                         .WithMany("Foods")
@@ -479,7 +493,9 @@ namespace FitnessBuddy.Data.Migrations
                 {
                     b.HasOne("FitnessBuddy.Data.Models.ApplicationUser", "ForUser")
                         .WithMany("Meals")
-                        .HasForeignKey("ForUserId");
+                        .HasForeignKey("ForUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("ForUser");
                 });

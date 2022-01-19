@@ -6,6 +6,7 @@
     using System.Reflection;
     using System.Threading;
     using System.Threading.Tasks;
+
     using FitnessBuddy.Common;
     using FitnessBuddy.Data.Common.Models;
     using FitnessBuddy.Data.Models;
