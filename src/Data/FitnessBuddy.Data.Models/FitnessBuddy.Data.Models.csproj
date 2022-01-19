@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\FitnessBuddy.Common\FitnessBuddy.Common.csproj" />
     <ProjectReference Include="..\FitnessBuddy.Data.Common\FitnessBuddy.Data.Common.csproj" />
   </ItemGroup>
   

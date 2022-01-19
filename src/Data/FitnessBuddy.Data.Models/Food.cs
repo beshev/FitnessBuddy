@@ -1,8 +1,9 @@
 ﻿namespace FitnessBuddy.Data.Models
 {
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
+    using System.ComponentModel.DataAnnotations;
 
+    using FitnessBuddy.Common;
     using FitnessBuddy.Data.Common.Models;
 
     public class Food : BaseDeletableModel<int>
@@ -17,6 +18,8 @@
 
         public virtual FoodName FoodName { get; set; }
 
+        [Required]
+        [MaxLength(DataConstants.FoodDescriptionMaxLength)]
         public string Description { get; set; }
 
         public double ProteinIn100Grams { get; set; }
@@ -29,6 +32,7 @@
 
         public string ImageUrl { get; set; }
 
+        [Required]
         public string AddedByUserId { get; set; }
 
         public virtual ApplicationUser AddedByUser { get; set; }

@@ -3,10 +3,12 @@ namespace FitnessBuddy.Data.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
+    using FitnessBuddy.Common;
     using FitnessBuddy.Data.Common.Models;
-
+    using FitnessBuddy.Data.Models.Enums;
     using Microsoft.AspNetCore.Identity;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
@@ -23,6 +25,8 @@ namespace FitnessBuddy.Data.Models
             this.FavoriteUserFoods = new HashSet<Food>();
         }
 
+        public GenderType Gender { get; set; }
+
         public double WeightInKg { get; set; }
 
         public double GoalWeightInKg { get; set; }
@@ -37,6 +41,7 @@ namespace FitnessBuddy.Data.Models
 
         public double DailyFatGoal { get; set; }
 
+        [MaxLength(DataConstants.UserAboutMeMaxLength)]
         public string AboutMe { get; set; }
 
         // Audit info
