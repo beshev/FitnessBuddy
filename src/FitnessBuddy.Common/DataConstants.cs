@@ -14,7 +14,7 @@
         public const double UserWeightMinValue = 1;
         public const double UserWeightMaxValue = 300;
 
-        public const double UserHeightMinValue = 0;
+        public const double UserHeightMinValue = 1;
         public const double UserHeightMaxValue = 300;
 
         public const double UserDailyNutritionsMinValue = 0;

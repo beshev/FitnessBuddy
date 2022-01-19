@@ -1,0 +1,39 @@
+﻿@using FitnessBuddy.Web.ViewModels.Users
+@model ProfileViewModel
+
+<div class="container">
+    <div class="row">
+        <div class="card col-xs-3 offset-md-1" style="width: 18rem;">
+            <img class="card-img-top" src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">@Model.UserInfo.UserName</h5>
+                <p class="card-text"><strong>Email:</strong> <h6>@Model.UserEmail</h6></p>
+                <p class="card-text"><strong>Weight:</strong> <h6>@Model.UserInfo.WeightInKg kg.</h6></p>
+                <p class="card-text"><strong>Goal weight:</strong> <h6>@Model.UserInfo.GoalWeightInKg kg.</h6></p>
+                <p class="card-text"><strong>Height</strong> <h6>@Model.UserInfo.HeightInCm cm</h6></p>
+                <a asp-controller="Users" asp-action="Edit"><span class="btn btn-primary">Edit</span></a>
+            </div>
+        </div>
+        <div class="card col-xs-3 offset-md-3" style="width: 24rem;">
+            <div class="card-body text-center">
+                <h4 class="card-title text-dark">Nutritions</h4>
+                <p class="card-text">
+                    <strong>Current protein / Daily protein goal</strong>
+                    <h6>@Model.CurrentProtein / @Model.UserInfo.DailyProteinGoal</h6>
+                </p>
+                <p class="card-text">
+                    <strong>Current carbohydrates / Daily carbohydrates goal</strong>
+                    <h6>@Model.CurrentCarbohydrates / @Model.UserInfo.DailyCarbohydratesGoal</h6>
+                </p>
+                <p class="card-text">
+                    <strong>Current fat / Daily fat goal</strong>
+                    <h6>@Model.CurrentFat / @Model.UserInfo.DailyFatGoal</h6>
+                </p>
+                <p class="card-text">
+                    <strong>Current calories / Daily calories goal</strong>
+                    <h6>@Model.CurrentCalories / @Model.UserInfo.DailyCaloriesGoal</h6>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

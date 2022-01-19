@@ -8,6 +8,7 @@
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Data.Repositories;
     using FitnessBuddy.Data.Seeding;
+    using FitnessBuddy.Services.Data.Users;
     using FitnessBuddy.Services.Mapping;
     using FitnessBuddy.Services.Messaging;
     using FitnessBuddy.Web.ViewModels;
@@ -63,6 +64,7 @@
 
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
+            services.AddTransient<IUsersService, UsersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

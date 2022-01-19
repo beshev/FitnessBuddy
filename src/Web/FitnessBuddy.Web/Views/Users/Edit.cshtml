@@ -1,0 +1,58 @@
+﻿@using FitnessBuddy.Web.ViewModels.Users
+@model UserProfileInputModel
+
+<h1 class="text-center">Edit Profile</h1>
+
+<form asp-controller="Users" asp-action="Edit" class="col-lg-6 offset-lg-3 text-center">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-grup">
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName" class="form-control" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+    <div class="form-grup">
+        <label asp-for="WeightInKg"></label>
+        <input asp-for="WeightInKg" class="form-control" />
+        <span asp-validation-for="WeightInKg" class="text-danger"></span>
+    </div>
+    <div class="form-grup">
+        <label asp-for="GoalWeightInKg"></label>
+        <input asp-for="GoalWeightInKg" class="form-control" />
+        <span asp-validation-for="GoalWeightInKg" class="text-danger"></span>
+    </div>
+    <div class="form-grup">
+        <label asp-for="ProfilePicture"></label>
+        <input asp-for="ProfilePicture" class="form-control" />
+        <span asp-validation-for="ProfilePicture" class="text-danger"></span>
+    </div>
+    <div class="form-grup">
+        <label asp-for="HeightInCm"></label>
+        <input asp-for="HeightInCm" class="form-control" />
+        <span asp-validation-for="HeightInCm" class="text-danger"></span>
+    </div>
+    <div class="form-grup">
+        <label asp-for="DailyProteinGoal"></label>
+        <input asp-for="DailyProteinGoal" class="form-control" />
+        <span asp-validation-for="DailyProteinGoal" class="text-danger"></span>
+    </div>
+    <div class="form-grup">
+        <label asp-for="DailyCarbohydratesGoal"></label>
+        <input asp-for="DailyCarbohydratesGoal" class="form-control" />
+        <span asp-validation-for="DailyCarbohydratesGoal" class="text-danger"></span>
+    </div>
+    <div class="form-grup">
+        <label asp-for="DailyFatGoal"></label>
+        <input asp-for="DailyFatGoal" class="form-control" />
+        <span asp-validation-for="DailyFatGoal" class="text-danger"></span>
+    </div>
+    <div class="form-grup">
+        <label asp-for="AboutMe"></label>
+        <input asp-for="AboutMe" class="form-control" />
+        <span asp-validation-for="AboutMe" class="text-danger"></span>
+    </div>
+
+    <div class="form-grup" style="margin-top: 2%;">
+        <input type="submit" class="btn btn-primary form-control" />
+    </div>
+</form>

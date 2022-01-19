@@ -23,7 +23,7 @@
                 .All()
                 .FirstOrDefault(x => x.Id == userId);
 
-            user.UserName = model.Username;
+            user.UserName = model.UserName;
             user.WeightInKg = model.WeightInKg;
             user.GoalWeightInKg = model.GoalWeightInKg;
             user.ProfilePicture = model.ProfilePicture;
@@ -43,7 +43,7 @@
                 .Where(x => x.Id == userId)
                 .Select(userData => new UserProfileInputModel
                 {
-                    Username = userData.UserName,
+                    UserName = userData.UserName,
                     WeightInKg = userData.WeightInKg,
                     GoalWeightInKg = userData.GoalWeightInKg,
                     ProfilePicture = userData.ProfilePicture,
