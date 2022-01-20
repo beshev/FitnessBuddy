@@ -3,15 +3,19 @@
     using System.ComponentModel.DataAnnotations;
 
     using FitnessBuddy.Common;
+    using FitnessBuddy.Data.Models;
+    using FitnessBuddy.Services.Mapping;
     using FitnessBuddy.Web.Infrastructure.Attributes;
 
-    public class FoodViewModel
+    public class FoodViewModel : IMapFrom<Food>
     {
         [Required]
         [MinLength(DataConstants.FoodNameMinLength)]
         [MaxLength(DataConstants.FoodNameMaxLength)]
         [Display(Name = "Food name")]
-        public string FoodName { get; set; }
+
+        // Property name for automapper
+        public string FoodNameName { get; set; }
 
         [Required]
         [MinLength(DataConstants.FoodDescriptionMinLength)]
