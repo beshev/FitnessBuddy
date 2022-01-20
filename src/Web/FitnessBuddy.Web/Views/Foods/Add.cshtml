@@ -1,0 +1,57 @@
+﻿@using FitnessBuddy.Web.ViewModels.Foods
+@model FoodViewModel
+
+@{
+    this.ViewData["Title"] = "Add new food";
+}
+
+<div class="text-center">
+    <h1>
+        Add Food
+    </h1>
+
+    <form asp-controller="Foods" asp-action="Add" class="col-lg-6 offset-lg-3">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-grup">
+            <label asp-for="FoodName"></label>
+            <input asp-for="FoodName" class="form-control" />
+            <span asp-validation-for="FoodName" class="text-danger"></span>
+        </div>
+        <div class="form-grup">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="form-grup">
+            <label asp-for="ProteinIn100Grams"></label>
+            <input asp-for="ProteinIn100Grams" class="form-control" />
+            <span asp-validation-for="ProteinIn100Grams" class="text-danger"></span>
+        </div>
+        <div class="form-grup">
+            <label asp-for="CarbohydratesIn100Grams"></label>
+            <input asp-for="CarbohydratesIn100Grams" class="form-control" />
+            <span asp-validation-for="CarbohydratesIn100Grams" class="text-danger"></span>
+        </div>
+        <div class="form-grup">
+            <label asp-for="FatIn100Grams"></label>
+            <input asp-for="FatIn100Grams" class="form-control" />
+            <span asp-validation-for="FatIn100Grams" class="text-danger"></span>
+        </div>
+        <div class="form-grup">
+            <label asp-for="ImageUrl"></label>
+            <input asp-for="ImageUrl" class="form-control" />
+            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+        </div>
+        <div class="form-grup">
+            <label asp-for="Sodium"></label>
+            <input asp-for="Sodium" class="form-control" />
+            <span asp-validation-for="Sodium" class="text-danger"></span>
+        </div>
+
+        <div class="form-grup" style="margin-top: 2%;">
+            <input type="submit" class="btn btn-primary form-control" />
+        </div>
+    </form>
+</div>
+

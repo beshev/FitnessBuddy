@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\FitnessBuddy.Data.Models\FitnessBuddy.Data.Models.csproj" />
     <ProjectReference Include="..\..\Services\FitnessBuddy.Services.Mapping\FitnessBuddy.Services.Mapping.csproj" />
+    <ProjectReference Include="..\FitnessBuddy.Web.Infrastructure\FitnessBuddy.Web.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
