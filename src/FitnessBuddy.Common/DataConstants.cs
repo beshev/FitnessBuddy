@@ -31,7 +31,7 @@
         public const double FoodNutritionsMaxValue = 1000;
 
         // FoodName model
-        public const int FoodNameMinLength = 1;
+        public const int FoodNameMinLength = 3;
         public const int FoodNameMaxLength = 50;
 
         // Meal model
