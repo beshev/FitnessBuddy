@@ -37,6 +37,9 @@
         [NonNegativeNumber]
         public double Sodium { get; set; }
 
+        public string FoodCalories
+            => (((this.ProteinIn100Grams + this.CarbohydratesIn100Grams) * 4) + (this.FatIn100Grams * 9)).ToString("F2");
+
         public string ImageUrl { get; set; }
     }
 }
