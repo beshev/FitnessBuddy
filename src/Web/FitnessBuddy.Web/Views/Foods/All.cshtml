@@ -1,0 +1,28 @@
+﻿@model IEnumerable<FoodViewModel>
+
+@{
+    this.ViewData["Title"] = "All foods";
+}
+
+<h1 class="text-center">
+    All foods
+</h1>
+<div class="container">
+    <div class="row">
+        @foreach (var food in @Model)
+        {
+            <div class="card col-md-3 offset-md-1" style="width: 18rem; height: fit-content; margin-top: 1%;">
+                <div class="card-header">
+                    <strong>@food.FoodNameName</strong> (for 100 grams)
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong>Description: </strong>@food.Description</li>
+                    <li class="list-group-item"><strong>Protein: </strong>@food.ProteinIn100Grams gr. </li>
+                    <li class="list-group-item"><strong>Carbohydrates: </strong>@food.CarbohydratesIn100Grams gr.</li>
+                    <li class="list-group-item"><strong>Fat: </strong>@food.FatIn100Grams gr.</li>
+                    <li class="list-group-item"><strong>Food calories: </strong>@food.FoodCalories kcal</li>
+                </ul>
+            </div>
+        }
+    </div>
+</div>

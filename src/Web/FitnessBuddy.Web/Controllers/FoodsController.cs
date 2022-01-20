@@ -5,6 +5,7 @@
     using FitnessBuddy.Services.Data.Foods;
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Foods;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     public class FoodsController : Controller
@@ -18,15 +19,19 @@
 
         public IActionResult All()
         {
-            return this.View();
+            var viewModel = this.foodsService.GetAll();
+
+            return this.View(viewModel);
         }
 
+        [Authorize]
         public IActionResult Add()
         {
             return this.View();
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Add(FoodViewModel model)
         {
             if (this.ModelState.IsValid == false)
@@ -38,9 +43,7 @@
 
             await this.foodsService.AddAsync(userId, model);
 
-            return this.Redirect("/");
-
-            // return this.RedirectToAction(nameof(this.All));
+            return this.RedirectToAction(nameof(this.All));
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿@using FitnessBuddy.Web.ViewModels.Foods
-@model FoodViewModel
+﻿@model FoodViewModel
 
 @{
     this.ViewData["Title"] = "Add new food";
@@ -14,9 +13,9 @@
         <div asp-validation-summary="All" class="text-danger"></div>
 
         <div class="form-grup">
-            <label asp-for="FoodName"></label>
-            <input asp-for="FoodName" class="form-control" />
-            <span asp-validation-for="FoodName" class="text-danger"></span>
+            <label asp-for="FoodNameName"></label>
+            <input asp-for="FoodNameName" class="form-control" />
+            <span asp-validation-for="FoodNameName" class="text-danger"></span>
         </div>
         <div class="form-grup">
             <label asp-for="Description"></label>
@@ -39,16 +38,15 @@
             <span asp-validation-for="FatIn100Grams" class="text-danger"></span>
         </div>
         <div class="form-grup">
-            <label asp-for="ImageUrl"></label>
-            <input asp-for="ImageUrl" class="form-control" />
-            <span asp-validation-for="ImageUrl" class="text-danger"></span>
-        </div>
-        <div class="form-grup">
             <label asp-for="Sodium"></label>
             <input asp-for="Sodium" class="form-control" />
             <span asp-validation-for="Sodium" class="text-danger"></span>
         </div>
-
+        <div class="form-grup">
+            <label asp-for="ImageUrl"></label>
+            <input asp-for="ImageUrl" class="form-control" />
+            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+        </div>
         <div class="form-grup" style="margin-top: 2%;">
             <input type="submit" class="btn btn-primary form-control" />
         </div>
