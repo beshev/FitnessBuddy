@@ -2,20 +2,23 @@
 {
     using System.ComponentModel.DataAnnotations;
 
+    using AutoMapper;
     using FitnessBuddy.Common;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
     using FitnessBuddy.Web.Infrastructure.Attributes;
 
-    public class FoodViewModel : IMapFrom<Food>
+    public class FoodViewModel : IMapFrom<Food>, IMapTo<Food>, IHaveCustomMappings
     {
+        public int Id { get; set; }
+
         [Required]
         [MinLength(DataConstants.FoodNameMinLength)]
         [MaxLength(DataConstants.FoodNameMaxLength)]
         [Display(Name = "Food name")]
 
         // Property name for automapper
-        public string FoodNameName { get; set; }
+        public string FoodName { get; set; }
 
         [Required]
         [MinLength(DataConstants.FoodDescriptionMinLength)]
@@ -41,5 +44,14 @@
             => (((this.ProteinIn100Grams + this.CarbohydratesIn100Grams) * 4) + (this.FatIn100Grams * 9)).ToString("F2");
 
         public string ImageUrl { get; set; }
+
+        public string AddedByUserId { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration
+                .CreateMap<Food, FoodViewModel>()
+                .ForMember(dest => dest.FoodName, opt => opt.MapFrom(x => x.FoodName.Name));
+        }
     }
 }
