@@ -1,5 +1,6 @@
 ﻿@using FitnessBuddy.Web.Infrastructure.Extensions
 @model IEnumerable<FoodViewModel>
+@inject FitnessBuddy.Services.Data.Users.IUsersService userService
 
 @{
     this.ViewData["Title"] = "All foods";
@@ -13,31 +14,20 @@
         @foreach (var food in @Model)
         {
             <div class="card col-md-3 offset-md-1" style="width: 18rem; height: fit-content; margin-top: 1%;">
-                <div class="card-header text-center">
-                    <strong>@food.FoodName</strong>
-                </div>
-                <img src="@food.ImageUrl" alt="..." class="img-thumbnail">
-                <strong class="text-center">Nutriotions for 100 grams</strong>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><strong>Food calories: </strong>@food.FoodCalories kcal</li>
-                    <li class="list-group-item"><strong>Protein: </strong>@food.ProteinIn100Grams gr. </li>
-                    <li class="list-group-item"><strong>Carbohydrates: </strong>@food.CarbohydratesIn100Grams gr.</li>
-                    <li class="list-group-item"><strong>Fat: </strong>@food.FatIn100Grams gr.</li>
-                    <li class="list-group-item"><strong>Sodium: </strong>@food.Sodium mg.</li>
-                    <li class="list-group-item"><strong>Description: </strong>@food.Description</li>
-                    @if (this.User.Identity.IsAuthenticated && food.AddedByUserId == this.User.GetUserId())
+                <partial name="_FoodPartial" model="food" />
+                @if (this.User.Identity.IsAuthenticated)
+                {
+                    @if (this.userService.IsFoodFavorite(this.User.GetUserId(), food.Id) == false)
                     {
-                        <li class="list-group-item text-center">
-                            <a class="btn btn-info" asp-action="Edit" asp-controller="Foods" asp-route-id="@food.Id">
-                                Edit
-                            </a>
-                            <a class="btn btn-danger" asp-action="Delete" asp-controller="Foods" asp-route-id="@food.Id">
-                                Delete
-                            </a>
-                        </li>
+                        <a asp-action="AddToFavorite" asp-controller="Foods" asp-route-foodId="@food.Id" class="btn btn-success">
+                            Add to favorite
+                        </a>
                     }
-                </ul>
+                }
             </div>
         }
     </div>
 </div>
+
+
+
