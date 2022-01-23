@@ -76,12 +76,10 @@
         }
 
         public IEnumerable<FoodViewModel> FoodsAddedByUser(string userId)
-        {
-            return this.foodRepository
+            => this.foodRepository
                 .AllAsNoTracking()
                 .Where(x => x.AddedByUserId == userId)
                 .To<FoodViewModel>()
                 .AsEnumerable();
-        }
     }
 }
