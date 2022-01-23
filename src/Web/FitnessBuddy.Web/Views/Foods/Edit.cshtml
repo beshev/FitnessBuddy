@@ -1,4 +1,4 @@
-﻿@model FoodViewModel
+﻿@model FoodInputModel
 
 @{
     this.ViewData["Title"] = "Edit food";
@@ -13,9 +13,9 @@
         <div asp-validation-summary="All" class="text-danger"></div>
 
         <div class="form-grup">
-            <label asp-for="FoodName"></label>
-            <input asp-for="FoodName" class="form-control" />
-            <span asp-validation-for="FoodName" class="text-danger"></span>
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
         </div>
         <div class="form-grup">
             <label asp-for="Description"></label>

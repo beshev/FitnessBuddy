@@ -49,7 +49,7 @@
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Add(FoodViewModel model)
+        public async Task<IActionResult> Add(FoodInputModel model)
         {
             if (this.ModelState.IsValid == false)
             {
@@ -100,14 +100,14 @@
         {
             var food = this.foodsService.GetFoodById(id);
 
-            var viewModel = AutoMapperConfig.MapperInstance.Map<Food, FoodViewModel>(food);
+            var viewModel = AutoMapperConfig.MapperInstance.Map<Food, FoodInputModel>(food);
 
             return this.View(viewModel);
         }
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Edit(FoodViewModel model)
+        public async Task<IActionResult> Edit(FoodInputModel model)
         {
             if (this.ModelState.IsValid == false)
             {
