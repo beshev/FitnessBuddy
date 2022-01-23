@@ -25,9 +25,6 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Profile">Profile</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Foods" asp-action="Add">Add food</a>
-                            </li>
                         }
                         else
                         {
@@ -36,7 +33,20 @@
                             </li>
                         }
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Foods" asp-action="All">All foods</a>
+                            <div class="dropdown show">
+                                <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Foods
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Foods" asp-action="All">All foods</a>
+                                    @if (this.User.Identity.IsAuthenticated)
+                                    {
+                                        <a class="dropdown-item" asp-action="MyFoods" asp-controller="Foods">My foods</a>
+                                        <a class="dropdown-item" asp-action="Favorites" asp-controller="Foods">My favorite foods</a>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Foods" asp-action="Add">Add food</a>
+                                    }
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </div>

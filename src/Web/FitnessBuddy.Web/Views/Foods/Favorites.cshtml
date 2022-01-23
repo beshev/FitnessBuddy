@@ -1,0 +1,26 @@
+﻿@using FitnessBuddy.Web.Infrastructure.Extensions
+@model IEnumerable<FoodViewModel>
+
+@{
+    this.ViewData["Title"] = "My favorite foods";
+}
+
+<h1 class="text-center">
+    Favorite foods
+</h1>
+<div class="container">
+    <div class="row">
+        @foreach (var food in @Model)
+        {
+            <div class="card col-md-3 offset-md-1" style="width: 18rem; height: fit-content; margin-top: 1%;">
+                <partial name="_FoodPartial" model="food" />
+                <a class="btn btn-dark" asp-action="RemoveFromFavorite" asp-controller="Foods" asp-route-foodId="@food.Id">
+                    Remove
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+
+
