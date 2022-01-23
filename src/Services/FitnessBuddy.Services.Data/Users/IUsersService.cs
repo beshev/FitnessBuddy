@@ -9,7 +9,7 @@
 
     public interface IUsersService
     {
-        public UserProfileInputModel GetUserInfo(string userId);
+        public UserViewModel GetUserInfo(string userId);
 
         public Task AddFoodToFavoriteAsync(string userId, Food food);
 
@@ -19,6 +19,6 @@
 
         public bool IsFoodFavorite(string userId, int foodId);
 
-        public Task EditAsync(string userId, UserProfileInputModel model);
+        public Task EditAsync(string userId, UserInputModel model);
     }
 }

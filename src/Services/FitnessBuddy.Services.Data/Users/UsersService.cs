@@ -32,7 +32,7 @@
             await this.usersRepository.SaveChangesAsync();
         }
 
-        public async Task EditAsync(string userId, UserProfileInputModel model)
+        public async Task EditAsync(string userId, UserInputModel model)
         {
             var user = this.usersRepository
                 .All()
@@ -59,27 +59,12 @@
                 .To<FoodViewModel>()
                 .AsEnumerable();
 
-        public UserProfileInputModel GetUserInfo(string userId)
-        {
-            var user = this.usersRepository
+        public UserViewModel GetUserInfo(string userId)
+            => this.usersRepository
                 .AllAsNoTracking()
                 .Where(x => x.Id == userId)
-                .Select(userData => new UserProfileInputModel
-                {
-                    UserName = userData.UserName,
-                    WeightInKg = userData.WeightInKg,
-                    GoalWeightInKg = userData.GoalWeightInKg,
-                    ProfilePicture = userData.ProfilePicture,
-                    HeightInCm = userData.HeightInCm,
-                    DailyProteinGoal = userData.DailyProteinGoal,
-                    DailyCarbohydratesGoal = userData.DailyCarbohydratesGoal,
-                    DailyFatGoal = userData.DailyFatGoal,
-                    AboutMe = userData.AboutMe,
-                })
+                .To<UserViewModel>()
                 .FirstOrDefault();
-
-            return user;
-        }
 
         public bool IsFoodFavorite(string userId, int foodId)
             => this.usersRepository

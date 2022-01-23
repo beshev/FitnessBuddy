@@ -12,6 +12,6 @@
 
         public double CurrentCalories { get; set; }
 
-        public UserProfileInputModel UserInfo { get; set; }
+        public UserViewModel UserInfo { get; set; }
     }
 }

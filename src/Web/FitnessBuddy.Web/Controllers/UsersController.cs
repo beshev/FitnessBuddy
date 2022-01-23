@@ -4,6 +4,7 @@
 
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Data.Users;
+    using FitnessBuddy.Services.Mapping;
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Users;
     using Microsoft.AspNetCore.Authorization;
@@ -49,12 +50,15 @@
 
             var userData = this.userService.GetUserInfo(userId);
 
-            return this.View(userData);
+            var viewModel = AutoMapperConfig.MapperInstance
+                .Map<UserViewModel, UserInputModel>(userData);
+
+            return this.View(viewModel);
         }
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Edit(UserProfileInputModel viewModel)
+        public async Task<IActionResult> Edit(UserInputModel viewModel)
         {
             if (this.ModelState.IsValid == false)
             {

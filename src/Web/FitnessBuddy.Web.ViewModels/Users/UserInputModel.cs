@@ -3,8 +3,9 @@
     using System.ComponentModel.DataAnnotations;
 
     using FitnessBuddy.Common;
+    using FitnessBuddy.Services.Mapping;
 
-    public class UserProfileInputModel
+    public class UserInputModel : IMapFrom<UserViewModel>
     {
         [Required]
         [MaxLength(DataConstants.UserUsernameMaxLength)]
@@ -38,9 +39,6 @@
         [Range(DataConstants.UserDailyNutritionsMinValue, DataConstants.UserDailyNutritionsMaxValue)]
         [Display(Name = "Daily fat goal")]
         public double DailyFatGoal { get; set; }
-
-        [Display(Name = "Daily calories goal")]
-        public double DailyCaloriesGoal => ((this.DailyProteinGoal + this.DailyCarbohydratesGoal) * 4) + (this.DailyFatGoal * 9);
 
         [Display(Name = "About Me")]
         public string AboutMe { get; set; }
