@@ -73,6 +73,13 @@
                 .SelectMany(x => x.FavoriteUserFoods)
                 .Any(x => x.Id == foodId);
 
+        public bool IsUserFood(string userId, int foodId)
+            => this.usersRepository
+                .AllAsNoTracking()
+                .Where(x => x.Id == userId)
+                .SelectMany(x => x.AddedFoods)
+                .Any(x => x.Id == foodId);
+
         public async Task RemoveFoodFromFavoriteAsync(string userId, Food food)
         {
             var user = this.usersRepository
