@@ -64,9 +64,9 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> AddToFavorite(int foodId)
+        public async Task<IActionResult> AddToFavorite(int? foodId)
         {
-            var food = this.foodsService.GetFoodById(foodId);
+            var food = this.foodsService.GetFoodById(foodId.Value);
             var userId = this.User.GetUserId();
 
             await this.usersService.AddFoodToFavoriteAsync(userId, food);
@@ -96,11 +96,16 @@
         }
 
         [Authorize]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int? id)
         {
-            var food = this.foodsService.GetFoodById(id);
+            if (id == null)
+            {
+                return this.RedirectToAction(nameof(this.MyFoods));
+            }
 
-            if (food.AddedByUserId != this.User.GetUserId())
+            var food = this.foodsService.GetFoodById(id.Value);
+
+            if (food == null || food.AddedByUserId != this.User.GetUserId())
             {
                 return this.RedirectToAction(nameof(this.MyFoods));
             }
@@ -125,9 +130,14 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int? foodId)
         {
-            await this.foodsService.DeleteAsync(id);
+            var userId = this.User.GetUserId();
+
+            if (foodId != null && this.usersService.IsUserFood(userId, foodId.Value))
+            {
+                await this.foodsService.DeleteAsync(foodId.Value);
+            }
 
             return this.RedirectToAction(nameof(this.MyFoods));
         }
