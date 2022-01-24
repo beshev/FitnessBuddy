@@ -100,6 +100,11 @@
         {
             var food = this.foodsService.GetFoodById(id);
 
+            if (food.AddedByUserId != this.User.GetUserId())
+            {
+                return this.RedirectToAction(nameof(this.MyFoods));
+            }
+
             var viewModel = AutoMapperConfig.MapperInstance.Map<Food, FoodInputModel>(food);
 
             return this.View(viewModel);
