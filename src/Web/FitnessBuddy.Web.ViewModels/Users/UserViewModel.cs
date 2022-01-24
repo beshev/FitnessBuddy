@@ -32,7 +32,7 @@
         public double DailyFatGoal { get; set; }
 
         [Display(Name = "Daily calories goal")]
-        public double DailyCaloriesGoal 
+        public double DailyCaloriesGoal
             => ((this.DailyProteinGoal + this.DailyCarbohydratesGoal) * 4) + (this.DailyFatGoal * 9);
 
         [Display(Name = "About Me")]
