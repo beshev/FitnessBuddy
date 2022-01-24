@@ -3,9 +3,10 @@
     using System.ComponentModel.DataAnnotations;
 
     using FitnessBuddy.Common;
+    using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
 
-    public class UserInputModel : IMapFrom<UserViewModel>
+    public class UserInputModel : IMapFrom<UserViewModel>, IMapTo<ApplicationUser>
     {
         [Required]
         [MaxLength(DataConstants.UserUsernameMaxLength)]
