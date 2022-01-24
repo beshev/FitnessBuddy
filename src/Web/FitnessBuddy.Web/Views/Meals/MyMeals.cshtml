@@ -1,0 +1,74 @@
+﻿@model IEnumerable<MealViewModel>
+
+@{
+    this.ViewData["Title"] = "All Meals";
+}
+
+@if (Model.Count() == 0)
+{
+    <div class="text-center">
+        <h1>
+            You don't have any meals.
+        </h1>
+        <a asp-action="Create" asp-controller="Meals">Add</a>
+    </div>
+}
+
+@foreach (var meal in Model)
+{
+    <h1 class="text-center">
+        @meal.Name
+    </h1>
+    <table class="table table-sm table-striped text-center">
+        <thead>
+            <tr>
+                <th scope="col">Current Protein / Target Protein</th>
+                <th scope="col">Current Carbohydrates / Target Carbohydrates</th>
+                <th scope="col">Current Fat / Target Fat</th>
+                <th scope="col">Total calories</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@meal.CurrentProtein / @meal.TargetProtein</td>
+                <td>@meal.CurrentCarbohydrates / @meal.TargetCarbs</td>
+                <td>@meal.CurrentFats / @meal.TargetFat</td>
+                <td>@meal.TotalCalories.ToString("F2") kcal</td>
+                <td>
+                    <a class="btn btn-danger" asp-action="Delete" asp-controller="Meals" asp-route-mealId="@meal.Id">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-striped text-center">
+        <thead>
+            <tr>
+                <th scope="col">Food name</th>
+                <th scope="col">Protein</th>
+                <th scope="col">Carbohydrates</th>
+                <th scope="col">Fats</th>
+                <th scope="col">Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var mealFood in meal.MealFoods)
+            {
+                <tr>
+                    <th scope="row">@mealFood.FoodName</th>
+                    <th scope="row">@mealFood.Protein gr.</th>
+                    <th scope="row">@mealFood.Carbohydrates gr.</th>
+                    <th scope="row">@mealFood.Fats gr.</th>
+                    <th scope="row">@mealFood.QuantityInGrams gr.</th>
+                    <th scope="row">
+                        <a asp-action="RemoveFood" asp-controller="Meals" asp-route-mealFoodId="@mealFood.Id">
+                            Remove
+                        </a>
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

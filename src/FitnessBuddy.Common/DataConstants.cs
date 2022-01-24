@@ -37,5 +37,11 @@
         // Meal model
         public const int MealNameMinLength = 1;
         public const int MealNameMaxLength = 50;
+
+        public const double MealNutritionsMinValue = 0;
+        public const double MealNutritionsMaxValue = 1000;
+
+        public const double MealFoodQuantityMinValue = 1;
+        public const double MealFoodQuantityMaxValue = 5000;
     }
 }

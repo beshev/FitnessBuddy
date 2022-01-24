@@ -1,0 +1,25 @@
+﻿@model MealFoodInputModel
+
+@{
+    this.ViewData["Title"] = "Add food to meal";
+}
+
+<div class="text-center">
+    <h1>
+        @Model.FoodName
+    </h1>
+    <form asp-action="AddFood" asp-controller="Meals" class="col-lg-6 offset-lg-3">
+        <input asp-for="FoodId" type="hidden" />
+        <div class="form-group">
+            <label asp-for="QuantityInGrams"></label>
+            <input asp-for="QuantityInGrams" class="form-control" placeholder="Quantity in grams..." />
+            <span asp-validation-for="QuantityInGrams" class="text-danger"></span>
+        </div>
+        @*TODO: Make ViewComponent for meals selection*@
+        <select asp-for="MealId" class="form-control">
+            <option value="1">Dinner</option>
+        </select>
+        <input type="submit" class="btn btn-primary" value="Add" />
+    </form>
+</div>
+
