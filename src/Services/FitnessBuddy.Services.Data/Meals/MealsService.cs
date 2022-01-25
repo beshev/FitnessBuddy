@@ -12,42 +12,19 @@
     public class MealsService : IMealsService
     {
         private readonly IDeletableEntityRepository<Meal> mealRepository;
-        private readonly IDeletableEntityRepository<MealFood> mealFoodRepository;
 
         public MealsService(
-            IDeletableEntityRepository<Meal> mealRepository,
-            IDeletableEntityRepository<MealFood> mealFoodRepository)
+            IDeletableEntityRepository<Meal> mealRepository)
         {
             this.mealRepository = mealRepository;
-            this.mealFoodRepository = mealFoodRepository;
         }
 
-        public async Task<MealFood> AddFoodToMealAsync(MealFoodInputModel model)
-        {
-            MealFood mealFood = this.mealFoodRepository
-                .All()
-                .FirstOrDefault(x => x.FoodId == model.FoodId && x.MealId == model.MealId);
+        public bool Contains(int mealId)
+            => this.mealRepository
+            .AllAsNoTracking()
+            .Any(x => x.Id == mealId);
 
-            if (mealFood == null)
-            {
-                mealFood = new MealFood
-                {
-                    FoodId = model.FoodId,
-                    MealId = model.MealId,
-                    QuantityInGrams = 0,
-                };
-
-                await this.mealFoodRepository.AddAsync(mealFood);
-            }
-
-            mealFood.QuantityInGrams += model.QuantityInGrams;
-
-            await this.mealRepository.SaveChangesAsync();
-
-            return mealFood;
-        }
-
-        public async Task<Meal> CreateMealAsync(string userId, MealInputModel model)
+        public async Task<Meal> CreateAsync(string userId, MealInputModel model)
         {
             var meal = AutoMapperConfig.MapperInstance.Map<MealInputModel, Meal>(model);
             meal.ForUserId = userId;
@@ -58,7 +35,7 @@
             return meal;
         }
 
-        public async Task<Meal> DeleteMealAsync(int mealId)
+        public async Task<Meal> DeleteAsync(int mealId)
         {
             var meal = this.mealRepository
                 .All()
@@ -70,24 +47,16 @@
             return meal;
         }
 
-        public IEnumerable<MealViewModel> GetUserMeals(string userId)
+        public Meal GetById(int mealId)
+            => this.mealRepository
+            .AllAsNoTracking()
+            .FirstOrDefault(x => x.Id == mealId);
+
+        public IEnumerable<TViewModel> GetUserMeals<TViewModel>(string userId)
             => this.mealRepository
             .AllAsNoTracking()
             .Where(x => x.ForUserId == userId)
-            .To<MealViewModel>()
+            .To<TViewModel>()
             .AsEnumerable();
-
-        public async Task<MealFood> RemoveFoodFromMealAsync(int mealFoodId)
-        {
-            var mealFood = this.mealFoodRepository
-                .All()
-                .FirstOrDefault(x => x.Id == mealFoodId);
-
-            this.mealFoodRepository.Delete(mealFood);
-
-            await this.mealFoodRepository.SaveChangesAsync();
-
-            return mealFood;
-        }
     }
 }

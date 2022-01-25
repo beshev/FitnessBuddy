@@ -8,14 +8,14 @@
 
     public interface IMealsService
     {
-        public Task<Meal> CreateMealAsync(string userId, MealInputModel model);
+        public Meal GetById(int mealId);
 
-        public Task<Meal> DeleteMealAsync(int mealId);
+        public Task<Meal> CreateAsync(string userId, MealInputModel model);
 
-        public Task<MealFood> AddFoodToMealAsync(MealFoodInputModel model);
+        public Task<Meal> DeleteAsync(int mealId);
 
-        public Task<MealFood> RemoveFoodFromMealAsync(int mealId);
+        public bool Contains(int mealId);
 
-        public IEnumerable<MealViewModel> GetUserMeals(string userId);
+        public IEnumerable<TViewModel> GetUserMeals<TViewModel>(string userId);
     }
 }
