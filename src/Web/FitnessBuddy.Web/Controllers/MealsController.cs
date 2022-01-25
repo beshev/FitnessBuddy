@@ -21,7 +21,8 @@
         [Authorize]
         public IActionResult MyMeals()
         {
-            var viewModel = this.mealsService.GetAllMeals();
+            string userId = this.User.GetUserId();
+            var viewModel = this.mealsService.GetUserMeals(userId);
 
             return this.View(viewModel);
         }
