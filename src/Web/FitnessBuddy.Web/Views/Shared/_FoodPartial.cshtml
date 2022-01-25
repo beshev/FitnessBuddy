@@ -1,12 +1,6 @@
 ﻿@using FitnessBuddy.Web.Infrastructure.Extensions
 @model FoodViewModel
 
-@{
-    var routeData = new Dictionary<string, string>();
-    routeData.Add("foodName", Model.FoodName);
-    routeData.Add("id", Model.Id.ToString());
-}
-
 <div class="card-header text-center">
     <strong>@Model.FoodName</strong>
 </div>
@@ -22,7 +16,7 @@
     @if (this.User.Identity.IsAuthenticated)
     {
         <li class="list-group-item text-center">
-            <a class="btn btn-warning" asp-action="AddFood" asp-controller="Meals" asp-all-route-data="@routeData">
+            <a class="btn btn-warning" asp-action="AddFood" asp-controller="Meals" asp-route-foodId="@Model.Id">
                 Add to meal
             </a>
         </li>

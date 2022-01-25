@@ -2,7 +2,9 @@
 {
     using System.Threading.Tasks;
 
+    using FitnessBuddy.Services.Data.Foods;
     using FitnessBuddy.Services.Data.Meals;
+    using FitnessBuddy.Services.Data.MealsFoodsService;
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Meals;
     using Microsoft.AspNetCore.Authorization;
@@ -12,31 +14,44 @@
     public class MealsController : Controller
     {
         private readonly IMealsService mealsService;
+        private readonly IFoodsService foodsService;
+        private readonly IMealsFoodsService mealsFoodsService;
 
-        public MealsController(IMealsService mealsService)
+        public MealsController(
+            IMealsService mealsService,
+            IFoodsService foodsService,
+            IMealsFoodsService mealsFoodsService)
         {
             this.mealsService = mealsService;
+            this.foodsService = foodsService;
+            this.mealsFoodsService = mealsFoodsService;
         }
 
         [Authorize]
         public IActionResult MyMeals()
         {
             string userId = this.User.GetUserId();
-            var viewModel = this.mealsService.GetUserMeals(userId);
+            var viewModel = this.mealsService.GetUserMeals<MealViewModel>(userId);
 
             return this.View(viewModel);
         }
 
         [Authorize]
-        public IActionResult AddFood(int id, string foodName)
+        public IActionResult AddFood(int foodId)
         {
+            var food = this.foodsService.GetById(foodId);
+
+            if (food == null)
+            {
+                return this.NotFound();
+            }
+
             var viewModel = new MealFoodInputModel
             {
-                FoodId = id,
-                FoodName = foodName,
+                FoodId = food.Id,
+                FoodName = food.FoodName.Name,
             };
 
-            // TODO: Make ViewComponent for meals selection
             return this.View(viewModel);
         }
 
@@ -49,7 +64,13 @@
                 return this.View(model);
             }
 
-            await this.mealsService.AddFoodToMealAsync(model);
+            if (this.mealsService.Contains(model.MealId) == false
+                || this.foodsService.Contains(model.FoodId) == false)
+            {
+                return this.NotFound();
+            }
+
+            await this.mealsFoodsService.Add(model);
 
             return this.RedirectToAction(nameof(this.MyMeals));
         }
@@ -57,7 +78,14 @@
         [Authorize]
         public async Task<IActionResult> RemoveFood(int mealFoodId)
         {
-            await this.mealsService.RemoveFoodFromMealAsync(mealFoodId);
+            var mealFood = this.mealsFoodsService.GetById(mealFoodId);
+
+            if (mealFood == null || mealFood.Meal.ForUserId != this.User.GetUserId())
+            {
+                return this.NotFound();
+            }
+
+            await this.mealsFoodsService.Remove(mealFood);
 
             return this.RedirectToAction(nameof(this.MyMeals));
         }
@@ -78,7 +106,7 @@
             }
 
             var userId = this.User.GetUserId();
-            await this.mealsService.CreateMealAsync(userId, model);
+            await this.mealsService.CreateAsync(userId, model);
 
             return this.RedirectToAction(nameof(this.MyMeals));
         }
@@ -86,7 +114,13 @@
         [Authorize]
         public async Task<IActionResult> Delete(int mealId)
         {
-            await this.mealsService.DeleteMealAsync(mealId);
+            var meal = this.mealsService.GetById(mealId);
+            var userId = this.User.GetUserId();
+
+            if (meal != null && meal.ForUserId == userId)
+            {
+                await this.mealsService.DeleteAsync(mealId);
+            }
 
             return this.RedirectToAction(nameof(this.MyMeals));
         }

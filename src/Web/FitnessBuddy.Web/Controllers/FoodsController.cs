@@ -66,7 +66,7 @@
         [Authorize]
         public async Task<IActionResult> AddToFavorite(int? foodId)
         {
-            var food = this.foodsService.GetFoodById(foodId.Value);
+            var food = this.foodsService.GetById(foodId.Value);
             var userId = this.User.GetUserId();
 
             await this.usersService.AddFoodToFavoriteAsync(userId, food);
@@ -78,7 +78,7 @@
         public async Task<IActionResult> RemoveFromFavorite(int foodId)
         {
             var userId = this.User.GetUserId();
-            var food = this.foodsService.GetFoodById(foodId);
+            var food = this.foodsService.GetById(foodId);
 
             await this.usersService.RemoveFoodFromFavoriteAsync(userId, food);
 
@@ -103,7 +103,7 @@
                 return this.RedirectToAction(nameof(this.MyFoods));
             }
 
-            var food = this.foodsService.GetFoodById(id.Value);
+            var food = this.foodsService.GetById(id.Value);
 
             if (food == null || food.AddedByUserId != this.User.GetUserId())
             {
