@@ -16,6 +16,8 @@
 
         public IEnumerable<FoodViewModel> FoodsAddedByUser(string userId);
 
+        public bool IsUserFood(string userId, int foodId);
+
         public Task DeleteAsync(int id);
 
         public Task AddAsync(string userId, FoodInputModel model);

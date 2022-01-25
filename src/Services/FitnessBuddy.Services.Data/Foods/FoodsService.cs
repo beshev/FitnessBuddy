@@ -35,18 +35,6 @@
             await this.foodRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<FoodViewModel> GetAll()
-            => this.foodRepository
-            .AllAsNoTracking()
-            .To<FoodViewModel>()
-            .AsEnumerable();
-
-        public Food GetFoodById(int id)
-            => this.foodRepository
-                 .All()
-                 .Include(x => x.FoodName)
-                 .FirstOrDefault(x => x.Id == id);
-
         public async Task<FoodInputModel> EditAsync(FoodInputModel model)
         {
             var food = this.GetFoodById(model.Id);
@@ -75,11 +63,28 @@
             await this.foodRepository.SaveChangesAsync();
         }
 
+        public IEnumerable<FoodViewModel> GetAll()
+           => this.foodRepository
+           .AllAsNoTracking()
+           .To<FoodViewModel>()
+           .AsEnumerable();
+
+        public Food GetFoodById(int id)
+            => this.foodRepository
+                 .All()
+                 .Include(x => x.FoodName)
+                 .FirstOrDefault(x => x.Id == id);
+
         public IEnumerable<FoodViewModel> FoodsAddedByUser(string userId)
             => this.foodRepository
                 .AllAsNoTracking()
                 .Where(x => x.AddedByUserId == userId)
                 .To<FoodViewModel>()
                 .AsEnumerable();
+
+        public bool IsUserFood(string userId, int foodId)
+            => this.foodRepository
+                .AllAsNoTracking()
+                .Any(x => x.Id == foodId && x.AddedByUserId == userId);
     }
 }
