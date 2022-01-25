@@ -53,9 +53,9 @@
             .Include(x => x.Meal)
             .FirstOrDefault(x => x.Id == mealFoodId);
 
-        public async Task<MealFood> Remove(MealFood mealFood)
+        public async Task<MealFood> Delete(MealFood mealFood)
         {
-            this.mealFoodRepository.Delete(mealFood);
+            this.mealFoodRepository.HardDelete(mealFood);
 
             await this.mealFoodRepository.SaveChangesAsync();
 

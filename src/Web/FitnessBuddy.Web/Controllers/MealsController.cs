@@ -85,7 +85,7 @@
                 return this.NotFound();
             }
 
-            await this.mealsFoodsService.Remove(mealFood);
+            await this.mealsFoodsService.Delete(mealFood);
 
             return this.RedirectToAction(nameof(this.MyMeals));
         }

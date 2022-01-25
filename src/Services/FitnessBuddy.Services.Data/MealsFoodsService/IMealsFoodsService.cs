@@ -11,7 +11,7 @@
 
         public bool Contains(int mealFoodId);
 
-        public Task<MealFood> Remove(MealFood mealFood);
+        public Task<MealFood> Delete(MealFood mealFood);
 
         public Task<MealFood> Add(MealFoodInputModel model);
     }

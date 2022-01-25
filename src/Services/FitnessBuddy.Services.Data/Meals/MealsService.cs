@@ -41,7 +41,7 @@
                 .All()
                 .FirstOrDefault(x => x.Id == mealId);
 
-            this.mealRepository.Delete(meal);
+            this.mealRepository.HardDelete(meal);
             await this.mealRepository.SaveChangesAsync();
 
             return meal;
