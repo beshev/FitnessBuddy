@@ -51,6 +51,18 @@
             await this.usersRepository.SaveChangesAsync();
         }
 
+        public async Task RemoveFoodFromFavoriteAsync(string userId, Food food)
+        {
+            var user = this.usersRepository
+                .All()
+                .Include(x => x.FavoriteUserFoods)
+                .FirstOrDefault(x => x.Id == userId);
+
+            user.FavoriteUserFoods.Remove(food);
+
+            await this.usersRepository.SaveChangesAsync();
+        }
+
         public IEnumerable<FoodViewModel> GetFavoriteFoods(string userId)
             => this.usersRepository
                 .AllAsNoTracking()
@@ -72,24 +84,5 @@
                 .Where(x => x.Id == userId)
                 .SelectMany(x => x.FavoriteUserFoods)
                 .Any(x => x.Id == foodId);
-
-        public bool IsUserFood(string userId, int foodId)
-            => this.usersRepository
-                .AllAsNoTracking()
-                .Where(x => x.Id == userId)
-                .SelectMany(x => x.AddedFoods)
-                .Any(x => x.Id == foodId);
-
-        public async Task RemoveFoodFromFavoriteAsync(string userId, Food food)
-        {
-            var user = this.usersRepository
-                .All()
-                .Include(x => x.FavoriteUserFoods)
-                .FirstOrDefault(x => x.Id == userId);
-
-            user.FavoriteUserFoods.Remove(food);
-
-            await this.usersRepository.SaveChangesAsync();
-        }
     }
 }
