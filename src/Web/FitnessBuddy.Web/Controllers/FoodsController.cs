@@ -134,7 +134,7 @@
         {
             var userId = this.User.GetUserId();
 
-            if (foodId != null && this.usersService.IsUserFood(userId, foodId.Value))
+            if (foodId != null && this.foodsService.IsUserFood(userId, foodId.Value))
             {
                 await this.foodsService.DeleteAsync(foodId.Value);
             }
