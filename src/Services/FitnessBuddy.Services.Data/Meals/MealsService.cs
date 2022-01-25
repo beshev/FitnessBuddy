@@ -70,9 +70,10 @@
             return meal;
         }
 
-        public IEnumerable<MealViewModel> GetAllMeals()
+        public IEnumerable<MealViewModel> GetUserMeals(string userId)
             => this.mealRepository
             .AllAsNoTracking()
+            .Where(x => x.ForUserId == userId)
             .To<MealViewModel>()
             .AsEnumerable();
 

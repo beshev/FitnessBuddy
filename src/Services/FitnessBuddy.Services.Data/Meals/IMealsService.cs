@@ -16,6 +16,6 @@
 
         public Task<MealFood> RemoveFoodFromMealAsync(int mealId);
 
-        public IEnumerable<MealViewModel> GetAllMeals();
+        public IEnumerable<MealViewModel> GetUserMeals(string userId);
     }
 }
