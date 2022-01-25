@@ -37,7 +37,7 @@
 
         public async Task<FoodInputModel> EditAsync(FoodInputModel model)
         {
-            var food = this.GetFoodById(model.Id);
+            var food = this.GetById(model.Id);
 
             var foodName = await this.foodNamesService.GetByNameAsync(model.Name);
 
@@ -56,7 +56,7 @@
 
         public async Task DeleteAsync(int id)
         {
-            var food = this.GetFoodById(id);
+            var food = this.GetById(id);
 
             this.foodRepository.Delete(food);
 
@@ -69,7 +69,7 @@
            .To<FoodViewModel>()
            .AsEnumerable();
 
-        public Food GetFoodById(int id)
+        public Food GetById(int id)
             => this.foodRepository
                  .All()
                  .Include(x => x.FoodName)
@@ -86,5 +86,10 @@
             => this.foodRepository
                 .AllAsNoTracking()
                 .Any(x => x.Id == foodId && x.AddedByUserId == userId);
+
+        public bool Contains(int Id)
+            => this.foodRepository
+            .AllAsNoTracking()
+            .Any(x => x.Id == Id);
     }
 }

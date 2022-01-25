@@ -10,7 +10,9 @@
     {
         public IEnumerable<FoodViewModel> GetAll();
 
-        public Food GetFoodById(int id);
+        public Food GetById(int id);
+
+        public bool Contains(int id);
 
         public Task<FoodInputModel> EditAsync(FoodInputModel model);
 
