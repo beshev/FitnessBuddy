@@ -17,7 +17,7 @@
             this.mealFoodRepository = mealFoodRepository;
         }
 
-        public async Task<MealFood> Add(MealFoodInputModel model)
+        public async Task<MealFood> AddAsync(MealFoodInputModel model)
         {
             MealFood mealFood = this.mealFoodRepository
                    .All()
@@ -53,8 +53,9 @@
             .Include(x => x.Meal)
             .FirstOrDefault(x => x.Id == mealFoodId);
 
-        public async Task<MealFood> Delete(MealFood mealFood)
+        public async Task<MealFood> DeleteAsync(MealFood mealFood)
         {
+            // TODO: Fix FOREING KEY  exception !!
             this.mealFoodRepository.HardDelete(mealFood);
 
             await this.mealFoodRepository.SaveChangesAsync();

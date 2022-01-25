@@ -31,7 +31,12 @@
         public IActionResult MyMeals()
         {
             string userId = this.User.GetUserId();
-            var viewModel = this.mealsService.GetUserMeals<MealViewModel>(userId);
+            var allMeals = this.mealsService.GetUserMeals<MealViewModel>(userId);
+
+            var viewModel = new AllMealsViewModel
+            {
+                Meals = allMeals,
+            };
 
             return this.View(viewModel);
         }
@@ -70,7 +75,7 @@
                 return this.NotFound();
             }
 
-            await this.mealsFoodsService.Add(model);
+            await this.mealsFoodsService.AddAsync(model);
 
             return this.RedirectToAction(nameof(this.MyMeals));
         }
@@ -85,7 +90,7 @@
                 return this.NotFound();
             }
 
-            await this.mealsFoodsService.Delete(mealFood);
+            await this.mealsFoodsService.DeleteAsync(mealFood);
 
             return this.RedirectToAction(nameof(this.MyMeals));
         }
@@ -111,6 +116,7 @@
             return this.RedirectToAction(nameof(this.MyMeals));
         }
 
+        // Fix bug with delete the meal !! (FOREIGN KEY CONSTRAINT)
         [Authorize]
         public async Task<IActionResult> Delete(int mealId)
         {

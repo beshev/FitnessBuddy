@@ -41,7 +41,9 @@
                 .All()
                 .FirstOrDefault(x => x.Id == mealId);
 
+            // TODO: Fix FOREING KEY  exception !!
             this.mealRepository.HardDelete(meal);
+
             await this.mealRepository.SaveChangesAsync();
 
             return meal;

@@ -26,10 +26,15 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Profile">Profile</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Meals" asp-action="Create">Create meal</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Meals" asp-action="MyMeals">My meals</a>
+                                <div class="dropdown show">
+                                    <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Nutritions
+                                    </a>
+                                    <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuLink">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Meals" asp-action="MyMeals">My meals</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Meals" asp-action="Create">Create meal</a>
+                                    </div>
+                                </div>
                             </li>
                         }
                         else
@@ -43,7 +48,7 @@
                                 <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Foods
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuLink">
                                     <a class="dropdown-item" asp-area="" asp-controller="Foods" asp-action="All">All foods</a>
                                     @if (this.User.Identity.IsAuthenticated)
                                     {

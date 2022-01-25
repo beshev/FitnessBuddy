@@ -4,6 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
+    using FitnessBuddy.Common;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
 
@@ -31,10 +32,9 @@
         [Display(Name = "Target meal fat")]
         public double TargetFat { get; set; }
 
-        // TODO: Make Global constants for nutritions calculation.
         [Display(Name = "Target meal calories")]
         public double TotalCalories
-            => ((this.CurrentProtein + this.CurrentCarbohydrates) * 4) + (this.CurrentFats * 9);
+            => ((this.CurrentProtein + this.CurrentCarbohydrates) * GlobalConstants.CaloriesForOneGramProteinAndCarbohydrates) + (this.CurrentFats * GlobalConstants.CaloriesForOneGramFats);
 
         public IEnumerable<MealFoodViewModel> MealFoods { get; set; }
     }

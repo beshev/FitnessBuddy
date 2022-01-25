@@ -1,27 +1,28 @@
 ﻿namespace FitnessBuddy.Web.Controllers
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using FitnessBuddy.Data.Models;
+    using FitnessBuddy.Services.Data.Meals;
     using FitnessBuddy.Services.Data.Users;
     using FitnessBuddy.Services.Mapping;
     using FitnessBuddy.Web.Infrastructure.Extensions;
+    using FitnessBuddy.Web.ViewModels.Meals;
     using FitnessBuddy.Web.ViewModels.Users;
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
     public class UsersController : Controller
     {
         private readonly IUsersService userService;
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly IMealsService mealsService;
 
         public UsersController(
             IUsersService userService,
-            UserManager<ApplicationUser> userManager)
+            IMealsService mealsService)
         {
             this.userService = userService;
-            this.userManager = userManager;
+            this.mealsService = mealsService;
         }
 
         [Authorize]
@@ -29,16 +30,11 @@
         {
             var userId = this.User.GetUserId();
             var userInfo = this.userService.GetUserInfo(userId);
+            var userMeals = this.mealsService.GetUserMeals<MealViewModel>(userId);
 
-            // TODO: Add user current nutritions
-            var viewModel = new ProfileViewModel
-            {
-                UserEmail = this.User.GetUserEmail(),
-                CurrentProtein = 0,
-                CurrentCarbohydrates = 0,
-                CurrentFat = 0,
-                UserInfo = userInfo,
-            };
+            var viewModel = AutoMapperConfig.MapperInstance.Map<IEnumerable<MealViewModel>, ProfileViewModel>(userMeals);
+            viewModel.UserInfo = userInfo;
+            viewModel.UserEmail = this.User.GetUserEmail();
 
             return this.View(viewModel);
         }
