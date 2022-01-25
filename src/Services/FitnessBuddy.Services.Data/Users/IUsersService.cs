@@ -19,6 +19,8 @@
 
         public bool IsFoodFavorite(string userId, int foodId);
 
+        public bool HasMeal(string userId);
+
         public Task EditAsync(string userId, UserInputModel model);
     }
 }

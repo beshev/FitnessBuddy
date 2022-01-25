@@ -84,5 +84,11 @@
                 .Where(x => x.Id == userId)
                 .SelectMany(x => x.FavoriteUserFoods)
                 .Any(x => x.Id == foodId);
+
+        public bool HasMeal(string userId)
+            => this.usersRepository
+            .AllAsNoTracking()
+            .Where(x => x.Id == userId)
+            .Any(x => x.Meals.Count > 0);
     }
 }
