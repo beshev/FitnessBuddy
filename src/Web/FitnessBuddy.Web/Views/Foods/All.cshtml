@@ -13,17 +13,27 @@
     <div class="row">
         @foreach (var food in @Model)
         {
-            <div class="card col-md-3 offset-md-1" style="width: 18rem; height: fit-content; margin-top: 1%;">
+            <div class="card col-6 col-sm-5 col-md-3 col-lg-3 flex relative">
                 <partial name="_FoodPartial" model="food" />
-                @if (this.User.Identity.IsAuthenticated)
-                {
-                    @if (this.userService.IsFoodFavorite(this.User.GetUserId(), food.Id) == false)
+                <ul class="list-group list-group-flush">
+                    @if (this.User.Identity.IsAuthenticated)
                     {
-                        <a asp-action="AddToFavorite" asp-controller="Foods" asp-route-foodId="@food.Id" class="btn btn-success">
-                            Add to favorite
-                        </a>
+                        @if (this.userService.IsFoodFavorite(this.User.GetUserId(), food.Id) == false)
+                        {
+                            <li class="list-group-item text-center">
+                                <a asp-action="AddToFavorite" asp-controller="Foods" asp-route-foodId="@food.Id" class="btn btn-success text-center">
+                                    Add to favorite
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="list-group-item text-center">
+                                <strong>The Food is already added.</strong>
+                            </li>
+                        }
                     }
-                }
+                </ul>
             </div>
         }
     </div>

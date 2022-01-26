@@ -56,7 +56,7 @@ else
                             @mealFood.FoodName - @mealFood.QuantityInGrams.ToString("F2") grams.
                         </th>
                         <th>
-                            @mealFood.Calories.ToString("F2") kcal
+                            @mealFood.Calories.ToString("F2")
                         </th>
                         <th>
                             @mealFood.Protein.ToString("F2")
@@ -80,6 +80,14 @@ else
             </tr>
         </tbody>
         <tfoot class="bg-light">
+            <tr class="text-white" style="background-color: peru">
+                <th scope="col">Stats</th>
+                <th scope="col">Calories</th>
+                <th scope="col">Protein</th>
+                <th scope="col">Carbs</th>
+                <th scope="col">Fat</th>
+                <th scope="col"></th>
+            </tr>
             <tr>
                 <th>
                     Totals:

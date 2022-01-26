@@ -4,15 +4,15 @@
 <div class="card-header text-center">
     <strong>@Model.FoodName</strong>
 </div>
-<img src="@Model.ImageUrl" alt="..." class="img-thumbnail">
-<strong class="text-center">Nutriotions for 100 grams</strong>
+<img src="@Model.ImageUrl" alt="..." class="img-thumbnail db center mb3 br-100" width="250" height="130" style="height:120px!important;">
+<strong class="text-center">Nutrients for 100 grams</strong>
 <ul class="list-group list-group-flush">
     <li class="list-group-item"><strong>Food calories: </strong>@Model.FoodCalories kcal</li>
     <li class="list-group-item"><strong>Protein: </strong>@Model.ProteinIn100Grams gr. </li>
     <li class="list-group-item"><strong>Carbohydrates: </strong>@Model.CarbohydratesIn100Grams gr.</li>
     <li class="list-group-item"><strong>Fat: </strong>@Model.FatIn100Grams gr.</li>
     <li class="list-group-item"><strong>Sodium: </strong>@Model.Sodium mg.</li>
-    <li class="list-group-item"><strong>Description: </strong>@Model.Description</li>
+    @*<li class="list-group-item"><strong>Description: </strong>@Model.Description</li>*@
     @if (this.User.Identity.IsAuthenticated)
     {
         <li class="list-group-item text-center">
