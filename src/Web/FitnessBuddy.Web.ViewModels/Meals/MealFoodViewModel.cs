@@ -1,6 +1,7 @@
 ﻿namespace FitnessBuddy.Web.ViewModels.Meals
 {
     using AutoMapper;
+    using FitnessBuddy.Common;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
 
@@ -15,6 +16,8 @@
         public double Carbohydrates { get; set; }
 
         public double Fats { get; set; }
+
+        public double Calories => ((this.Protein + this.Carbohydrates) * GlobalConstants.CaloriesForOneGramProteinAndCarbohydrates) + (this.Fats * GlobalConstants.CaloriesForOneGramFats);
 
         public double QuantityInGrams { get; set; }
 

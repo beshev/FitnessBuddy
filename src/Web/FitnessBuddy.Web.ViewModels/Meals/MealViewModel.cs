@@ -4,7 +4,6 @@
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
-    using FitnessBuddy.Common;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
 
@@ -34,7 +33,7 @@
 
         [Display(Name = "Target meal calories")]
         public double TotalCalories
-            => ((this.CurrentProtein + this.CurrentCarbohydrates) * GlobalConstants.CaloriesForOneGramProteinAndCarbohydrates) + (this.CurrentFats * GlobalConstants.CaloriesForOneGramFats);
+            => this.MealFoods.Sum(x => x.Calories);
 
         public IEnumerable<MealFoodViewModel> MealFoods { get; set; }
     }
