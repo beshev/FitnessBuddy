@@ -71,11 +71,11 @@
                 .To<FoodViewModel>()
                 .AsEnumerable();
 
-        public UserViewModel GetUserInfo(string userId)
+        public TViewModel GetUserInfo<TViewModel>(string userId)
             => this.usersRepository
                 .AllAsNoTracking()
                 .Where(x => x.Id == userId)
-                .To<UserViewModel>()
+                .To<TViewModel>()
                 .FirstOrDefault();
 
         public bool IsFoodFavorite(string userId, int foodId)

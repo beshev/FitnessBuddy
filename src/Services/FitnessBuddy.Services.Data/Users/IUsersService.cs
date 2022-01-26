@@ -9,7 +9,7 @@
 
     public interface IUsersService
     {
-        public UserViewModel GetUserInfo(string userId);
+        public TViewModel GetUserInfo<TViewModel>(string userId);
 
         public Task AddFoodToFavoriteAsync(string userId, Food food);
 
