@@ -5,8 +5,10 @@
     using FitnessBuddy.Services.Data.Foods;
     using FitnessBuddy.Services.Data.Meals;
     using FitnessBuddy.Services.Data.MealsFoodsService;
+    using FitnessBuddy.Services.Data.Users;
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Meals;
+    using FitnessBuddy.Web.ViewModels.Users;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
@@ -16,15 +18,18 @@
         private readonly IMealsService mealsService;
         private readonly IFoodsService foodsService;
         private readonly IMealsFoodsService mealsFoodsService;
+        private readonly IUsersService usersService;
 
         public MealsController(
             IMealsService mealsService,
             IFoodsService foodsService,
-            IMealsFoodsService mealsFoodsService)
+            IMealsFoodsService mealsFoodsService,
+            IUsersService usersService)
         {
             this.mealsService = mealsService;
             this.foodsService = foodsService;
             this.mealsFoodsService = mealsFoodsService;
+            this.usersService = usersService;
         }
 
         [Authorize]
@@ -32,9 +37,11 @@
         {
             string userId = this.User.GetUserId();
             var allMeals = this.mealsService.GetUserMeals<MealViewModel>(userId);
+            var userNutrients = this.usersService.GetUserInfo<UserTargetNutrientsViewModel>(userId);
 
             var viewModel = new AllMealsViewModel
             {
+                UserNutrients = userNutrients,
                 Meals = allMeals,
             };
 

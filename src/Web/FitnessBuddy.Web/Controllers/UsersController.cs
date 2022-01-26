@@ -29,7 +29,7 @@
         public IActionResult Profile()
         {
             var userId = this.User.GetUserId();
-            var userInfo = this.userService.GetUserInfo(userId);
+            var userInfo = this.userService.GetUserInfo<UserViewModel>(userId);
             var userMeals = this.mealsService.GetUserMeals<MealViewModel>(userId);
 
             var viewModel = AutoMapperConfig.MapperInstance.Map<IEnumerable<MealViewModel>, ProfileViewModel>(userMeals);
@@ -44,7 +44,7 @@
         {
             var userId = this.User.GetUserId();
 
-            var userData = this.userService.GetUserInfo(userId);
+            var userData = this.userService.GetUserInfo<UserViewModel>(userId);
 
             var viewModel = AutoMapperConfig.MapperInstance
                 .Map<UserViewModel, UserInputModel>(userData);

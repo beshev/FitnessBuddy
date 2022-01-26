@@ -74,14 +74,17 @@
 
 
 <h5>
-    Total protein: @Model.TotalProtein.ToString("F2") gr.
+    Total protein: @Model.TotalProtein.ToString("F2") gr. / Targer Protein: @Model.UserNutrients.DailyProteinGoal.ToString("F2")
 </h5>
 <h5>
-    Total carbs: @Model.TotalCarbohydrates.ToString("F2") gr.
+    Total carbs: @Model.TotalCarbohydrates.ToString("F2") gr. / Targer Carbohydrates: @Model.UserNutrients.DailyCarbohydratesGoal.ToString("F2")
 </h5>
 <h5>
-    Total fats: @Model.TotalFats.ToString("F2") gr.
+    Total fats: @Model.TotalFats.ToString("F2") gr. / Targer Fats: @Model.UserNutrients.DailyFatGoal.ToString("F2")
 </h5>
 <h5>
-    Total calories: @Model.TotalCalories.ToString("F2") kcal.
+    Total calories: @Model.TotalCalories.ToString("F2") kcal. / Targer Calories: @Model.UserNutrients.DailyCaloriesGoal.ToString("F2")
+</h5>
+<h5>
+    Calories left to the goal: @((Model.UserNutrients.DailyCaloriesGoal - Model.TotalCalories).ToString("F2"))
 </h5>
