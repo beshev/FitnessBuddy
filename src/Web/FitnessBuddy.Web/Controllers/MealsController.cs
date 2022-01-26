@@ -123,7 +123,6 @@
             return this.RedirectToAction(nameof(this.MyMeals));
         }
 
-        // Fix bug with delete the meal !! (FOREIGN KEY CONSTRAINT)
         [Authorize]
         public async Task<IActionResult> Delete(int mealId)
         {

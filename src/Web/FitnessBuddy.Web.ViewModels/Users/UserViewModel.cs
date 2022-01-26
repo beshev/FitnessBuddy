@@ -2,6 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
+    using FitnessBuddy.Common;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
 
@@ -33,9 +34,11 @@
 
         [Display(Name = "Daily calories goal")]
         public double DailyCaloriesGoal
-            => ((this.DailyProteinGoal + this.DailyCarbohydratesGoal) * 4) + (this.DailyFatGoal * 9);
+            => ((this.DailyProteinGoal + this.DailyCarbohydratesGoal) * GlobalConstants.CaloriesForOneGramProteinAndCarbohydrates) + (this.DailyFatGoal * GlobalConstants.CaloriesForOneGramFats);
 
         [Display(Name = "About Me")]
         public string AboutMe { get; set; }
+
+        public string Gender { get; set; }
     }
 }

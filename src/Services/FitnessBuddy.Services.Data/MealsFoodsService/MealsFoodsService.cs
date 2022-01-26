@@ -55,8 +55,7 @@
 
         public async Task<MealFood> DeleteAsync(MealFood mealFood)
         {
-            // TODO: Fix FOREING KEY  exception !!
-            this.mealFoodRepository.HardDelete(mealFood);
+            this.mealFoodRepository.Delete(mealFood);
 
             await this.mealFoodRepository.SaveChangesAsync();
 
