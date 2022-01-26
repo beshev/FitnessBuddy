@@ -16,6 +16,6 @@
 
         public bool Contains(int mealId);
 
-        public IEnumerable<TViewModel> GetUserMeals<TViewModel>(string userId);
+        public IEnumerable<TModel> GetUserMeals<TModel>(string userId);
     }
 }
