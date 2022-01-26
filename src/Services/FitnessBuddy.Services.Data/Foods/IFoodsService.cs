@@ -8,15 +8,15 @@
 
     public interface IFoodsService
     {
-        public IEnumerable<FoodViewModel> GetAll();
+        public IEnumerable<TModel> GetAll<TModel>(int pageNumber, int itemsPerPage, string userId = null);
 
         public Food GetById(int id);
+
+        public int GetCount(string userId = null);
 
         public bool Contains(int id);
 
         public Task<FoodInputModel> EditAsync(FoodInputModel model);
-
-        public IEnumerable<FoodViewModel> FoodsAddedByUser(string userId);
 
         public bool IsUserFood(string userId, int foodId);
 

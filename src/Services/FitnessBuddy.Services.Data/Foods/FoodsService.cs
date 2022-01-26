@@ -63,24 +63,28 @@
             await this.foodRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<FoodViewModel> GetAll()
-           => this.foodRepository
-           .AllAsNoTracking()
-           .To<FoodViewModel>()
-           .AsEnumerable();
+        public IEnumerable<TModel> GetAll<TModel>(int pageNumber, int itemsPerPage, string userId = null)
+        {
+            var query = this.foodRepository
+                .AllAsNoTracking();
+
+            if (userId != null)
+            {
+                query = query.Where(x => x.AddedByUserId == userId);
+            }
+
+            return query
+                .Skip(pageNumber * itemsPerPage)
+                .Take(itemsPerPage)
+                .To<TModel>()
+                .AsEnumerable();
+        }
 
         public Food GetById(int id)
             => this.foodRepository
                  .All()
                  .Include(x => x.FoodName)
                  .FirstOrDefault(x => x.Id == id);
-
-        public IEnumerable<FoodViewModel> FoodsAddedByUser(string userId)
-            => this.foodRepository
-                .AllAsNoTracking()
-                .Where(x => x.AddedByUserId == userId)
-                .To<FoodViewModel>()
-                .AsEnumerable();
 
         public bool IsUserFood(string userId, int foodId)
             => this.foodRepository
@@ -91,5 +95,18 @@
             => this.foodRepository
             .AllAsNoTracking()
             .Any(x => x.Id == id);
+
+        public int GetCount(string userId = null)
+        {
+            var query = this.foodRepository
+                .AllAsNoTracking();
+
+            if (userId != null)
+            {
+                query = query.Where(x => x.AddedByUserId == userId);
+            }
+
+            return query.Count();
+        }
     }
 }

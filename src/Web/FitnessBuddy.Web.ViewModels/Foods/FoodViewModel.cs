@@ -1,6 +1,7 @@
 ﻿namespace FitnessBuddy.Web.ViewModels.Foods
 {
     using AutoMapper;
+    using FitnessBuddy.Common;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
 
@@ -21,7 +22,7 @@
         public double Sodium { get; set; }
 
         public string FoodCalories
-            => (((this.ProteinIn100Grams + this.CarbohydratesIn100Grams) * 4) + (this.FatIn100Grams * 9)).ToString("F2");
+            => (((this.ProteinIn100Grams + this.CarbohydratesIn100Grams) * GlobalConstants.CaloriesForOneGramProteinAndCarbohydrates) + (this.FatIn100Grams * GlobalConstants.CaloriesForOneGramFats)).ToString("F2");
 
         public string ImageUrl { get; set; }
 

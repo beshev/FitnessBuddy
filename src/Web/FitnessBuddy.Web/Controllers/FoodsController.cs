@@ -24,19 +24,58 @@
             this.usersService = usersService;
         }
 
-        public IActionResult All()
+        public IActionResult All(int id = 1)
         {
-            var viewModel = this.foodsService.GetAll();
+            if (id < 1)
+            {
+                return this.NotFound();
+            }
+
+            const int itemsPerPage = 8;
+            var foods = this.foodsService.GetAll<FoodViewModel>(id - 1, itemsPerPage);
+
+            var viewModel = new AllFoodsViewModel
+            {
+                PageNumber = id,
+                ItemsPerPage = itemsPerPage,
+                ItemsCount = this.foodsService.GetCount(),
+                Foods = foods,
+                ForFoodAction = nameof(this.All),
+            };
+
+            if (viewModel.PagesCount < id)
+            {
+                return this.NotFound();
+            }
 
             return this.View(viewModel);
         }
 
         [Authorize]
-        public IActionResult MyFoods()
+        public IActionResult MyFoods(int id = 1)
         {
-            var userId = this.User.GetUserId();
+            if (id < 1)
+            {
+                return this.NotFound();
+            }
 
-            var viewModel = this.foodsService.FoodsAddedByUser(userId);
+            var userId = this.User.GetUserId();
+            const int itemsPerPage = 8;
+            var foods = this.foodsService.GetAll<FoodViewModel>(id - 1, itemsPerPage, userId);
+
+            var viewModel = new AllFoodsViewModel
+            {
+                PageNumber = id,
+                ItemsPerPage = itemsPerPage,
+                ItemsCount = this.foodsService.GetCount(userId),
+                Foods = foods,
+                ForFoodAction = nameof(this.MyFoods),
+            };
+
+            if (viewModel.PagesCount < id)
+            {
+                return this.NotFound();
+            }
 
             return this.View(viewModel);
         }
