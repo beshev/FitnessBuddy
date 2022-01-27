@@ -12,6 +12,8 @@
 
         public Food GetById(int id);
 
+        public TModel GetByIdAsNoTracking<TModel>(int id);
+
         public int GetCount(string userId = null);
 
         public bool Contains(int id);

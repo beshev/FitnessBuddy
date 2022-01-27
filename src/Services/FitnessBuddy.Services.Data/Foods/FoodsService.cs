@@ -92,6 +92,13 @@
                  .Include(x => x.FoodName)
                  .FirstOrDefault(x => x.Id == id);
 
+        public TModel GetByIdAsNoTracking<TModel>(int id)
+        => this.foodRepository
+            .AllAsNoTracking()
+            .Where(x => x.Id == id)
+            .To<TModel>()
+            .FirstOrDefault();
+
         public bool IsUserFood(string userId, int foodId)
             => this.foodRepository
                 .AllAsNoTracking()
