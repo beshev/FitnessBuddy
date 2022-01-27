@@ -8,28 +8,41 @@
 <h1 class="text-center">
     My foods
 </h1>
-<partial name="_FoodsPagingPartial" model="@Model" />
-<div class="container">
-    <div class="row">
-        @foreach (var food in @Model.Foods)
-        {
-            <div class="card col-6 col-sm-5 col-md-3 col-lg-3 flex relative">
-                <partial name="_FoodPartial" model="food">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item text-center">
-                            <a class="btn btn-info" asp-action="Edit" asp-controller="Foods" asp-route-id="@food.Id">
-                                Edit
-                            </a>
-                            <a class="btn btn-danger" asp-action="Delete" asp-controller="Foods" asp-route-foodId="@food.Id">
-                                Delete
-                            </a>
-                        </li>
-                    </ul>
-            </div>
-        }
+
+@if (Model.Foods.Any() == false)
+{
+    <div class="text-center">
+        <h4>
+            You don't have any added food!
+        </h4>
+        <a class="btn btn-group-sm btn-primary" asp-action="Add" asp-controller="Foods">Add</a>
     </div>
-</div>
-<partial name="_FoodsPagingPartial" model="@Model" />
+}
+else
+{
+    <partial name="_FoodsPagingPartial" model="@Model" />
+    <div class="container">
+        <div class="row">
+            @foreach (var food in @Model.Foods)
+            {
+                <div class="card col-6 col-sm-5 col-md-3 col-lg-3 flex relative">
+                    <partial name="_FoodPartial" model="food">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item text-center">
+                                <a class="btn btn-info" asp-action="Edit" asp-controller="Foods" asp-route-id="@food.Id">
+                                    Edit
+                                </a>
+                                <a class="btn btn-danger" asp-action="Delete" asp-controller="Foods" asp-route-foodId="@food.Id">
+                                    Delete
+                                </a>
+                            </li>
+                        </ul>
+                </div>
+            }
+        </div>
+    </div>
+    <partial name="_FoodsPagingPartial" model="@Model" />
+}
 
 
 
