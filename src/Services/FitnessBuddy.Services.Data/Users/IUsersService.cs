@@ -21,6 +21,6 @@
 
         public bool HasMeal(string userId);
 
-        public Task EditAsync(string userId, UserInputModel model);
+        public Task EditAsync(string userId, UserInputModel model, string picturePath);
     }
 }

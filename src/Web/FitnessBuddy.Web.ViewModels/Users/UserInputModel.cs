@@ -1,12 +1,14 @@
 ﻿namespace FitnessBuddy.Web.ViewModels.Users
 {
     using System.ComponentModel.DataAnnotations;
-
+    using AutoMapper;
     using FitnessBuddy.Common;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
+    using FitnessBuddy.Web.Infrastructure.Attributes;
+    using Microsoft.AspNetCore.Http;
 
-    public class UserInputModel : IMapFrom<UserViewModel>, IMapTo<ApplicationUser>
+    public class UserInputModel : IMapFrom<ApplicationUser>, IHaveCustomMappings
     {
         [Required]
         [MaxLength(DataConstants.UserUsernameMaxLength)]
@@ -23,7 +25,8 @@
         public double GoalWeightInKg { get; set; }
 
         [Display(Name = "Profile picture")]
-        public string ProfilePicture { get; set; }
+        [AllowedExtensions(new string[] { ".jpg", ".png" })]
+        public IFormFile ProfilePicture { get; set; }
 
         [Range(DataConstants.UserHeightMinValue, DataConstants.UserHeightMaxValue)]
         [Display(Name = "Height (in cm)")]
@@ -43,5 +46,11 @@
 
         [Display(Name = "About Me")]
         public string AboutMe { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<ApplicationUser, UserInputModel>()
+                .ForMember(dest => dest.ProfilePicture, opt => opt.Ignore());
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace FitnessBuddy.Services.Data.Users
 {
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -32,7 +33,7 @@
             await this.usersRepository.SaveChangesAsync();
         }
 
-        public async Task EditAsync(string userId, UserInputModel model)
+        public async Task EditAsync(string userId, UserInputModel model, string picturePath)
         {
             var user = this.usersRepository
                 .All()
@@ -41,12 +42,21 @@
             user.UserName = model.UserName;
             user.WeightInKg = model.WeightInKg;
             user.GoalWeightInKg = model.GoalWeightInKg;
-            user.ProfilePicture = model.ProfilePicture;
             user.HeightInCm = model.HeightInCm;
             user.DailyProteinGoal = model.DailyProteinGoal;
             user.DailyCarbohydratesGoal = model.DailyCarbohydratesGoal;
             user.DailyFatGoal = model.DailyFatGoal;
             user.AboutMe = model.AboutMe;
+
+            Directory.CreateDirectory($"{picturePath}/profileimages/");
+            var physicalPath = $"{picturePath}/profileimages/{userId}{Path.GetExtension(model.ProfilePicture.FileName)}";
+
+            using (var fileStream = new FileStream(physicalPath, FileMode.Create))
+            {
+                await model.ProfilePicture.CopyToAsync(fileStream);
+            }
+
+            user.ProfilePicture = physicalPath;
 
             await this.usersRepository.SaveChangesAsync();
         }

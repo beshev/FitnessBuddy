@@ -1,6 +1,7 @@
 ﻿namespace FitnessBuddy.Web.Controllers
 {
     using System.Collections.Generic;
+    using System.IO;
     using System.Threading.Tasks;
 
     using FitnessBuddy.Services.Data.Meals;
@@ -10,19 +11,23 @@
     using FitnessBuddy.Web.ViewModels.Meals;
     using FitnessBuddy.Web.ViewModels.Users;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
 
     public class UsersController : Controller
     {
         private readonly IUsersService userService;
         private readonly IMealsService mealsService;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
         public UsersController(
             IUsersService userService,
-            IMealsService mealsService)
+            IMealsService mealsService,
+            IWebHostEnvironment webHostEnvironment)
         {
             this.userService = userService;
             this.mealsService = mealsService;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         [Authorize]
@@ -31,6 +36,9 @@
             var userId = this.User.GetUserId();
             var userInfo = this.userService.GetUserInfo<UserViewModel>(userId);
             var userMeals = this.mealsService.GetUserMeals<MealViewModel>(userId);
+
+            var extention = Path.GetExtension(userInfo.ProfilePicture);
+            userInfo.ProfilePicture = $"/images/profileimages/{userId}{extention}";
 
             var viewModel = AutoMapperConfig.MapperInstance.Map<IEnumerable<MealViewModel>, ProfileViewModel>(userMeals);
             viewModel.UserInfo = userInfo;
@@ -44,26 +52,24 @@
         {
             var userId = this.User.GetUserId();
 
-            var userData = this.userService.GetUserInfo<UserViewModel>(userId);
-
-            var viewModel = AutoMapperConfig.MapperInstance
-                .Map<UserViewModel, UserInputModel>(userData);
+            var viewModel = this.userService.GetUserInfo<UserInputModel>(userId);
 
             return this.View(viewModel);
         }
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Edit(UserInputModel viewModel)
+        public async Task<IActionResult> Edit(UserInputModel model)
         {
             if (this.ModelState.IsValid == false)
             {
-                return this.View();
+                return this.View(model);
             }
 
             var userId = this.User.GetUserId();
+            var path = $"{this.webHostEnvironment.WebRootPath}/images";
 
-            await this.userService.EditAsync(userId, viewModel);
+            await this.userService.EditAsync(userId, model, path);
 
             return this.RedirectToAction(nameof(this.Profile));
         }
