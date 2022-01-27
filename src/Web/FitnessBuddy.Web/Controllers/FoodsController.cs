@@ -31,8 +31,10 @@
                 return this.NotFound();
             }
 
-            const int itemsPerPage = 8;
-            var foods = this.foodsService.GetAll<FoodViewModel>(id - 1, itemsPerPage);
+            int itemsPerPage = 8;
+            int pageNumber = id - 1;
+
+            var foods = this.foodsService.GetAll<FoodViewModel>(null, pageNumber, itemsPerPage);
 
             var viewModel = new AllFoodsViewModel
             {
@@ -40,7 +42,7 @@
                 ItemsPerPage = itemsPerPage,
                 ItemsCount = this.foodsService.GetCount(),
                 Foods = foods,
-                ForFoodAction = nameof(this.All),
+                ForAction = nameof(this.All),
             };
 
             if (viewModel.PagesCount < id)
@@ -61,7 +63,7 @@
 
             var userId = this.User.GetUserId();
             const int itemsPerPage = 8;
-            var foods = this.foodsService.GetAll<FoodViewModel>(id - 1, itemsPerPage, userId);
+            var foods = this.foodsService.GetAll<FoodViewModel>(userId, id - 1, itemsPerPage);
 
             var viewModel = new AllFoodsViewModel
             {
@@ -69,13 +71,23 @@
                 ItemsPerPage = itemsPerPage,
                 ItemsCount = this.foodsService.GetCount(userId),
                 Foods = foods,
-                ForFoodAction = nameof(this.MyFoods),
+                ForAction = nameof(this.MyFoods),
             };
 
             if (viewModel.PagesCount < id)
             {
                 return this.NotFound();
             }
+
+            return this.View(viewModel);
+        }
+
+        [Authorize]
+        public IActionResult Favorites()
+        {
+            var userId = this.User.GetUserId();
+
+            var viewModel = this.usersService.GetFavoriteFoods(userId);
 
             return this.View(viewModel);
         }
@@ -122,16 +134,6 @@
             await this.usersService.RemoveFoodFromFavoriteAsync(userId, food);
 
             return this.RedirectToAction(nameof(this.Favorites));
-        }
-
-        [Authorize]
-        public IActionResult Favorites()
-        {
-            var userId = this.User.GetUserId();
-
-            var viewModel = this.usersService.GetFavoriteFoods(userId);
-
-            return this.View(viewModel);
         }
 
         [Authorize]
