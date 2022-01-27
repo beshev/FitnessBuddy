@@ -24,6 +24,6 @@
 
         public int PagesCount => (int)Math.Ceiling((double)this.ItemsCount / this.ItemsPerPage);
 
-        public string ForFoodAction { get; set; }
+        public string ForAction { get; init; }
     }
 }
