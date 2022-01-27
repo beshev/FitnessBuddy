@@ -3,12 +3,12 @@
 <nav aria-label="...">
     <ul class="pagination justify-content-center">
         <li class="page-item @if(Model.HasPreviousPage == false) { <text>disabled</text> }">
-            <a class="page-link" asp-controller="Foods" asp-action="@Model.ForFoodAction" asp-route-id="@Model.FirstPageNumber">
+            <a class="page-link" asp-controller="Foods" asp-action="@Model.ForAction" asp-route-id="@Model.FirstPageNumber">
                 &laquo;&laquo;
             </a>
         </li>
         <li class="page-item @if(Model.HasPreviousPage == false) {<text>disabled</text>}">
-            <a class="page-link" asp-controller="Foods" asp-action="@Model.ForFoodAction" asp-route-id="@Model.PreviousPageNumber">
+            <a class="page-link" asp-controller="Foods" asp-action="@Model.ForAction" asp-route-id="@Model.PreviousPageNumber">
                 &laquo;
             </a>
         </li>
@@ -17,7 +17,7 @@
             if (i > 0)
             {
                 <li class="page-item">
-                    <a class="page-link" asp-controller="Foods" asp-action="@Model.ForFoodAction" asp-route-id="@i">
+                    <a class="page-link" asp-controller="Foods" asp-action="@Model.ForAction" asp-route-id="@i">
                         @i
                     </a>
                 </li>
@@ -34,19 +34,19 @@
             if (i <= Model.PagesCount)
             {
                 <li class="page-item">
-                    <a class="page-link" asp-controller="Foods" asp-action="@Model.ForFoodAction" asp-route-id="@i">
+                    <a class="page-link" asp-controller="Foods" asp-action="@Model.ForAction" asp-route-id="@i">
                         @i
                     </a>
                 </li>
             }
         }
         <li class="page-item @if(Model.HasNextPage == false) { <text>disabled</text> }">
-            <a class="page-link" asp-controller="Foods" asp-action="@Model.ForFoodAction" asp-route-id="@Model.NextPageNumber">
+            <a class="page-link" asp-controller="Foods" asp-action="@Model.ForAction" asp-route-id="@Model.NextPageNumber">
                 &raquo;
             </a>
         </li>
         <li class="page-item @if(Model.HasNextPage == false) {<text>disabled</text>}">
-            <a class="page-link" asp-controller="Foods" asp-action="@Model.ForFoodAction" asp-route-id="@Model.LastPageNumber">
+            <a class="page-link" asp-controller="Foods" asp-action="@Model.ForAction" asp-route-id="@Model.LastPageNumber">
                 &raquo;&raquo;
             </a>
         </li>
