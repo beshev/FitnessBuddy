@@ -83,11 +83,30 @@
         }
 
         [Authorize]
-        public IActionResult Favorites()
+        public IActionResult Favorites(int id = 1)
         {
-            var userId = this.User.GetUserId();
+            if (id < 1)
+            {
+                return this.NotFound();
+            }
 
-            var viewModel = this.usersService.GetFavoriteFoods(userId);
+            var userId = this.User.GetUserId();
+            const int itemsPerPage = 8;
+            var foods = this.usersService.GetFavoriteFoods(userId);
+
+            var viewModel = new AllFoodsViewModel
+            {
+                PageNumber = id,
+                ItemsPerPage = itemsPerPage,
+                ItemsCount = this.foodsService.GetCount(userId),
+                Foods = foods,
+                ForAction = nameof(this.Favorites),
+            };
+
+            if (viewModel.PagesCount < id)
+            {
+                return this.NotFound();
+            }
 
             return this.View(viewModel);
         }

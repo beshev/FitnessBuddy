@@ -1,5 +1,5 @@
 ﻿@using FitnessBuddy.Web.Infrastructure.Extensions
-@model IEnumerable<FoodViewModel>
+@model AllFoodsViewModel
 
 @{
     this.ViewData["Title"] = "My favorite foods";
@@ -9,30 +9,35 @@
     Favorite foods
 </h1>
 
-@if (Model.Count() == 0)
+@if (Model.Foods.Any() == false)
 {
     <h4 class="text-center">
         You don't have any favorite foods!
     </h4>
 }
-
-<div class="container">
-    <div class="row">
-        @foreach (var food in @Model)
-        {
-            <div class="card col-6 col-sm-5 col-md-3 col-lg-3 flex relative">
-                <partial name="_FoodPartial" model="food" />
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item text-center">
-                        <a class="btn btn-dark" asp-action="RemoveFromFavorite" asp-controller="Foods" asp-route-foodId="@food.Id">
-                            Remove
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        }
+else
+{
+    <partial name="_FoodsPagingPartial" model="@Model" />
+    <div class="container">
+        <div class="row">
+            @foreach (var food in @Model.Foods)
+            {
+                <div class="card col-6 col-sm-5 col-md-3 col-lg-3 flex relative">
+                    <partial name="_FoodPartial" model="food" />
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item text-center">
+                            <a class="btn btn-dark" asp-action="RemoveFromFavorite" asp-controller="Foods" asp-route-foodId="@food.Id">
+                                Remove
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            }
+        </div>
     </div>
-</div>
+    <partial name="_FoodsPagingPartial" model="@Model" />
+}
+
 
 
 

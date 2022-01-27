@@ -63,13 +63,24 @@
             await this.usersRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<FoodViewModel> GetFavoriteFoods(string userId)
-            => this.usersRepository
+        public IEnumerable<FoodViewModel> GetFavoriteFoods(string userId, int pageNumber = 0, int? itemsPerPage = null)
+        {
+            var query = this.usersRepository
                 .AllAsNoTracking()
-                .Where(x => x.Id == userId)
+                .Where(x => x.Id == userId);
+
+            if (itemsPerPage.HasValue)
+            {
+                query = query
+                    .Skip(pageNumber * itemsPerPage.Value)
+                    .Take(itemsPerPage.Value);
+            }
+
+            return query
                 .SelectMany(x => x.FavoriteUserFoods)
                 .To<FoodViewModel>()
                 .AsEnumerable();
+        }
 
         public TViewModel GetUserInfo<TViewModel>(string userId)
             => this.usersRepository
