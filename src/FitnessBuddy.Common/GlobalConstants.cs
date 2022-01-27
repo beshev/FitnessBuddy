@@ -9,5 +9,8 @@
         // Nutritions constants
         public const int CaloriesForOneGramProteinAndCarbohydrates = 4;
         public const int CaloriesForOneGramFats = 9;
+
+        // Constants for redirect
+        public const string MyMealsUrl = "/Meals/MyMeals";
     }
 }
