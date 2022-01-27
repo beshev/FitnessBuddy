@@ -63,19 +63,25 @@
             await this.foodRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<TModel> GetAll<TModel>(int pageNumber, int itemsPerPage, string userId = null)
+        public IEnumerable<TModel> GetAll<TModel>(string userId = null, int pageNumber = 0, int? itemsPerPage = null)
         {
             var query = this.foodRepository
                 .AllAsNoTracking();
 
-            if (userId != null)
+            if (string.IsNullOrWhiteSpace(userId) == false)
             {
-                query = query.Where(x => x.AddedByUserId == userId);
+                query = query
+                    .Where(x => x.AddedByUserId == userId);
+            }
+
+            if (itemsPerPage.HasValue)
+            {
+                query = query
+                    .Skip(pageNumber * itemsPerPage.Value)
+                    .Take(itemsPerPage.Value);
             }
 
             return query
-                .Skip(pageNumber * itemsPerPage)
-                .Take(itemsPerPage)
                 .To<TModel>()
                 .AsEnumerable();
         }
