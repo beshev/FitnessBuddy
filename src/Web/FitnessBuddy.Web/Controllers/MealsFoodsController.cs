@@ -30,18 +30,12 @@
 
         public IActionResult AddFood(int foodId)
         {
-            var food = this.foodsService.GetById(foodId);
+            var viewModel = this.foodsService.GetByIdAsNoTracking<MealFoodInputModel>(foodId);
 
-            if (food == null)
+            if (viewModel == null)
             {
                 return this.NotFound();
             }
-
-            var viewModel = new MealFoodInputModel
-            {
-                FoodId = food.Id,
-                FoodName = food.FoodName.Name,
-            };
 
             return this.View(viewModel);
         }
