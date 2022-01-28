@@ -8,7 +8,7 @@
 
     public interface IFoodsService
     {
-        public IEnumerable<TModel> GetAll<TModel>(string userId = null, int pageNumber = 0, int? itemsPerPage = null);
+        public IEnumerable<TModel> GetAll<TModel>(string userId = null, int skip = 0, int? take = null);
 
         public Food GetById(int id);
 

@@ -63,7 +63,7 @@
             await this.foodRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<TModel> GetAll<TModel>(string userId = null, int pageNumber = 0, int? itemsPerPage = null)
+        public IEnumerable<TModel> GetAll<TModel>(string userId = null, int skip = 0, int? take = null)
         {
             var query = this.foodRepository
                 .AllAsNoTracking();
@@ -74,11 +74,11 @@
                     .Where(x => x.AddedByUserId == userId);
             }
 
-            if (itemsPerPage.HasValue)
+            if (take.HasValue)
             {
                 query = query
-                    .Skip(pageNumber * itemsPerPage.Value)
-                    .Take(itemsPerPage.Value);
+                    .Skip(skip)
+                    .Take(take.Value);
             }
 
             return query
