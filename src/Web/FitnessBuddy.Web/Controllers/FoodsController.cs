@@ -1,5 +1,6 @@
 ﻿namespace FitnessBuddy.Web.Controllers
 {
+    using System.Linq;
     using System.Threading.Tasks;
 
     using FitnessBuddy.Data.Models;
@@ -13,6 +14,8 @@
 
     public class FoodsController : Controller
     {
+        private const int FoodsPerPage = 8;
+
         private readonly IFoodsService foodsService;
         private readonly IUsersService usersService;
 
@@ -31,15 +34,14 @@
                 return this.NotFound();
             }
 
-            int itemsPerPage = 8;
-            int pageNumber = id - 1;
+            int skip = (id - 1) * FoodsPerPage;
 
-            var foods = this.foodsService.GetAll<FoodViewModel>(null, pageNumber, itemsPerPage);
+            var foods = this.foodsService.GetAll<FoodViewModel>(null, skip, FoodsPerPage);
 
             var viewModel = new AllFoodsViewModel
             {
                 PageNumber = id,
-                ItemsPerPage = itemsPerPage,
+                ItemsPerPage = FoodsPerPage,
                 ItemsCount = this.foodsService.GetCount(),
                 Foods = foods,
                 ForAction = nameof(this.All),
@@ -47,7 +49,7 @@
 
             if (viewModel.PagesCount < id)
             {
-                return this.NotFound();
+                return this.RedirectToAction(nameof(this.All), new { Id = viewModel.PagesCount });
             }
 
             return this.View(viewModel);
@@ -62,13 +64,14 @@
             }
 
             var userId = this.User.GetUserId();
-            const int itemsPerPage = 8;
-            var foods = this.foodsService.GetAll<FoodViewModel>(userId, id - 1, itemsPerPage);
+
+            int skip = (id - 1) * FoodsPerPage;
+            var foods = this.foodsService.GetAll<FoodViewModel>(userId, skip, FoodsPerPage);
 
             var viewModel = new AllFoodsViewModel
             {
                 PageNumber = id,
-                ItemsPerPage = itemsPerPage,
+                ItemsPerPage = FoodsPerPage,
                 ItemsCount = this.foodsService.GetCount(userId),
                 Foods = foods,
                 ForAction = nameof(this.MyFoods),
@@ -76,7 +79,7 @@
 
             if (viewModel.PagesCount < id)
             {
-                return this.NotFound();
+                return this.RedirectToAction(nameof(this.MyFoods), new { Id = viewModel.PagesCount });
             }
 
             return this.View(viewModel);
@@ -91,21 +94,22 @@
             }
 
             var userId = this.User.GetUserId();
-            const int itemsPerPage = 8;
-            var foods = this.usersService.GetFavoriteFoods(userId);
+
+            int skip = (id - 1) * FoodsPerPage;
+            var foods = this.usersService.GetFavoriteFoods(userId, skip, FoodsPerPage);
 
             var viewModel = new AllFoodsViewModel
             {
                 PageNumber = id,
-                ItemsPerPage = itemsPerPage,
-                ItemsCount = this.foodsService.GetCount(userId),
+                ItemsPerPage = FoodsPerPage,
+                ItemsCount = this.usersService.FavoriteFoodsCount(userId),
                 Foods = foods,
                 ForAction = nameof(this.Favorites),
             };
 
             if (viewModel.PagesCount < id)
             {
-                return this.NotFound();
+                return this.RedirectToAction(nameof(this.Favorites), new { Id = viewModel.PagesCount });
             }
 
             return this.View(viewModel);
@@ -134,25 +138,25 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> AddToFavorite(int? foodId)
+        public async Task<IActionResult> AddToFavorite(int pageNumber, int? foodId)
         {
             var food = this.foodsService.GetById(foodId.Value);
             var userId = this.User.GetUserId();
 
             await this.usersService.AddFoodToFavoriteAsync(userId, food);
 
-            return this.RedirectToAction(nameof(this.All));
+            return this.RedirectToAction(nameof(this.All), new { Id = pageNumber });
         }
 
         [Authorize]
-        public async Task<IActionResult> RemoveFromFavorite(int foodId)
+        public async Task<IActionResult> RemoveFromFavorite(int pageNumber, int foodId)
         {
             var userId = this.User.GetUserId();
             var food = this.foodsService.GetById(foodId);
 
             await this.usersService.RemoveFoodFromFavoriteAsync(userId, food);
 
-            return this.RedirectToAction(nameof(this.Favorites));
+            return this.RedirectToAction(nameof(this.Favorites), new { Id = pageNumber });
         }
 
         [Authorize]
@@ -190,7 +194,7 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> Delete(int? foodId)
+        public async Task<IActionResult> Delete(int pageNumber, int? foodId)
         {
             var userId = this.User.GetUserId();
 
@@ -199,7 +203,7 @@
                 await this.foodsService.DeleteAsync(foodId.Value);
             }
 
-            return this.RedirectToAction(nameof(this.MyFoods));
+            return this.RedirectToAction(nameof(this.MyFoods), new { Id = pageNumber });
         }
     }
 }
