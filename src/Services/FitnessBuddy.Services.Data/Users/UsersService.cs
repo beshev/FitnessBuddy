@@ -40,6 +40,7 @@
                 .FirstOrDefault(x => x.Id == userId);
 
             user.UserName = model.UserName;
+            user.Gender = model.Gender;
             user.WeightInKg = model.WeightInKg;
             user.GoalWeightInKg = model.GoalWeightInKg;
             user.HeightInCm = model.HeightInCm;

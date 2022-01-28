@@ -4,6 +4,7 @@
     using AutoMapper;
     using FitnessBuddy.Common;
     using FitnessBuddy.Data.Models;
+    using FitnessBuddy.Data.Models.Enums;
     using FitnessBuddy.Services.Mapping;
     using FitnessBuddy.Web.Infrastructure.Attributes;
     using Microsoft.AspNetCore.Http;
@@ -15,6 +16,9 @@
         [MinLength(DataConstants.UserUsernameMinLength)]
         [Display(Name = "Username")]
         public string UserName { get; set; }
+
+        [EnumDataType(typeof(GenderType))]
+        public GenderType Gender { get; set; }
 
         [Range(DataConstants.UserWeightMinValue, DataConstants.UserWeightMaxValue)]
         [Display(Name = "Current weights (in kg)")]
