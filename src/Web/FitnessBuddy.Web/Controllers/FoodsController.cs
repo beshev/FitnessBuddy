@@ -1,6 +1,5 @@
 ﻿namespace FitnessBuddy.Web.Controllers
 {
-    using System.Linq;
     using System.Threading.Tasks;
 
     using FitnessBuddy.Data.Models;
@@ -12,6 +11,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize]
     public class FoodsController : Controller
     {
         private const int FoodsPerPage = 8;
@@ -27,6 +27,7 @@
             this.usersService = usersService;
         }
 
+        [AllowAnonymous]
         public IActionResult All(int id = 1)
         {
             if (id < 1)
@@ -55,7 +56,6 @@
             return this.View(viewModel);
         }
 
-        [Authorize]
         public IActionResult MyFoods(int id = 1)
         {
             if (id < 1)
@@ -85,7 +85,6 @@
             return this.View(viewModel);
         }
 
-        [Authorize]
         public IActionResult Favorites(int id = 1)
         {
             if (id < 1)
@@ -115,14 +114,12 @@
             return this.View(viewModel);
         }
 
-        [Authorize]
         public IActionResult Add()
         {
             return this.View();
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> Add(FoodInputModel model)
         {
             if (this.ModelState.IsValid == false)
@@ -137,7 +134,6 @@
             return this.RedirectToAction(nameof(this.All));
         }
 
-        [Authorize]
         public async Task<IActionResult> AddToFavorite(int pageNumber, int? foodId)
         {
             var food = this.foodsService.GetById(foodId.Value);
@@ -148,7 +144,6 @@
             return this.RedirectToAction(nameof(this.All), new { Id = pageNumber });
         }
 
-        [Authorize]
         public async Task<IActionResult> RemoveFromFavorite(int pageNumber, int foodId)
         {
             var userId = this.User.GetUserId();
@@ -159,7 +154,6 @@
             return this.RedirectToAction(nameof(this.Favorites), new { Id = pageNumber });
         }
 
-        [Authorize]
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -179,7 +173,6 @@
             return this.View(viewModel);
         }
 
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Edit(FoodInputModel model)
         {
@@ -193,7 +186,6 @@
             return this.RedirectToAction(nameof(this.All));
         }
 
-        [Authorize]
         public async Task<IActionResult> Delete(int pageNumber, int? foodId)
         {
             var userId = this.User.GetUserId();
