@@ -49,11 +49,11 @@
                                     Foods
                                 </a>
                                 <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" asp-area="" asp-controller="Foods" asp-action="All">All foods</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Foods" asp-action="All" asp-route-id="1">All foods</a>
                                     @if (this.User.Identity.IsAuthenticated)
                                     {
-                                        <a class="dropdown-item" asp-action="MyFoods" asp-controller="Foods">My foods</a>
-                                        <a class="dropdown-item" asp-action="Favorites" asp-controller="Foods">My favorite foods</a>
+                                        <a class="dropdown-item" asp-action="MyFoods" asp-controller="Foods" asp-route-id="1">My foods</a>
+                                        <a class="dropdown-item" asp-action="Favorites" asp-controller="Foods" asp-route-id="1">My favorite foods</a>
                                         <a class="dropdown-item" asp-area="" asp-controller="Foods" asp-action="Add">Add food</a>
                                     }
                                 </div>

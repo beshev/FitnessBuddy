@@ -9,14 +9,27 @@
     My foods
 </h1>
 
+<partial name="_SearchFoodPartial" model="@("MyFoods")" />
+
 @if (Model.Foods.Any() == false)
 {
-    <div class="text-center">
-        <h4>
-            You don't have any added food!
-        </h4>
-        <a class="btn btn-group-sm btn-primary" asp-action="Add" asp-controller="Foods">Add</a>
-    </div>
+    @if (string.IsNullOrWhiteSpace(@Model.Search))
+    {
+        <div class="text-center">
+            <h4>
+                You don't have any added food!
+            </h4>
+            <a class="btn btn-group-sm btn-primary" asp-action="Add" asp-controller="Foods">Add</a>
+        </div>
+    }
+    else
+    {
+        <div class="text-center">
+            <h4>
+                Does not match any results!
+            </h4>
+        </div>
+    }
 }
 else
 {

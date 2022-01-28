@@ -21,5 +21,7 @@
         public int PagesCount { get; set; }
 
         public string ForAction { get; init; }
+
+        public string Search { get; set; }
     }
 }

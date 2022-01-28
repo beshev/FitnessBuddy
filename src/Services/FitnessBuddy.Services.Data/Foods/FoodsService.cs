@@ -63,15 +63,19 @@
             await this.foodRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<TModel> GetAll<TModel>(string userId = null, int skip = 0, int? take = null)
+        public IEnumerable<TModel> GetAll<TModel>(string userId = null, string search = null, int skip = 0, int? take = null)
         {
             var query = this.foodRepository
                 .AllAsNoTracking();
 
             if (string.IsNullOrWhiteSpace(userId) == false)
             {
-                query = query
-                    .Where(x => x.AddedByUserId == userId);
+                query = query.Where(x => x.AddedByUserId == userId);
+            }
+
+            if (string.IsNullOrWhiteSpace(search) == false)
+            {
+                query = query.Where(x => x.FoodName.Name.Contains(search));
             }
 
             if (take.HasValue)
@@ -109,14 +113,19 @@
             .AllAsNoTracking()
             .Any(x => x.Id == id);
 
-        public int GetCount(string userId = null)
+        public int GetCount(string userId = null, string search = null)
         {
             var query = this.foodRepository
                 .AllAsNoTracking();
 
-            if (userId != null)
+            if (string.IsNullOrWhiteSpace(userId) == false)
             {
                 query = query.Where(x => x.AddedByUserId == userId);
+            }
+
+            if (string.IsNullOrWhiteSpace(search) == false)
+            {
+                query = query.Where(x => x.FoodName.Name.Contains(search));
             }
 
             return query.Count();

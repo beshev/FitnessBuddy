@@ -29,36 +29,37 @@
         }
 
         [AllowAnonymous]
-        public IActionResult All(int id = 1)
+        public IActionResult All(int id = 1, string search = null)
         {
             if (id < 1)
             {
                 id = 1;
             }
 
-            int count = this.foodsService.GetCount();
+            int count = this.foodsService.GetCount(null, search);
             int pagesCount = (int)Math.Ceiling((double)count / FoodsPerPage);
 
-            if (id > pagesCount)
+            if (pagesCount > 0 && id > pagesCount)
             {
                 id = pagesCount;
             }
 
             int skip = (id - 1) * FoodsPerPage;
-            var foods = this.foodsService.GetAll<FoodViewModel>(null, skip, FoodsPerPage);
+            var foods = this.foodsService.GetAll<FoodViewModel>(null, search, skip, FoodsPerPage);
 
             var viewModel = new AllFoodsViewModel
             {
                 PageNumber = id,
                 PagesCount = pagesCount,
                 Foods = foods,
+                Search = search,
                 ForAction = nameof(this.All),
             };
 
             return this.View(viewModel);
         }
 
-        public IActionResult MyFoods(int id = 1)
+        public IActionResult MyFoods(int id = 1, string search = null)
         {
             if (id < 1)
             {
@@ -66,22 +67,23 @@
             }
 
             var userId = this.User.GetUserId();
-            int count = this.foodsService.GetCount(userId);
+            int count = this.foodsService.GetCount(userId, search);
             int pagesCount = (int)Math.Ceiling((double)count / FoodsPerPage);
 
-            if (id > pagesCount)
+            if (pagesCount > 0 && id > pagesCount)
             {
                 id = pagesCount;
             }
 
             int skip = (id - 1) * FoodsPerPage;
-            var foods = this.foodsService.GetAll<FoodViewModel>(userId, skip, FoodsPerPage);
+            var foods = this.foodsService.GetAll<FoodViewModel>(userId, search, skip, FoodsPerPage);
 
             var viewModel = new AllFoodsViewModel
             {
                 PageNumber = id,
                 PagesCount = pagesCount,
                 Foods = foods,
+                Search = search,
                 ForAction = nameof(this.MyFoods),
             };
 
