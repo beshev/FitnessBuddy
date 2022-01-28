@@ -1,5 +1,6 @@
 ﻿namespace FitnessBuddy.Web.Controllers
 {
+    using System;
     using System.Threading.Tasks;
 
     using FitnessBuddy.Data.Models;
@@ -14,7 +15,7 @@
     [Authorize]
     public class FoodsController : Controller
     {
-        private const int FoodsPerPage = 8;
+        private const int FoodsPerPage = 4;
 
         private readonly IFoodsService foodsService;
         private readonly IUsersService usersService;
@@ -32,26 +33,27 @@
         {
             if (id < 1)
             {
-                return this.NotFound();
+                id = 1;
+            }
+
+            int count = this.foodsService.GetCount();
+            int pagesCount = (int)Math.Ceiling((double)count / FoodsPerPage);
+
+            if (id > pagesCount)
+            {
+                id = pagesCount;
             }
 
             int skip = (id - 1) * FoodsPerPage;
-
             var foods = this.foodsService.GetAll<FoodViewModel>(null, skip, FoodsPerPage);
 
             var viewModel = new AllFoodsViewModel
             {
                 PageNumber = id,
-                ItemsPerPage = FoodsPerPage,
-                ItemsCount = this.foodsService.GetCount(),
+                PagesCount = pagesCount,
                 Foods = foods,
                 ForAction = nameof(this.All),
             };
-
-            if (viewModel.PagesCount < id)
-            {
-                return this.RedirectToAction(nameof(this.All), new { Id = viewModel.PagesCount });
-            }
 
             return this.View(viewModel);
         }
@@ -60,10 +62,17 @@
         {
             if (id < 1)
             {
-                return this.NotFound();
+                id = 1;
             }
 
             var userId = this.User.GetUserId();
+            int count = this.foodsService.GetCount(userId);
+            int pagesCount = (int)Math.Ceiling((double)count / FoodsPerPage);
+
+            if (id > pagesCount)
+            {
+                id = pagesCount;
+            }
 
             int skip = (id - 1) * FoodsPerPage;
             var foods = this.foodsService.GetAll<FoodViewModel>(userId, skip, FoodsPerPage);
@@ -71,16 +80,10 @@
             var viewModel = new AllFoodsViewModel
             {
                 PageNumber = id,
-                ItemsPerPage = FoodsPerPage,
-                ItemsCount = this.foodsService.GetCount(userId),
+                PagesCount = pagesCount,
                 Foods = foods,
                 ForAction = nameof(this.MyFoods),
             };
-
-            if (viewModel.PagesCount < id)
-            {
-                return this.RedirectToAction(nameof(this.MyFoods), new { Id = viewModel.PagesCount });
-            }
 
             return this.View(viewModel);
         }
@@ -89,10 +92,17 @@
         {
             if (id < 1)
             {
-                return this.NotFound();
+                id = 1;
             }
 
             var userId = this.User.GetUserId();
+            int count = this.usersService.FavoriteFoodsCount(userId);
+            int pagesCount = (int)Math.Ceiling((double)count / FoodsPerPage);
+
+            if (id > pagesCount)
+            {
+                id = pagesCount;
+            }
 
             int skip = (id - 1) * FoodsPerPage;
             var foods = this.usersService.GetFavoriteFoods(userId, skip, FoodsPerPage);
@@ -100,16 +110,10 @@
             var viewModel = new AllFoodsViewModel
             {
                 PageNumber = id,
-                ItemsPerPage = FoodsPerPage,
-                ItemsCount = this.usersService.FavoriteFoodsCount(userId),
+                PagesCount = pagesCount,
                 Foods = foods,
                 ForAction = nameof(this.Favorites),
             };
-
-            if (viewModel.PagesCount < id)
-            {
-                return this.RedirectToAction(nameof(this.Favorites), new { Id = viewModel.PagesCount });
-            }
 
             return this.View(viewModel);
         }
