@@ -48,15 +48,18 @@
             user.DailyFatGoal = model.DailyFatGoal;
             user.AboutMe = model.AboutMe;
 
-            Directory.CreateDirectory($"{picturePath}/profileimages/");
-            var physicalPath = $"{picturePath}/profileimages/{userId}{Path.GetExtension(model.ProfilePicture.FileName)}";
-
-            using (var fileStream = new FileStream(physicalPath, FileMode.Create))
+            if (model.ProfilePicture != null)
             {
-                await model.ProfilePicture.CopyToAsync(fileStream);
-            }
+                Directory.CreateDirectory($"{picturePath}/profileimages/");
+                var physicalPath = $"{picturePath}/profileimages/{userId}{Path.GetExtension(model.ProfilePicture.FileName)}";
 
-            user.ProfilePicture = physicalPath;
+                using (var fileStream = new FileStream(physicalPath, FileMode.Create))
+                {
+                    await model.ProfilePicture.CopyToAsync(fileStream);
+                }
+
+                user.ProfilePicture = physicalPath;
+            }
 
             await this.usersRepository.SaveChangesAsync();
         }
