@@ -15,7 +15,9 @@
 
         public Task RemoveFoodFromFavoriteAsync(string userId, Food food);
 
-        public IEnumerable<FoodViewModel> GetFavoriteFoods(string userId, int pageNumber = 0, int? itemsPerPage = null);
+        public IEnumerable<FoodViewModel> GetFavoriteFoods(string userId, int skip = 0, int? take = null);
+
+        public int FavoriteFoodsCount(string userId);
 
         public bool IsFoodFavorite(string userId, int foodId);
 
