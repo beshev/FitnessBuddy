@@ -179,6 +179,7 @@ namespace FitnessBuddy.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("AddedByUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("CategoryId")
@@ -191,6 +192,7 @@ namespace FitnessBuddy.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Difficulty")
@@ -209,7 +211,9 @@ namespace FitnessBuddy.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("VideoUrl")
                         .HasColumnType("nvarchar(max)");
@@ -248,7 +252,9 @@ namespace FitnessBuddy.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -278,7 +284,9 @@ namespace FitnessBuddy.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -474,6 +482,7 @@ namespace FitnessBuddy.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ForUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
@@ -483,7 +492,9 @@ namespace FitnessBuddy.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -665,7 +676,9 @@ namespace FitnessBuddy.Data.Migrations
                 {
                     b.HasOne("FitnessBuddy.Data.Models.ApplicationUser", "AddedByUser")
                         .WithMany("Exercises")
-                        .HasForeignKey("AddedByUserId");
+                        .HasForeignKey("AddedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("FitnessBuddy.Data.Models.ExerciseCategory", "Category")
                         .WithMany("Exercises")
@@ -739,7 +752,9 @@ namespace FitnessBuddy.Data.Migrations
                 {
                     b.HasOne("FitnessBuddy.Data.Models.ApplicationUser", "ForUser")
                         .WithMany("Trainings")
-                        .HasForeignKey("ForUserId");
+                        .HasForeignKey("ForUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("ForUser");
                 });
