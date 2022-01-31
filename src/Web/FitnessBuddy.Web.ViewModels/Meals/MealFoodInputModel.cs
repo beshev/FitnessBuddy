@@ -15,6 +15,10 @@
 
         public string ImageUrl { get; set; }
 
+        public string UserId { get; set; }
+
+        public bool HasMeals { get; set; }
+
         public int MealId { get; set; }
 
         [Range(
