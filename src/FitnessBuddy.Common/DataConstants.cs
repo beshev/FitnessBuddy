@@ -43,5 +43,12 @@
 
         public const double MealFoodQuantityMinValue = 1;
         public const double MealFoodQuantityMaxValue = 5000;
+
+        // Exercise model
+        public const int ExerciseNameMinLength = 3;
+        public const int ExerciseNameMaxLength = 100;
+
+        public const int ExerciseDifficultyMinValue = 1;
+        public const int ExerciseDifficultyMaxValue = 3;
     }
 }

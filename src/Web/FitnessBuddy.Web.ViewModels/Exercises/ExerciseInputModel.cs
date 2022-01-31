@@ -1,17 +1,27 @@
 ﻿namespace FitnessBuddy.Web.ViewModels.Exercises
 {
+    using System.ComponentModel.DataAnnotations;
+
+    using FitnessBuddy.Common;
     using FitnessBuddy.Data.Models.Enums;
 
     public class ExerciseInputModel
     {
+        [Required]
+        [MaxLength(DataConstants.ExerciseNameMaxLength)]
+        [MinLength(DataConstants.ExerciseNameMinLength)]
         public string Name { get; set; }
 
+        [Required]
         public string Description { get; set; }
 
+        [Range(DataConstants.ExerciseDifficultyMinValue, DataConstants.ExerciseDifficultyMaxValue)]
         public ExerciseDifficulty Difficulty { get; set; }
 
+        [Url]
         public string ImageUrl { get; set; }
 
+        [Url]
         public string VideoUrl { get; set; }
 
         public int CategoryId { get; set; }

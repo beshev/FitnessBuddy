@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using FitnessBuddy.Common;
     using FitnessBuddy.Data.Common.Models;
     using FitnessBuddy.Data.Models.Enums;
 
@@ -14,7 +15,7 @@
         }
 
         [Required]
-        [MaxLength(100)]
+        [MaxLength(DataConstants.ExerciseNameMaxLength)]
         public string Name { get; set; }
 
         [Required]
