@@ -1,0 +1,41 @@
+﻿@model IEnumerable<ExerciseViewModel>
+
+@{
+    this.ViewData["Title"] = "All exercise";
+}
+
+<div>
+    <h1>
+        All Exercise
+    </h1>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Difficulty</th>
+            <th>Equipment</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var exercise in Model)
+        {
+            <tr>
+                <td>
+                    @exercise.Name
+                </td>
+                <td>
+                    @exercise.CategoryName
+                </td>
+                <td>
+                    @exercise.Difficulty
+                </td>
+                <td>
+                    @exercise.EquipmentName
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
