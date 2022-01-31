@@ -13,15 +13,18 @@
         public string Name { get; set; }
 
         [Required]
+        [Display(Name = "Instructions")]
         public string Description { get; set; }
 
         [Range(DataConstants.ExerciseDifficultyMinValue, DataConstants.ExerciseDifficultyMaxValue)]
         public ExerciseDifficulty Difficulty { get; set; }
 
         [Url]
+        [Display(Name = "Image link")]
         public string ImageUrl { get; set; }
 
         [Url]
+        [Display(Name = "YouTube link")]
         public string VideoUrl { get; set; }
 
         public int CategoryId { get; set; }
