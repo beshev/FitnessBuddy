@@ -1,13 +1,10 @@
-﻿@using FitnessBuddy.Web.Infrastructure.Extensions
-@using FitnessBuddy.Services.Data.Users
-@model MealFoodInputModel
-@inject IUsersService usersService
+﻿@model MealFoodInputModel
 
 @{
     this.ViewData["Title"] = "Add food to meal";
 }
 
-@if (this.usersService.HasMeal(this.User.GetUserId()))
+@if (@Model.HasMeals)
 {
     <div class="text-center">
         <h1>
@@ -21,7 +18,7 @@
                 <input asp-for="QuantityInGrams" class="form-control" placeholder="Quantity in grams..." />
                 <span asp-validation-for="QuantityInGrams" class="text-danger"></span>
             </div>
-            <vc:user-meals-drop-down user-Id="@this.User.GetUserId()"></vc:user-meals-drop-down>
+            <vc:user-meals-select user-Id="@Model.UserId"></vc:user-meals-select>
             <input type="submit" class="btn btn-primary" value="Add" />
         </form>
     </div>
