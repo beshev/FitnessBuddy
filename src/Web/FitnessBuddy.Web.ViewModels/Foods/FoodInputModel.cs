@@ -19,11 +19,6 @@
 
         public string Name { get; set; }
 
-        [Required]
-        [MinLength(DataConstants.FoodDescriptionMinLength)]
-        [MaxLength(DataConstants.FoodDescriptionMaxLength)]
-        public string Description { get; set; }
-
         [Range(DataConstants.FoodNutritionsMinValue, DataConstants.FoodNutritionsMaxValue)]
         [Display(Name = "Protein for 100 grams")]
         public double ProteinIn100Grams { get; set; }

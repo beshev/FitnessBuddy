@@ -22,7 +22,7 @@ namespace FitnessBuddy.Data.Models
 
             this.Meals = new HashSet<Meal>();
             this.AddedFoods = new HashSet<Food>();
-            this.FavoriteUserFoods = new HashSet<Food>();
+            this.FavoriteFoods = new HashSet<Food>();
         }
 
         public GenderType Gender { get; set; }
@@ -59,7 +59,7 @@ namespace FitnessBuddy.Data.Models
         [InverseProperty("AddedByUser")]
         public virtual ICollection<Food> AddedFoods { get; set; }
 
-        public virtual ICollection<Food> FavoriteUserFoods { get; set; }
+        public virtual ICollection<Food> FavoriteFoods { get; set; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 

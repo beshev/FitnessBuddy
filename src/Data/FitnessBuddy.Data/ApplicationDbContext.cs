@@ -83,7 +83,7 @@
 
             // Set Mapping table name, and properties names
             builder.Entity<ApplicationUser>()
-            .HasMany(x => x.FavoriteUserFoods)
+            .HasMany(x => x.FavoriteFoods)
             .WithMany(x => x.FavoriteUsersFood)
             .UsingEntity<Dictionary<string, object>>(
                 DataConstants.UserFavoriteFoodTableName,

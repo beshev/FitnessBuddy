@@ -28,7 +28,7 @@
                 .All()
                 .FirstOrDefault(x => x.Id == userId);
 
-            user.FavoriteUserFoods.Add(food);
+            user.FavoriteFoods.Add(food);
 
             await this.usersRepository.SaveChangesAsync();
         }
@@ -69,10 +69,10 @@
         {
             var user = this.usersRepository
                 .All()
-                .Include(x => x.FavoriteUserFoods)
+                .Include(x => x.FavoriteFoods)
                 .FirstOrDefault(x => x.Id == userId);
 
-            user.FavoriteUserFoods.Remove(food);
+            user.FavoriteFoods.Remove(food);
 
             await this.usersRepository.SaveChangesAsync();
         }
@@ -82,7 +82,7 @@
             var query = this.usersRepository
                 .AllAsNoTracking()
                 .Where(x => x.Id == userId)
-                .SelectMany(x => x.FavoriteUserFoods);
+                .SelectMany(x => x.FavoriteFoods);
 
             if (take.HasValue)
             {
@@ -107,7 +107,7 @@
             => this.usersRepository
                 .AllAsNoTracking()
                 .Where(x => x.Id == userId)
-                .SelectMany(x => x.FavoriteUserFoods)
+                .SelectMany(x => x.FavoriteFoods)
                 .Any(x => x.Id == foodId);
 
         public bool HasMeal(string userId)
@@ -120,7 +120,7 @@
             => this.usersRepository
             .AllAsNoTracking()
             .Where(x => x.Id == userId)
-            .SelectMany(x => x.FavoriteUserFoods)
+            .SelectMany(x => x.FavoriteFoods)
             .Count();
     }
 }

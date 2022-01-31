@@ -1,6 +1,7 @@
 ﻿namespace FitnessBuddy.Web.ViewModels.Users
 {
     using System.ComponentModel.DataAnnotations;
+
     using AutoMapper;
     using FitnessBuddy.Common;
     using FitnessBuddy.Data.Models;

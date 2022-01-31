@@ -11,8 +11,6 @@
 
         public string FoodName { get; set; }
 
-        public string Description { get; set; }
-
         public double ProteinIn100Grams { get; set; }
 
         public double CarbohydratesIn100Grams { get; set; }

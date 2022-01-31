@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using FitnessBuddy.Common;
     using FitnessBuddy.Data.Common.Models;
 
     public class Food : BaseDeletableModel<int>
@@ -17,10 +16,6 @@
         public int FoodNameId { get; set; }
 
         public virtual FoodName FoodName { get; set; }
-
-        [Required]
-        [MaxLength(DataConstants.FoodDescriptionMaxLength)]
-        public string Description { get; set; }
 
         public double ProteinIn100Grams { get; set; }
 

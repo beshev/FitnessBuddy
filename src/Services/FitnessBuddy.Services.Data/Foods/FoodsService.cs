@@ -42,7 +42,6 @@
             var foodName = await this.foodNamesService.GetByNameAsync(model.Name);
 
             food.FoodNameId = foodName.Id;
-            food.Description = model.Description;
             food.ProteinIn100Grams = model.ProteinIn100Grams;
             food.CarbohydratesIn100Grams = model.CarbohydratesIn100Grams;
             food.FatIn100Grams = model.FatIn100Grams;
