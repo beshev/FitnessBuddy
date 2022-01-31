@@ -1,0 +1,12 @@
+﻿@model IEnumerable<SelectViewModel>
+
+<div class="form-group">
+    <label id="select-meal">Equipment</label>
+    <select id="select-meal" name="EquipmentId"
+            class="form-control"
+            asp-items="@(new SelectList(Model,"Id","Name"))">
+    </select>
+</div>
+
+
+

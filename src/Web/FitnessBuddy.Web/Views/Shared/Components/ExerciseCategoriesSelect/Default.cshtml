@@ -1,8 +1,8 @@
-﻿@model IEnumerable<MealDropDownViewModel>
+﻿@model IEnumerable<SelectViewModel>
 
 <div class="form-group">
-    <label id="select-meal">For meal</label>
-    <select id="select-meal" name="MealId"
+    <label id="select-meal">Category</label>
+    <select id="select-meal" name="CategoryId"
             class="form-control"
             asp-items="@(new SelectList(Model,"Id","Name"))">
     </select>
