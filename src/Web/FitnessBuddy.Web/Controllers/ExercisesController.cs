@@ -44,5 +44,12 @@
 
             return this.RedirectToAction(nameof(this.All));
         }
+
+        public IActionResult Details(int exerciseId)
+        {
+            var viewModel = this.exercisesService.GetById<ExerciseDetailsModel>(exerciseId);
+
+            return this.View(viewModel);
+        }
     }
 }
