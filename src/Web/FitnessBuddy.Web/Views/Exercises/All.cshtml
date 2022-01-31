@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ExerciseViewModel>
+﻿@using FitnessBuddy.Web.ViewModels.Exercises
+@model IEnumerable<ExerciseViewModel>
 
 @{
     this.ViewData["Title"] = "All exercise";
@@ -9,33 +10,23 @@
         All Exercise
     </h1>
 </div>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Difficulty</th>
-            <th>Equipment</th>
-        </tr>
-    </thead>
-    <tbody>
+<div class="container">
+    <div class="row row-cols-3">
         @foreach (var exercise in Model)
         {
-            <tr>
-                <td>
-                    @exercise.Name
-                </td>
-                <td>
-                    @exercise.CategoryName
-                </td>
-                <td>
-                    @exercise.Difficulty
-                </td>
-                <td>
-                    @exercise.EquipmentName
-                </td>
-            </tr>
+            <a asp-action="Details" asp-controller="Exercises" asp-route-exerciseId="@exercise.Id">
+                <div class="card text-center" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">@exercise.Name</h5>
+                    </div>
+                    <img src="@exercise.ImageUrl" class="card-img-top img-fluid" alt="Card" style="height: 184px">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Difficulty: @exercise.Difficulty</li>
+                        <li class="list-group-item">Category: @exercise.CategoryName</li>
+                        <li class="list-group-item">Equipment: @exercise.EquipmentName</li>
+                    </ul>
+                </div>
+            </a>
         }
-    </tbody>
-</table>
+    </div>
+</div>
