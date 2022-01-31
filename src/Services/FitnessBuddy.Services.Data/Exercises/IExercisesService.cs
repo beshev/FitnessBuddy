@@ -9,6 +9,8 @@
     {
         public IEnumerable<ExerciseViewModel> GetAll();
 
+        public TModel GetById<TModel>(int id);
+
         public Task AddAsync(string userId, ExerciseInputModel model);
     }
 }

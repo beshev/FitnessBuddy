@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
     using FitnessBuddy.Data.Common.Repositories;
@@ -29,7 +30,7 @@
                 CategoryId = model.CategoryId,
                 EquipmentId = model.EquipmentId,
                 ImageUrl = model.ImageUrl,
-                VideoUrl = model.VideoUrl,
+                VideoUrl = GetYouTubeEmbededLink(model.VideoUrl),
                 AddedByUserId = userId,
             };
 
@@ -42,5 +43,24 @@
             .AllAsNoTracking()
             .To<ExerciseViewModel>()
             .AsEnumerable();
+
+        public TModel GetById<TModel>(int id)
+            => this.exerciseRepository
+            .AllAsNoTracking()
+            .Where(x => x.Id == id)
+            .To<TModel>()
+            .FirstOrDefault();
+
+        private static string GetYouTubeEmbededLink(string url)
+        {
+            var regex = new Regex(@"^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*");
+            var match = regex.Match(url);
+
+            string videoId = (match.Success && match.Groups[2].Length == 11)
+                ? match.Groups[2].ToString()
+                : null;
+
+            return $"https://youtube.com/embed/{videoId}";
+        }
     }
 }
