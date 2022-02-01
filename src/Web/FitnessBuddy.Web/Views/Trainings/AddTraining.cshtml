@@ -1,0 +1,26 @@
+﻿@using FitnessBuddy.Web.ViewModels.Trainings
+@model TrainingInputModel
+
+
+@{
+    this.ViewData["Title"] = "Create training";
+}
+
+<div class="text-center">
+
+    <h1>
+        Create new trainig
+    </h1>
+
+    <form asp-action="AddTraining" asp-controller="Trainings" class="col-lg-6 offset-lg-3">
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" placeholder="Training name..." />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-grup" style="margin-top: 2%;">
+            <input type="submit" class="btn btn-outline-dark" value="Add" />
+        </div>
+    </form>
+</div>

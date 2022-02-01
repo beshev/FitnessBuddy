@@ -50,5 +50,9 @@
 
         public const int ExerciseDifficultyMinValue = 1;
         public const int ExerciseDifficultyMaxValue = 3;
+
+        // Training model
+        public const int TrainingNameMinLength = 3;
+        public const int TrainingNameMaxLength = 100;
     }
 }

@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using FitnessBuddy.Common;
     using FitnessBuddy.Data.Common.Models;
 
     public class Training : BaseDeletableModel<int>
@@ -13,7 +14,8 @@
         }
 
         [Required]
-        [MaxLength(100)]
+        [MinLength(DataConstants.TrainingNameMinLength)]
+        [MaxLength(DataConstants.TrainingNameMaxLength)]
         public string Name { get; set; }
 
         [Required]
