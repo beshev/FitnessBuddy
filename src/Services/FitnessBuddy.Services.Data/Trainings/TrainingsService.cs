@@ -1,9 +1,12 @@
 ﻿namespace FitnessBuddy.Services.Data.Trainings
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using FitnessBuddy.Data.Common.Repositories;
     using FitnessBuddy.Data.Models;
+    using FitnessBuddy.Services.Mapping;
     using FitnessBuddy.Web.ViewModels.Trainings;
 
     public class TrainingsService : ITrainingsService
@@ -26,5 +29,11 @@
             await this.trainingRepository.AddAsync(trainig);
             await this.trainingRepository.SaveChangesAsync();
         }
+
+        public IEnumerable<TModel> GetAll<TModel>()
+            => this.trainingRepository
+            .AllAsNoTracking()
+            .To<TModel>()
+            .AsEnumerable();
     }
 }
