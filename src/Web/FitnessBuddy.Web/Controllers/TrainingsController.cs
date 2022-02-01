@@ -19,7 +19,9 @@
 
         public IActionResult MyTrainings()
         {
-            return this.View();
+            var viewModel = this.trainingsService.GetAll<AllTrainingsViewModel>();
+
+            return this.View(viewModel);
         }
 
         public IActionResult AddTraining()

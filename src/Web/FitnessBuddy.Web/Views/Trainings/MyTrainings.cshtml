@@ -1,4 +1,6 @@
-﻿
+﻿@using FitnessBuddy.Web.ViewModels.Trainings
+@model IEnumerable<AllTrainingsViewModel>
+
 @{
     this.ViewData["Title"] = "My trainings";
 }
@@ -6,3 +8,29 @@
 <h1>
     My trainings
 </h1>
+
+<ul>
+    @foreach (var training in Model)
+    {
+        <li>
+            @training.Name
+            Exercises: 
+            @foreach(var exercise in training.TrainingExercises)
+            {
+                <br />
+                <p>
+                    Name: @exercise.ExerciseName
+                </p>
+                 <p>
+                    Sets: @exercise.Sets
+                </p>
+                 <p>
+                    Repetitions: @exercise.Repetitions
+                </p>
+                 <p>
+                    Weight: @exercise.Weight
+                </p>
+            }
+        </li>
+    }
+</ul>
