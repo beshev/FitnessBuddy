@@ -7,12 +7,12 @@
 
     public interface ITrainingsService
     {
-        public Task AddAsync(TrainingInputModel model);
+        public Task AddAsync(string trainingName, string userId);
 
-        public IEnumerable<TModel> GetAll<TModel>();
+        public IEnumerable<TModel> GetAll<TModel>(string userId);
 
-        public IEnumerable<string> GetNames();
+        public IEnumerable<string> GetNames(string userId);
 
-        public int GetIdByName(string name);
+        public int GetTrainingId(string name, string userId);
     }
 }
