@@ -54,6 +54,7 @@
         public IActionResult AddToTraining(int exerciseId)
         {
             var viewModel = this.exercisesService.GetById<ExerciseTrainingInputModel>(exerciseId);
+            viewModel.UserId = this.User.GetUserId();
 
             return this.View(viewModel);
         }

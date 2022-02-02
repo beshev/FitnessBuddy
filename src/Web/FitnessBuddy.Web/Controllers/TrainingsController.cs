@@ -26,11 +26,13 @@
 
         public IActionResult MyTrainings(string trainingName = "")
         {
-            var trainingId = this.trainingsService.GetIdByName(trainingName);
+            var userId = this.User.GetUserId();
+            var trainingId = this.trainingsService.GetTrainingId(trainingName, userId);
 
             var viewModel = new AllTrainingsViewModel
             {
-                Trainings = this.trainingsService.GetNames(),
+                TrainingName = trainingName,
+                Trainings = this.trainingsService.GetNames(userId),
                 TrainingExercises = this.trainingsExercisesService
                 .GetTrainingExercises<TrainingExerciseViewModel>(trainingId),
             };
@@ -38,25 +40,17 @@
             return this.View(viewModel);
         }
 
-        public IActionResult AddTraining()
-        {
-            return this.View();
-        }
-
         [HttpPost]
-        public async Task<IActionResult> AddTraining(TrainingInputModel model)
+        public async Task<IActionResult> AddTraining(AllTrainingsViewModel model)
         {
-            if (this.ModelState.IsValid == false)
+            var userId = this.User.GetUserId();
+
+            if (this.ModelState.IsValid)
             {
-                this.View(model);
+                await this.trainingsService.AddAsync(model.TrainingName, userId);
             }
 
-            var userId = this.User.GetUserId();
-            model.UserId = userId;
-
-            await this.trainingsService.AddAsync(model);
-
-            return this.RedirectToAction(nameof(this.MyTrainings));
+            return this.RedirectToAction(nameof(this.MyTrainings), new { model.TrainingName });
         }
     }
 }
