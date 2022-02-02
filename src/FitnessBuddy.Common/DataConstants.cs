@@ -51,6 +51,12 @@
         public const int ExerciseDifficultyMinValue = 1;
         public const int ExerciseDifficultyMaxValue = 3;
 
+        public const int ExerciseSetsMinValue = 1;
+        public const int ExerciseSetsMaxValue = 100;
+
+        public const int ExerciseRepetitionMinValue = 1;
+        public const int ExerciseRepetitionMaxValue = 100;
+
         // Training model
         public const int TrainingNameMinLength = 3;
         public const int TrainingNameMaxLength = 100;

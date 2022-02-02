@@ -12,5 +12,6 @@
 
         // Constants for redirect
         public const string MyMealsUrl = "/Meals/MyMeals";
+        public const string UserTrainings = "/Trainings/MyTrainings";
     }
 }
