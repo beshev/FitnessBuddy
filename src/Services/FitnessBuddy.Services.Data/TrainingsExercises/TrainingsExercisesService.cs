@@ -30,14 +30,20 @@
                 {
                     ExerciseId = model.Id,
                     TrainingId = model.TrainingId,
+                    Sets = model.Sets,
+                    Repetitions = model.Repetitions,
+                    Weight = model.Weight,
                 };
+
+                await this.trainingExerciseRepository.AddAsync(trainingExercise);
+            }
+            else
+            {
+                trainingExercise.Sets = model.Sets;
+                trainingExercise.Repetitions = model.Repetitions;
+                trainingExercise.Weight = model.Weight;
             }
 
-            trainingExercise.Sets = model.Sets;
-            trainingExercise.Repetitions = model.Repetitions;
-            trainingExercise.Weight = model.Weight;
-
-            await this.trainingExerciseRepository.AddAsync(trainingExercise);
             await this.trainingExerciseRepository.SaveChangesAsync();
         }
 
