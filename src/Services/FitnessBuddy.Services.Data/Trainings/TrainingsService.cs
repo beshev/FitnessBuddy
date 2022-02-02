@@ -35,5 +35,20 @@
             .AllAsNoTracking()
             .To<TModel>()
             .AsEnumerable();
+
+        public int GetIdByName(string name)
+        {
+            var training = this.trainingRepository
+                .AllAsNoTracking()
+                .FirstOrDefault(x => x.Name == name);
+
+            return training != null ? training.Id : -1;
+        }
+
+        public IEnumerable<string> GetNames()
+            => this.trainingRepository
+            .AllAsNoTracking()
+            .Select(x => x.Name)
+            .AsEnumerable();
     }
 }

@@ -10,5 +10,9 @@
         public Task AddAsync(TrainingInputModel model);
 
         public IEnumerable<TModel> GetAll<TModel>();
+
+        public IEnumerable<string> GetNames();
+
+        public int GetIdByName(string name);
     }
 }
