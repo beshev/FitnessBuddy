@@ -6,7 +6,8 @@
     public class SelectViewModel :
         IMapFrom<ExerciseCategory>,
         IMapFrom<ExerciseEquipment>,
-        IMapFrom<Meal>
+        IMapFrom<Meal>,
+        IMapFrom<Training>
     {
         public int Id { get; set; }
 
