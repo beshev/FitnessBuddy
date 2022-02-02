@@ -2,7 +2,9 @@
 {
     using System.Threading.Tasks;
 
+    using FitnessBuddy.Common;
     using FitnessBuddy.Services.Data.Exercises;
+    using FitnessBuddy.Services.Data.TrainingsExercises;
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Exercises;
     using Microsoft.AspNetCore.Authorization;
@@ -12,10 +14,14 @@
     public class ExercisesController : Controller
     {
         private readonly IExercisesService exercisesService;
+        private readonly ITrainingsExercisesService trainingsExercisesService;
 
-        public ExercisesController(IExercisesService exercisesService)
+        public ExercisesController(
+            IExercisesService exercisesService,
+            ITrainingsExercisesService trainingsExercisesService)
         {
             this.exercisesService = exercisesService;
+            this.trainingsExercisesService = trainingsExercisesService;
         }
 
         public IActionResult All()
@@ -25,13 +31,13 @@
             return this.View(viewModel);
         }
 
-        public IActionResult Add()
+        public IActionResult Create()
         {
             return this.View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(ExerciseInputModel model)
+        public async Task<IActionResult> Create(ExerciseInputModel model)
         {
             if (this.ModelState.IsValid == false)
             {
@@ -45,11 +51,24 @@
             return this.RedirectToAction(nameof(this.All));
         }
 
-        public IActionResult Details(int exerciseId)
+        public IActionResult AddToTraining(int exerciseId)
         {
-            var viewModel = this.exercisesService.GetById<ExerciseDetailsModel>(exerciseId);
+            var viewModel = this.exercisesService.GetById<ExerciseTrainingInputModel>(exerciseId);
 
             return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddToTraining(ExerciseTrainingInputModel model)
+        {
+            if (this.ModelState.IsValid == false)
+            {
+                return this.View(model);
+            }
+
+            await this.trainingsExercisesService.AddAsync(model);
+
+            return this.Redirect(GlobalConstants.UserTrainings);
         }
     }
 }
