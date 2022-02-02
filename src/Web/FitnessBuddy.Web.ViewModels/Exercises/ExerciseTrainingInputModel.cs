@@ -1,9 +1,12 @@
 ﻿namespace FitnessBuddy.Web.ViewModels.Exercises
 {
+    using System.ComponentModel.DataAnnotations;
+
+    using FitnessBuddy.Common;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
 
-    public class ExerciseDetailsModel : IMapFrom<Exercise>
+    public class ExerciseTrainingInputModel : IMapFrom<Exercise>
     {
         public int Id { get; set; }
 
@@ -21,6 +24,14 @@
 
         public string EquipmentName { get; set; }
 
-        public string AddedByUserUserName { get; set; }
+        public int TrainingId { get; set; }
+
+        [Range(DataConstants.ExerciseSetsMinValue, DataConstants.ExerciseSetsMaxValue)]
+        public int Sets { get; set; }
+
+        [Range(DataConstants.ExerciseRepetitionMinValue, DataConstants.ExerciseRepetitionMaxValue)]
+        public int Repetitions { get; set; }
+
+        public double Weight { get; set; }
     }
 }
