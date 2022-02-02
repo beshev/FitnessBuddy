@@ -5,36 +5,71 @@
     this.ViewData["Title"] = "My trainings";
 }
 
-<h1>
-    My trainings
-</h1>
+<h4 class="text-center">
+    @Model.TrainingName
+</h4>
 
-<ul>
-    @foreach (var training in Model.Trainings)
-    {
-        <li>
-            <a asp-action="MyTrainings" asp-controller="Trainings" asp-route-trainingName="@training">@training</a>
-        </li>
-    }
-</ul>
+<div class="container">
+    <div class="row">
+        <div class="col-md-2 bg-light" style="text-align: left;">
+            <ul style="list-style-type: none;">
+                <li>
+                    <h4>Workouts:</h4>
+                </li>
+                @foreach (var training in Model.Trainings)
+                {
+                    <li>
+                        <a asp-action="MyTrainings" asp-controller="Trainings" asp-route-trainingName="@training"><h5>@training</h5></a>
+                    </li>
+                }
+            </ul>
+            <hr />
+            <div class="text-center">
+                <a class="btn btn-outline-secondary text-dark" asp-area="" asp-controller="Exercises" asp-action="All">Add exercise</a>
+            </div>
+            <hr />
+            <div class="text-center">
+                <h6>
+                    Create new trainig
+                </h6>
+                <form asp-action="AddTraining" asp-controller="Trainings">
+                    <div class="form-group">
+                        <input asp-for="TrainingName" value="@string.Empty" class="form-control" placeholder="Training name..." />
+                        <span asp-validation-for="TrainingName" class="text-danger"></span>
+                    </div>
+                    <div class="form-grup" style="margin-top: 2%;">
+                        <input type="submit" class="btn btn-outline-dark" value="Add" />
+                    </div>
+                </form>
+            </div>
+        </div>
 
-<ul>
-    @foreach (var exercise in Model.TrainingExercises)
-    {
-        <li>
-            <strong>Exercise name:</strong> @exercise.ExerciseName
-        </li>
-        <li>
-            <strong>Sets:</strong> @exercise.Sets
-        </li>
-        <li>
-            <strong>Repetitions:</strong> @exercise.Repetitions
-        </li>
-        <li>
-            <strong>Weight:</strong> @exercise.Weight
-        </li>
-    }
-</ul>
+        @if (Model.TrainingExercises.Any() == false)
+        {
+            <h2>
+                No exercises!
+            </h2>
+        }
+
+        @foreach (var exercise in Model.TrainingExercises)
+        {
+            <div class="col-md-3">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="@exercise.ExerciseImageUrl" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">@exercise.ExerciseName</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>Sets:</strong> @exercise.Sets</li>
+                        <li class="list-group-item"><strong>Repetitions:</strong> @exercise.Repetitions</li>
+                        <li class="list-group-item"><strong>Weight:</strong> @exercise.Weight</li>
+                    </ul>
+                </div>
+            </div>
+        }
+    </div>
+</div>
 
 
-<a class="btn btn-outline-info text-dark" asp-area="" asp-controller="Trainings" asp-action="AddTraining">Add new training</a>
+
+
