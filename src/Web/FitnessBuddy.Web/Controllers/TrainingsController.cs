@@ -1,11 +1,12 @@
 ﻿namespace FitnessBuddy.Web.Controllers
 {
+    using System.Threading.Tasks;
+
     using FitnessBuddy.Services.Data.Trainings;
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Trainings;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System.Threading.Tasks;
 
     [Authorize]
     public class TrainingsController : Controller
