@@ -14,16 +14,16 @@
     <div class="row row-cols-3">
         @foreach (var exercise in Model)
         {
-            <a asp-action="Details" asp-controller="Exercises" asp-route-exerciseId="@exercise.Id">
+            <a asp-action="AddToTraining" asp-controller="Exercises" asp-route-exerciseId="@exercise.Id">
                 <div class="card text-center" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title">@exercise.Name</h5>
                     </div>
                     <img src="@exercise.ImageUrl" class="card-img-top img-fluid" alt="Card" style="height: 184px">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Difficulty: @exercise.Difficulty</li>
-                        <li class="list-group-item">Category: @exercise.CategoryName</li>
-                        <li class="list-group-item">Equipment: @exercise.EquipmentName</li>
+                        <li class="list-group-item"><strong>Difficulty:</strong> @exercise.Difficulty</li>
+                        <li class="list-group-item"><strong>Category:</strong> @exercise.CategoryName</li>
+                        <li class="list-group-item"><strong>Equipment:</strong> @exercise.EquipmentName</li>
                     </ul>
                 </div>
             </a>

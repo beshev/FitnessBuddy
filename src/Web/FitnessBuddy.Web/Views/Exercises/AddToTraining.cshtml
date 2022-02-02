@@ -1,0 +1,75 @@
+﻿@using FitnessBuddy.Web.ViewModels.Exercises
+@model ExerciseTrainingInputModel
+
+@{
+    this.ViewData["Title"] = "Exercise details";
+}
+
+<div class="text-center">
+    <h2>
+        @Model.Name
+    </h2>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 col-xl-3">
+            <form asp-controller="Exercises" asp-action="AddToTraining">
+                <div class="form-grup">
+                    <label asp-for="Sets"></label>
+                    <input asp-for="Sets" class="form-control" placeholder="Food name..." />
+                    <span asp-validation-for="Sets" class="text-danger"></span>
+                </div>
+                <div class="form-grup">
+                    <label asp-for="Repetitions"></label>
+                    <input asp-for="Repetitions" class="form-control" placeholder="Food name..." />
+                    <span asp-validation-for="Repetitions" class="text-danger"></span>
+                </div>
+                <div class="form-grup">
+                    <label asp-for="Weight"></label>
+                    <input asp-for="Weight" class="form-control" placeholder="Food name..." />
+                    <span asp-validation-for="Weight" class="text-danger"></span>
+                </div>
+                <vc:trainings-select></vc:trainings-select>
+                <input type="hidden" asp-for="Id" value="@Model.Id" />
+                <div class="form-grup" style="margin-top: 2%;">
+                    <input type="submit" class="btn btn-outline-primary" value="Add" />
+                </div>
+            </form>
+        </div>
+
+        <div class="col-lg-9 col-xl-9 mt-3">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="img" ">
+                        <img src="@Model.ImageUrl" class="img-fluid" alt="Responsive image" />
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p class="item-description">
+                        <strong>Muscle group: </strong>@Model.CategoryName
+                    </p>
+                    <p class="item-description">
+                        <strong>Equipment: </strong>@Model.EquipmentName
+                    </p>
+                    <p class="item-description">
+                        <strong>Difficulty: </strong>@Model.Difficulty
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="@Model.VideoUrl" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <p class="item-description">
+                        <strong>Instructions: </strong>@Model.Description
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
