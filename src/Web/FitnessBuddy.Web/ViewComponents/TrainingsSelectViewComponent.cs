@@ -13,9 +13,9 @@
             this.trainingsService = trainingsService;
         }
 
-        public IViewComponentResult Invoke()
+        public IViewComponentResult Invoke(string userId)
         {
-            var viewModel = this.trainingsService.GetAll<SelectViewModel>();
+            var viewModel = this.trainingsService.GetAll<SelectViewModel>(userId);
 
             return this.View(viewModel);
         }
