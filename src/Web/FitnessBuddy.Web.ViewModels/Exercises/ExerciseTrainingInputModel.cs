@@ -26,6 +26,8 @@
 
         public int TrainingId { get; set; }
 
+        public string UserId { get; set; }
+
         [Range(DataConstants.ExerciseSetsMinValue, DataConstants.ExerciseSetsMaxValue)]
         public int Sets { get; set; }
 
