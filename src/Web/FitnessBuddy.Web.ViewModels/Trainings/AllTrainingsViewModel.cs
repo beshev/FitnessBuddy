@@ -8,7 +8,7 @@
 
     public class AllTrainingsViewModel : IMapFrom<Training>
     {
-        public string Name { get; set; }
+        public IEnumerable<string> Trainings { get; set; }
 
         public IEnumerable<TrainingExerciseViewModel> TrainingExercises { get; set; }
     }

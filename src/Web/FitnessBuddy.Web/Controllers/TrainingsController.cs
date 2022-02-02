@@ -3,8 +3,10 @@
     using System.Threading.Tasks;
 
     using FitnessBuddy.Services.Data.Trainings;
+    using FitnessBuddy.Services.Data.TrainingsExercises;
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Trainings;
+    using FitnessBuddy.Web.ViewModels.TrainingsExercises;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
@@ -12,15 +14,26 @@
     public class TrainingsController : Controller
     {
         private readonly ITrainingsService trainingsService;
+        private readonly ITrainingsExercisesService trainingsExercisesService;
 
-        public TrainingsController(ITrainingsService trainingsService)
+        public TrainingsController(
+            ITrainingsService trainingsService,
+            ITrainingsExercisesService trainingsExercisesService)
         {
             this.trainingsService = trainingsService;
+            this.trainingsExercisesService = trainingsExercisesService;
         }
 
-        public IActionResult MyTrainings()
+        public IActionResult MyTrainings(string trainingName = "")
         {
-            var viewModel = this.trainingsService.GetAll<AllTrainingsViewModel>();
+            var trainingId = this.trainingsService.GetIdByName(trainingName);
+
+            var viewModel = new AllTrainingsViewModel
+            {
+                Trainings = this.trainingsService.GetNames(),
+                TrainingExercises = this.trainingsExercisesService
+                .GetTrainingExercises<TrainingExerciseViewModel>(trainingId),
+            };
 
             return this.View(viewModel);
         }

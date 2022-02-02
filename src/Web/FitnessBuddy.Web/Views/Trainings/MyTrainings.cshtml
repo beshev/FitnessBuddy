@@ -1,5 +1,5 @@
 ﻿@using FitnessBuddy.Web.ViewModels.Trainings
-@model IEnumerable<AllTrainingsViewModel>
+@model AllTrainingsViewModel
 
 @{
     this.ViewData["Title"] = "My trainings";
@@ -10,27 +10,31 @@
 </h1>
 
 <ul>
-    @foreach (var training in Model)
+    @foreach (var training in Model.Trainings)
     {
         <li>
-            @training.Name
-            Exercises: 
-            @foreach(var exercise in training.TrainingExercises)
-            {
-                <br />
-                <p>
-                    Name: @exercise.ExerciseName
-                </p>
-                 <p>
-                    Sets: @exercise.Sets
-                </p>
-                 <p>
-                    Repetitions: @exercise.Repetitions
-                </p>
-                 <p>
-                    Weight: @exercise.Weight
-                </p>
-            }
+            <a asp-action="MyTrainings" asp-controller="Trainings" asp-route-trainingName="@training">@training</a>
         </li>
     }
 </ul>
+
+<ul>
+    @foreach (var exercise in Model.TrainingExercises)
+    {
+        <li>
+            <strong>Exercise name:</strong> @exercise.ExerciseName
+        </li>
+        <li>
+            <strong>Sets:</strong> @exercise.Sets
+        </li>
+        <li>
+            <strong>Repetitions:</strong> @exercise.Repetitions
+        </li>
+        <li>
+            <strong>Weight:</strong> @exercise.Weight
+        </li>
+    }
+</ul>
+
+
+<a class="btn btn-outline-info text-dark" asp-area="" asp-controller="Trainings" asp-action="AddTraining">Add new training</a>
