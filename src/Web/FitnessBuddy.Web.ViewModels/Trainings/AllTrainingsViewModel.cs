@@ -14,7 +14,7 @@
         [StringLength(DataConstants.TrainingNameMaxLength, MinimumLength = DataConstants.TrainingNameMinLength, ErrorMessage = "Name must be between {1} and {2}.")]
         public string TrainingName { get; set; }
 
-        public IEnumerable<string> Trainings { get; set; }
+        public IEnumerable<SelectViewModel> Trainings { get; set; }
 
         public IEnumerable<TrainingExerciseViewModel> TrainingExercises { get; set; }
     }
