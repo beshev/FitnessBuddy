@@ -8,6 +8,8 @@
     {
         public int TrainingExerciseId { get; set; }
 
+        public string ExerciseId { get; set; }
+
         public string ExerciseName { get; set; }
 
         public string ExerciseImageUrl { get; set; }
