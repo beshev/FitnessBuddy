@@ -5,6 +5,8 @@
 
     public class TrainingExerciseViewModel : IMapFrom<TrainingExercise>
     {
+        public int TrainingExerciseId { get; set; }
+
         public string ExerciseName { get; set; }
 
         public string ExerciseImageUrl { get; set; }
