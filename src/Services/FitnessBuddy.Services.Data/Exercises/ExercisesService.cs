@@ -38,11 +38,20 @@
             await this.exerciseRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<ExerciseViewModel> GetAll()
-            => this.exerciseRepository
-            .AllAsNoTracking()
-            .To<ExerciseViewModel>()
-            .AsEnumerable();
+        public IEnumerable<ExerciseViewModel> GetAll(int skip = 0, int? take = null)
+        {
+            var query = this.exerciseRepository
+                .AllAsNoTracking();
+
+            if (take.HasValue)
+            {
+                query = query.Skip(skip).Take(take.Value);
+            }
+
+            return query
+                .To<ExerciseViewModel>()
+                .AsEnumerable();
+        }
 
         public TModel GetById<TModel>(int id)
             => this.exerciseRepository
@@ -50,6 +59,11 @@
             .Where(x => x.Id == id)
             .To<TModel>()
             .FirstOrDefault();
+
+        public int GetCount()
+          => this.exerciseRepository
+          .AllAsNoTracking()
+          .Count();
 
         private static string GetYouTubeEmbededLink(string url)
         {

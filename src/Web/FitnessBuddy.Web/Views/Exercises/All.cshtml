@@ -1,10 +1,11 @@
-﻿@model IEnumerable<ExerciseViewModel>
+﻿@using FitnessBuddy.Web.ViewModels.Exercises
+@model AllExercisesViewModel
 
 @{
     this.ViewData["Title"] = "All exercise";
 }
 
-<div>
+<div class="text-center">
     <h1>
         All Exercise
     </h1>
@@ -12,7 +13,7 @@
 
 <div class="container">
     <div class="row row-cols-3">
-        @foreach (var exercise in Model)
+        @foreach (var exercise in Model.Exercises)
         {
             <a asp-action="AddToTraining" asp-controller="Exercises" asp-route-exerciseId="@exercise.Id">
                 <div class="card text-center" style="width: 18rem;">
@@ -29,4 +30,6 @@
             </a>
         }
     </div>
-</div> 
+</div>
+<hr />
+<partial name="_ExercisesPagingPartial" model="@Model" />

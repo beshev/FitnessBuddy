@@ -1,5 +1,6 @@
 ﻿namespace FitnessBuddy.Web.Controllers
 {
+    using System;
     using System.Threading.Tasks;
 
     using FitnessBuddy.Common;
@@ -13,6 +14,8 @@
     [Authorize]
     public class ExercisesController : Controller
     {
+        private const int ExercisesPerPage = 6;
+
         private readonly IExercisesService exercisesService;
         private readonly ITrainingsExercisesService trainingsExercisesService;
 
@@ -24,9 +27,20 @@
             this.trainingsExercisesService = trainingsExercisesService;
         }
 
-        public IActionResult All()
+        public IActionResult All(int id = 1)
         {
-            var viewModel = this.exercisesService.GetAll();
+            int count = this.exercisesService.GetCount();
+            int pagesCount = (int)Math.Ceiling((double)count / ExercisesPerPage);
+            var skip = (id - 1) * ExercisesPerPage;
+
+            var exercises = this.exercisesService.GetAll(skip, ExercisesPerPage);
+
+            var viewModel = new AllExercisesViewModel
+            {
+                PageNumber = id,
+                PagesCount = pagesCount,
+                Exercises = exercises,
+            };
 
             return this.View(viewModel);
         }
