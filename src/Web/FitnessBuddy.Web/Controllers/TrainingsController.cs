@@ -67,5 +67,12 @@
 
             return this.RedirectToAction(nameof(this.MyTrainings));
         }
+
+        public async Task<IActionResult> RemoveExercise(int trainingExerciseId, string name)
+        {
+            await this.trainingsExercisesService.RemoveAsync(trainingExerciseId);
+
+            return this.RedirectToAction(nameof(this.MyTrainings), new { TrainingName = name });
+        }
     }
 }

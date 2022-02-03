@@ -53,5 +53,16 @@
             .Where(x => x.TrainingId == id)
             .To<TModel>()
             .AsEnumerable();
+
+        public async Task RemoveAsync(int id)
+        {
+            var trainingExercise = this.trainingExerciseRepository
+                .All()
+                .FirstOrDefault(x => x.Id == id);
+
+            this.trainingExerciseRepository.Delete(trainingExercise);
+
+            await this.trainingExerciseRepository.SaveChangesAsync();
+        }
     }
 }

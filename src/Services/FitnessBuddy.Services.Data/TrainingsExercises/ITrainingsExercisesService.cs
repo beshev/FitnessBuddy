@@ -9,6 +9,8 @@
     {
         public Task AddAsync(ExerciseTrainingInputModel model);
 
+        public Task RemoveAsync(int id);
+
         public IEnumerable<TModel> GetTrainingExercises<TModel>(int id);
     }
 }

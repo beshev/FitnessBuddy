@@ -5,10 +5,6 @@
     this.ViewData["Title"] = "My trainings";
 }
 
-<h4 class="text-center">
-    @Model.TrainingName
-</h4>
-
 <div class="container">
     <div class="row">
         <div class="col-md-2 bg-light" style="text-align: left;">
@@ -28,7 +24,7 @@
             </ul>
             <hr />
             <div class="text-center">
-                <a class="btn btn-outline-secondary text-dark" asp-area="" asp-controller="Exercises" asp-action="All">Add exercise</a>
+                <a class="btn btn-outline-success text-dark" asp-area="" asp-controller="Exercises" asp-action="All">Add exercise</a>
             </div>
             <hr />
             <div class="text-center">
@@ -41,35 +37,49 @@
                         <span asp-validation-for="TrainingName" class="text-danger"></span>
                     </div>
                     <div class="form-grup" style="margin-top: 2%;">
-                        <input type="submit" class="btn btn-outline-dark" value="Add" />
+                        <input type="submit" class="btn btn-outline-warning" value="Add" />
                     </div>
                 </form>
             </div>
+            <hr />
         </div>
 
-        @if (Model.TrainingExercises.Any() == false)
-        {
-            <h2>
-                No exercises!
-            </h2>
-        }
+        <div class="col-md-9">
+            <h4 class="text-center">
+                @Model.TrainingName
+            </h4>
 
-        @foreach (var exercise in Model.TrainingExercises)
-        {
-            <div class="col-md-3">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="@exercise.ExerciseImageUrl" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">@exercise.ExerciseName</h5>
+            @if (Model.TrainingExercises.Any() == false)
+            {
+                <h2 class="text-center">
+                    No exercises!
+                </h2>
+            }
+
+            <div class="row">
+                @foreach (var exercise in Model.TrainingExercises)
+                {
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <img class="card-img-top img-thumbnail rounded" style="height: 180px;" src="@exercise.ExerciseImageUrl" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">@exercise.ExerciseName</h5>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Sets:</strong> @exercise.Sets</li>
+                                <li class="list-group-item"><strong>Repetitions:</strong> @exercise.Repetitions</li>
+                                <li class="list-group-item"><strong>Weight:</strong> @exercise.Weight</li>
+                                <li class="list-group-item text-center">
+                                    <a asp-action="RemoveExercise" asp-controller="Trainings" asp-route-trainingExerciseId="@exercise.TrainingExerciseId" asp-route-name="@Model.TrainingName">
+                                        <strong class="text-danger">Remove</strong>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><strong>Sets:</strong> @exercise.Sets</li>
-                        <li class="list-group-item"><strong>Repetitions:</strong> @exercise.Repetitions</li>
-                        <li class="list-group-item"><strong>Weight:</strong> @exercise.Weight</li>
-                    </ul>
-                </div>
+                }
             </div>
-        }
+        </div>
     </div>
 </div>
 
