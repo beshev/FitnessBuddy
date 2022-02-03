@@ -7,7 +7,6 @@
     using FitnessBuddy.Data.Common.Repositories;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
-    using FitnessBuddy.Web.ViewModels.Trainings;
 
     public class TrainingsService : ITrainingsService
     {
@@ -37,6 +36,16 @@
             }
         }
 
+        public async Task DeleteAsync(int trainingId, string userId)
+        {
+            var training = this.trainingRepository
+                .All()
+                .FirstOrDefault(x => x.Id == trainingId && x.ForUserId == userId);
+
+            this.trainingRepository.Delete(training);
+            await this.trainingRepository.SaveChangesAsync();
+        }
+
         public IEnumerable<TModel> GetAll<TModel>(string userId)
             => this.trainingRepository
             .AllAsNoTracking()
@@ -52,12 +61,5 @@
 
             return training != null ? training.Id : -1;
         }
-
-        public IEnumerable<string> GetNames(string userId)
-            => this.trainingRepository
-            .AllAsNoTracking()
-            .Where(x => x.ForUserId == userId)
-            .Select(x => x.Name)
-            .AsEnumerable();
     }
 }

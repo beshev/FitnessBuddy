@@ -9,9 +9,9 @@
     {
         public Task AddAsync(string trainingName, string userId);
 
-        public IEnumerable<TModel> GetAll<TModel>(string userId);
+        public Task DeleteAsync(int trainingId, string userId);
 
-        public IEnumerable<string> GetNames(string userId);
+        public IEnumerable<TModel> GetAll<TModel>(string userId);
 
         public int GetTrainingId(string name, string userId);
     }
