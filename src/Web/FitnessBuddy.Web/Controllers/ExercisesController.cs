@@ -27,19 +27,20 @@
             this.trainingsExercisesService = trainingsExercisesService;
         }
 
-        public IActionResult All(int id = 1)
+        public IActionResult All(int id = 1, string search = "")
         {
-            int count = this.exercisesService.GetCount();
+            int count = this.exercisesService.GetCount(search);
             int pagesCount = (int)Math.Ceiling((double)count / ExercisesPerPage);
             var skip = (id - 1) * ExercisesPerPage;
 
-            var exercises = this.exercisesService.GetAll(skip, ExercisesPerPage);
+            var exercises = this.exercisesService.GetAll(search, skip, ExercisesPerPage);
 
             var viewModel = new AllExercisesViewModel
             {
                 PageNumber = id,
                 PagesCount = pagesCount,
                 Exercises = exercises,
+                Search = search,
             };
 
             return this.View(viewModel);

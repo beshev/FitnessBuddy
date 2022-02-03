@@ -11,6 +11,19 @@
     </h1>
 </div>
 
+<div class="row justify-content-center" style="margin-bottom: 1%">
+    <form class="form-inline col-lg-6 offset-lg-3" asp-action="All" asp-controller="Exercises">
+        <input class="form-control mr-sm-2" type="search" placeholder="Name or Category" aria-label="Search" name="search">
+        <input type="hidden" name="id" value="1" />
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+</div>
+
+@if (Model.Exercises.Any() == false)
+{
+    <h3 class="text-center">No exercises found!</h3>
+}
+
 <div class="container">
     <div class="row row-cols-3">
         @foreach (var exercise in Model.Exercises)

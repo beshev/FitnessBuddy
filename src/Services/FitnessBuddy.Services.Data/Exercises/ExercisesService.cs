@@ -38,10 +38,15 @@
             await this.exerciseRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<ExerciseViewModel> GetAll(int skip = 0, int? take = null)
+        public IEnumerable<ExerciseViewModel> GetAll(string search = "", int skip = 0, int? take = null)
         {
             var query = this.exerciseRepository
                 .AllAsNoTracking();
+
+            if (string.IsNullOrWhiteSpace(search) == false)
+            {
+                query = query.Where(x => x.Name.Contains(search) || x.Category.Name.Contains(search));
+            }
 
             if (take.HasValue)
             {
@@ -60,10 +65,18 @@
             .To<TModel>()
             .FirstOrDefault();
 
-        public int GetCount()
-          => this.exerciseRepository
-          .AllAsNoTracking()
-          .Count();
+        public int GetCount(string search = "")
+        {
+            var query = this.exerciseRepository
+                .AllAsNoTracking();
+
+            if (string.IsNullOrWhiteSpace(search) == false)
+            {
+                query = query.Where(x => x.Name.Contains(search) || x.Category.Name.Contains(search));
+            }
+
+            return query.Count();
+        }
 
         private static string GetYouTubeEmbededLink(string url)
         {

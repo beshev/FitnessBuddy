@@ -7,9 +7,9 @@
 
     public interface IExercisesService
     {
-        public IEnumerable<ExerciseViewModel> GetAll(int skip = 0, int? take = null);
+        public IEnumerable<ExerciseViewModel> GetAll(string search = null, int skip = 0, int? take = null);
 
-        public int GetCount();
+        public int GetCount(string search = "");
 
         public TModel GetById<TModel>(int id);
 
