@@ -10,7 +10,7 @@
 }
 else
 {
-    <table class="table table-sm text-center table-bordered">
+    <table class="table table-sm text-center table-bordered shadow">
         <thead>
             <tr class="text-white" style="background-color: peru">
                 <th scope="col">Meal / Foods</th>
@@ -69,7 +69,7 @@ else
                         </th>
                         <th>
                             <a asp-action="RemoveFood" asp-controller="MealsFoods" asp-route-mealFoodId="@mealFood.Id">
-                                <strong class="text-danger">✕</strong>
+                                <i class="far fa-trash-alt text-danger"></i>
                             </a>
                         </th>
                     </tr>
