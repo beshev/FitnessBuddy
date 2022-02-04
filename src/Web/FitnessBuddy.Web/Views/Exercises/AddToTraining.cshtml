@@ -5,16 +5,9 @@
     this.ViewData["Title"] = "Exercise details";
 }
 
-<div class="text-center">
-    <h2>
-        @Model.Name
-    </h2>
-</div>
-
-
-<div class="container">
-    <div class="row">
-        <div class="col-lg-3 col-xl-3">
+<div class="container-fluid">
+    <div class="row shadow-lg">
+        <div class="col-md-2 alert-secondary text-center font-weight-bold">
             <form asp-controller="Exercises" asp-action="AddToTraining">
                 <div class="form-grup">
                     <label asp-for="Sets"></label>
@@ -34,12 +27,17 @@
                 <vc:trainings-select user-id="@Model.UserId"></vc:trainings-select>
                 <input type="hidden" asp-for="Id" value="@Model.Id" />
                 <div class="form-grup" style="margin-top: 2%;">
-                    <input type="submit" class="btn btn-outline-primary" value="Add" />
+                    <input type="submit" class="btn btn-outline-secondary" value="Add" />
                 </div>
             </form>
         </div>
 
-        <div class="col-lg-9 col-xl-9 mt-3">
+        <div class="col-md-10 bg-light">
+            <div class="text-center">
+                <h2 style="font-style: oblique;">
+                    @Model.Name
+                </h2>
+            </div>
             <div class="row">
                 <div class="col-md-6">
                     <p class="img" ">
