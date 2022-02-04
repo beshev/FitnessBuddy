@@ -4,45 +4,51 @@
 @{
     this.ViewData["Title"] = "All exercise";
 }
+<div class="container-fluid bg-light">
 
-<div class="text-center">
-    <h1>
-        All Exercise
-    </h1>
-</div>
-
-<div class="row justify-content-center" style="margin-bottom: 1%">
-    <form class="form-inline col-lg-6 offset-lg-3" asp-action="All" asp-controller="Exercises">
-        <input class="form-control mr-sm-2" type="search" placeholder="Name or Category" aria-label="Search" name="search">
-        <input type="hidden" name="id" value="1" />
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-</div>
-
-@if (Model.Exercises.Any() == false)
-{
-    <h3 class="text-center">No exercises found!</h3>
-}
-
-<div class="container">
-    <div class="row row-cols-3">
-        @foreach (var exercise in Model.Exercises)
-        {
-            <a asp-action="AddToTraining" asp-controller="Exercises" asp-route-exerciseId="@exercise.Id">
-                <div class="card text-center" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">@exercise.Name</h5>
-                    </div>
-                    <img src="@exercise.ImageUrl" class="card-img-top img-fluid" alt="Card" style="height: 184px">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><strong>Difficulty:</strong> @exercise.Difficulty</li>
-                        <li class="list-group-item"><strong>Category:</strong> @exercise.CategoryName</li>
-                        <li class="list-group-item"><strong>Equipment:</strong> @exercise.EquipmentName</li>
-                    </ul>
-                </div>
-            </a>
-        }
+    <div class="text-center">
+        <h2 style="font-style: oblique;">
+            All Exercises
+        </h2>
     </div>
+
+    <div class="row justify-content-center" style="margin-bottom: 1%">
+        <form class="form-inline col-lg-6 offset-lg-3" asp-action="All" asp-controller="Exercises">
+            <input class="form-control mr-sm-2" type="search" placeholder="Name or Category" aria-label="Search" name="search">
+            <input type="hidden" name="id" value="1" />
+            <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+
+    <hr />
+
+    @if (Model.Exercises.Any() == false)
+    {
+        <h3 class="text-center">No exercises found!</h3>
+    }
+
+    <div class="container-fluid">
+        <div class="row">
+            @foreach (var exercise in Model.Exercises)
+            {
+                <div class="col-md-4 mt-4">
+                    <a asp-action="AddToTraining" asp-controller="Exercises" asp-route-exerciseId="@exercise.Id">
+                        <div class="card text-center alert-light shadow-lg rounded" style="width: 18rem;">
+                            <div class="card-body">
+                                <h6 class="card-title font-weight-bold">@exercise.Name</h6>
+                            </div>
+                            <img src="@exercise.ImageUrl" class="card-img-top img-fluid" alt="Card" style="height: 184px">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Difficulty:</strong> @exercise.Difficulty</li>
+                                <li class="list-group-item"><strong>Category:</strong> @exercise.CategoryName</li>
+                                <li class="list-group-item"><strong>Equipment:</strong> @exercise.EquipmentName</li>
+                            </ul>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+    <hr />
+    <partial name="_ExercisesPagingPartial" model="@Model" />
 </div>
-<hr />
-<partial name="_ExercisesPagingPartial" model="@Model" />
