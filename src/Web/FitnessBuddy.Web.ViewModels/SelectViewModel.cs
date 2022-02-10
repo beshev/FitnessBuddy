@@ -7,7 +7,8 @@
         IMapFrom<ExerciseCategory>,
         IMapFrom<ExerciseEquipment>,
         IMapFrom<Meal>,
-        IMapFrom<Training>
+        IMapFrom<Training>,
+        IMapFrom<ArticleCategory>
     {
         public int Id { get; set; }
 
