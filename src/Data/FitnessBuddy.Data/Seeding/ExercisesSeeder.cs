@@ -18,7 +18,7 @@
             }
 
             var adminId = dbContext.Users
-                .Where(x => x.Email == "admin@admin.bg")
+                .Where(x => x.Email == "admin@admin.com")
                 .Select(x => x.Id)
                 .FirstOrDefault();
 
