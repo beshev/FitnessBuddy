@@ -44,6 +44,10 @@
 
         public DbSet<ExerciseEquipment> ExerciseEquipment { get; set; }
 
+        public DbSet<Article> Articles { get; set; }
+
+        public DbSet<ArticleCategory> ArticleCategories { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
