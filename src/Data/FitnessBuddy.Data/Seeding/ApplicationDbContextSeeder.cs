@@ -29,6 +29,7 @@
                               new ExersiceCategoriesSeeder(),
                               new ExerciseEquipmentsSeeder(),
                               new ExercisesSeeder(),
+                              new FoodsSeeder(),
                           };
 
             foreach (var seeder in seeders)
