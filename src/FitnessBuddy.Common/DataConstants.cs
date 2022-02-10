@@ -60,5 +60,16 @@
         // Training model
         public const int TrainingNameMinLength = 3;
         public const int TrainingNameMaxLength = 100;
+
+        // Article Model
+        public const int ArticleTitleMinLength = 2;
+        public const int ArticleTitleMaxLength = 100;
+
+        public const int ArticleContentMinLength = 2;
+        public const int ArticleContentMaxLength = 10000;
+
+        // ArticleCategory Model
+        public const int ArticleCategoryNameMinLength = 2;
+        public const int ArticleCategoryNameMaxLength = 20;
     }
 }
