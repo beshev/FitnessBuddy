@@ -101,7 +101,7 @@
             int count = this.usersService.FavoriteFoodsCount(userId);
             int pagesCount = (int)Math.Ceiling((double)count / FoodsPerPage);
 
-            if (id > pagesCount)
+            if (pagesCount > 0 && id > pagesCount)
             {
                 id = pagesCount;
             }
