@@ -1,0 +1,40 @@
+﻿@model ArticleInputModel
+
+@{
+    this.ViewData["Title"] = "Create";
+}
+
+
+<h1>
+    Create
+</h1>
+
+<div class="text-center">
+    <h1>
+        Add Food
+    </h1>
+
+    <form asp-controller="Articles" asp-action="Create" class="col-lg-6 offset-lg-3">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-grup">
+            <label asp-for="Title"></label>
+            <input asp-for="Title" class="form-control" placeholder="Title..." />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="form-grup">
+            <label asp-for="Content"></label>
+            <textarea asp-for="Content" class="form-control" rows="20" placeholder="Content..."></textarea>
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
+        <vc:article-categories-select></vc:article-categories-select>
+        <div class="form-grup">
+            <label asp-for="ImageUrl"></label>
+            <input asp-for="ImageUrl" class="form-control" placeholder="ImageUrl..." />
+            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+        </div>
+        <div class="form-grup" style="margin-top: 2%;">
+            <input type="submit" class="btn btn-outline-dark" value="Add" />
+        </div>
+    </form>
+</div>
