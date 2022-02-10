@@ -43,7 +43,6 @@
                     opts => SandboxCode(opts, serviceProvider).GetAwaiter().GetResult(),
                     _ => 255);
             }
-
         }
 
         private static async Task<int> SandboxCode(SandboxOptions options, IServiceProvider serviceProvider)
