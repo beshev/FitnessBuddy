@@ -21,7 +21,12 @@
         [AllowAnonymous]
         public IActionResult All()
         {
-            return this.View();
+            var viewModel = new AllArticlesViewModel
+            {
+                Articles = this.articlesService.GetAll<ArticleViewModel>(),
+            };
+
+            return this.View(viewModel);
         }
 
         public IActionResult Create()

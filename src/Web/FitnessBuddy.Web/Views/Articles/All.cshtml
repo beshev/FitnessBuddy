@@ -1,0 +1,33 @@
+﻿@model AllArticlesViewModel
+
+
+@{
+    this.ViewData["Title"] = "Articles";
+}
+
+<div class="text-center">
+    <h1>
+        All Articles
+    </h1>
+</div>
+
+<ul style="list-style-type: none;">
+    @foreach (var article in Model.Articles)
+    {
+        @*<li>
+            <img src="@article.ImageUrl" />
+            </li>*@
+        <li>
+            Title: @article.Title
+        </li>
+        <li>
+            Content: @article.Content
+        </li>
+        <li>
+            Category: @article.CategoryName
+        </li>
+        <li>
+            <hr />
+        </li>
+    }
+</ul>
