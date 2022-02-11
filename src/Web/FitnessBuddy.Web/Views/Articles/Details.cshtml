@@ -14,7 +14,7 @@
                 <ul class="post-meta" style="list-style-type: none;">
                     <li><span class="posted-on"><time class="entry-date published"><strong>Written in:</strong> @Model.CreatedOn.ToString("dddd, dd MMMM, yyyy")</time></span></li>
                     <li><span><strong>Written by:</strong> <a href="javascript:void(0)" title="Aigars">@Model.Creator</a></span></li>
-                    <li><span><strong>Category:</strong> <a href="javascript:void(0)" title="Aigars">@Model.CategoryName</a></span></li>
+                    <li><span><strong>Category:</strong> <a asp-contoller="Articles" asp-action="Category" asp-route-categoryName="@Model.CategoryName" title="Aigars">@Model.CategoryName</a></span></li>
                 </ul>
             </div>
             <div>
