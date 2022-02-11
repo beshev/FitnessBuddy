@@ -1,7 +1,5 @@
 ﻿namespace FitnessBuddy.Web.ViewModels
 {
-    using System;
-
     public class PagingViewModel
     {
         public int PageNumber { get; set; }
@@ -21,6 +19,8 @@
         public int PagesCount { get; set; }
 
         public string ForAction { get; init; }
+
+        public string ForController { get; init; }
 
         public string Search { get; set; }
     }
