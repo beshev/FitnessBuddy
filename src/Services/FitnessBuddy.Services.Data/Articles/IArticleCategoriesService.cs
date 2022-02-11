@@ -5,5 +5,7 @@
     public interface IArticleCategoriesService
     {
         public IEnumerable<TModel> GetAll<TModel>();
+
+        public IEnumerable<TModel> GetCategoryArticles<TModel>(string categoryName);
     }
 }

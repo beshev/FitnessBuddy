@@ -15,10 +15,14 @@
         private const int ArticlesPerPage = 4;
 
         private readonly IArticlesService articlesService;
+        private readonly IArticleCategoriesService articleCategoriesService;
 
-        public ArticlesController(IArticlesService articlesService)
+        public ArticlesController(
+            IArticlesService articlesService,
+            IArticleCategoriesService articleCategoriesService)
         {
             this.articlesService = articlesService;
+            this.articleCategoriesService = articleCategoriesService;
         }
 
         [AllowAnonymous]
@@ -66,6 +70,22 @@
         public IActionResult Details(int id)
         {
             var viewModel = this.articlesService.GetById<ArticleDetailsModel>(id);
+
+            return this.View(viewModel);
+        }
+
+        public IActionResult Categories()
+        {
+            var viewModel = this.articleCategoriesService.GetAll<ArticleCategoryViewModel>();
+
+            return this.View(viewModel);
+        }
+
+        public IActionResult Category(string categoryName)
+        {
+            var viewModel = this.articleCategoriesService.GetCategoryArticles<ArticleViewModel>(categoryName);
+
+            this.ViewData["CategoryName"] = categoryName;
 
             return this.View(viewModel);
         }

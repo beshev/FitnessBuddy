@@ -20,5 +20,13 @@
             .AllAsNoTracking()
             .To<TModel>()
             .AsEnumerable();
+
+        public IEnumerable<TModel> GetCategoryArticles<TModel>(string categoryName)
+            => this.articleCategoriesRepository
+            .AllAsNoTracking()
+            .Where(x => x.Name == categoryName)
+            .SelectMany(x => x.Articles)
+            .To<TModel>()
+            .AsEnumerable();
     }
 }
