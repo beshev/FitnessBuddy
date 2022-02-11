@@ -48,5 +48,12 @@
 
             return this.RedirectToAction(nameof(this.All));
         }
+
+        public IActionResult Details(int id)
+        {
+            var viewModel = this.articlesService.GetById<ArticleDetailsModel>(id);
+
+            return this.View(viewModel);
+        }
     }
 }

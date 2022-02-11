@@ -1,0 +1,29 @@
+﻿@model ArticleDetailsModel
+
+@{
+    this.ViewData["Title"] = "Article";
+}
+
+<div id="primary" class="col-md-12 mb-xs-24 text-center">
+    <article id="post-996" class="post-content post-grid-wide post-996 post type-post status-publish format-standard has-post-thumbnail hentry category-news category-template-2 tag-content-2 tag-read-more tag-template">
+        <div class="entry-content bg-light shadow">
+            <h2 class="post-title entry-title">
+                @Model.Title
+            </h2>
+            <div class="entry-meta">
+                <ul class="post-meta" style="list-style-type: none;">
+                    <li><span class="posted-on"><time class="entry-date published"><strong>Written in:</strong> @Model.CreatedOn.ToString("dddd, dd MMMM, yyyy")</time></span></li>
+                    <li><span><strong>Written by:</strong> <a href="javascript:void(0)" title="Aigars">@Model.Creator</a></span></li>
+                    <li><span><strong>Category:</strong> <a href="javascript:void(0)" title="Aigars">@Model.CategoryName</a></span></li>
+                </ul>
+            </div>
+            <div>
+                <img width="492" height="350" src="@Model.ImageUrl" class="border mb-3" alt="" data-lazy-loaded="1" loading="eager">
+            </div>
+            <div class="shapely-content dropcaps-content alert-secondary">
+                <p class="text-dark">@Model.Content</p>
+                <p><span id="more-996"></span></p>
+            </div>
+        </div>
+    </article>
+</div>
