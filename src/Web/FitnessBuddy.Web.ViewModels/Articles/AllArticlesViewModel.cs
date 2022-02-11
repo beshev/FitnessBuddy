@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public class AllArticlesViewModel
+    public class AllArticlesViewModel : PagingViewModel
     {
         public IEnumerable<ArticleViewModel> Articles { get; set; }
     }

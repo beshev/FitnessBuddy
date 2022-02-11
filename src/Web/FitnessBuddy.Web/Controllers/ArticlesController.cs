@@ -1,5 +1,6 @@
 ﻿namespace FitnessBuddy.Web.Controllers
 {
+    using System;
     using System.Threading.Tasks;
 
     using FitnessBuddy.Services.Data.Articles;
@@ -11,6 +12,8 @@
     [Authorize]
     public class ArticlesController : Controller
     {
+        private const int ArticlesPerPage = 4;
+
         private readonly IArticlesService articlesService;
 
         public ArticlesController(IArticlesService articlesService)
@@ -19,11 +22,19 @@
         }
 
         [AllowAnonymous]
-        public IActionResult All()
+        public IActionResult All(int id, string search = "")
         {
+            int count = this.articlesService.GetCount(search);
+            int pagesCount = (int)Math.Ceiling((double)count / ArticlesPerPage);
+            var skip = (id - 1) * ArticlesPerPage;
+
+            var articles = this.articlesService.GetAll<ArticleViewModel>(search, skip, ArticlesPerPage);
+
             var viewModel = new AllArticlesViewModel
             {
-                Articles = this.articlesService.GetAll<ArticleViewModel>(),
+                PageNumber = id,
+                PagesCount = pagesCount,
+                Articles = articles,
             };
 
             return this.View(viewModel);

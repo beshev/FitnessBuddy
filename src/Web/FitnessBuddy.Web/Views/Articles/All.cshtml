@@ -1,7 +1,6 @@
 ﻿@using FitnessBuddy.Web.ViewModels.Articles
 @model AllArticlesViewModel
 
-
 @{
     this.ViewData["Title"] = "Articles";
 }
@@ -35,3 +34,4 @@
         </div>
     </div>
 </div>
+<partial name="_ArticlesPagingPartial" model="@Model" />
