@@ -1,0 +1,25 @@
+﻿@model IEnumerable<ArticleViewModel>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="row mb-2">
+            @foreach (var article in Model)
+            {
+                <div class="col-md-6">
+                    <div class="card flex-md-row mb-4 box-shadow h-md-250 shadow border">
+                        <div class="card-body d-flex flex-column align-items-start">
+                            <a asp-contoller="Articles" asp-action="Category" asp-route-categoryName="@article.CategoryName" title="Aigars"><strong class="d-inline-block mb-2 text-primary">@article.CategoryName</strong></a>
+                            <h3 class="mb-0">
+                                <span class="text-dark" asp-action="Details" asp-controller="Articles" asp-route-id="@article.Id">@article.Title</span>
+                            </h3>
+                            <div class="mb-1 text-muted">@article.CreatedOn.ToString("MMM-d")</div>
+                            <p class="card-text mb-auto">@article.Content.Substring(0, article.Content.Length / 5)...</p>
+                            <a asp-action="Details" asp-controller="Articles" asp-route-id="@article.Id">Continue reading</a>
+                        </div>
+                        <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb" alt="Thumbnail [200x250]" style="width: 200px; height: 250px;" src="@article.ImageUrl" data-holder-rendered="true">
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
