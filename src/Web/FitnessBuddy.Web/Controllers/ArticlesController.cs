@@ -22,7 +22,7 @@
         }
 
         [AllowAnonymous]
-        public IActionResult All(int id, string search = "")
+        public IActionResult All(int id = 1, string search = "")
         {
             int count = this.articlesService.GetCount(search);
             int pagesCount = (int)Math.Ceiling((double)count / ArticlesPerPage);
