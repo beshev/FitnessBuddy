@@ -6,10 +6,6 @@
     this.ViewData["Title"] = "All foods";
 }
 
-<h1 class="text-center">
-    All foods
-</h1>
-
 <partial name="_SearchFoodPartial" model="@("All")" />
 
 @if (Model.Foods.Any() == false)
@@ -34,13 +30,12 @@
 }
 else
 {
-    <partial name="_PagingPartial" model="@Model" />
     <hr />
     <div class="container">
         <div class="row">
             @foreach (var food in @Model.Foods)
             {
-                <div class="card col-md-3 mt-3">
+                <div class="card col-md-3 offset-1 mb-3 card-bg-color shadow">
                     <partial name="_FoodPartial" model="food" />
                     <ul class="list-group list-group-flush">
                         @if (this.User.Identity.IsAuthenticated)
@@ -48,7 +43,7 @@ else
                             @if (this.userService.IsFoodFavorite(this.User.GetUserId(), food.Id) == false)
                             {
                                 <li class="list-group-item text-center">
-                                    <a asp-action="AddToFavorite" asp-controller="Foods" asp-route-foodId="@food.Id" asp-route-pageNumber="@Model.PageNumber" class="btn btn-success text-center">
+                                    <a asp-action="AddToFavorite" asp-controller="Foods" asp-route-foodId="@food.Id" asp-route-pageNumber="@Model.PageNumber" class="btn btn-outline-secondary btn-sm text-center">
                                         Add to favorite
                                     </a>
                                 </li>
@@ -65,6 +60,5 @@ else
             }
         </div>
     </div>
-    <hr />
     <partial name="_PagingPartial" model="@Model" />
 }
