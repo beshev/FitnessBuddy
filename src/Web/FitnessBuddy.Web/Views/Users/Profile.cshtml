@@ -5,16 +5,14 @@
     this.ViewData["Title"] = "Profile";
 }
 
-<section style="background-color: #eee;">
+<section>
     <div class="container py-5">
         <div class="row">
             <div class="col-lg-4">
                 <div class="card mb-4">
-                    <div class="card-body text-center">
+                    <div class="card-body text-center shadow">
                         <img src="@Model.UserInfo.ProfilePicture" onerror="src='/images/profileimages/default-avatar.jpg'" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
                         <h5 class="my-3">@Model.UserInfo.UserName</h5>
-                        @* <p class="text-muted mb-1">About me</p>
-                            <p class="text-muted mb-4">@Model.UserInfo.AboutMe</p>*@
                         <div class="d-flex justify-content-center mb-2">
                             <a asp-controller="Users" asp-action="Edit"><span class="btn btn-outline-primary">Edit</span></a>
                         </div>
@@ -24,7 +22,7 @@
                     </div>
                 </div>
                 <div class="card mb-4 mb-lg-0">
-                    <div class="card-body p-0">
+                    <div class="card-body p-0 shadow">
                         <ul class="list-group list-group-flush rounded-3">
                             <li class="list-group-item text-center justify-content-between align-items-center p-3">
                                 <i class="fas fa-globe fa-lg text-warning"></i>
@@ -40,7 +38,7 @@
             </div>
             <div class="col-lg-8">
                 <div class="card mb-4">
-                    <div class="card-body">
+                    <div class="card-body shadow">
                         <div class="row">
                             <div class="col-sm-3">
                                 <p class="mb-0">Full Name</p>
@@ -97,14 +95,14 @@
                     </div>
                 </div>
                 <div class="card mb-4">
-                    <div class="card-body">
+                    <div class="card-body shadow">
                         <div class="row">
                             <div class="col-sm-3">
                                 <p class="mb-0">Current protein</p>
                                 <p class="mb-0"><strong>Daily protein goal</strong></p>
                             </div>
                             <div class="col-sm-9">
-                                <p class="mb-0">@Model.CurrentProtein.ToString("F2") gr.</p>
+                                <p class="mb-0 text-muted">@Model.CurrentProtein.ToString("F2") gr.</p>
                                 <p class="mb-0"><strong>@Model.UserInfo.DailyProteinGoal gr.</strong></p>
                             </div>
                         </div>
@@ -115,7 +113,7 @@
                                 <p class="mb-0"><strong>Daily carbs goal</strong></p>
                             </div>
                             <div class="col-sm-9">
-                                <p class="mb-0">@Model.CurrentCarbohydrates.ToString("F2") gr.</p>
+                                <p class="mb-0 text-muted">@Model.CurrentCarbohydrates.ToString("F2") gr.</p>
                                 <p class="mb-0"><strong>@Model.UserInfo.DailyCarbohydratesGoal gr.</strong></p>
                             </div>
                         </div>
@@ -126,7 +124,7 @@
                                 <p class="mb-0"><strong>Daily fat goal</strong></p>
                             </div>
                             <div class="col-sm-9">
-                                <p class="mb-0">@Model.CurrentFats.ToString("F2") gr.</p>
+                                <p class="mb-0 text-muted">@Model.CurrentFats.ToString("F2") gr.</p>
                                 <p class="mb-0"><strong>@Model.UserInfo.DailyFatGoal gr.</strong></p>
                             </div>
                         </div>
@@ -137,7 +135,7 @@
                                 <p class="mb-0"><strong>Daily calories goal</strong></p>
                             </div>
                             <div class="col-sm-9">
-                                <p class="mb-0">@Model.CurrentCalories.ToString("F2") kcal</p>
+                                <p class="mb-0 text-muted">@Model.CurrentCalories.ToString("F2") kcal</p>
                                 <p class="mb-0"><strong>@Model.UserInfo.DailyCaloriesGoal kcal</strong></p>
                             </div>
                         </div>
