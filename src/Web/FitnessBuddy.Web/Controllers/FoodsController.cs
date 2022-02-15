@@ -15,7 +15,7 @@
     [Authorize]
     public class FoodsController : Controller
     {
-        private const int FoodsPerPage = 8;
+        private const int FoodsPerPage = 6;
 
         private readonly IFoodsService foodsService;
         private readonly IUsersService usersService;
