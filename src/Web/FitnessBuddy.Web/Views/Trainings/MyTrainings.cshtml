@@ -8,25 +8,23 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-2 border shadow bg-light rounded">
-            <div class="text-center row">
-                <ul style="list-style-type: none;">
-                    <li>
-                        <h4>Workouts:</h4>
-                    </li>
-                    @foreach (var training in Model.Trainings)
-                    {
-                        <li>
-                            <div class="row">
-                                <a asp-action="MyTrainings" asp-controller="Trainings" asp-route-trainingName="@training.Name"><h5>@training.Name</h5></a>
-                                <a class="offset-1" asp-action="Delete" asp-controller="Trainings" asp-route-id="@training.Id"><i class="fas fa-trash-alt text-danger"></i></a>
-                            </div>
-                        </li>
-                    }
-                </ul>
+            <h4 class="text-center">Workouts:</h4>
+            <div class="row">
+                @foreach (var training in Model.Trainings)
+                {
+                    <div class="col-md-8">
+                        <a asp-action="MyTrainings" asp-controller="Trainings" asp-route-trainingName="@training.Name">
+                            <h5>@training.Name</h5>
+                        </a>
+                        <a asp-action="Delete" asp-controller="Trainings" asp-route-id="@training.Id">
+                            <i class="fas fa-trash-alt text-danger"></i>
+                        </a>
+                    </div>
+                }
             </div>
             <hr />
             <div class="text-center">
-                <a class="btn btn-info text-white" asp-area="" asp-controller="Exercises" asp-action="All">Add exercise</a>
+                <a class="btn btn-outline-info" asp-area="" asp-controller="Exercises" asp-action="All">Add exercise</a>
             </div>
             <hr />
             <div class="text-center">
@@ -39,15 +37,15 @@
                         <span asp-validation-for="TrainingName" class="text-danger"></span>
                     </div>
                     <div class="form-grup" style="margin-top: 2%;">
-                        <input type="submit" class="btn btn-warning" value="Create" />
+                        <input type="submit" class="btn btn-outline-warning" value="Create" />
                     </div>
                 </form>
             </div>
             <hr />
         </div>
 
-        <div class="col-md-9 bg-light">
-            <h4 class="text-center shadow border" style="font-style: oblique;">
+        <div class="col-md-9">
+            <h4 class="text-center shadow border">
                 <strong>@Model.TrainingName</strong>
             </h4>
             <hr />
