@@ -36,4 +36,10 @@
     <ProjectReference Include="..\FitnessBuddy.Web.Infrastructure\FitnessBuddy.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\FitnessBuddy.Web.ViewModels\FitnessBuddy.Web.ViewModels.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\css\mycustom.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>
