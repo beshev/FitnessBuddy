@@ -59,6 +59,8 @@
                 return this.View(model);
             }
 
+            // The binder set Id to 1 for no reason!
+            model.Id = 0;
             model.CreatorId = this.User.GetUserId();
 
             await this.articlesService.CreateAsync(model);
@@ -88,6 +90,48 @@
             this.ViewData["CategoryName"] = categoryName;
 
             return this.View(viewModel);
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (this.articlesService.IsUserCreator(this.User.GetUserId(), id) == false)
+            {
+                return this.Unauthorized();
+            }
+
+            await this.articlesService.DeleteAsync(id);
+
+            return this.RedirectToAction(nameof(this.All));
+        }
+
+        public IActionResult Edit(int id)
+        {
+            var viewModel = this.articlesService.GetById<ArticleInputModel>(id);
+
+            if (viewModel.CreatorId != this.User.GetUserId())
+            {
+                return this.Unauthorized();
+            }
+
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(ArticleInputModel model)
+        {
+            if (model.CreatorId != this.User.GetUserId())
+            {
+                return this.Unauthorized();
+            }
+
+            if (this.ModelState.IsValid == false)
+            {
+                return this.View();
+            }
+
+            await this.articlesService.EditAsync(model);
+
+            return this.RedirectToAction(nameof(this.Details), new { model.Id });
         }
     }
 }
