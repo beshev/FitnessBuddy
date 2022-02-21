@@ -27,7 +27,7 @@
         {
             var foodName = await this.foodNamesService.GetByNameAsync(model.Name);
 
-            var food = AutoMapperConfig.MapperInstance.Map<FoodInputModel, Food>(model);
+            var food = AutoMapperConfig.MapperInstance.Map<Food>(model);
             food.AddedByUserId = userId;
             food.FoodNameId = foodName.Id;
 
