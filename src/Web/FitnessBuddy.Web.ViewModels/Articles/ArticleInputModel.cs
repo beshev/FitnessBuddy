@@ -6,8 +6,10 @@
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
 
-    public class ArticleInputModel : IMapTo<Article>
+    public class ArticleInputModel : IMapTo<Article>, IMapFrom<Article>
     {
+        public int Id { get; set; }
+
         [Required]
         [StringLength(DataConstants.ArticleTitleMaxLength, MinimumLength = DataConstants.ArticleTitleMinLength, ErrorMessage = "Title lenght must be betweem {2} and {1}")]
         public string Title { get; set; }
