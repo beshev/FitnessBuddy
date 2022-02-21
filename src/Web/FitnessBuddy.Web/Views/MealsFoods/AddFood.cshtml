@@ -18,7 +18,7 @@
                 <input asp-for="QuantityInGrams" class="form-control" placeholder="Quantity in grams..." />
                 <span asp-validation-for="QuantityInGrams" class="text-danger"></span>
             </div>
-            <vc:user-meals-select user-Id="@Model.UserId"></vc:user-meals-select>
+            <vc:user-meals-select></vc:user-meals-select>
             <input type="submit" class="btn btn-primary" value="Add" />
         </form>
     </div>
