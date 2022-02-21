@@ -23,6 +23,6 @@
         [Required(ErrorMessage = "The field Category is required!")]
         public int? CategoryId { get; set; }
 
-        public string AddedByUserId { get; set; }
+        public string CreatorId { get; set; }
     }
 }
