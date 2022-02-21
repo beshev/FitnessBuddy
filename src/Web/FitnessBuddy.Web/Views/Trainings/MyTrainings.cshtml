@@ -9,19 +9,24 @@
     <div class="row">
         <div class="col-md-2 border shadow bg-light rounded">
             <h4 class="text-center">Workouts:</h4>
-            <div class="row">
+            <table>
                 @foreach (var training in Model.Trainings)
                 {
-                    <div class="col-md-8">
-                        <a asp-action="MyTrainings" asp-controller="Trainings" asp-route-trainingName="@training.Name">
-                            <h5>@training.Name</h5>
-                        </a>
-                        <a asp-action="Delete" asp-controller="Trainings" asp-route-id="@training.Id">
-                            <i class="fas fa-trash-alt text-danger"></i>
-                        </a>
-                    </div>
+                    <tr>
+                        <td>
+                            <a asp-action="MyTrainings" asp-controller="Trainings" asp-route-trainingName="@training.Name">
+                                <h5>@training.Name</h5>
+                            </a>
+                        </td>
+                        <td></td>
+                        <td>
+                            <a asp-action="Delete" asp-controller="Trainings" asp-route-id="@training.Id">
+                                <i class="fas fa-trash-alt text-danger"></i>
+                            </a>
+                        </td>
+                    </tr>
                 }
-            </div>
+            </table>
             <hr />
             <div class="text-center">
                 <a class="btn btn-outline-info" asp-area="" asp-controller="Exercises" asp-action="All">Add exercise</a>
@@ -66,9 +71,9 @@
                                 <img class="card-img img-thumbnail" style="height: 180px;" src="@exercise.ExerciseImageUrl" alt="Card image cap">
                             </div>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item bg-light"><strong>Sets:</strong> @exercise.Sets</li>
-                                <li class="list-group-item bg-light"><strong>Repetitions:</strong> @exercise.Repetitions</li>
-                                <li class="list-group-item bg-light"><strong>Weight:</strong> @exercise.Weight</li>
+                                <li class="list-group-item li-bg-color"><strong>Sets:</strong> @exercise.Sets</li>
+                                <li class="list-group-item li-bg-color"><strong>Repetitions:</strong> @exercise.Repetitions</li>
+                                <li class="list-group-item li-bg-color"><strong>Weight:</strong> @exercise.Weight</li>
                                 <li class="list-group-item text-center alert bg-light">
                                     <a asp-action="AddToTraining" asp-controller="Exercises" asp-route-exerciseId="@exercise.ExerciseId">
                                         <p class="text-white btn btn-sm btn-info font-weight-bold">Details</p>
