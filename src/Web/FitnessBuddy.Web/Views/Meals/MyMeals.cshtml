@@ -132,17 +132,17 @@ else
                 <th>
                     Remaining:
                 </th>
-                <th>
-                    @((Model.UserNutrients.DailyCaloriesGoal - Model.TotalCalories).ToString("F2")) kcal
+                <th class="remainings">
+                    @Model.RemainingCalories.ToString("F2") kcal
                 </th>
-                <th>
-                    @((Model.UserNutrients.DailyProteinGoal - Model.TotalProtein).ToString("F2")) gr.
+                <th class="remainings">
+                    @Model.RemainingProtein.ToString("F2") gr.
                 </th>
-                <th>
-                    @((Model.UserNutrients.DailyCarbohydratesGoal - Model.TotalCarbohydrates).ToString("F2")) gr.
+                <th class="remainings">
+                    @Model.RemainingCarbohydrates.ToString("F2") gr.
                 </th>
-                <th>
-                    @((Model.UserNutrients.DailyFatGoal - Model.TotalFats).ToString("F2")) gr.
+                <th class="remainings">
+                    @Model.RemainingFat gr.
                 </th>
                 <th></th>
             </tr>
@@ -154,4 +154,26 @@ else
     <div class="text-center" style="margin-top: 1%">
         <a class="btn btn-outline-primary" asp-area="" asp-controller="Meals" asp-action="Create">Create new meal</a>
     </div>
+}
+
+
+@section Scripts{
+<script>
+    var filterArray = [
+        '', '\n', 'kcal\n', 'gr.\n'
+    ]
+
+    $(".remainings").each(function( index ) {
+        var value = $(this)
+        .text()
+        .split(' ')
+        .filter(x => !filterArray.includes(x))[0];
+
+        var valueAsInt = parseInt(value);
+
+        if(valueAsInt < 0) {
+            $(this).addClass("text-danger");
+        }
+    });
+</script>
 }
