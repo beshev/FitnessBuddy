@@ -3,11 +3,11 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using FitnessBuddy.Web.ViewModels.Exercises;
+    using FitnessBuddy.Web.ViewModels.Trainings;
 
     public interface ITrainingsExercisesService
     {
-        public Task AddAsync(ExerciseTrainingInputModel model);
+        public Task AddAsync(TrainingExerciseInputModel model);
 
         public Task RemoveAsync(int id);
 

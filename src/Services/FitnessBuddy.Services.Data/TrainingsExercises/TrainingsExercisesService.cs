@@ -7,7 +7,7 @@
     using FitnessBuddy.Data.Common.Repositories;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
-    using FitnessBuddy.Web.ViewModels.Exercises;
+    using FitnessBuddy.Web.ViewModels.Trainings;
 
     public class TrainingsExercisesService : ITrainingsExercisesService
     {
@@ -18,17 +18,17 @@
             this.trainingExerciseRepository = trainingExerciseRepository;
         }
 
-        public async Task AddAsync(ExerciseTrainingInputModel model)
+        public async Task AddAsync(TrainingExerciseInputModel model)
         {
             var trainingExercise = this.trainingExerciseRepository
                 .All()
-                .FirstOrDefault(x => x.ExerciseId == model.Id && x.TrainingId == model.TrainingId);
+                .FirstOrDefault(x => x.ExerciseId == model.ExerciseId && x.TrainingId == model.TrainingId);
 
             if (trainingExercise == null)
             {
                 trainingExercise = new TrainingExercise
                 {
-                    ExerciseId = model.Id,
+                    ExerciseId = model.ExerciseId,
                     TrainingId = model.TrainingId,
                     Sets = model.Sets,
                     Repetitions = model.Repetitions,
