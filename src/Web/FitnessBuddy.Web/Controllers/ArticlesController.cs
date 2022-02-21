@@ -26,20 +26,19 @@
         }
 
         [AllowAnonymous]
-        public IActionResult All(int id = 1, string search = "")
+        public IActionResult All(int id = 1)
         {
-            int count = this.articlesService.GetCount(search);
+            int count = this.articlesService.GetCount();
             int pagesCount = (int)Math.Ceiling((double)count / ArticlesPerPage);
             var skip = (id - 1) * ArticlesPerPage;
 
-            var articles = this.articlesService.GetAll<ArticleViewModel>(search, skip, ArticlesPerPage);
+            var articles = this.articlesService.GetAll<ArticleViewModel>(skip, ArticlesPerPage);
 
             var viewModel = new AllArticlesViewModel
             {
                 PageNumber = id,
                 PagesCount = pagesCount,
                 Articles = articles,
-                Search = search,
                 ForAction = nameof(this.All),
                 ForController = this.GetType().Name.Replace(nameof(Controller), string.Empty),
             };
