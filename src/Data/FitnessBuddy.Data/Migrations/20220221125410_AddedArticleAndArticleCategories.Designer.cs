@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessBuddy.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220210165939_AddedArticleAndArticleCategories")]
+    [Migration("20220221125410_AddedArticleAndArticleCategories")]
     partial class AddedArticleAndArticleCategories
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -180,10 +180,6 @@ namespace FitnessBuddy.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("AddedByUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
@@ -194,6 +190,10 @@ namespace FitnessBuddy.Data.Migrations
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
@@ -215,9 +215,9 @@ namespace FitnessBuddy.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddedByUserId");
-
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("CreatorId");
 
                     b.HasIndex("IsDeleted");
 
@@ -764,21 +764,21 @@ namespace FitnessBuddy.Data.Migrations
 
             modelBuilder.Entity("FitnessBuddy.Data.Models.Article", b =>
                 {
-                    b.HasOne("FitnessBuddy.Data.Models.ApplicationUser", "AddedByUser")
-                        .WithMany()
-                        .HasForeignKey("AddedByUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("FitnessBuddy.Data.Models.ArticleCategory", "Category")
                         .WithMany("Articles")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("AddedByUser");
+                    b.HasOne("FitnessBuddy.Data.Models.ApplicationUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Category");
+
+                    b.Navigation("Creator");
                 });
 
             modelBuilder.Entity("FitnessBuddy.Data.Models.Exercise", b =>
