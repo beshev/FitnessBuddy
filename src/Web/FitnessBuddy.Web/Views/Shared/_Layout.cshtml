@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
-    @*<link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />*@
+    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/bootstrap.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/mycustom.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/_bootswatch.scss" asp-append-version="true" />
@@ -29,7 +29,7 @@
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="Users" asp-action="Profile">Profile</a>
                             </li>
-                             <li class="nav-item">
+                            <li class="nav-item">
                                 <div class="dropdown show">
                                     <a class="btn dropdown-toggle text-white" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Workout
@@ -93,9 +93,90 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted navbar-dark bg-info">
+    <footer class="footer shadow alert alert-dismissible alert-secondary text-white">
         <div class="container">
-            &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="row">
+                    <div class="col-md-3">
+                        <h2 class="ct-footer-list-header">Learn More</h2>
+                        <ul>
+                            <li>
+                                <a href="">Company</a>
+                            </li>
+                            <li>
+                                <a href="">Clients</a>
+                            </li>
+                            <li>
+                                <a href="">News</a>
+                            </li>
+                            <li>
+                                <a href="">Careers</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <h2 class="ct-footer-list-header">Services</h2>
+                        <ul>
+                            <li>
+                                <a href="">Design</a>
+                            </li>
+                            <li>
+                                <a href="">Marketing</a>
+                            </li>
+                            <li>
+                                <a href="">Sales</a>
+                            </li>
+                            <li>
+                                <a href="">Programming</a>
+                            </li>
+                            <li>
+                                <a href="">Support</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <h2 class="ct-footer-list-header">The Industry</h2>
+                        <ul>
+                            <li>
+                                <a href="">Thought Leadership</a>
+                            </li>
+                            <li>
+                                <a href="">Webinars</a>
+                            </li>
+                            <li>
+                                <a href="">Events</a>
+                            </li>
+                            <li>
+                                <a href="">Sponsorships</a>
+                            </li>
+                            <li>
+                                <a href="">Advisors</a>
+                            </li>
+                            <li>
+                                <a href="">Training Program</a>
+                            </li>
+                            <li>
+                                <a href="">Activities & Campaigns</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <h2 class="ct-footer-list-header">About</h2>
+                        <ul>
+                            <li>
+                                <a href="">FAQ</a>
+                            </li>
+                            <li>
+                                <a href="">Our Board</a>
+                            </li>
+                            <li>
+                                <a href="">Our Staff</a>
+                            </li>
+                            <li>
+                                <a href="">Contact Us</a>
+                            </li>
+                        </ul>
+                    </div>
+            </div>
         </div>
     </footer>
 
