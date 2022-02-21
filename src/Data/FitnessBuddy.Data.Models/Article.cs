@@ -24,8 +24,8 @@
         public virtual ArticleCategory Category { get; set; }
 
         [Required]
-        public string AddedByUserId { get; set; }
+        public string CreatorId { get; set; }
 
-        public virtual ApplicationUser AddedByUser { get; set; }
+        public virtual ApplicationUser Creator { get; set; }
     }
 }
