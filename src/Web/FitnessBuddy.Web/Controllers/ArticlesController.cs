@@ -60,7 +60,7 @@
                 return this.View(model);
             }
 
-            model.AddedByUserId = this.User.GetUserId();
+            model.CreatorId = this.User.GetUserId();
 
             await this.articlesService.CreateAsync(model);
 
@@ -70,6 +70,7 @@
         public IActionResult Details(int id)
         {
             var viewModel = this.articlesService.GetById<ArticleDetailsModel>(id);
+            viewModel.IsCreator = viewModel.CreatorId == this.User.GetUserId();
 
             return this.View(viewModel);
         }
