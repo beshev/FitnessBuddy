@@ -26,6 +26,30 @@
             await this.articlesRepository.SaveChangesAsync();
         }
 
+        public async Task DeleteAsync(int id)
+        {
+            var article = this.articlesRepository
+                   .All()
+                   .FirstOrDefault(x => x.Id == id);
+
+            this.articlesRepository.Delete(article);
+            await this.articlesRepository.SaveChangesAsync();
+        }
+
+        public async Task EditAsync(ArticleInputModel model)
+        {
+            var article = this.articlesRepository
+                .All()
+                .FirstOrDefault(x => x.Id == model.Id);
+
+            article.Title = model.Title;
+            article.Content = model.Content;
+            article.CategoryId = model.CategoryId.Value;
+            article.ImageUrl = model.ImageUrl;
+
+            await this.articlesRepository.SaveChangesAsync();
+        }
+
         public IEnumerable<TModel> GetAll<TModel>(int skip = 0, int? take = null)
         {
             var query = this.articlesRepository
@@ -49,6 +73,11 @@
             .Where(x => x.Id == id)
             .To<TModel>()
             .FirstOrDefault();
+
+        public bool IsUserCreator(string userId, int articleId)
+            => this.articlesRepository
+            .AllAsNoTracking()
+            .Any(x => x.Id == articleId && x.CreatorId == userId);
 
         public int GetCount()
             => this.articlesRepository

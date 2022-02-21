@@ -13,6 +13,12 @@
 
         public Task CreateAsync(ArticleInputModel model);
 
+        public Task EditAsync(ArticleInputModel model);
+
+        public Task DeleteAsync(int id);
+
+        public bool IsUserCreator(string userId, int articleId);
+
         public int GetCount();
     }
 }
