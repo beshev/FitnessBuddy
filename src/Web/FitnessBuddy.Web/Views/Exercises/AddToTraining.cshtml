@@ -1,5 +1,5 @@
 ﻿@using FitnessBuddy.Web.ViewModels.Exercises
-@model ExerciseTrainingInputModel
+@model ExerciseDetailsModel
 
 @{
     this.ViewData["Title"] = "Exercise details";
@@ -10,22 +10,22 @@
         <div class="col-md-2 form-training-bg-color text-center text-white font-weight-bold">
             <form asp-controller="Exercises" asp-action="AddToTraining">
                 <div class="form-grup">
-                    <label asp-for="Sets"></label>
-                    <input asp-for="Sets" class="form-control" placeholder="Food name..." />
-                    <span asp-validation-for="Sets" class="text-danger"></span>
+                    <label asp-for="TrainingExercise.Sets"></label>
+                    <input asp-for="TrainingExercise.Sets" class="form-control" placeholder="Sets..." />
+                    <span asp-validation-for="TrainingExercise.Sets" class="text-danger"></span>
                 </div>
                 <div class="form-grup">
-                    <label asp-for="Repetitions"></label>
-                    <input asp-for="Repetitions" class="form-control" placeholder="Food name..." />
-                    <span asp-validation-for="Repetitions" class="text-danger"></span>
+                    <label asp-for="TrainingExercise.Repetitions"></label>
+                    <input asp-for="TrainingExercise.Repetitions" class="form-control" placeholder="Repetitions..." />
+                    <span asp-validation-for="TrainingExercise.Repetitions" class="text-danger"></span>
                 </div>
                 <div class="form-grup">
-                    <label asp-for="Weight"></label>
-                    <input asp-for="Weight" class="form-control" placeholder="Food name..." />
-                    <span asp-validation-for="Weight" class="text-danger"></span>
+                    <label asp-for="TrainingExercise.Weight"></label>
+                    <input asp-for="TrainingExercise.Weight" class="form-control" placeholder="Weight..." />
+                    <span asp-validation-for="TrainingExercise.Weight" class="text-danger"></span>
                 </div>
-                <vc:trainings-select user-id="@Model.UserId"></vc:trainings-select>
-                <input type="hidden" asp-for="Id" value="@Model.Id" />
+                <vc:trainings-select></vc:trainings-select>
+                <input type="hidden" asp-for="TrainingExercise.ExerciseId" value="@Model.Id" />
                 <div class="form-group" style="margin-top: 2%;">
                     <input type="submit" class="btn btn-info" value="Add" />
                 </div>

@@ -8,6 +8,7 @@
     using FitnessBuddy.Services.Data.TrainingsExercises;
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Exercises;
+    using FitnessBuddy.Web.ViewModels.Trainings;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
@@ -70,21 +71,20 @@
 
         public IActionResult AddToTraining(int exerciseId)
         {
-            var viewModel = this.exercisesService.GetById<ExerciseTrainingInputModel>(exerciseId);
-            viewModel.UserId = this.User.GetUserId();
+            var viewModel = this.exercisesService.GetById<ExerciseDetailsModel>(exerciseId);
 
             return this.View(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddToTraining(ExerciseTrainingInputModel model)
+        public async Task<IActionResult> AddToTraining(ExerciseDetailsModel model)
         {
             if (this.ModelState.IsValid == false)
             {
                 return this.View(model);
             }
 
-            await this.trainingsExercisesService.AddAsync(model);
+            await this.trainingsExercisesService.AddAsync(model.TrainingExercise);
 
             return this.Redirect(GlobalConstants.UserTrainings);
         }
