@@ -7,12 +7,12 @@
 
     public interface IArticlesService
     {
-        public IEnumerable<TModel> GetAll<TModel>(string search = null, int skip = 0, int? take = null);
+        public IEnumerable<TModel> GetAll<TModel>(int skip = 0, int? take = null);
 
         public TModel GetById<TModel>(int id);
 
         public Task CreateAsync(ArticleInputModel model);
 
-        public int GetCount(string search = "");
+        public int GetCount();
     }
 }

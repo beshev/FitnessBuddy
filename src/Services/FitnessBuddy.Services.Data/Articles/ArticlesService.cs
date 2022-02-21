@@ -26,15 +26,10 @@
             await this.articlesRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<TModel> GetAll<TModel>(string search = null, int skip = 0, int? take = null)
+        public IEnumerable<TModel> GetAll<TModel>(int skip = 0, int? take = null)
         {
             var query = this.articlesRepository
                 .AllAsNoTracking();
-
-            if (string.IsNullOrWhiteSpace(search) == false)
-            {
-                query = query.Where(x => x.Title == search);
-            }
 
             if (take.HasValue)
             {
@@ -55,17 +50,9 @@
             .To<TModel>()
             .FirstOrDefault();
 
-        public int GetCount(string search = "")
-        {
-            var query = this.articlesRepository
-                .AllAsNoTracking();
-
-            if (string.IsNullOrWhiteSpace(search) == false)
-            {
-                query = query.Where(x => x.Title == search);
-            }
-
-            return query.Count();
-        }
+        public int GetCount()
+            => this.articlesRepository
+                .AllAsNoTracking()
+                .Count();
     }
 }
