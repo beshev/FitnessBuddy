@@ -69,9 +69,47 @@
             return this.RedirectToAction(nameof(this.All));
         }
 
+        public IActionResult Edit(int id)
+        {
+            var viewModel = this.exercisesService.GetById<ExerciseInputModel>(id);
+
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(ExerciseInputModel model)
+        {
+            if (this.exercisesService.IsUserCreator(this.User.GetUserId(), model.Id) == false)
+            {
+                return this.Unauthorized();
+            }
+
+            if (this.ModelState.IsValid == false)
+            {
+                return this.View(model);
+            }
+
+            await this.exercisesService.EditAsync(model);
+
+            return this.RedirectToAction(nameof(this.AddToTraining), new { ExerciseId = model.Id });
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (this.exercisesService.IsUserCreator(this.User.GetUserId(), id) == false)
+            {
+                return this.Unauthorized();
+            }
+
+            await this.exercisesService.DeleteAsync(id);
+
+            return this.RedirectToAction(nameof(this.All));
+        }
+
         public IActionResult AddToTraining(int exerciseId)
         {
             var viewModel = this.exercisesService.GetById<ExerciseDetailsModel>(exerciseId);
+            viewModel.IsCreator = this.exercisesService.IsUserCreator(this.User.GetUserId(), exerciseId);
 
             return this.View(viewModel);
         }

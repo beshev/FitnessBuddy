@@ -33,18 +33,20 @@
         </div>
 
         <div class="col-md-10 training-details-bg-color">
+
             <div class="text-center">
                 <h2>
                     @Model.Name
                 </h2>
             </div>
+
             <div class="row">
                 <div class="col-md-6">
                     <p class="img" ">
                         <img src="@Model.ImageUrl" class="img-fluid" alt="Responsive image" />
                     </p>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <p class="item-description">
                         <strong>Muscle group: </strong>@Model.CategoryName
                     </p>
@@ -55,7 +57,12 @@
                         <strong>Difficulty: </strong>@Model.Difficulty
                     </p>
                 </div>
+                <div class="col-md-3">
+                   <a class="btn btn-outline-info" href=@($"/Exercises/Edit/{Model.Id}")>Edit</a>
+                   <a class="btn btn-outline-danger" href=@($"/Exercises/Delete/{Model.Id}")>Delete</a>
+                </div>
             </div>
+
             <div class="row">
                 <div class="col-md-6">
                     <div class="embed-responsive embed-responsive-16by9">

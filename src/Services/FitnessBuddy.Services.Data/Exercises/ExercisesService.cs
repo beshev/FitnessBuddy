@@ -78,6 +78,39 @@
             return query.Count();
         }
 
+        public bool IsUserCreator(string userId, int exerciseId)
+            => this.exerciseRepository
+            .AllAsNoTracking()
+            .Any(x => x.AddedByUserId == userId && x.Id == exerciseId);
+
+        public async Task EditAsync(ExerciseInputModel model)
+        {
+            var exercise = this.exerciseRepository
+                .All()
+                .FirstOrDefault(x => x.Id == model.Id);
+
+            exercise.Name = model.Name;
+            exercise.Description = model.Description;
+            exercise.ImageUrl = model.ImageUrl;
+            exercise.VideoUrl = model.VideoUrl;
+            exercise.CategoryId = model.CategoryId;
+            exercise.EquipmentId = model.EquipmentId;
+            exercise.Difficulty = model.Difficulty;
+
+            this.exerciseRepository.Update(exercise);
+            await this.exerciseRepository.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var exercise = this.exerciseRepository
+                   .All()
+                   .FirstOrDefault(x => x.Id == id);
+
+            this.exerciseRepository.Delete(exercise);
+            await this.exerciseRepository.SaveChangesAsync();
+        }
+
         private static string GetYouTubeEmbededLink(string url)
         {
             var regex = new Regex(@"^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*");

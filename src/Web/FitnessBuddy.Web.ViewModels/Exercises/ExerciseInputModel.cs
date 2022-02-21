@@ -3,10 +3,14 @@
     using System.ComponentModel.DataAnnotations;
 
     using FitnessBuddy.Common;
+    using FitnessBuddy.Data.Models;
     using FitnessBuddy.Data.Models.Enums;
+    using FitnessBuddy.Services.Mapping;
 
-    public class ExerciseInputModel
+    public class ExerciseInputModel : IMapFrom<Exercise>
     {
+        public int Id { get; set; }
+
         [Required]
         [MaxLength(DataConstants.ExerciseNameMaxLength)]
         [MinLength(DataConstants.ExerciseNameMinLength)]

@@ -22,6 +22,8 @@
 
         public string EquipmentName { get; set; }
 
+        public bool IsCreator { get; set; }
+
         public TrainingExerciseInputModel TrainingExercise { get; set; }
     }
 }
