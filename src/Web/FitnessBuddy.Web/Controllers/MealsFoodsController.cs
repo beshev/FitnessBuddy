@@ -32,7 +32,7 @@
             this.usersService = usersService;
         }
 
-        public IActionResult AddFood(int foodId)
+        public IActionResult AddFood(int foodId, int mealId = 0)
         {
             var viewModel = this.foodsService.GetByIdAsNoTracking<MealFoodInputModel>(foodId);
 
@@ -45,6 +45,8 @@
 
             viewModel.UserId = userId;
             viewModel.HasMeals = this.usersService.HasMeal(userId);
+
+            this.ViewData["Selected"] = mealId;
 
             return this.View(viewModel);
         }

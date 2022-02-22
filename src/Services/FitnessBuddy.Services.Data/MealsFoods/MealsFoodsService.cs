@@ -35,7 +35,7 @@
                 await this.mealFoodRepository.AddAsync(mealFood);
             }
 
-            mealFood.QuantityInGrams += model.QuantityInGrams;
+            mealFood.QuantityInGrams = model.QuantityInGrams;
 
             await this.mealFoodRepository.SaveChangesAsync();
 

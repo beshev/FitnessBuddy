@@ -72,7 +72,10 @@ else
                             @mealFood.Fats.ToString("F2")
                         </th>
                         <th>
-                            <a asp-action="RemoveFood" asp-controller="MealsFoods" asp-route-mealFoodId="@mealFood.Id">
+                            <a asp-action="AddFood" asp-controller="MealsFoods" asp-route-foodId="@mealFood.FoodId" asp-route-mealId="@mealFood.MealId">
+                                <i class="fa-solid fa-pen text-info"></i>
+                            </a>
+                            <a asp-action="RemoveFood" asp-controller="MealsFoods" asp-route-mealFoodId="@mealFood.Id" class="ml-4">
                                 <i class="far fa-trash-alt text-danger"></i>
                             </a>
                         </th>
@@ -132,17 +135,17 @@ else
                 <th>
                     Remaining:
                 </th>
-                <th class="remainings">
+                <th class="stat">
                     @Model.RemainingCalories.ToString("F2") kcal
                 </th>
-                <th class="remainings">
+                <th class="stat">
                     @Model.RemainingProtein.ToString("F2") gr.
                 </th>
-                <th class="remainings">
+                <th class="stat">
                     @Model.RemainingCarbohydrates.ToString("F2") gr.
                 </th>
-                <th class="remainings">
-                    @Model.RemainingFat gr.
+                <th class="stat">
+                    @Model.RemainingFat.ToString("F2") gr.
                 </th>
                 <th></th>
             </tr>
@@ -163,7 +166,7 @@ else
         '', '\n', 'kcal\n', 'gr.\n'
     ]
 
-    $(".remainings").each(function( index ) {
+    $(".stat").each(function( index ) {
         var value = $(this)
         .text()
         .split(' ')

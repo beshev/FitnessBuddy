@@ -9,6 +9,10 @@
     {
         public int Id { get; set; }
 
+        public int FoodId { get; set; }
+
+        public int MealId { get; set; }
+
         public string FoodName { get; set; }
 
         public double Protein { get; set; }
