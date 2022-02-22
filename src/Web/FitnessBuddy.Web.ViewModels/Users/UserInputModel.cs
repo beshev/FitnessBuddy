@@ -30,7 +30,7 @@
         public double GoalWeightInKg { get; set; }
 
         [Display(Name = "Profile picture")]
-        [AllowedExtensions(new string[] { ".jpg", ".png" })]
+        [AllowedExtensions(".jpg", ".png")]
         public IFormFile ProfilePicture { get; set; }
 
         [Range(DataConstants.UserHeightMinValue, DataConstants.UserHeightMaxValue)]
