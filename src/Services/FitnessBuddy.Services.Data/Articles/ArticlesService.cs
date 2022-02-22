@@ -1,6 +1,7 @@
 ﻿namespace FitnessBuddy.Services.Data.Articles
 {
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -8,6 +9,7 @@
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
     using FitnessBuddy.Web.ViewModels.Articles;
+    using Microsoft.AspNetCore.Http;
 
     public class ArticlesService : IArticlesService
     {
@@ -18,11 +20,16 @@
             this.articlesRepository = articlesRepository;
         }
 
-        public async Task CreateAsync(ArticleInputModel model)
+        public async Task CreateAsync(ArticleInputModel model, string picturePath)
         {
             var article = AutoMapperConfig.MapperInstance.Map<Article>(model);
 
             await this.articlesRepository.AddAsync(article);
+            article.ImageUrl = string.Empty;
+            await this.articlesRepository.SaveChangesAsync();
+
+            // TODO: Find another way for saving the new picture. !!
+            article.ImageUrl = await SavePictureAsync(model.Picture, article.Id, picturePath);
             await this.articlesRepository.SaveChangesAsync();
         }
 
@@ -36,7 +43,7 @@
             await this.articlesRepository.SaveChangesAsync();
         }
 
-        public async Task EditAsync(ArticleInputModel model)
+        public async Task EditAsync(ArticleInputModel model, string picturePath)
         {
             var article = this.articlesRepository
                 .All()
@@ -45,7 +52,7 @@
             article.Title = model.Title;
             article.Content = model.Content;
             article.CategoryId = model.CategoryId.Value;
-            article.ImageUrl = model.ImageUrl;
+            article.ImageUrl = await SavePictureAsync(model.Picture, article.Id, picturePath);
 
             await this.articlesRepository.SaveChangesAsync();
         }
@@ -83,5 +90,18 @@
             => this.articlesRepository
                 .AllAsNoTracking()
                 .Count();
+
+        private static async Task<string> SavePictureAsync(IFormFile picture, int articleId, string picturePath)
+        {
+            Directory.CreateDirectory($@"{picturePath}\articles\");
+            var physicalPath = $@"{picturePath}\articles\{articleId}{Path.GetExtension(picture.FileName)}";
+
+            using (var fileStream = new FileStream(physicalPath, FileMode.Create))
+            {
+                await picture.CopyToAsync(fileStream);
+            }
+
+            return physicalPath;
+        }
     }
 }

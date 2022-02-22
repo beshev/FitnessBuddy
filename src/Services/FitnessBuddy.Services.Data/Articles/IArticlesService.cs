@@ -11,9 +11,9 @@
 
         public TModel GetById<TModel>(int id);
 
-        public Task CreateAsync(ArticleInputModel model);
+        public Task CreateAsync(ArticleInputModel model, string picturePath);
 
-        public Task EditAsync(ArticleInputModel model);
+        public Task EditAsync(ArticleInputModel model, string picturePath);
 
         public Task DeleteAsync(int id);
 

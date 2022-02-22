@@ -7,6 +7,7 @@
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Articles;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
 
     [Authorize]
@@ -16,13 +17,16 @@
 
         private readonly IArticlesService articlesService;
         private readonly IArticleCategoriesService articleCategoriesService;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
         public ArticlesController(
             IArticlesService articlesService,
-            IArticleCategoriesService articleCategoriesService)
+            IArticleCategoriesService articleCategoriesService,
+            IWebHostEnvironment webHostEnvironment)
         {
             this.articlesService = articlesService;
             this.articleCategoriesService = articleCategoriesService;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         [AllowAnonymous]
@@ -63,7 +67,9 @@
             model.Id = 0;
             model.CreatorId = this.User.GetUserId();
 
-            await this.articlesService.CreateAsync(model);
+            var path = $"{this.webHostEnvironment.WebRootPath}/images";
+
+            await this.articlesService.CreateAsync(model, path);
 
             return this.RedirectToAction(nameof(this.All));
         }
@@ -129,7 +135,9 @@
                 return this.View();
             }
 
-            await this.articlesService.EditAsync(model);
+            var path = $"{this.webHostEnvironment.WebRootPath}/images";
+
+            await this.articlesService.EditAsync(model, path);
 
             return this.RedirectToAction(nameof(this.Details), new { model.Id });
         }

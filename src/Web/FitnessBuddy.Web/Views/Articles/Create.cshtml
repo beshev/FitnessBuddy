@@ -9,7 +9,7 @@
         @this.ViewData["Title"]
     </h1>
 
-    <form asp-controller="Articles" asp-action="Create" class="col-lg-6 offset-lg-3">
+    <form asp-controller="Articles" asp-action="Create" class="col-lg-6 offset-lg-3" enctype="multipart/form-data">
         <div asp-validation-summary="All" class="text-danger"></div>
 
         <div class="form-grup">
@@ -24,9 +24,9 @@
         </div>
         <vc:article-categories-select></vc:article-categories-select>
         <div class="form-grup">
-            <label asp-for="ImageUrl"></label>
-            <input asp-for="ImageUrl" class="form-control" placeholder="ImageUrl..." />
-            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            <label asp-for="Picture"></label>
+            <input asp-for="Picture" class="form-control" placeholder="ImageUrl..." />
+            <span asp-validation-for="Picture" class="text-danger"></span>
         </div>
         <div class="form-grup" style="margin-top: 2%;">
             <input type="submit" class="btn btn-outline-dark" value="Add" />

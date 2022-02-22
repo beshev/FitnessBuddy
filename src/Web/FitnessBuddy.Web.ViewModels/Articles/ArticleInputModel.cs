@@ -5,6 +5,8 @@
     using FitnessBuddy.Common;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
+    using FitnessBuddy.Web.Infrastructure.Attributes;
+    using Microsoft.AspNetCore.Http;
 
     public class ArticleInputModel : IMapTo<Article>, IMapFrom<Article>
     {
@@ -19,8 +21,8 @@
         public string Content { get; set; }
 
         [Required]
-        [Url(ErrorMessage = "The URL is not valid!")]
-        public string ImageUrl { get; set; }
+        [AllowedExtensions(".jpg", ".png")]
+        public IFormFile Picture { get; set; }
 
         [Required(ErrorMessage = "The field Category is required!")]
         public int? CategoryId { get; set; }
