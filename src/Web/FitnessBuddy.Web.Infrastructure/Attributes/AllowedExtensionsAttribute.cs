@@ -11,7 +11,7 @@
     {
         private readonly string[] extensions;
 
-        public AllowedExtensionsAttribute(string[] extensions)
+        public AllowedExtensionsAttribute(params string[] extensions)
         {
             this.extensions = extensions;
         }
