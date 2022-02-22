@@ -9,24 +9,21 @@
     <div class="row">
         <div class="col-md-2 border shadow bg-light rounded">
             <h4 class="text-center">Workouts:</h4>
-            <table>
+            <div class="row">
                 @foreach (var training in Model.Trainings)
                 {
-                    <tr>
-                        <td>
-                            <a asp-action="MyTrainings" asp-controller="Trainings" asp-route-trainingName="@training.Name">
-                                <h5>@training.Name</h5>
-                            </a>
-                        </td>
-                        <td></td>
-                        <td>
-                            <a asp-action="Delete" asp-controller="Trainings" asp-route-id="@training.Id">
-                                <i class="fas fa-trash-alt text-danger"></i>
-                            </a>
-                        </td>
-                    </tr>
+                    <div class="col-md-1">
+                        <a asp-action="Delete" asp-controller="Trainings" asp-route-id="@training.Id">
+                            <i class="fas fa-trash-alt text-danger"></i>
+                        </a>
+                    </div>
+                    <div class="col-md-10 text-left">
+                        <a asp-action="MyTrainings" asp-controller="Trainings" asp-route-trainingName="@training.Name">
+                            <h5>@training.Name</h5>
+                        </a>
+                    </div>
                 }
-            </table>
+            </div>
             <hr />
             <div class="text-center">
                 <a class="btn btn-outline-info" asp-area="" asp-controller="Exercises" asp-action="All">Add exercise</a>
