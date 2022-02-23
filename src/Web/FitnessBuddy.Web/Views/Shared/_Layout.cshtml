@@ -81,6 +81,19 @@
                                 </div>
                             </div>
                         </li>
+                        <li class="nav-item">
+                            <div class="dropdown show">
+                                <a class="btn dropdown-toggle text-white" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Community
+                                </a>
+                                <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuLink">
+                                    @if (this.User.Identity.IsAuthenticated)
+                                    {
+                                        <a class="dropdown-item" asp-action="Categories" asp-controller="Posts" asp-route-id="1">Forum</a>
+                                    }
+                                </div>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>
