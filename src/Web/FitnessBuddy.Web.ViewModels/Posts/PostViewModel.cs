@@ -1,5 +1,7 @@
 ﻿namespace FitnessBuddy.Web.ViewModels.Posts
 {
+    using System;
+
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
 
@@ -14,6 +16,8 @@
         public string CategoryName { get; set; }
 
         public string AuthorUsername { get; set; }
+
+        public DateTime CreatedOn { get; set; }
 
         public int RepliesCount { get; set; }
 
