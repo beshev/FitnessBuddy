@@ -21,5 +21,17 @@
             .AllAsNoTracking()
             .To<TModel>()
             .AsEnumerable();
+
+        public string GetName(int categoryId)
+            => this.postCategoriesRepository
+            .AllAsNoTracking()
+            .Where(x => x.Id == categoryId)
+            .Select(x => x.Name)
+            .FirstOrDefault();
+
+        public bool IsExist(int categoryId)
+            => this.postCategoriesRepository
+            .AllAsNoTracking()
+            .Any(x => x.Id == categoryId);
     }
 }
