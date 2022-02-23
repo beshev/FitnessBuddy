@@ -2,8 +2,10 @@
 {
     using FitnessBuddy.Services.Data.Posts;
     using FitnessBuddy.Web.ViewModels.Posts;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize]
     public class PostsController : Controller
     {
         private readonly IPostCategoriesService postCategoriesService;
