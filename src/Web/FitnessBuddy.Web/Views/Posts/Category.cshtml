@@ -1,0 +1,25 @@
+﻿@model CategoryPostsViewModel
+
+@{
+    this.ViewData["Title"] = @Model.Name;
+}
+
+<h3 class="text-center">
+    @this.ViewData["Title"]
+</h3>
+<div class="row">
+    @foreach (var post in Model.Posts)
+    {
+        <div class="card border-info mb-3 col-md-4 shadow" style="max-width: 20rem;">
+            <div class="row">
+                <div class="card-header col-md-4">Views: @post.Views</div>
+                <div class="card-header col-md-4">Replies: @post.RepliesCount</div>
+                <div class="card-header col-md-4"><span class="text-info">@post.CategoryName</span></div>
+            </div>
+            <div class="card-body">
+                <a asp-action="Details" asp-controller="Post" asp-route-id="@post.Id" ><h4 class="card-title">@post.Title</h4></a>
+                <p class="card-text">@(post.Description.Substring(0, post.Description.Length / 4))...</p>
+            </div>
+        </div>
+    }
+</div>
