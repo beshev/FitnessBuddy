@@ -32,6 +32,7 @@
                               new ExercisesSeeder(),
                               new FoodsSeeder(),
                               new ArticleCategoriesSeeder(),
+                              new PostCategoriesSeeder(),
                           };
 
             foreach (var seeder in seeders)
