@@ -61,15 +61,30 @@
         public const int TrainingNameMinLength = 3;
         public const int TrainingNameMaxLength = 100;
 
-        // Article Model
+        // Article model
         public const int ArticleTitleMinLength = 2;
         public const int ArticleTitleMaxLength = 100;
 
         public const int ArticleContentMinLength = 2;
         public const int ArticleContentMaxLength = 10000;
 
-        // ArticleCategory Model
+        // ArticleCategory model
         public const int ArticleCategoryNameMinLength = 2;
         public const int ArticleCategoryNameMaxLength = 20;
+
+        // Post model
+        public const int PostTitleMinLength = 1;
+        public const int PostTitleMaxLength = 100;
+
+        public const int PostDescriptionMinLength = 10;
+        public const int PostDescriptionMaxLength = 5000;
+
+        // Reply model
+        public const int ReplyDescriptionMinLength = 1;
+        public const int ReplyDescriptionMaxLength = 5000;
+
+        // PostCategory model
+        public const int PostCategoryNameMinLength = 1;
+        public const int PostCategoryNameMaxLength = 100;
     }
 }

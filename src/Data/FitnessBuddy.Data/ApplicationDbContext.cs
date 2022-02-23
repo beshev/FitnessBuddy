@@ -48,6 +48,12 @@
 
         public DbSet<ArticleCategory> ArticleCategories { get; set; }
 
+        public DbSet<Post> Posts { get; set; }
+
+        public DbSet<Reply> Replies { get; set; }
+
+        public DbSet<PostCategory> PostCategories { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
