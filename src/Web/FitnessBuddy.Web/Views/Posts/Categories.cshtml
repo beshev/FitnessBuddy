@@ -1,0 +1,27 @@
+﻿@model IEnumerable<PostCategoryViewModel>
+
+@{
+    this.ViewData["Title"] = "Forum";
+}
+
+<h1 class="text-center">
+    @this.ViewData["Title"]
+</h1>
+
+<div class="row">
+    @foreach(var category in Model)
+    {
+        <div class="col-md-6 col-lg-4 mb-5">
+            <div class="list-group shadow">
+                <a asp-action="Category" asp-controller="Posts" asp-route-id="@category.Id" class="list-group-item list-group-item-action flex-column align-items-start alert-primary">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h3 class="mb-1">@category.Name</h3>
+                        <p class="text-info">@category.PostsCount posts</p>
+                    </div>
+                    <p class="mb-1">Lets discuss about @category.Name.</p>
+
+                </a>
+            </div>
+        </div>
+    }
+</div>
