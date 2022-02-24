@@ -71,6 +71,8 @@
         {
             var viewModel = this.postsService.GetById<PostDetailsViewModel>(id);
 
+            this.postsService.IncreaseViewsAsync(id);
+
             return this.View(viewModel);
         }
     }
