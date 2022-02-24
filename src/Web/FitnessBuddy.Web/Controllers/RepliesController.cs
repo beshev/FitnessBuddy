@@ -1,7 +1,7 @@
 ﻿namespace FitnessBuddy.Web.Controllers
 {
     using System.Threading.Tasks;
-
+    using FitnessBuddy.Services.Data.Posts;
     using FitnessBuddy.Services.Data.Replies;
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Replies;
@@ -22,6 +22,11 @@
         {
             var viewModel = this.repliesService.GetById<ReplyViewModel>(parentId);
 
+            if (viewModel == null)
+            {
+                return this.NotFound();
+            }
+
             return this.View(viewModel);
         }
 
@@ -41,6 +46,16 @@
 
         public async Task<IActionResult> Delete(int replyId, int postId)
         {
+            if (this.repliesService.IsExist(replyId) == false)
+            {
+                return this.NotFound();
+            }
+
+            if (this.repliesService.IsUserAuthor(replyId, this.User.GetUserId()) == false)
+            {
+                return this.Unauthorized();
+            }
+
             await this.repliesService.DeleteAsync(replyId);
 
             return this.RedirectToAction("Details", "Posts", new { id = postId });
