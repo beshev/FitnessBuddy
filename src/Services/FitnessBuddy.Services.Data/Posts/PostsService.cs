@@ -26,9 +26,22 @@
             await this.postsRepository.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new System.NotImplementedException();
+            var post = this.GetById(id);
+
+            this.postsRepository.Delete(post);
+            await this.postsRepository.SaveChangesAsync();
+        }
+
+        public async Task EditAsync(int id, string description, int categoryId)
+        {
+            var post = this.GetById(id);
+
+            post.Description = description;
+            post.CategoryId = categoryId;
+
+            await this.postsRepository.SaveChangesAsync();
         }
 
         public TModel GetById<TModel>(int id)
@@ -53,6 +66,16 @@
 
             await this.postsRepository.SaveChangesAsync();
         }
+
+        public bool IsExist(int id)
+            => this.postsRepository
+            .AllAsNoTracking()
+            .Any(x => x.Id == id);
+
+        public bool IsUserAuthor(int postId, string userId)
+            => this.postsRepository
+            .AllAsNoTracking()
+            .Any(x => x.Id == postId && x.AuthorId == userId);
 
         private Post GetById(int id)
             => this.postsRepository

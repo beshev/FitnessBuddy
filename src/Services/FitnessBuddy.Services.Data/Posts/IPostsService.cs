@@ -11,9 +11,15 @@
 
         public TModel GetById<TModel>(int id);
 
+        public bool IsExist(int id);
+
+        public bool IsUserAuthor(int postId, string userId);
+
         public Task CreateAsync(PostInputModel model);
 
         public Task DeleteAsync(int id);
+
+        public Task EditAsync(int id, string description, int categoryId);
 
         public Task IncreaseViewsAsync(int id);
     }
