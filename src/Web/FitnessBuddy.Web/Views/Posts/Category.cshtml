@@ -18,16 +18,15 @@
     {
         <div class="card border-info mb-4 col-md-12 shadow">
             <div class="card-body">
-                <a asp-action="Details" asp-controller="Post" asp-route-id="@post.Id">
+                <a asp-action="Details" asp-controller="Posts" asp-route-id="@post.Id">
                     <h4 class="card-title">@post.Title</h4>
-                    @*<p class="card-text">@(post.Description.Substring(0, post.Description.Length / 4))...</p>*@
                 </a>
                 <hr>
                 <p class="card-text">@(post.Description.Substring(0, post.Description.Length / 4))...</p>
             </div>
             <div class="row text-center">
                 <div class="card-header col-md-2"><i class="fa-solid fa-user"></i> @post.AuthorUsername</div>
-                <div class="card-header col-md-4"><i class="fa-solid fa-calendar-days"></i> @post.CreatedOn.ToString("MM/dd/yyyy")</div>
+                <div class="card-header col-md-4"><i class="fa-solid fa-calendar-days"></i> @post.CreatedOn.ToShortDateString()</div>
                 <div class="card-header col-md-2"><i class="fa-solid fa-eye"></i> @post.Views</div>
                 <div class="card-header col-md-2"><i class="fa-solid fa-comment-dots"></i> @post.RepliesCount</div>
                 <div class="card-header col-md-2"><i class="fa-solid fa-folder-open"></i> @post.CategoryName</div>

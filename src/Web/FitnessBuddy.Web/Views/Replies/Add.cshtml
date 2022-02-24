@@ -1,0 +1,16 @@
+﻿@model ReplyViewModel
+
+<div class="row">
+    <div class="card border-primary mb-3">
+        <div class="row">
+            <div class="card-header col-md-6 text-left">
+                <i class="fa-solid fa-user"></i> @Model.AuthorUsername
+            </div>
+            <div class="card-header col-md-6 text-right"> <i class="fa-solid fa-calendar-days"></i> @Model.CreatedOn.ToLongDateString()</div>
+        </div>
+        <div class="card-body">
+            <p class="card-text">@Model.Description</p>
+        </div>
+    </div>
+</div>
+<vc:add-reply post-id="@Model.PostId" parent-id="Model.Id"></vc:add-reply>

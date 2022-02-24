@@ -1,0 +1,91 @@
+﻿@using FitnessBuddy.Web.Infrastructure.Extensions
+@model PostDetailsViewModel
+
+@{
+    this.ViewData["Title"] = "Post Details";
+
+    async Task GetReplies(int? parentId)
+    {
+        var replies = Model.Replies.Where(x => x.ParentId == parentId);
+
+        if (replies.Any() == false)
+        {
+            return;
+        }
+
+        @foreach (var reply in replies)
+        {
+            <div class="row">
+                <div class="card border-primary mb-3 offset-1 col-md-11">
+                    <div class="row li-bg-color">
+                        <div class="card-header col-md-6 text-left">
+                            <i class="fa-solid fa-user"></i> @reply.AuthorUsername
+                            <a asp-action="Add" asp-controller="Replies" asp-route-parentId="@reply.Id" asp-route-postId="@Model.Id" class="text-info"><i class="fa-solid fa-reply"></i></a>
+                            @if (this.User.GetUserId() == reply.AuthorId)
+                            {
+                                <a asp-action="Delete" asp-controller="Replies" asp-route-replyId="@reply.Id" asp-route-postId="@Model.Id" class="text-danger"><i class="fa-solid fa-trash"></i></a>
+                            }
+                        </div>
+                        <div class="card-header col-md-6 text-right"> <i class="fa-solid fa-calendar-days"></i> @reply.CreatedOn.ToLongDateString()</div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">@reply.Description</p>
+                    </div>
+                    @{
+                        await GetReplies(reply.Id);
+                    }
+                </div>
+            </div>
+        }
+    }
+}
+
+<div class="row">
+    <div class="card border-info mb-3 shadow">
+        <div class="row">
+            <div class="card-header col-md-6">
+                <div class="row">
+                    <div class="col-md-3 text-left">
+                        <i class="fa-solid fa-user"></i> @Model.AuthorUsername
+                    </div>
+                    <div class="col-md-3 text-left">
+                        <i class="fa-solid fa-folder-open"></i> @Model.CategoryName
+                    </div>
+                </div>
+            </div>
+            <div class="card-header col-md-6 text-right"> <i class="fa-solid fa-calendar-days"></i> @Model.CreatedOn.ToLongDateString()</div>
+        </div>
+        <div class="card-body">
+            <h4 class="card-title text-center">@Model.Title</h4>
+            <p class="card-text">@Model.Description</p>
+        </div>
+    </div>
+</div>
+
+<hr />
+<h4 class="text-center">Replies</h4>
+@foreach (var reply in Model.Replies.Where(x => x.ParentId == null))
+{
+    <div class="row">
+        <div class="card border-primary mb-3">
+            <div class="row">
+                <div class="card-header col-md-6 text-left">
+                    <i class="fa-solid fa-user"></i> @reply.AuthorUsername
+                    <a asp-action="Add" asp-controller="Replies" asp-route-parentId="@reply.Id" asp-route-postId="@Model.Id" class="text-info"><i class="fa-solid fa-reply"></i></a>
+                    @if (this.User.GetUserId() == reply.AuthorId)
+                    {
+                        <a asp-action="Delete" asp-controller="Replies" asp-route-replyId="@reply.Id" asp-route-postId="@Model.Id" class="text-danger"><i class="fa-solid fa-trash"></i></a>
+                    }
+                </div>
+                <div class="card-header col-md-6 text-right"> <i class="fa-solid fa-calendar-days"></i> @reply.CreatedOn.ToLongDateString()</div>
+            </div>
+            <div class="card-body">
+                <p class="card-text">@reply.Description</p>
+            </div>
+            @{
+                await GetReplies(reply.Id);
+            }
+        </div>
+    </div>
+}
+<vc:add-reply post-id="@Model.Id"></vc:add-reply>
