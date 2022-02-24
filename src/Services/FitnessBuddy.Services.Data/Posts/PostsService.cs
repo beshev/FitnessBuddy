@@ -26,6 +26,13 @@
             await this.postsRepository.SaveChangesAsync();
         }
 
+        public TModel GetById<TModel>(int id)
+            => this.postsRepository
+            .AllAsNoTracking()
+            .Where(x => x.Id == id)
+            .To<TModel>()
+            .FirstOrDefault();
+
         public IEnumerable<TModel> GetPostsByCategory<TModel>(int categoryId)
             => this.postsRepository
             .AllAsNoTracking()

@@ -9,6 +9,8 @@
     {
         public IEnumerable<TModel> GetPostsByCategory<TModel>(int categoryId);
 
+        public TModel GetById<TModel>(int id);
+
         public Task CreateAsync(PostInputModel model);
     }
 }
