@@ -16,7 +16,7 @@
         @foreach (var reply in replies)
         {
             <div class="row">
-                <div class="card border-primary mb-3 offset-1 col-md-11">
+                <div class="card border-top border-right border-bottom mb-3 offset-1 col-md-11">
                     <div class="row li-bg-color">
                         <div class="card-header col-md-6 text-left">
                             <i class="fa-solid fa-user"></i> @reply.AuthorUsername
@@ -43,23 +43,27 @@
 <div class="row">
     <div class="card border-info mb-3 shadow">
         <div class="row">
-            <div class="card-header col-md-6">
+            <div class="card-header col-md-8">
                 <div class="row">
-                    <div class="col-md-3 text-left">
+                    <div class="col-md-4 text-left">
                         <i class="fa-solid fa-user"></i> @Model.AuthorUsername
                         @if (this.User.GetUserId() == Model.AuthorId)
                         {
+                            <a asp-controller="Posts" asp-action="Edit" asp-route-id="@Model.Id" class="mr-1">
+                                <i class="fa-solid fa-pen-to-square text-info"></i>
+                            </a>
                             <a asp-controller="Posts" asp-action="Delete" asp-route-id="@Model.Id">
                                 <i class="fa-solid fa-trash text-danger"></i>
                             </a>
+
                         }
                     </div>
-                    <div class="col-md-3 text-left">
+                    <div class="col-md-4 text-left">
                         <i class="fa-solid fa-folder-open"></i> @Model.CategoryName
                     </div>
                 </div>
             </div>
-            <div class="card-header col-md-6 text-right"> <i class="fa-solid fa-calendar-days"></i> @Model.CreatedOn.ToLongDateString()</div>
+            <div class="card-header col-md-4 text-right"> <i class="fa-solid fa-calendar-days"></i> @Model.CreatedOn.ToLongDateString()</div>
         </div>
         <div class="card-body">
             <h4 class="card-title text-center">@Model.Title</h4>

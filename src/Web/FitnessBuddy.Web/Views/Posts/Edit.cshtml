@@ -1,0 +1,30 @@
+﻿@model PostInputModel
+
+@{
+    this.ViewData["Title"] = "Edit Post";
+}
+
+<div class="text-center">
+    <h1>
+        @this.ViewData["Title"]
+    </h1>
+
+    <form asp-controller="Posts" asp-action="Edit" class="col-lg-6 offset-lg-3" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-grup">
+            <label asp-for="Title"></label>
+            <input asp-for="Title" class="form-control" placeholder="Title..." />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="form-grup">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" class="form-control" rows="20" placeholder="Description..."></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <vc:post-categories-select></vc:post-categories-select>
+        <div class="form-grup" style="margin-top: 2%;">
+            <input type="submit" class="btn btn-outline-dark" value="Edit" />
+        </div>
+    </form>
+</div>

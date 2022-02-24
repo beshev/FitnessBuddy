@@ -72,6 +72,46 @@
             return this.RedirectToAction(nameof(this.Categories));
         }
 
+        public IActionResult Edit(int id)
+        {
+            if (this.postsService.IsExist(id) == false)
+            {
+                return this.NotFound();
+            }
+
+            if (this.postsService.IsUserAuthor(id, this.User.GetUserId()) == false)
+            {
+                return this.Unauthorized();
+            }
+
+            var viewModel = this.postsService.GetById<PostInputModel>(id);
+
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(PostInputModel model)
+        {
+            if (this.ModelState.IsValid == false)
+            {
+                return this.View(model);
+            }
+
+            if (this.postsService.IsExist(model.Id) == false)
+            {
+                return this.NotFound();
+            }
+
+            if (this.postsService.IsUserAuthor(model.Id, this.User.GetUserId()) == false)
+            {
+                return this.Unauthorized();
+            }
+
+            await this.postsService.EditAsync(model);
+
+            return this.RedirectToAction(nameof(this.Details), new { model.Id });
+        }
+
         public IActionResult Details(int id)
         {
             if (this.postsService.IsExist(id) == false)
