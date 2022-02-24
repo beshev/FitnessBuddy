@@ -8,7 +8,6 @@
     using FitnessBuddy.Services.Data.TrainingsExercises;
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Exercises;
-    using FitnessBuddy.Web.ViewModels.Trainings;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
