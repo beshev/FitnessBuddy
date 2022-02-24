@@ -50,7 +50,7 @@
                         <i class="fa-solid fa-user"></i> @Model.AuthorUsername
                         @if (this.User.GetUserId() == Model.AuthorId)
                         {
-                            <a asp-controller="Posts" asp-action="Edit" asp-route-id="@Model.Id" class="mr-1">
+                            <a asp-controller="Posts" asp-action="Edit" asp-route-id="@Model.Id" class="mr-2 ml-2">
                                 <i class="fa-solid fa-pen-to-square text-info"></i>
                             </a>
                             <a asp-controller="Posts" asp-action="Delete" asp-route-id="@Model.Id">
