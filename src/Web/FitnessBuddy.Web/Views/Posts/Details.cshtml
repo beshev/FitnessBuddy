@@ -20,10 +20,11 @@
                     <div class="row li-bg-color">
                         <div class="card-header col-md-6 text-left">
                             <i class="fa-solid fa-user"></i> @reply.AuthorUsername
-                            <a asp-action="Add" asp-controller="Replies" asp-route-parentId="@reply.Id" asp-route-postId="@Model.Id" class="text-info"><i class="fa-solid fa-reply"></i></a>
+                            <a asp-action="Add" asp-controller="Replies" asp-route-parentId="@reply.Id" asp-route-postId="@Model.Id" class="text-primary"><i class="fa-solid fa-reply"></i></a>
                             @if (this.User.GetUserId() == reply.AuthorId)
                             {
-                                <a asp-action="Delete" asp-controller="Replies" asp-route-replyId="@reply.Id" asp-route-postId="@Model.Id" class="text-danger"><i class="fa-solid fa-trash"></i></a>
+                                <a asp-action="Edit" asp-controller="Replies" asp-route-Id="@reply.Id" class="text-danger ml-2"><i class="fa-solid fa-pen-to-square text-info"></i></a>
+                                <a asp-action="Delete" asp-controller="Replies" asp-route-replyId="@reply.Id" asp-route-postId="@Model.Id" class="text-danger ml-2"><i class="fa-solid fa-trash"></i></a>
                             }
                         </div>
                         <div class="card-header col-md-6 text-right"> <i class="fa-solid fa-calendar-days"></i> @reply.CreatedOn.ToLongDateString()</div>
@@ -81,10 +82,11 @@
             <div class="row">
                 <div class="card-header col-md-6 text-left">
                     <i class="fa-solid fa-user"></i> @reply.AuthorUsername
-                    <a asp-action="Add" asp-controller="Replies" asp-route-parentId="@reply.Id" asp-route-postId="@Model.Id" class="text-info"><i class="fa-solid fa-reply"></i></a>
+                    <a asp-action="Add" asp-controller="Replies" asp-route-parentId="@reply.Id" asp-route-postId="@Model.Id" class="text-primary"><i class="fa-solid fa-reply"></i></a>
                     @if (this.User.GetUserId() == reply.AuthorId)
                     {
-                        <a asp-action="Delete" asp-controller="Replies" asp-route-replyId="@reply.Id" asp-route-postId="@Model.Id" class="text-danger"><i class="fa-solid fa-trash"></i></a>
+                        <a asp-action="Edit" asp-controller="Replies" asp-route-Id="@reply.Id" class="text-danger ml-2"><i class="fa-solid fa-pen-to-square text-info"></i></a>
+                        <a asp-action="Delete" asp-controller="Replies" asp-route-replyId="@reply.Id" asp-route-postId="@Model.Id" class="text-danger ml-2"><i class="fa-solid fa-trash"></i></a>
                     }
                 </div>
                 <div class="card-header col-md-6 text-right"> <i class="fa-solid fa-calendar-days"></i> @reply.CreatedOn.ToLongDateString()</div>
