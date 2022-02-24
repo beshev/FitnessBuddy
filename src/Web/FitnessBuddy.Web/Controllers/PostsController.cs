@@ -66,5 +66,12 @@
 
             return this.RedirectToAction(nameof(this.Categories));
         }
+
+        public IActionResult Details(int id)
+        {
+            var viewModel = this.postsService.GetById<PostDetailsViewModel>(id);
+
+            return this.View(viewModel);
+        }
     }
 }
