@@ -11,5 +11,9 @@
         public Task DeleteAsync(int id);
 
         public TModel GetById<TModel>(int id);
+
+        public bool IsUserAuthor(int replyId, string userId);
+
+        public bool IsExist(int replyId);
     }
 }

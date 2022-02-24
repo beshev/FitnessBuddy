@@ -41,5 +41,15 @@
             .Where(x => x.Id == id)
             .To<TModel>()
             .FirstOrDefault();
+
+        public bool IsExist(int replyId)
+            => this.repliesRepository
+            .AllAsNoTracking()
+            .Any(x => x.Id == replyId);
+
+        public bool IsUserAuthor(int replyId, string userId)
+            => this.repliesRepository
+            .AllAsNoTracking()
+            .Any(x => x.Id == replyId & x.AuthorId == userId);
     }
 }
