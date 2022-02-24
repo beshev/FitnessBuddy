@@ -1,0 +1,21 @@
+﻿@model ReplyInputModel
+
+<div class="text-center">
+    <h5>
+        Post Your Reply
+    </h5>
+    <form asp-controller="Replies" asp-action="Add" class="col-lg-6 offset-lg-3" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-grup">
+            <textarea asp-for="Description" class="form-control" placeholder="Lets get started..." rows="15"></textarea>
+        </div>
+        <div class="form-grup">
+            <input asp-for="ParentId" value="@Model.ParentId" hidden />
+            <input asp-for="PostId" value="@Model.PostId" hidden />
+        </div>
+        <div class="form-grup" style="margin-top: 2%;">
+            <input type="submit" class="btn btn-outline-dark" value="Add" />
+        </div>
+    </form>
+</div>
