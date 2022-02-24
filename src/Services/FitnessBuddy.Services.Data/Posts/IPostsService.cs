@@ -19,7 +19,7 @@
 
         public Task DeleteAsync(int id);
 
-        public Task EditAsync(int id, string description, int categoryId);
+        public Task EditAsync(PostInputModel model);
 
         public Task IncreaseViewsAsync(int id);
     }

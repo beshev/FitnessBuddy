@@ -34,12 +34,13 @@
             await this.postsRepository.SaveChangesAsync();
         }
 
-        public async Task EditAsync(int id, string description, int categoryId)
+        public async Task EditAsync(PostInputModel model)
         {
-            var post = this.GetById(id);
+            var post = this.GetById(model.Id);
 
-            post.Description = description;
-            post.CategoryId = categoryId;
+            post.Title = model.Title;
+            post.Description = model.Description;
+            post.CategoryId = model.CategoryId;
 
             await this.postsRepository.SaveChangesAsync();
         }
