@@ -47,6 +47,12 @@
                 <div class="row">
                     <div class="col-md-3 text-left">
                         <i class="fa-solid fa-user"></i> @Model.AuthorUsername
+                        @if (this.User.GetUserId() == Model.AuthorId)
+                        {
+                            <a asp-controller="Posts" asp-action="Delete" asp-route-id="@Model.Id">
+                                <i class="fa-solid fa-trash text-danger"></i>
+                            </a>
+                        }
                     </div>
                     <div class="col-md-3 text-left">
                         <i class="fa-solid fa-folder-open"></i> @Model.CategoryName
