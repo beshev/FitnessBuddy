@@ -26,6 +26,11 @@
             await this.postsRepository.SaveChangesAsync();
         }
 
+        public Task DeleteAsync(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public TModel GetById<TModel>(int id)
             => this.postsRepository
             .AllAsNoTracking()
@@ -39,5 +44,19 @@
             .Where(x => x.CategoryId == categoryId)
             .To<TModel>()
             .AsEnumerable();
+
+        public async Task IncreaseViewsAsync(int id)
+        {
+            var post = this.GetById(id);
+
+            post.Views++;
+
+            await this.postsRepository.SaveChangesAsync();
+        }
+
+        private Post GetById(int id)
+            => this.postsRepository
+            .All()
+            .FirstOrDefault(x => x.Id == id);
     }
 }

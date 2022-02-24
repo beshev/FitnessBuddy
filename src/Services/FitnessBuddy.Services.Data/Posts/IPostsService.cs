@@ -12,5 +12,9 @@
         public TModel GetById<TModel>(int id);
 
         public Task CreateAsync(PostInputModel model);
+
+        public Task DeleteAsync(int id);
+
+        public Task IncreaseViewsAsync(int id);
     }
 }
