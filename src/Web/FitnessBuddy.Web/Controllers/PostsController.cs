@@ -31,6 +31,11 @@
 
         public IActionResult Category(int categoryId)
         {
+            if (this.postCategoriesService.IsExist(categoryId) == false)
+            {
+                return this.NotFound();
+            }
+
             var posts = this.postsService.GetPostsByCategory<PostViewModel>(categoryId);
 
             var viewModel = new CategoryPostsViewModel
@@ -69,11 +74,33 @@
 
         public IActionResult Details(int id)
         {
+            if (this.postsService.IsExist(id) == false)
+            {
+                return this.NotFound();
+            }
+
             var viewModel = this.postsService.GetById<PostDetailsViewModel>(id);
 
             this.postsService.IncreaseViewsAsync(id);
 
             return this.View(viewModel);
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (this.postsService.IsExist(id) == false)
+            {
+                return this.NotFound();
+            }
+
+            if (this.postsService.IsUserAuthor(id, this.User.GetUserId()) == false)
+            {
+                return this.Unauthorized();
+            }
+
+            await this.postsService.DeleteAsync(id);
+
+            return this.RedirectToAction(nameof(this.Categories));
         }
     }
 }
