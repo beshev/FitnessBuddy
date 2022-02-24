@@ -6,8 +6,10 @@
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
 
-    public class PostInputModel : IMapTo<Post>
+    public class PostInputModel : IMapTo<Post>, IMapFrom<Post>
     {
+        public int Id { get; set; }
+
         [Required]
         [StringLength(DataConstants.PostTitleMaxLength, MinimumLength = DataConstants.PostTitleMinLength)]
         public string Title { get; set; }
