@@ -35,11 +35,29 @@
             await this.repliesRepository.SaveChangesAsync();
         }
 
+        public async Task EditAsync(ReplyEditInputModel model)
+        {
+            var reply = this.repliesRepository
+                .All()
+                .FirstOrDefault(x => x.Id == model.Id);
+
+            reply.Description = model.Description;
+
+            await this.repliesRepository.SaveChangesAsync();
+        }
+
         public TModel GetById<TModel>(int id)
             => this.repliesRepository
             .AllAsNoTracking()
             .Where(x => x.Id == id)
             .To<TModel>()
+            .FirstOrDefault();
+
+        public int GetReplyPostId(int replyId)
+            => this.repliesRepository
+            .AllAsNoTracking()
+            .Where(x => x.Id == replyId)
+            .Select(x => x.PostId)
             .FirstOrDefault();
 
         public bool IsExist(int replyId)

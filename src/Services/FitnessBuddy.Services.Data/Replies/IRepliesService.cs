@@ -10,6 +10,10 @@
 
         public Task DeleteAsync(int id);
 
+        public Task EditAsync(ReplyEditInputModel model);
+
+        public int GetReplyPostId(int replyId);
+
         public TModel GetById<TModel>(int id);
 
         public bool IsUserAuthor(int replyId, string userId);
