@@ -1,7 +1,7 @@
 ﻿namespace FitnessBuddy.Web.Controllers
 {
     using System.Threading.Tasks;
-    using FitnessBuddy.Services.Data.Posts;
+
     using FitnessBuddy.Services.Data.Replies;
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Replies;
@@ -42,6 +42,43 @@
             await this.repliesService.AddAsync(model);
 
             return this.RedirectToAction("Details", "Posts", new { Id = model.PostId });
+        }
+
+        public IActionResult Edit(int id)
+        {
+            if (this.repliesService.IsExist(id) == false)
+            {
+                return this.NotFound();
+            }
+
+            if (this.repliesService.IsUserAuthor(id, this.User.GetUserId()) == false)
+            {
+                return this.Unauthorized();
+            }
+
+            var viewModel = this.repliesService.GetById<ReplyEditInputModel>(id);
+
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(ReplyEditInputModel model)
+        {
+            if (this.repliesService.IsExist(model.Id) == false)
+            {
+                return this.NotFound();
+            }
+
+            if (this.repliesService.IsUserAuthor(model.Id, this.User.GetUserId()) == false)
+            {
+                return this.Unauthorized();
+            }
+
+            await this.repliesService.EditAsync(model);
+
+            var postId = this.repliesService.GetReplyPostId(model.Id);
+
+            return this.RedirectToAction("Details", "Posts", new { Id = postId });
         }
 
         public async Task<IActionResult> Delete(int replyId, int postId)
