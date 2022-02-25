@@ -72,7 +72,7 @@
                                 <li class="list-group-item li-bg-color"><strong>Repetitions:</strong> @exercise.Repetitions</li>
                                 <li class="list-group-item li-bg-color"><strong>Weight:</strong> @exercise.Weight</li>
                                 <li class="list-group-item text-center alert bg-light">
-                                    <a asp-action="AddToTraining" asp-controller="Exercises" asp-route-exerciseId="@exercise.ExerciseId">
+                                    <a asp-action="Details" asp-controller="Exercises" asp-route-id="@exercise.ExerciseId">
                                         <p class="text-white btn btn-sm btn-info font-weight-bold">Details</p>
                                     </a>
                                     <a asp-action="RemoveExercise" asp-controller="Trainings" asp-route-trainingExerciseId="@exercise.TrainingExerciseId" asp-route-name="@Model.TrainingName">
