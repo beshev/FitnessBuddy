@@ -63,9 +63,9 @@
         }
 
         public bool IsExist(int id)
-        {
-            throw new System.NotImplementedException();
-        }
+            => this.trainingRepository
+            .AllAsNoTracking()
+            .Any(x => x.Id == id);
 
         public bool IsUserTraining(int id, string userId)
             => this.trainingRepository
