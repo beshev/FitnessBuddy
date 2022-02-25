@@ -2,7 +2,6 @@
 {
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
-    using FitnessBuddy.Web.ViewModels.Trainings;
 
     public class ExerciseDetailsModel : IMapFrom<Exercise>
     {
@@ -23,7 +22,5 @@
         public string EquipmentName { get; set; }
 
         public bool IsCreator { get; set; }
-
-        public TrainingExerciseInputModel TrainingExercise { get; set; }
     }
 }

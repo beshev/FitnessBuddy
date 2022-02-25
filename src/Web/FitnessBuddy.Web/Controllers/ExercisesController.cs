@@ -105,7 +105,7 @@
 
             await this.exercisesService.EditAsync(model);
 
-            return this.RedirectToAction(nameof(this.AddToTraining), new { ExerciseId = model.Id });
+            return this.RedirectToAction(nameof(this.Details), new { ExerciseId = model.Id });
         }
 
         public async Task<IActionResult> Delete(int id)
@@ -125,35 +125,17 @@
             return this.RedirectToAction(nameof(this.All));
         }
 
-        public IActionResult AddToTraining(int exerciseId)
+        public IActionResult Details(int id)
         {
-            if (this.exercisesService.IsExist(exerciseId) == false)
+            if (this.exercisesService.IsExist(id) == false)
             {
                 return this.NotFound();
             }
 
-            var viewModel = this.exercisesService.GetById<ExerciseDetailsModel>(exerciseId);
-            viewModel.IsCreator = this.exercisesService.IsUserCreator(this.User.GetUserId(), exerciseId);
+            var viewModel = this.exercisesService.GetById<ExerciseDetailsModel>(id);
+            viewModel.IsCreator = this.exercisesService.IsUserCreator(this.User.GetUserId(), id);
 
             return this.View(viewModel);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddToTraining(ExerciseDetailsModel model)
-        {
-            if (this.exercisesService.IsExist(model.Id) == false)
-            {
-                return this.NotFound();
-            }
-
-            if (this.ModelState.IsValid == false)
-            {
-                return this.View(model);
-            }
-
-            await this.trainingsExercisesService.AddAsync(model.TrainingExercise);
-
-            return this.Redirect(GlobalConstants.UserTrainings);
         }
     }
 }
