@@ -2,7 +2,8 @@
 {
     using System.Linq;
     using System.Threading.Tasks;
-
+    using FitnessBuddy.Common;
+    using FitnessBuddy.Services.Data.Exercises;
     using FitnessBuddy.Services.Data.Trainings;
     using FitnessBuddy.Services.Data.TrainingsExercises;
     using FitnessBuddy.Web.Infrastructure.Extensions;
@@ -17,13 +18,16 @@
     {
         private readonly ITrainingsService trainingsService;
         private readonly ITrainingsExercisesService trainingsExercisesService;
+        private readonly IExercisesService exercisesService;
 
         public TrainingsController(
             ITrainingsService trainingsService,
-            ITrainingsExercisesService trainingsExercisesService)
+            ITrainingsExercisesService trainingsExercisesService,
+            IExercisesService exercisesService)
         {
             this.trainingsService = trainingsService;
             this.trainingsExercisesService = trainingsExercisesService;
+            this.exercisesService = exercisesService;
         }
 
         public IActionResult MyTrainings(string trainingName = "")
@@ -76,6 +80,25 @@
             await this.trainingsService.DeleteAsync(id, userId);
 
             return this.RedirectToAction(nameof(this.MyTrainings));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddExercise(TrainingExerciseInputModel model)
+        {
+            if (this.exercisesService.IsExist(model.ExerciseId) == false
+                || this.trainingsService.IsExist(model.TrainingId) == false)
+            {
+                return this.NotFound();
+            }
+
+            if (this.ModelState.IsValid == false)
+            {
+                return this.RedirectToAction("Details", "Exercises", new { Id = model.ExerciseId });
+            }
+
+            await this.trainingsExercisesService.AddAsync(model);
+
+            return this.Redirect(GlobalConstants.UserTrainings);
         }
 
         public async Task<IActionResult> RemoveExercise(int trainingExerciseId, string name)
