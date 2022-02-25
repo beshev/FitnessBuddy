@@ -54,6 +54,16 @@
             .To<TModel>()
             .AsEnumerable();
 
+        public bool IsExist(int id)
+            => this.trainingExerciseRepository
+            .AllAsNoTracking()
+            .Any(x => x.Id == id);
+
+        public bool IsForUser(int id, string userId)
+            => this.trainingExerciseRepository
+            .AllAsNoTracking()
+            .Any(x => x.Id == id && x.Training.ForUserId == userId);
+
         public async Task RemoveAsync(int id)
         {
             var trainingExercise = this.trainingExerciseRepository

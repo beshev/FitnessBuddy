@@ -14,5 +14,9 @@
         public IEnumerable<TModel> GetAll<TModel>(string userId);
 
         public int GetTrainingId(string name, string userId);
+
+        public bool IsExist(int id);
+
+        public bool IsUserTraining(int id, string userId);
     }
 }

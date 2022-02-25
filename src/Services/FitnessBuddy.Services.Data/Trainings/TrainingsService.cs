@@ -61,5 +61,15 @@
 
             return training != null ? training.Id : -1;
         }
+
+        public bool IsExist(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool IsUserTraining(int id, string userId)
+            => this.trainingRepository
+            .AllAsNoTracking()
+            .Any(x => x.Id == id && x.ForUserId == userId);
     }
 }

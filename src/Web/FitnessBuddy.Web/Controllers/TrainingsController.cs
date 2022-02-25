@@ -61,7 +61,17 @@
 
         public async Task<IActionResult> Delete(int id)
         {
+            if (this.trainingsService.IsExist(id) == false)
+            {
+                return this.NotFound();
+            }
+
             var userId = this.User.GetUserId();
+
+            if (this.trainingsService.IsUserTraining(id, userId))
+            {
+                return this.Unauthorized();
+            }
 
             await this.trainingsService.DeleteAsync(id, userId);
 
@@ -70,6 +80,16 @@
 
         public async Task<IActionResult> RemoveExercise(int trainingExerciseId, string name)
         {
+            if (this.trainingsExercisesService.IsExist(trainingExerciseId) == false)
+            {
+                return this.NotFound();
+            }
+
+            if (this.trainingsExercisesService.IsForUser(trainingExerciseId, this.User.GetUserId()) == false)
+            {
+                return this.Unauthorized();
+            }
+
             await this.trainingsExercisesService.RemoveAsync(trainingExerciseId);
 
             return this.RedirectToAction(nameof(this.MyTrainings), new { TrainingName = name });
