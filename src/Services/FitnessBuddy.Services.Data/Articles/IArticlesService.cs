@@ -17,6 +17,8 @@
 
         public Task DeleteAsync(int id);
 
+        public bool IsExist(int id);
+
         public bool IsUserCreator(string userId, int articleId);
 
         public int GetCount();

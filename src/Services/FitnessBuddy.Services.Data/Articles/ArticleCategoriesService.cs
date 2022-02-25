@@ -29,5 +29,10 @@
             .SelectMany(x => x.Articles)
             .To<TModel>()
             .AsEnumerable();
+
+        public bool IsExist(string categoryName)
+            => this.articleCategoriesRepository
+            .AllAsNoTracking()
+            .Any(x => x.Name == categoryName);
     }
 }

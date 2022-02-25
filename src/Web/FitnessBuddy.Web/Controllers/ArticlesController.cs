@@ -76,6 +76,11 @@
 
         public IActionResult Details(int id)
         {
+            if (this.articlesService.IsExist(id) == false)
+            {
+                return this.NotFound();
+            }
+
             var viewModel = this.articlesService.GetById<ArticleDetailsModel>(id);
             viewModel.IsCreator = viewModel.CreatorId == this.User.GetUserId();
 
@@ -91,6 +96,11 @@
 
         public IActionResult Category(string categoryName)
         {
+            if (this.articleCategoriesService.IsExist(categoryName) == false)
+            {
+                return this.NotFound();
+            }
+
             var viewModel = this.articleCategoriesService.GetCategoryArticles<ArticleViewModel>(categoryName);
 
             this.ViewData["CategoryName"] = categoryName;
@@ -100,6 +110,11 @@
 
         public async Task<IActionResult> Delete(int id)
         {
+            if (this.articlesService.IsExist(id) == false)
+            {
+                return this.NotFound();
+            }
+
             if (this.articlesService.IsUserCreator(this.User.GetUserId(), id) == false)
             {
                 return this.Unauthorized();
@@ -112,6 +127,11 @@
 
         public IActionResult Edit(int id)
         {
+            if (this.articlesService.IsExist(id) == false)
+            {
+                return this.NotFound();
+            }
+
             var viewModel = this.articlesService.GetById<ArticleInputModel>(id);
 
             if (viewModel.CreatorId != this.User.GetUserId())
@@ -125,6 +145,11 @@
         [HttpPost]
         public async Task<IActionResult> Edit(ArticleInputModel model)
         {
+            if (this.articlesService.IsExist(model.Id) == false)
+            {
+                return this.NotFound();
+            }
+
             if (model.CreatorId != this.User.GetUserId())
             {
                 return this.Unauthorized();

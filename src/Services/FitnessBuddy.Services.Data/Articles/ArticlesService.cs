@@ -91,6 +91,11 @@
                 .AllAsNoTracking()
                 .Count();
 
+        public bool IsExist(int id)
+            => this.articlesRepository
+            .AllAsNoTracking()
+            .Any(x => x.Id == id);
+
         private static async Task<string> SavePictureAsync(IFormFile picture, int articleId, string picturePath)
         {
             Directory.CreateDirectory($@"{picturePath}\articles\");
