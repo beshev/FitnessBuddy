@@ -19,7 +19,7 @@
             this.mealRepository = mealRepository;
         }
 
-        public bool Contains(int mealId)
+        public bool IsExist(int mealId)
             => this.mealRepository
             .AllAsNoTracking()
             .Any(x => x.Id == mealId);
@@ -59,5 +59,10 @@
             .Where(x => x.ForUserId == userId)
             .To<TViewModel>()
             .AsEnumerable();
+
+        public bool IsUserMeal(int mealId, string userId)
+            => this.mealRepository
+            .AllAsNoTracking()
+            .Any(x => x.Id == mealId && x.ForUserId == userId);
     }
 }

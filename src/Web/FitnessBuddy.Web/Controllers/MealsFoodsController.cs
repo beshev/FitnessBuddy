@@ -59,7 +59,7 @@
                 return this.View(model);
             }
 
-            if (this.mealsService.Contains(model.MealId) == false
+            if (this.mealsService.IsExist(model.MealId) == false
                 || this.foodsService.IsExist(model.FoodId) == false)
             {
                 return this.NotFound();

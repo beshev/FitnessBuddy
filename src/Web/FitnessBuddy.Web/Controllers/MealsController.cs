@@ -72,13 +72,17 @@
         [Authorize]
         public async Task<IActionResult> Delete(int mealId)
         {
-            var meal = this.mealsService.GetById(mealId);
-            var userId = this.User.GetUserId();
-
-            if (meal != null && meal.ForUserId == userId)
+            if (this.mealsService.IsExist(mealId) == false)
             {
-                await this.mealsService.DeleteAsync(mealId);
+                return this.NotFound();
             }
+
+            if (this.mealsService.IsUserMeal(mealId, this.User.GetUserId()) == false)
+            {
+                return this.Unauthorized();
+            }
+
+            await this.mealsService.DeleteAsync(mealId);
 
             return this.RedirectToAction(nameof(this.MyMeals));
         }
