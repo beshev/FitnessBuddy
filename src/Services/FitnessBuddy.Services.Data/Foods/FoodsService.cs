@@ -107,7 +107,7 @@
                 .AllAsNoTracking()
                 .Any(x => x.Id == foodId && x.AddedByUserId == userId);
 
-        public bool Contains(int id)
+        public bool IsExist(int id)
             => this.foodRepository
             .AllAsNoTracking()
             .Any(x => x.Id == id);

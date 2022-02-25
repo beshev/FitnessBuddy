@@ -16,11 +16,11 @@
 
         public int GetCount(string userId = null, string search = null);
 
-        public bool Contains(int id);
-
-        public Task<FoodInputModel> EditAsync(FoodInputModel model);
+        public bool IsExist(int id);
 
         public bool IsUserFood(string userId, int foodId);
+
+        public Task<FoodInputModel> EditAsync(FoodInputModel model);
 
         public Task DeleteAsync(int id);
 

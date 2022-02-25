@@ -60,7 +60,7 @@
             }
 
             if (this.mealsService.Contains(model.MealId) == false
-                || this.foodsService.Contains(model.FoodId) == false)
+                || this.foodsService.IsExist(model.FoodId) == false)
             {
                 return this.NotFound();
             }
