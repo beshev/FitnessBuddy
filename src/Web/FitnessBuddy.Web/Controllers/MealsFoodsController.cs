@@ -65,6 +65,11 @@
                 return this.NotFound();
             }
 
+            if (this.mealsService.IsUserMeal(model.MealId, this.User.GetUserId()) == false)
+            {
+                return this.Unauthorized();
+            }
+
             await this.mealsFoodsService.AddAsync(model);
 
             return this.Redirect(GlobalConstants.MyMealsUrl);
@@ -75,9 +80,14 @@
         {
             var mealFood = this.mealsFoodsService.GetById(mealFoodId);
 
-            if (mealFood == null || mealFood.Meal.ForUserId != this.User.GetUserId())
+            if (mealFood == null)
             {
                 return this.NotFound();
+            }
+
+            if (mealFood.Meal.ForUserId != this.User.GetUserId())
+            {
+                return this.Unauthorized();
             }
 
             await this.mealsFoodsService.DeleteAsync(mealFood);
