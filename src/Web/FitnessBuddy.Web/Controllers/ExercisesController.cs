@@ -70,6 +70,16 @@
 
         public IActionResult Edit(int id)
         {
+            if (this.exercisesService.IsExist(id) == false)
+            {
+                return this.NotFound();
+            }
+
+            if (this.exercisesService.IsUserCreator(this.User.GetUserId(), id) == false)
+            {
+                return this.Unauthorized();
+            }
+
             var viewModel = this.exercisesService.GetById<ExerciseInputModel>(id);
 
             return this.View(viewModel);
@@ -78,6 +88,11 @@
         [HttpPost]
         public async Task<IActionResult> Edit(ExerciseInputModel model)
         {
+            if (this.exercisesService.IsExist(model.Id) == false)
+            {
+                return this.NotFound();
+            }
+
             if (this.exercisesService.IsUserCreator(this.User.GetUserId(), model.Id) == false)
             {
                 return this.Unauthorized();
@@ -95,6 +110,11 @@
 
         public async Task<IActionResult> Delete(int id)
         {
+            if (this.exercisesService.IsExist(id) == false)
+            {
+                return this.NotFound();
+            }
+
             if (this.exercisesService.IsUserCreator(this.User.GetUserId(), id) == false)
             {
                 return this.Unauthorized();
@@ -107,6 +127,11 @@
 
         public IActionResult AddToTraining(int exerciseId)
         {
+            if (this.exercisesService.IsExist(exerciseId) == false)
+            {
+                return this.NotFound();
+            }
+
             var viewModel = this.exercisesService.GetById<ExerciseDetailsModel>(exerciseId);
             viewModel.IsCreator = this.exercisesService.IsUserCreator(this.User.GetUserId(), exerciseId);
 
@@ -116,6 +141,11 @@
         [HttpPost]
         public async Task<IActionResult> AddToTraining(ExerciseDetailsModel model)
         {
+            if (this.exercisesService.IsExist(model.Id) == false)
+            {
+                return this.NotFound();
+            }
+
             if (this.ModelState.IsValid == false)
             {
                 return this.View(model);

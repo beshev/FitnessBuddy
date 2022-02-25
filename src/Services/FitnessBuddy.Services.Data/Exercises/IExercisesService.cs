@@ -17,6 +17,8 @@
 
         public bool IsUserCreator(string userId, int exerciseId);
 
+        public bool IsExist(int id);
+
         public TModel GetById<TModel>(int id);
 
         public Task AddAsync(string userId, ExerciseInputModel model);

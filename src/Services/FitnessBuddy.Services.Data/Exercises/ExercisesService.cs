@@ -111,6 +111,11 @@
             await this.exerciseRepository.SaveChangesAsync();
         }
 
+        public bool IsExist(int id)
+            => this.exerciseRepository
+            .AllAsNoTracking()
+            .Any(x => x.Id == id);
+
         private static string GetYouTubeEmbededLink(string url)
         {
             var regex = new Regex(@"^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*");
