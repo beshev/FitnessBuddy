@@ -5,6 +5,7 @@
         public const string SystemName = "FitnessBuddy";
 
         public const string AdministratorRoleName = "Administrator";
+        public const string UserRoleName = "User";
 
         // Nutritions constants
         public const int CaloriesForOneGramProteinAndCarbohydrates = 4;
