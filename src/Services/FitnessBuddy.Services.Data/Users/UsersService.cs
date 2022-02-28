@@ -150,10 +150,19 @@
             .Select(x => x.Id)
             .FirstOrDefault();
 
-        public IEnumerable<TModel> GetAll<TModel>()
-            => this.usersRepository
-            .AllAsNoTracking()
-            .To<TModel>()
+        public IEnumerable<TModel> GetAll<TModel>(string username = "")
+        {
+            var query = this.usersRepository
+            .AllAsNoTracking();
+
+            if (string.IsNullOrWhiteSpace(username) == false)
+            {
+                query = query
+                    .Where(x => x.UserName == username);
+            }
+
+            return query.To<TModel>()
             .AsEnumerable();
+        }
     }
 }

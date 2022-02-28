@@ -1,14 +1,11 @@
 ﻿namespace FitnessBuddy.Web.Controllers
 {
-    using System.Collections.Generic;
-    using System.IO;
     using System.Threading.Tasks;
+
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Data.Meals;
     using FitnessBuddy.Services.Data.Users;
-    using FitnessBuddy.Services.Mapping;
     using FitnessBuddy.Web.Infrastructure.Extensions;
-    using FitnessBuddy.Web.ViewModels.Meals;
     using FitnessBuddy.Web.ViewModels.Users;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
@@ -64,9 +61,11 @@
             return this.View(viewModel);
         }
 
-        public IActionResult All()
+        public IActionResult All(string username = "")
         {
-            var viewModel = this.userService.GetAll<ShortUserViewModel>();
+            var viewModel = this.userService.GetAll<ShortUserViewModel>(username);
+
+            this.ViewData["Username"] = username;
 
             return this.View(viewModel);
         }

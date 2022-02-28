@@ -5,6 +5,20 @@
 }
 
 <div class="row">
+    <form class="form-inline col-md-6 offset-md-5 mb-3" asp-action="All" asp-controller="Users">
+        <input class="form-control mr-sm-2" type="search" placeholder="Enter username..." aria-label="Search" name="username">
+        <button class="btn btn-outline-info my-2 my-sm-0" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </form>
+</div>
+
+@if(Model.Any() == false)
+{
+    <h4 class="text-center">
+        User '@this.ViewData["Username"]' does not exist!
+    </h4>
+}
+
+<div class="row">
     @foreach (var user in Model)
     {
         <div class="card mb-4 mr-4 col-md-2 shadow-lg li-bg-color">
