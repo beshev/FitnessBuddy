@@ -14,6 +14,7 @@
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize]
     public class UsersController : Controller
     {
         private readonly IUsersService userService;
@@ -30,7 +31,6 @@
             this.webHostEnvironment = webHostEnvironment;
         }
 
-        [Authorize]
         public IActionResult MyProfile()
         {
             var userId = this.User.GetUserId();
@@ -43,7 +43,23 @@
             return this.View(viewModel);
         }
 
-        [Authorize]
+        public IActionResult UserProfile(string username = "")
+        {
+            var userId = this.userService.GetIdByUsername(username);
+
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                return this.NotFound();
+            }
+
+            var viewModel = this.userService.GetProfileData(userId);
+
+            viewModel.UserEmail = this.User.GetUserEmail();
+            viewModel.IsMyProfile = false;
+
+            return this.View(viewModel);
+        }
+
         public IActionResult Edit()
         {
             var userId = this.User.GetUserId();
@@ -53,7 +69,6 @@
             return this.View(viewModel);
         }
 
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Edit(UserInputModel model)
         {
