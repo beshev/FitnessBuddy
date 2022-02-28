@@ -44,7 +44,6 @@
                 .All()
                 .FirstOrDefault(x => x.Id == userId);
 
-            user.UserName = model.Username;
             user.Gender = model.Gender;
             user.WeightInKg = model.WeightInKg;
             user.GoalWeightInKg = model.GoalWeightInKg;

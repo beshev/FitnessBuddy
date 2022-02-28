@@ -12,12 +12,6 @@
 
     public class UserInputModel : IMapFrom<ApplicationUser>, IHaveCustomMappings
     {
-        [Required]
-        [MaxLength(DataConstants.UserUsernameMaxLength)]
-        [MinLength(DataConstants.UserUsernameMinLength)]
-        [Display(Name = "Username")]
-        public string Username { get; set; }
-
         [EnumDataType(typeof(GenderType))]
         public GenderType Gender { get; set; }
 
