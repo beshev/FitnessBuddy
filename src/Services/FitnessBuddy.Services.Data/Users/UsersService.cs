@@ -138,9 +138,6 @@
             var userInfo = this.GetUserInfo<UserViewModel>(userId);
             var userMeals = this.mealsService.GetUserMeals<MealViewModel>(userId);
 
-            var extention = Path.GetExtension(userInfo.ProfilePicture);
-            userInfo.ProfilePicture = $"/images/profileimages/{userId}{extention}";
-
             var profileInfo = AutoMapperConfig.MapperInstance.Map<IEnumerable<MealViewModel>, ProfileViewModel>(userMeals);
             profileInfo.UserInfo = userInfo;
 
@@ -153,5 +150,11 @@
             .Where(x => x.UserName == username)
             .Select(x => x.Id)
             .FirstOrDefault();
+
+        public IEnumerable<TModel> GetAll<TModel>()
+            => this.usersRepository
+            .AllAsNoTracking()
+            .To<TModel>()
+            .AsEnumerable();
     }
 }

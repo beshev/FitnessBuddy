@@ -11,6 +11,8 @@
     {
         public TModel GetUserInfo<TModel>(string userId);
 
+        public IEnumerable<TModel> GetAll<TModel>();
+
         public Task AddFoodToFavoriteAsync(string userId, Food food);
 
         public Task RemoveFoodFromFavoriteAsync(string userId, Food food);
