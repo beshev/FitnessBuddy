@@ -25,7 +25,7 @@
                 <p class="card-text">@(post.Description.Substring(0, post.Description.Length / 4))...</p>
             </div>
             <div class="row text-center">
-                <div class="card-header col-md-2"><i class="fa-solid fa-user"></i> @post.AuthorUsername</div>
+                <div class="card-header col-md-2"><i class="fa-solid fa-user"></i> <a asp-action="UserProfile" asp-controller="Users" asp-route-username="@post.AuthorUsername">@post.AuthorUsername</a></div>
                 <div class="card-header col-md-4"><i class="fa-solid fa-calendar-days"></i> @post.CreatedOn.ToShortDateString()</div>
                 <div class="card-header col-md-2"><i class="fa-solid fa-eye"></i> @post.Views</div>
                 <div class="card-header col-md-2"><i class="fa-solid fa-comment-dots"></i> @post.RepliesCount</div>
