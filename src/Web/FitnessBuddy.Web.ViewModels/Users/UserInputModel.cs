@@ -16,7 +16,7 @@
         [MaxLength(DataConstants.UserUsernameMaxLength)]
         [MinLength(DataConstants.UserUsernameMinLength)]
         [Display(Name = "Username")]
-        public string UserName { get; set; }
+        public string Username { get; set; }
 
         [EnumDataType(typeof(GenderType))]
         public GenderType Gender { get; set; }
