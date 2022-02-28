@@ -151,7 +151,7 @@
             => this.usersRepository
             .AllAsNoTracking()
             .Where(x => x.UserName == username)
-            .Select(x => x.UserName)
+            .Select(x => x.Id)
             .FirstOrDefault();
     }
 }
