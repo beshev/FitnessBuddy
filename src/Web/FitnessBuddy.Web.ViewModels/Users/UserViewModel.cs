@@ -1,15 +1,19 @@
 ﻿namespace FitnessBuddy.Web.ViewModels.Users
 {
     using System.ComponentModel.DataAnnotations;
+    using System.IO;
 
+    using AutoMapper;
     using FitnessBuddy.Common;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
 
-    public class UserViewModel : IMapFrom<ApplicationUser>
+    public class UserViewModel : IMapFrom<ApplicationUser>, IHaveCustomMappings
     {
         [Display(Name = "Username")]
         public string UserName { get; set; }
+
+        public string Email { get; set; }
 
         [Display(Name = "Current weights (in kg)")]
         public double WeightInKg { get; set; }
@@ -40,5 +44,13 @@
         public string AboutMe { get; set; }
 
         public string Gender { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<ApplicationUser, UserViewModel>()
+                   .ForMember(
+                   dest => dest.ProfilePicture,
+                   opt => opt.MapFrom(x => $"/images/profileimages/{Path.GetFileName(x.ProfilePicture)}"));
+        }
     }
 }
