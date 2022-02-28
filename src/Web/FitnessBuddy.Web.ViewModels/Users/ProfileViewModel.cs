@@ -9,8 +9,6 @@
 
     public class ProfileViewModel : IHaveCustomMappings
     {
-        public string UserEmail { get; set; }
-
         public double CurrentProtein { get; set; }
 
         public double CurrentCarbohydrates { get; set; }
