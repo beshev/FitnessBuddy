@@ -7,19 +7,24 @@
 
     using FitnessBuddy.Data.Common.Repositories;
     using FitnessBuddy.Data.Models;
+    using FitnessBuddy.Services.Data.Meals;
     using FitnessBuddy.Services.Mapping;
     using FitnessBuddy.Web.ViewModels.Foods;
+    using FitnessBuddy.Web.ViewModels.Meals;
     using FitnessBuddy.Web.ViewModels.Users;
     using Microsoft.EntityFrameworkCore;
 
     public class UsersService : IUsersService
     {
         private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
+        private readonly IMealsService mealsService;
 
         public UsersService(
-            IDeletableEntityRepository<ApplicationUser> usersRepository)
+            IDeletableEntityRepository<ApplicationUser> usersRepository,
+            IMealsService mealsService)
         {
             this.usersRepository = usersRepository;
+            this.mealsService = mealsService;
         }
 
         public async Task AddFoodToFavoriteAsync(string userId, Food food)
@@ -127,5 +132,26 @@
             .Where(x => x.Id == userId)
             .SelectMany(x => x.FavoriteFoods)
             .Count();
+
+        public ProfileViewModel GetProfileData(string userId)
+        {
+            var userInfo = this.GetUserInfo<UserViewModel>(userId);
+            var userMeals = this.mealsService.GetUserMeals<MealViewModel>(userId);
+
+            var extention = Path.GetExtension(userInfo.ProfilePicture);
+            userInfo.ProfilePicture = $"/images/profileimages/{userId}{extention}";
+
+            var profileInfo = AutoMapperConfig.MapperInstance.Map<IEnumerable<MealViewModel>, ProfileViewModel>(userMeals);
+            profileInfo.UserInfo = userInfo;
+
+            return profileInfo;
+        }
+
+        public string GetIdByUsername(string username)
+            => this.usersRepository
+            .AllAsNoTracking()
+            .Where(x => x.UserName == username)
+            .Select(x => x.UserName)
+            .FirstOrDefault();
     }
 }
