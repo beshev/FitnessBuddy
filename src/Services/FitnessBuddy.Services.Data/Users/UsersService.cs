@@ -116,6 +116,11 @@
             .Where(x => x.Id == userId)
             .Any(x => x.Meals.Count > 0);
 
+        public bool IsUsernameExist(string username)
+            => this.usersRepository
+            .AllAsNoTracking()
+            .Any(x => x.UserName == username);
+
         public int FavoriteFoodsCount(string userId)
             => this.usersRepository
             .AllAsNoTracking()

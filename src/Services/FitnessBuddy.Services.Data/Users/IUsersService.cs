@@ -23,6 +23,8 @@
 
         public bool HasMeal(string userId);
 
+        public bool IsUsernameExist(string username);
+
         public Task EditAsync(string userId, UserInputModel model, string picturePath);
     }
 }
