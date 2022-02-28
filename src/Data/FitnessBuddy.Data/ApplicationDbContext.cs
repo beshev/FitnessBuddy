@@ -54,6 +54,8 @@
 
         public DbSet<PostCategory> PostCategories { get; set; }
 
+        public DbSet<UserFollower> UsersFollowers { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
