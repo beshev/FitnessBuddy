@@ -36,8 +36,6 @@
             var userId = this.User.GetUserId();
 
             var viewModel = this.userService.GetProfileData(userId);
-
-            viewModel.UserEmail = this.User.GetUserEmail();
             viewModel.IsMyProfile = true;
 
             return this.View(viewModel);
@@ -54,8 +52,14 @@
 
             var viewModel = this.userService.GetProfileData(userId);
 
-            viewModel.UserEmail = this.User.GetUserEmail();
             viewModel.IsMyProfile = false;
+
+            return this.View(viewModel);
+        }
+
+        public IActionResult All()
+        {
+            var viewModel = this.userService.GetAll<ShortUserViewModel>();
 
             return this.View(viewModel);
         }

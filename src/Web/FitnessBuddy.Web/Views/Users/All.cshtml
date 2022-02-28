@@ -1,0 +1,21 @@
+﻿@model IEnumerable<ShortUserViewModel>
+
+@{
+    this.ViewData["Title"] = "All Users";
+}
+
+<div class="row">
+    @foreach (var user in Model)
+    {
+        <div class="card mb-4 mr-4 col-md-2 shadow-lg li-bg-color">
+            <a asp-action="UserProfile" asp-controller="Users" asp-route-username="@user.Username">
+                <div class="card-body text-center">
+                    <h5 class="my-3">@user.Username</h5>
+                    <img src="@user.ProfilePicture" onerror="src='/images/profileimages/default-avatar.jpg'" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                    <h6 class="my-3">@user.Email</h6>
+                    <p>Registered on: @user.CreatedOn.ToShortDateString()</p>
+                </div>
+            </a>
+        </div>
+    }
+</div>
