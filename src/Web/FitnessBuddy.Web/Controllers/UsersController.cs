@@ -31,18 +31,14 @@
         }
 
         [Authorize]
-        public IActionResult Profile()
+        public IActionResult MyProfile()
         {
             var userId = this.User.GetUserId();
-            var userInfo = this.userService.GetUserInfo<UserViewModel>(userId);
-            var userMeals = this.mealsService.GetUserMeals<MealViewModel>(userId);
 
-            var extention = Path.GetExtension(userInfo.ProfilePicture);
-            userInfo.ProfilePicture = $"/images/profileimages/{userId}{extention}";
+            var viewModel = this.userService.GetProfileData(userId);
 
-            var viewModel = AutoMapperConfig.MapperInstance.Map<IEnumerable<MealViewModel>, ProfileViewModel>(userMeals);
-            viewModel.UserInfo = userInfo;
             viewModel.UserEmail = this.User.GetUserEmail();
+            viewModel.IsMyProfile = true;
 
             return this.View(viewModel);
         }
@@ -71,7 +67,7 @@
 
             await this.userService.EditAsync(userId, model, path);
 
-            return this.RedirectToAction(nameof(this.Profile));
+            return this.RedirectToAction(nameof(this.MyProfile));
         }
     }
 }
