@@ -2,6 +2,7 @@
 {
     using System.Linq;
     using System.Threading.Tasks;
+
     using FitnessBuddy.Common;
     using FitnessBuddy.Services.Data.Exercises;
     using FitnessBuddy.Services.Data.Trainings;
