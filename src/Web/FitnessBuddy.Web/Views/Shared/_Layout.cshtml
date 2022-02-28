@@ -81,19 +81,21 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="nav-item">
-                            <div class="dropdown show">
-                                <a class="btn dropdown-toggle text-white" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Community
-                                </a>
-                                <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuLink">
-                                    @if (this.User.Identity.IsAuthenticated)
-                                    {
+                        @if (this.User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <div class="dropdown show">
+                                    <a class="btn dropdown-toggle text-white" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Community
+                                    </a>
+                                    <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuLink">
+
                                         <a class="dropdown-item" asp-action="Categories" asp-controller="Posts" asp-route-id="1">Forum</a>
-                                    }
+                                        <a class="dropdown-item" asp-action="All" asp-controller="Users" asp-route-id="1">Users</a>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -110,62 +112,62 @@
     <footer class="footer shadow alert alert-dismissible alert-primary text-dark">
         <div class="container">
             <div class="row">
-                    <div class="col-md-3">
-                        <h2 class="ct-footer-list-header">Learn More</h2>
-                        <ul>
-                            <li>
-                                <a href="">Company</a>
-                            </li>
-                            <li>
-                                <a href="">Clients</a>
-                            </li>
-                            <li>
-                                <a href="">News</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3">
-                        <h2 class="ct-footer-list-header">Services</h2>
-                        <ul>
-                            <li>
-                                <a href="">Design</a>
-                            </li>
-                            <li>
-                                <a href="">Marketing</a>
-                            </li>
-                            <li>
-                                <a href="">Sales</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3">
-                        <h2 class="ct-footer-list-header">The Industry</h2>
-                        <ul>
-                            <li>
-                                <a href="">Thought Leadership</a>
-                            </li>
-                            <li>
-                                <a href="">Webinars</a>
-                            </li>
-                            <li>
-                                <a href="">Events</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3">
-                        <h2 class="ct-footer-list-header">About</h2>
-                        <ul>
-                            <li>
-                                <a href="">FAQ</a>
-                            </li>
-                            <li>
-                                <a href="">Our Board</a>
-                            </li>
-                            <li>
-                                <a href="">Our Staff</a>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="col-md-3">
+                    <h2 class="ct-footer-list-header">Learn More</h2>
+                    <ul>
+                        <li>
+                            <a href="">Company</a>
+                        </li>
+                        <li>
+                            <a href="">Clients</a>
+                        </li>
+                        <li>
+                            <a href="">News</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h2 class="ct-footer-list-header">Services</h2>
+                    <ul>
+                        <li>
+                            <a href="">Design</a>
+                        </li>
+                        <li>
+                            <a href="">Marketing</a>
+                        </li>
+                        <li>
+                            <a href="">Sales</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h2 class="ct-footer-list-header">The Industry</h2>
+                    <ul>
+                        <li>
+                            <a href="">Thought Leadership</a>
+                        </li>
+                        <li>
+                            <a href="">Webinars</a>
+                        </li>
+                        <li>
+                            <a href="">Events</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h2 class="ct-footer-list-header">About</h2>
+                    <ul>
+                        <li>
+                            <a href="">FAQ</a>
+                        </li>
+                        <li>
+                            <a href="">Our Board</a>
+                        </li>
+                        <li>
+                            <a href="">Our Staff</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </footer>
