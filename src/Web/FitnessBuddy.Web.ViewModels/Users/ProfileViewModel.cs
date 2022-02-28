@@ -19,6 +19,8 @@
 
         public double CurrentCalories { get; set; }
 
+        public bool IsMyProfile { get; set; }
+
         public UserViewModel UserInfo { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
