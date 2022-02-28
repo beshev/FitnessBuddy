@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using System.IO;
-
+    using System.Linq;
     using AutoMapper;
     using FitnessBuddy.Common;
     using FitnessBuddy.Data.Models;
@@ -45,12 +45,18 @@
 
         public string Gender { get; set; }
 
+        public string UserRoleId { get; set; }
+
+        public string UserRole { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<ApplicationUser, UserViewModel>()
                    .ForMember(
                    dest => dest.ProfilePicture,
-                   opt => opt.MapFrom(x => $"/images/profileimages/{Path.GetFileName(x.ProfilePicture)}"));
+                   opt => opt.MapFrom(x => $"/images/profileimages/{Path.GetFileName(x.ProfilePicture)}"))
+                   .ForMember(
+                   dest => dest.UserRoleId, opt => opt.MapFrom(x => x.Roles.FirstOrDefault().RoleId));
         }
     }
 }
