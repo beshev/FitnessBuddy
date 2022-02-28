@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Threading.Tasks;
-
+    using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Data.Meals;
     using FitnessBuddy.Services.Data.Users;
     using FitnessBuddy.Services.Mapping;
@@ -12,36 +12,42 @@
     using FitnessBuddy.Web.ViewModels.Users;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
     [Authorize]
     public class UsersController : Controller
     {
+        private readonly RoleManager<ApplicationRole> roleManager;
         private readonly IUsersService userService;
         private readonly IMealsService mealsService;
         private readonly IWebHostEnvironment webHostEnvironment;
 
         public UsersController(
+            RoleManager<ApplicationRole> roleManager,
             IUsersService userService,
             IMealsService mealsService,
             IWebHostEnvironment webHostEnvironment)
         {
+            this.roleManager = roleManager;
             this.userService = userService;
             this.mealsService = mealsService;
             this.webHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult MyProfile()
+        public async Task<IActionResult> MyProfile()
         {
             var userId = this.User.GetUserId();
 
             var viewModel = this.userService.GetProfileData(userId);
+
             viewModel.IsMyProfile = true;
+            viewModel.UserInfo.UserRole = (await this.roleManager.FindByIdAsync(viewModel.UserInfo.UserRoleId)).Name;
 
             return this.View(viewModel);
         }
 
-        public IActionResult UserProfile(string username = "")
+        public async Task<IActionResult> UserProfile(string username = "")
         {
             var userId = this.userService.GetIdByUsername(username);
 
@@ -53,6 +59,7 @@
             var viewModel = this.userService.GetProfileData(userId);
 
             viewModel.IsMyProfile = false;
+            viewModel.UserInfo.UserRole = (await this.roleManager.FindByIdAsync(viewModel.UserInfo.UserRoleId)).Name;
 
             return this.View(viewModel);
         }
