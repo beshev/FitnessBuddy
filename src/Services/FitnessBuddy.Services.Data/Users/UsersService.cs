@@ -164,5 +164,27 @@
             return query.To<TModel>()
             .AsEnumerable();
         }
+
+        public IEnumerable<TModel> GetFollowers<TModel>(string userId)
+            => this.usersRepository
+            .AllAsNoTracking()
+            .Where(x => x.Id == userId)
+            .SelectMany(x => x.Followers)
+            .To<TModel>()
+            .AsEnumerable();
+
+        public IEnumerable<TModel> GetFollowing<TModel>(string userId)
+        => this.usersRepository
+            .AllAsNoTracking()
+            .Where(x => x.Id == userId)
+            .SelectMany(x => x.Following)
+            .To<TModel>()
+            .AsEnumerable();
+
+        public bool IsFollowingByUser(string userUsername, string followerUsername)
+            => this.usersRepository
+            .AllAsNoTracking()
+            .SelectMany(x => x.Followers)
+            .Any(x => x.User.UserName == userUsername && x.Follower.UserName == followerUsername);
     }
 }

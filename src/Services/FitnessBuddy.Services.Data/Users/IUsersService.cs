@@ -11,6 +11,10 @@
     {
         public TModel GetUserInfo<TModel>(string userId);
 
+        public IEnumerable<TModel> GetFollowers<TModel>(string userId);
+
+        public IEnumerable<TModel> GetFollowing<TModel>(string userId);
+
         public IEnumerable<TModel> GetAll<TModel>(string username = "");
 
         public Task AddFoodToFavoriteAsync(string userId, Food food);
@@ -26,6 +30,8 @@
         public bool IsFoodFavorite(string userId, int foodId);
 
         public bool HasMeal(string userId);
+
+        public bool IsFollowingByUser(string userUsername, string followerUsername);
 
         public string GetIdByUsername(string username);
 
