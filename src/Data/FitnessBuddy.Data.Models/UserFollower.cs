@@ -1,6 +1,7 @@
 ﻿namespace FitnessBuddy.Data.Models
 {
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     using FitnessBuddy.Data.Common.Models;
 
