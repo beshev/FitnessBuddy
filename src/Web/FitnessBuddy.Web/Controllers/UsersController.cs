@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
 
+    using FitnessBuddy.Common;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Data.Meals;
     using FitnessBuddy.Services.Data.Users;
@@ -38,7 +39,7 @@
 
         public async Task<IActionResult> Profile(string username = "", string tab = "")
         {
-            this.ViewData["Tab"] = tab.ToLower();
+            this.ViewData[GlobalConstants.NameOfTab] = tab.ToLower();
 
             var loggedUserId = this.User.GetUserId();
             var userId = this.userService.GetIdByUsername(username);
@@ -50,12 +51,12 @@
 
             var viewModel = this.userService.GetProfileData(userId);
 
-            if (tab == "followers")
+            if (tab == GlobalConstants.NameOfFollowers)
             {
                 viewModel.Followers = this.userService.GetFollowers<UserFollowers>(userId);
             }
 
-            if (tab == "following")
+            if (tab == GlobalConstants.NameOfFollowing)
             {
                 viewModel.Following = this.userService.GetFollowing<UserFollowing>(userId);
             }

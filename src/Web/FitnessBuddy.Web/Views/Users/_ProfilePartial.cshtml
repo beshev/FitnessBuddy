@@ -1,8 +1,9 @@
-﻿@model ProfileViewModel
+﻿@using FitnessBuddy.Common
+@model ProfileViewModel
 
 @{
-    var isTabFollowers = (this.ViewData["tab"] as string) == "followers";
-    var isTabFollowing = (this.ViewData["tab"] as string) == "following";
+    var isTabFollowers = (this.ViewData[GlobalConstants.NameOfTab] as string) == GlobalConstants.NameOfFollowers;
+    var isTabFollowing = (this.ViewData[GlobalConstants.NameOfTab] as string) == GlobalConstants.NameOfFollowing;
 }
 
 <section>
