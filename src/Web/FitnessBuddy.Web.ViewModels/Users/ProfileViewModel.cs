@@ -19,6 +19,8 @@
 
         public bool IsMyProfile { get; set; }
 
+        public bool IsFollowingByUser { get; set; }
+
         public UserViewModel UserInfo { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
