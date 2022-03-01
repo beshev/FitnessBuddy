@@ -23,6 +23,10 @@
 
         public UserViewModel UserInfo { get; set; }
 
+        public IEnumerable<ShortUserViewModel> Followers { get; set; }
+
+        public IEnumerable<ShortUserViewModel> Following { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration
