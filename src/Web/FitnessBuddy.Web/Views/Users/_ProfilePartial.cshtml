@@ -10,12 +10,31 @@
                         <h5 class="my-3">@Model.UserInfo.UserRole</h5>
                         @if (Model.IsMyProfile)
                         {
-                            <div class="d-flex justify-content-center mb-2">
-                                <a asp-controller="Users" asp-action="Edit"><span class="btn btn-outline-primary">Edit</span></a>
+                            <div class="row">
+                                <a asp-controller="Users" asp-action="Edit" class="btn btn-outline-secondary rounded mb-2 col-md-6 offset-3">Edit</a>
                             </div>
-                            <div class="d-flex justify-content-center mb-2">
-                                <a asp-controller="Meals" asp-action="MyMeals"><span class="btn btn-outline-info">My Meals</span></a>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a asp-action="Followers" asp-controller="Users"><i class="fa-solid fa-user-group"></i> Followers: @Model.UserInfo.FollowersCount</a>
+                                </div>
+                                <div class="col-md-6 text-left mb-2">
+                                    <a asp-action="Following" asp-controller="Users"><i class="fa-solid fa-user-group"></i> Following: @Model.UserInfo.FollowingCount</a>
+                                </div>
                             </div>
+                            <div class="col-md-12 text-center">
+                                <a asp-controller="Meals" asp-action="MyMeals"><span class="btn btn-outline-dark">My Meals</span></a>
+                            </div>
+                        }
+                        else
+                        {
+                            if (Model.IsFollowingByUser)
+                            {
+                                <a class="btn btn-sm btn-outline-danger">Unfollow</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-sm btn-outline-info">Start Follow</a>
+                            }
                         }
                     </div>
                 </div>

@@ -11,7 +11,7 @@
     </form>
 </div>
 
-@if(Model.Any() == false)
+@if (Model.Any() == false)
 {
     <h4 class="text-center">
         User '@this.ViewData["Username"]' does not exist!
@@ -21,15 +21,6 @@
 <div class="row">
     @foreach (var user in Model)
     {
-        <div class="card mb-4 mr-4 col-md-2 shadow-lg li-bg-color">
-            <a asp-action="UserProfile" asp-controller="Users" asp-route-username="@user.Username">
-                <div class="card-body text-center">
-                    <h5 class="my-3">@user.Username</h5>
-                    <img src="@user.ProfilePicture" onerror="src='/images/profileimages/default-avatar.jpg'" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
-                    <h6 class="my-3">@user.Email</h6>
-                    <p>Registered on: @user.CreatedOn.ToShortDateString()</p>
-                </div>
-            </a>
-        </div>
+        <partial name="_UserPartial" model="user" />
     }
 </div>
