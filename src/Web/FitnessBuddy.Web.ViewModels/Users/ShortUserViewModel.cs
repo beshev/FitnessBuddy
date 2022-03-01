@@ -15,9 +15,11 @@
 
         public string ProfilePicture { get; set; }
 
-        public DateTime CreatedOn { get; set; }
+        public int FollowersCount { get; set; }
 
-        public void CreateMappings(IProfileExpression configuration)
+        public int FollowingCount { get; set; }
+
+        public virtual void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<ApplicationUser, ShortUserViewModel>()
                 .ForMember(

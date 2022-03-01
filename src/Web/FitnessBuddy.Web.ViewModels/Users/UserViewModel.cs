@@ -49,6 +49,10 @@
 
         public string UserRole { get; set; }
 
+        public int FollowersCount { get; set; }
+
+        public int FollowingCount { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<ApplicationUser, UserViewModel>()
