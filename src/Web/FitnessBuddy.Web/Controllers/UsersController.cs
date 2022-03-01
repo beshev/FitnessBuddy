@@ -57,6 +57,25 @@
 
             viewModel.IsMyProfile = false;
             viewModel.UserInfo.UserRole = (await this.roleManager.FindByIdAsync(viewModel.UserInfo.UserRoleId)).Name;
+            viewModel.IsFollowingByUser = this.userService.IsFollowingByUser(username, this.User.GetUsername());
+
+            return this.View(viewModel);
+        }
+
+        public IActionResult Followers()
+        {
+            var userId = this.User.GetUserId();
+
+            var viewModel = this.userService.GetFollowers<UserFollowers>(userId);
+
+            return this.View(viewModel);
+        }
+
+        public IActionResult Following()
+        {
+            var userId = this.User.GetUserId();
+
+            var viewModel = this.userService.GetFollowing<UserFollowing>(userId);
 
             return this.View(viewModel);
         }
