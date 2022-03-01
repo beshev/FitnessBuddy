@@ -1,9 +1,14 @@
 ﻿@model ProfileViewModel
 
+@{
+    var isTabFollowers = (this.ViewData["tab"] as string) == "followers";
+    var isTabFollowing = (this.ViewData["tab"] as string) == "following";
+}
+
 <section>
     <div class="container py-5">
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="card mb-4">
                     <div class="card-body text-center shadow">
                         <img src="@Model.UserInfo.ProfilePicture" onerror="src='/images/profileimages/default-avatar.jpg'" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
@@ -14,15 +19,12 @@
                                 <a asp-controller="Users" asp-action="Edit" class="btn btn-outline-secondary rounded mb-2 col-md-6 offset-3">Edit</a>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
-                                    <a asp-action="Followers" asp-controller="Users"><i class="fa-solid fa-user-group"></i> Followers: @Model.UserInfo.FollowersCount</a>
+                                <div class="col-md-6 text-right">
+                                    <a asp-controller="Meals" asp-action="MyMeals"><span class="btn btn-outline-dark">Food diary</span></a>
                                 </div>
-                                <div class="col-md-6 text-left mb-2">
-                                    <a asp-action="Following" asp-controller="Users"><i class="fa-solid fa-user-group"></i> Following: @Model.UserInfo.FollowingCount</a>
+                                <div class="col-md-6 text-left">
+                                    <a asp-controller="Users" asp-action="Profile"><span class="btn btn-outline-dark">Profile</span></a>
                                 </div>
-                            </div>
-                            <div class="col-md-12 text-center">
-                                <a asp-controller="Meals" asp-action="MyMeals"><span class="btn btn-outline-dark">My Meals</span></a>
                             </div>
                         }
                         else
@@ -36,6 +38,14 @@
                                 <a asp-action="Follow" asp-controller="Users" asp-route-username="@Model.UserInfo.UserName" class="btn btn-sm btn-outline-info">Start Follow</a>
                             }
                         }
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <a asp-action="Profile" asp-controller="Users" asp-route-username="@Model.UserInfo.UserName" asp-route-tab="followers"><i class="fa-solid fa-user-group"></i> Followers: @Model.UserInfo.FollowersCount</a>
+                            </div>
+                            <div class="col-md-6 text-left mb-2">
+                                <a asp-action="Profile" asp-controller="Users" asp-route-username="@Model.UserInfo.UserName" asp-route-tab="following"><i class="fa-solid fa-user-group"></i> Following: @Model.UserInfo.FollowingCount</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="card mb-4 mb-lg-0">
@@ -55,116 +65,155 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8">
-                <div class="card mb-4">
-                    <div class="card-body shadow">
-                        <h5 class="mb-0 text-center">Personal Info</h5>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <p class="mb-0">Username</p>
+            @if (isTabFollowers)
+            {
+                <div class="col-md-9">
+                    @if (Model.Followers.Any() == false)
+                    {
+                        <h4 class="text-center">
+                            You don't have any followers.
+                        </h4>
+                    }
+
+                    <div class="row">
+                        @foreach (var user in Model.Followers)
+                        {
+                            <partial name="_UserPartial" model="user" />
+                        }
+                    </div>
+                </div>
+            }
+            else if (isTabFollowing)
+            {
+                <div class="col-md-9">
+                    @if (Model.Following.Any() == false)
+                    {
+                        <h4 class="text-center">
+                            You don't follow anyone.
+                        </h4>
+                    }
+
+                    <div class="row">
+                        @foreach (var user in Model.Following)
+                        {
+                            <partial name="_UserPartial" model="user" />
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="col-lg-8">
+                    <div class="card mb-4">
+                        <div class="card-body shadow">
+                            <h5 class="mb-0 text-center">Personal Info</h5>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Username</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">@Model.UserInfo.UserName</p>
+                                </div>
                             </div>
-                            <div class="col-sm-9">
-                                <p class="text-muted mb-0">@Model.UserInfo.UserName</p>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Email</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">@Model.UserInfo.Email</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Gender</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">@Model.UserInfo.Gender</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Weight</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">@Model.UserInfo.WeightInKg kg.</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Goal weight</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">@Model.UserInfo.GoalWeightInKg kg.</p>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Height</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">@Model.UserInfo.HeightInCm cm.</p>
+                                </div>
                             </div>
                         </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <p class="mb-0">Email</p>
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-body shadow">
+                            <h5 class="mb-0 text-center">Nutrient Goal</h5>
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Current protein</p>
+                                    <p class="mb-0"><strong>Daily protein goal</strong></p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="mb-0 text-muted">@Model.CurrentProtein.ToString("F2") gr.</p>
+                                    <p class="mb-0"><strong>@Model.UserInfo.DailyProteinGoal gr.</strong></p>
+                                </div>
                             </div>
-                            <div class="col-sm-9">
-                                <p class="text-muted mb-0">@Model.UserInfo.Email</p>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Current carbs</p>
+                                    <p class="mb-0"><strong>Daily carbs goal</strong></p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="mb-0 text-muted">@Model.CurrentCarbohydrates.ToString("F2") gr.</p>
+                                    <p class="mb-0"><strong>@Model.UserInfo.DailyCarbohydratesGoal gr.</strong></p>
+                                </div>
                             </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <p class="mb-0">Gender</p>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Current fat</p>
+                                    <p class="mb-0"><strong>Daily fat goal</strong></p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="mb-0 text-muted">@Model.CurrentFats.ToString("F2") gr.</p>
+                                    <p class="mb-0"><strong>@Model.UserInfo.DailyFatGoal gr.</strong></p>
+                                </div>
                             </div>
-                            <div class="col-sm-9">
-                                <p class="text-muted mb-0">@Model.UserInfo.Gender</p>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <p class="mb-0">Weight</p>
-                            </div>
-                            <div class="col-sm-9">
-                                <p class="text-muted mb-0">@Model.UserInfo.WeightInKg kg.</p>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <p class="mb-0">Goal weight</p>
-                            </div>
-                            <div class="col-sm-9">
-                                <p class="text-muted mb-0">@Model.UserInfo.GoalWeightInKg kg.</p>
-                            </div>
-                        </div>
-                        <hr />
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <p class="mb-0">Height</p>
-                            </div>
-                            <div class="col-sm-9">
-                                <p class="text-muted mb-0">@Model.UserInfo.HeightInCm cm.</p>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Current calories</p>
+                                    <p class="mb-0"><strong>Daily calories goal</strong></p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="mb-0 text-muted">@Model.CurrentCalories.ToString("F2") kcal</p>
+                                    <p class="mb-0"><strong>@Model.UserInfo.DailyCaloriesGoal kcal</strong></p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="card mb-4">
-                    <div class="card-body shadow">
-                        <h5 class="mb-0 text-center">Nutrient Goal</h5>
-                        <hr />
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <p class="mb-0">Current protein</p>
-                                <p class="mb-0"><strong>Daily protein goal</strong></p>
-                            </div>
-                            <div class="col-sm-9">
-                                <p class="mb-0 text-muted">@Model.CurrentProtein.ToString("F2") gr.</p>
-                                <p class="mb-0"><strong>@Model.UserInfo.DailyProteinGoal gr.</strong></p>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <p class="mb-0">Current carbs</p>
-                                <p class="mb-0"><strong>Daily carbs goal</strong></p>
-                            </div>
-                            <div class="col-sm-9">
-                                <p class="mb-0 text-muted">@Model.CurrentCarbohydrates.ToString("F2") gr.</p>
-                                <p class="mb-0"><strong>@Model.UserInfo.DailyCarbohydratesGoal gr.</strong></p>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <p class="mb-0">Current fat</p>
-                                <p class="mb-0"><strong>Daily fat goal</strong></p>
-                            </div>
-                            <div class="col-sm-9">
-                                <p class="mb-0 text-muted">@Model.CurrentFats.ToString("F2") gr.</p>
-                                <p class="mb-0"><strong>@Model.UserInfo.DailyFatGoal gr.</strong></p>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <p class="mb-0">Current calories</p>
-                                <p class="mb-0"><strong>Daily calories goal</strong></p>
-                            </div>
-                            <div class="col-sm-9">
-                                <p class="mb-0 text-muted">@Model.CurrentCalories.ToString("F2") kcal</p>
-                                <p class="mb-0"><strong>@Model.UserInfo.DailyCaloriesGoal kcal</strong></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </section>

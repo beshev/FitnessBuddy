@@ -36,50 +36,33 @@
             this.webHostEnvironment = webHostEnvironment;
         }
 
-        public async Task<IActionResult> MyProfile()
+        public async Task<IActionResult> Profile(string username = "", string tab = "")
         {
-            var userId = this.User.GetUserId();
+            this.ViewData["Tab"] = tab.ToLower();
 
-            var viewModel = this.userService.GetProfileData(userId);
-
-            viewModel.IsMyProfile = true;
-            viewModel.UserInfo.UserRole = (await this.roleManager.FindByIdAsync(viewModel.UserInfo.UserRoleId)).Name;
-
-            return this.View(viewModel);
-        }
-
-        public async Task<IActionResult> UserProfile(string username = "")
-        {
+            var loggedUserId = this.User.GetUserId();
             var userId = this.userService.GetIdByUsername(username);
 
             if (string.IsNullOrWhiteSpace(userId))
             {
-                return this.NotFound();
+                userId = loggedUserId;
             }
 
             var viewModel = this.userService.GetProfileData(userId);
 
-            viewModel.IsMyProfile = username == this.User.GetUsername();
+            if (tab == "followers")
+            {
+                viewModel.Followers = this.userService.GetFollowers<UserFollowers>(userId);
+            }
+
+            if (tab == "following")
+            {
+                viewModel.Following = this.userService.GetFollowing<UserFollowing>(userId);
+            }
+
+            viewModel.IsMyProfile = userId == loggedUserId;
             viewModel.UserInfo.UserRole = (await this.roleManager.FindByIdAsync(viewModel.UserInfo.UserRoleId)).Name;
             viewModel.IsFollowingByUser = this.usersFollowersService.IsFollowingByUser(userId, this.User.GetUserId());
-
-            return this.View(viewModel);
-        }
-
-        public IActionResult Followers()
-        {
-            var userId = this.User.GetUserId();
-
-            var viewModel = this.userService.GetFollowers<UserFollowers>(userId);
-
-            return this.View(viewModel);
-        }
-
-        public IActionResult Following()
-        {
-            var userId = this.User.GetUserId();
-
-            var viewModel = this.userService.GetFollowing<UserFollowing>(userId);
 
             return this.View(viewModel);
         }
@@ -101,7 +84,7 @@
 
             await this.usersFollowersService.FollowAsync(userId, followerId);
 
-            return this.RedirectToAction(nameof(this.UserProfile), new { Username = username });
+            return this.RedirectToAction(nameof(this.Profile), new { Username = username });
         }
 
         public async Task<IActionResult> UnFollow(string username)
@@ -121,7 +104,7 @@
 
             await this.usersFollowersService.UnFollowAsync(userId, followerId);
 
-            return this.RedirectToAction(nameof(this.UserProfile), new { Username = username });
+            return this.RedirectToAction(nameof(this.Profile), new { Username = username });
         }
 
         public IActionResult All(string username = "")
@@ -155,7 +138,7 @@
 
             await this.userService.EditAsync(userId, model, path);
 
-            return this.RedirectToAction(nameof(this.MyProfile));
+            return this.RedirectToAction(nameof(this.Profile));
         }
     }
 }

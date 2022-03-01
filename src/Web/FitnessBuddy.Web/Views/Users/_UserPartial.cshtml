@@ -1,7 +1,7 @@
 ﻿@model ShortUserViewModel
 
-<div class="card mb-4 mr-4 col-md-2 shadow-lg li-bg-color">
-    <a asp-action="UserProfile" asp-controller="Users" asp-route-username="@Model.Username">
+<div class="card mb-4 mr-4 ml-5 col-md-3 shadow-lg li-bg-color">
+    <a asp-action="Profile" asp-controller="Users" asp-route-username="@Model.Username">
         <div class="card-body text-center">
             <h5 class="my-3">@Model.Username</h5>
             <img src="@Model.ProfilePicture" onerror="src='/images/profileimages/default-avatar.jpg'" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
