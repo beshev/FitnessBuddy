@@ -180,11 +180,5 @@
             .SelectMany(x => x.Following)
             .To<TModel>()
             .AsEnumerable();
-
-        public bool IsFollowingByUser(string userUsername, string followerUsername)
-            => this.usersRepository
-            .AllAsNoTracking()
-            .SelectMany(x => x.Followers)
-            .Any(x => x.User.UserName == userUsername && x.Follower.UserName == followerUsername);
     }
 }

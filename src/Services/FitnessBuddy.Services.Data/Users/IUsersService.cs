@@ -31,8 +31,6 @@
 
         public bool HasMeal(string userId);
 
-        public bool IsFollowingByUser(string userUsername, string followerUsername);
-
         public string GetIdByUsername(string username);
 
         public bool IsUsernameExist(string username);
