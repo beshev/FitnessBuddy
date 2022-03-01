@@ -59,6 +59,12 @@ namespace FitnessBuddy.Data.Models
         [InverseProperty("AddedByUser")]
         public virtual ICollection<Food> AddedFoods { get; set; }
 
+        [InverseProperty("User")]
+        public virtual ICollection<UserFollower> Followers { get; set; }
+
+        [InverseProperty("Follower")]
+        public virtual ICollection<UserFollower> Following { get; set; }
+
         public virtual ICollection<Food> FavoriteFoods { get; set; }
 
         public virtual ICollection<Exercise> Exercises { get; set; }
