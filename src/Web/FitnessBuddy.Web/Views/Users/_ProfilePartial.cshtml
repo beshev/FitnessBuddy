@@ -29,11 +29,11 @@
                         {
                             if (Model.IsFollowingByUser)
                             {
-                                <a class="btn btn-sm btn-outline-danger">Unfollow</a>
+                                <a asp-action="UnFollow" asp-controller="Users" asp-route-username="@Model.UserInfo.UserName" class="btn btn-sm btn-outline-danger">Unfollow</a>
                             }
                             else
                             {
-                                <a class="btn btn-sm btn-outline-info">Start Follow</a>
+                                <a asp-action="Follow" asp-controller="Users" asp-route-username="@Model.UserInfo.UserName" class="btn btn-sm btn-outline-info">Start Follow</a>
                             }
                         }
                     </div>

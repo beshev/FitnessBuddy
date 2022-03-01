@@ -5,6 +5,7 @@
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Data.Meals;
     using FitnessBuddy.Services.Data.Users;
+    using FitnessBuddy.Services.Data.UsersFollowers;
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Users;
     using Microsoft.AspNetCore.Authorization;
@@ -17,17 +18,20 @@
     {
         private readonly RoleManager<ApplicationRole> roleManager;
         private readonly IUsersService userService;
+        private readonly IUsersFollowersService usersFollowersService;
         private readonly IMealsService mealsService;
         private readonly IWebHostEnvironment webHostEnvironment;
 
         public UsersController(
             RoleManager<ApplicationRole> roleManager,
             IUsersService userService,
+            IUsersFollowersService usersFollowersService,
             IMealsService mealsService,
             IWebHostEnvironment webHostEnvironment)
         {
             this.roleManager = roleManager;
             this.userService = userService;
+            this.usersFollowersService = usersFollowersService;
             this.mealsService = mealsService;
             this.webHostEnvironment = webHostEnvironment;
         }
@@ -55,9 +59,9 @@
 
             var viewModel = this.userService.GetProfileData(userId);
 
-            viewModel.IsMyProfile = false;
+            viewModel.IsMyProfile = username == this.User.GetUsername();
             viewModel.UserInfo.UserRole = (await this.roleManager.FindByIdAsync(viewModel.UserInfo.UserRoleId)).Name;
-            viewModel.IsFollowingByUser = this.userService.IsFollowingByUser(username, this.User.GetUsername());
+            viewModel.IsFollowingByUser = this.usersFollowersService.IsFollowingByUser(userId, this.User.GetUserId());
 
             return this.View(viewModel);
         }
@@ -78,6 +82,46 @@
             var viewModel = this.userService.GetFollowing<UserFollowing>(userId);
 
             return this.View(viewModel);
+        }
+
+        public async Task<IActionResult> Follow(string username)
+        {
+            var userId = this.userService.GetIdByUsername(username);
+            var followerId = this.User.GetUserId();
+
+            if (userId == null)
+            {
+                return this.NotFound();
+            }
+
+            if (this.usersFollowersService.IsFollowingByUser(userId, followerId))
+            {
+                return this.Unauthorized();
+            }
+
+            await this.usersFollowersService.FollowAsync(userId, followerId);
+
+            return this.RedirectToAction(nameof(this.UserProfile), new { Username = username });
+        }
+
+        public async Task<IActionResult> UnFollow(string username)
+        {
+            var userId = this.userService.GetIdByUsername(username);
+            var followerId = this.User.GetUserId();
+
+            if (userId == null)
+            {
+                return this.NotFound();
+            }
+
+            if (this.usersFollowersService.IsFollowingByUser(userId, followerId) == false)
+            {
+                return this.Unauthorized();
+            }
+
+            await this.usersFollowersService.UnFollowAsync(userId, followerId);
+
+            return this.RedirectToAction(nameof(this.UserProfile), new { Username = username });
         }
 
         public IActionResult All(string username = "")
