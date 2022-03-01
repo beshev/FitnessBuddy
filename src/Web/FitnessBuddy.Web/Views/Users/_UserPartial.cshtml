@@ -1,0 +1,23 @@
+﻿@model ShortUserViewModel
+
+<div class="card mb-4 mr-4 col-md-2 shadow-lg li-bg-color">
+    <a asp-action="UserProfile" asp-controller="Users" asp-route-username="@Model.Username">
+        <div class="card-body text-center">
+            <h5 class="my-3">@Model.Username</h5>
+            <img src="@Model.ProfilePicture" onerror="src='/images/profileimages/default-avatar.jpg'" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+            <p class="my-3">@Model.Email</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <i class="fa-solid fa-users"></i>
+                    <p>Followers:</p>
+                    <p>@Model.FollowersCount</p>
+                </div>
+                <div class="col-md-6">
+                    <i class="fa-solid fa-users"></i>
+                    <p>Following:</p>
+                    <p>@Model.FollowingCount</p>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
