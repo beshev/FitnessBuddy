@@ -48,6 +48,8 @@
                 query = query.Where(x => x.Name.Contains(search) || x.Category.Name.Contains(search));
             }
 
+            query = query.OrderByDescending(x => x.CreatedOn);
+
             if (take.HasValue)
             {
                 query = query.Skip(skip).Take(take.Value);
