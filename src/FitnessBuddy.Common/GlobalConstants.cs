@@ -23,11 +23,14 @@
         public const string NameOfSuccess = "success";
         public const string NameOfExercise = "exercise";
         public const string NameOfFood = "food";
+        public const string NameOfArticle = "article";
+        public const string NameOfPost = "post";
 
         // CRUD messages
         public const string DeleteMessage = "The {0} was deleted successfully";
         public const string SuccessMessage = "The {0} was added successfully";
         public const string AddFoodToFavoriteMessage = "The food was added successfully to favorites";
         public const string RemoveFoodFromFavoriteMessage = "The food was removed successfully from favorites";
+        public const string EditFoodMessage = "The food was edited successfully";
     }
 }
