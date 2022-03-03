@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
 
+    using FitnessBuddy.Common;
     using FitnessBuddy.Services.Data.Posts;
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Posts;
@@ -69,7 +70,9 @@
 
             await this.postsService.CreateAsync(model);
 
-            return this.RedirectToAction(nameof(this.Categories));
+            this.TempData[GlobalConstants.NameOfSuccess] = string.Format(GlobalConstants.SuccessMessage, GlobalConstants.NameOfPost);
+
+            return this.RedirectToAction(nameof(this.Category), new { model.CategoryId });
         }
 
         public IActionResult Edit(int id)
@@ -139,6 +142,8 @@
             }
 
             await this.postsService.DeleteAsync(id);
+
+            this.TempData[GlobalConstants.NameOfDelete] = string.Format(GlobalConstants.DeleteMessage, GlobalConstants.NameOfPost);
 
             return this.RedirectToAction(nameof(this.Categories));
         }

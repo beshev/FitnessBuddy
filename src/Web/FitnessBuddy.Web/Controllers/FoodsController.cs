@@ -2,6 +2,7 @@
 {
     using System;
     using System.Threading.Tasks;
+
     using FitnessBuddy.Common;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Data.Foods;
@@ -217,6 +218,8 @@
             }
 
             await this.foodsService.EditAsync(model);
+
+            this.TempData[GlobalConstants.NameOfSuccess] = GlobalConstants.EditFoodMessage;
 
             return this.RedirectToAction(nameof(this.MyFoods));
         }
