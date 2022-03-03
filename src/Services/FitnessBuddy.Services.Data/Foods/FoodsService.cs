@@ -77,6 +77,8 @@
                 query = query.Where(x => x.FoodName.Name.Contains(search));
             }
 
+            query = query.OrderByDescending(x => x.CreatedOn);
+
             if (take.HasValue)
             {
                 query = query
