@@ -59,8 +59,9 @@
 
         public IEnumerable<TModel> GetAll<TModel>(int skip = 0, int? take = null)
         {
-            var query = this.articlesRepository
-                .AllAsNoTracking();
+            IQueryable<Article> query = this.articlesRepository
+                .AllAsNoTracking()
+                .OrderByDescending(x => x.CreatedOn);
 
             if (take.HasValue)
             {
