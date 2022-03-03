@@ -1,0 +1,11 @@
+﻿@using FitnessBuddy.Common
+
+@if (this.TempData[GlobalConstants.NameOfDelete] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show col-md-4 offset-4" role="alert">
+        @this.TempData[GlobalConstants.NameOfDelete]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
