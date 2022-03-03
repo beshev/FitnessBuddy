@@ -19,7 +19,7 @@
                 <div class="card border-right border-bottom mb-3 offset-1 col-md-11">
                     <div class="row li-bg-color">
                         <div class="card-header col-md-6 text-left">
-                            <i class="fa-solid fa-user"></i> <a asp-action="UserProfile" asp-controller="Users" asp-route-username="@reply.AuthorUsername">@reply.AuthorUsername</a>
+                            <i class="fa-solid fa-user"></i> <a asp-action="Profile" asp-controller="Users" asp-route-username="@reply.AuthorUsername">@reply.AuthorUsername</a>
                             <a asp-action="Add" asp-controller="Replies" asp-route-parentId="@reply.Id" asp-route-postId="@Model.Id" class="text-primary"><i class="fa-solid fa-reply"></i></a>
                             @if (this.User.GetUserId() == reply.AuthorId)
                             {
@@ -47,7 +47,7 @@
             <div class="card-header col-md-8">
                 <div class="row">
                     <div class="col-md-4 text-left">
-                        <i class="fa-solid fa-user"></i> <a asp-action="UserProfile" asp-controller="Users" asp-route-username="@Model.AuthorUsername">@Model.AuthorUsername</a>
+                        <i class="fa-solid fa-user"></i> <a asp-action="Profile" asp-controller="Users" asp-route-username="@Model.AuthorUsername">@Model.AuthorUsername</a>
                         @if (this.User.GetUserId() == Model.AuthorId)
                         {
                             <a asp-controller="Posts" asp-action="Edit" asp-route-id="@Model.Id" class="mr-2 ml-2">
@@ -81,7 +81,7 @@
         <div class="card border-primary mb-3">
             <div class="row">
                 <div class="card-header col-md-6 text-left">
-                    <i class="fa-solid fa-user"></i> <a asp-action="UserProfile" asp-controller="Users" asp-route-username="@reply.AuthorUsername">@reply.AuthorUsername</a>
+                    <i class="fa-solid fa-user"></i> <a asp-action="Profile" asp-controller="Users" asp-route-username="@reply.AuthorUsername">@reply.AuthorUsername</a>
                     <a asp-action="Add" asp-controller="Replies" asp-route-parentId="@reply.Id" asp-route-postId="@Model.Id" class="text-primary"><i class="fa-solid fa-reply"></i></a>
                     @if (this.User.GetUserId() == reply.AuthorId)
                     {

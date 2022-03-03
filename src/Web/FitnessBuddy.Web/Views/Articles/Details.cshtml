@@ -13,7 +13,7 @@
             <div class="entry-meta">
                 <ul class="post-meta" style="list-style-type: none;">
                     <li><span class="posted-on"><time class="entry-date published"><strong>Written in:</strong> @Model.CreatedOn.ToString("dddd, dd MMMM, yyyy")</time></span></li>
-                    <li><span><strong>Written by:</strong> <a asp-action="UserProfile" asp-controller="Users" asp-route-username="@Model.CreatorUsername" title="Aigars" class="text-info">@Model.CreatorUsername</a></span></li>
+                    <li><span><strong>Written by:</strong> <a asp-action="Profile" asp-controller="Users" asp-route-username="@Model.CreatorUsername" title="Aigars" class="text-info">@Model.CreatorUsername</a></span></li>
                     <li><span><strong>Category:</strong> <a asp-contoller="Articles" asp-action="Category" asp-route-categoryName="@Model.CategoryName" title="Aigars" class="text-info">@Model.CategoryName</a></span></li>
                 </ul>
             </div>
