@@ -22,7 +22,9 @@
             <textarea asp-for="Content" class="form-control" rows="20" placeholder="Content..."></textarea>
             <span asp-validation-for="Content" class="text-danger"></span>
         </div>
-        <vc:article-categories-select></vc:article-categories-select>
+        <cache expires-after="TimeSpan.FromHours(1)">
+            <vc:article-categories-select></vc:article-categories-select>
+        </cache>
         <div class="form-grup">
             <label asp-for="Picture"></label>
             <input asp-for="Picture" class="form-control" placeholder="ImageUrl..." />

@@ -31,9 +31,13 @@
                         <span asp-validation-for="Difficulty" class="text-danger"></span>
                     </div>
 
-                    <vc:exercise-categories-select></vc:exercise-categories-select>
+                    <cache expires-after="TimeSpan.FromHours(1)">
+                        <vc:exercise-categories-select></vc:exercise-categories-select>
+                    </cache>
 
-                    <vc:exercise-equipment-select></vc:exercise-equipment-select>
+                    <cache expires-after="TimeSpan.FromHours(1)">
+                        <vc:exercise-equipment-select></vc:exercise-equipment-select>
+                    </cache>
 
                     <div class="form-group">
                         <label asp-for="ImageUrl"></label>

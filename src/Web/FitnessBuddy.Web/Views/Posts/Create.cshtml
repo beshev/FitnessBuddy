@@ -22,7 +22,9 @@
             <textarea asp-for="Description" class="form-control" rows="20" placeholder="Description..."></textarea>
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
-        <vc:post-categories-select></vc:post-categories-select>
+        <cache expires-after="TimeSpan.FromHours(1)">
+            <vc:post-categories-select></vc:post-categories-select>
+        </cache>
         <div class="form-grup" style="margin-top: 2%;">
             <input type="submit" class="btn btn-outline-dark" value="Create" />
         </div>
