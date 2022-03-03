@@ -105,7 +105,7 @@
 
             await this.exercisesService.EditAsync(model);
 
-            return this.RedirectToAction(nameof(this.Details), new { ExerciseId = model.Id });
+            return this.RedirectToAction(nameof(this.Details), new { model.Id });
         }
 
         public async Task<IActionResult> Delete(int id)
