@@ -2,7 +2,7 @@
 {
     using System;
     using System.Threading.Tasks;
-
+    using FitnessBuddy.Common;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Data.Foods;
     using FitnessBuddy.Services.Data.Users;
@@ -140,7 +140,9 @@
 
             await this.foodsService.AddAsync(userId, model);
 
-            return this.RedirectToAction(nameof(this.All));
+            this.TempData[GlobalConstants.NameOfSuccess] = string.Format(GlobalConstants.SuccessMessage, GlobalConstants.NameOfFood);
+
+            return this.RedirectToAction(nameof(this.MyFoods));
         }
 
         public async Task<IActionResult> AddToFavorite(int pageNumber, int foodId)
@@ -154,6 +156,8 @@
             var userId = this.User.GetUserId();
 
             await this.usersService.AddFoodToFavoriteAsync(userId, food);
+
+            this.TempData[GlobalConstants.NameOfSuccess] = GlobalConstants.AddFoodToFavoriteMessage;
 
             return this.RedirectToAction(nameof(this.All), new { Id = pageNumber });
         }
@@ -169,6 +173,8 @@
             var food = this.foodsService.GetById(foodId);
 
             await this.usersService.RemoveFoodFromFavoriteAsync(userId, food);
+
+            this.TempData[GlobalConstants.NameOfDelete] = GlobalConstants.RemoveFoodFromFavoriteMessage;
 
             return this.RedirectToAction(nameof(this.Favorites), new { Id = pageNumber });
         }
@@ -228,6 +234,8 @@
             }
 
             await this.foodsService.DeleteAsync(foodId);
+
+            this.TempData[GlobalConstants.NameOfDelete] = string.Format(GlobalConstants.DeleteMessage, GlobalConstants.NameOfFood);
 
             return this.RedirectToAction(nameof(this.MyFoods), new { Id = pageNumber });
         }

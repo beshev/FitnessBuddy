@@ -63,9 +63,9 @@
 
             var userId = this.User.GetUserId();
 
-            await this.exercisesService.AddAsync(userId, model);
+            var exerciseId = await this.exercisesService.AddAsync(userId, model);
 
-            return this.RedirectToAction(nameof(this.All));
+            return this.RedirectToAction(nameof(this.Details), new { Id = exerciseId });
         }
 
         public IActionResult Edit(int id)
@@ -121,6 +121,8 @@
             }
 
             await this.exercisesService.DeleteAsync(id);
+
+            this.TempData[GlobalConstants.NameOfDelete] = string.Format(GlobalConstants.DeleteMessage, GlobalConstants.NameOfExercise);
 
             return this.RedirectToAction(nameof(this.All));
         }
