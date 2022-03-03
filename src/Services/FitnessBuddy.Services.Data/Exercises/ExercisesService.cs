@@ -20,7 +20,7 @@
             this.exerciseRepository = exerciseRepository;
         }
 
-        public async Task AddAsync(string userId, ExerciseInputModel model)
+        public async Task<int> AddAsync(string userId, ExerciseInputModel model)
         {
             var exercise = new Exercise
             {
@@ -36,6 +36,8 @@
 
             await this.exerciseRepository.AddAsync(exercise);
             await this.exerciseRepository.SaveChangesAsync();
+
+            return exercise.Id;
         }
 
         public IEnumerable<ExerciseViewModel> GetAll(string search = "", int skip = 0, int? take = null)

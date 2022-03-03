@@ -21,6 +21,6 @@
 
         public TModel GetById<TModel>(int id);
 
-        public Task AddAsync(string userId, ExerciseInputModel model);
+        public Task<int> AddAsync(string userId, ExerciseInputModel model);
     }
 }
