@@ -19,6 +19,8 @@
 
         public string CategoryName { get; set; }
 
+        public string CreatorUsername { get; set; }
+
         public DateTime CreatedOn { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
