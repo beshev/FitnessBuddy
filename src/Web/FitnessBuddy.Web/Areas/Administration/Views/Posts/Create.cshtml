@@ -1,0 +1,35 @@
+﻿@model PostInputModel
+
+@{
+    this.ViewData["Title"] = "Create";
+}
+
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+
+<h4 class="text-center">Post</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4 offset-md-4 text-center">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" placeholder="Title..."/>
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                 <textarea asp-for="Description" class="form-control" rows="20" placeholder="Description..."></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <vc:post-categories-select></vc:post-categories-select>
+            <div class="form-group text-center">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="text-center">
+    <a asp-action="Index">Back to List</a>
+</div>
