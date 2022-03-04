@@ -56,7 +56,8 @@
             => this.postsRepository
             .AllAsNoTracking()
             .Where(x => x.CategoryId == categoryId)
-            .OrderByDescending(x => x.CreatedOn)
+            .OrderByDescending(x => x.Views)
+            .ThenByDescending(x => x.CreatedOn)
             .To<TModel>()
             .AsEnumerable();
 
