@@ -24,6 +24,9 @@
             <th>
                 Gender
             </th>
+            <th>
+                Banned on
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -44,8 +47,17 @@
                     @user.Gender
                 </td>
                 <td>
-                    <a asp-action="Ban" asp-route-username="@user.Username">Ban</a>
-                    <a asp-action="Unban" asp-route-username="@user.Username">Unban</a>
+                    @user.BannedOn
+                </td>
+                <td>
+                    @if (@user.IsBanned)
+                    {
+                        <a asp-action="Unban" asp-route-username="@user.Username" class="btn btn-sm btn-outline-info">Unban</a>
+                    }
+                    else
+                    {
+                        <a asp-action="Ban" asp-route-username="@user.Username" class="btn btn-sm btn-outline-danger">Ban</a>
+                    }
                 </td>
             </tr>
         }
