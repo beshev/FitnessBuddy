@@ -53,6 +53,11 @@
             .To<TModel>()
             .FirstOrDefault();
 
+        public int GetCount()
+            => this.repliesRepository
+            .AllAsNoTracking()
+            .Count();
+
         public int GetReplyPostId(int replyId)
             => this.repliesRepository
             .AllAsNoTracking()

@@ -180,5 +180,10 @@
             .SelectMany(x => x.Following)
             .To<TModel>()
             .AsEnumerable();
+
+        public int GetCount()
+            => this.usersRepository
+            .AllAsNoTracking()
+            .Count();
     }
 }

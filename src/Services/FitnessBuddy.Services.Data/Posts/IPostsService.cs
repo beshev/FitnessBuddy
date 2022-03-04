@@ -11,6 +11,8 @@
 
         public TModel GetById<TModel>(int id);
 
+        public int GetCount();
+
         public bool IsExist(int id);
 
         public bool IsUserAuthor(int postId, string userId);

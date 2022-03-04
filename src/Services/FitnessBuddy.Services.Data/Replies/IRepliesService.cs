@@ -14,6 +14,8 @@
 
         public int GetReplyPostId(int replyId);
 
+        public int GetCount();
+
         public TModel GetById<TModel>(int id);
 
         public bool IsUserAuthor(int replyId, string userId);

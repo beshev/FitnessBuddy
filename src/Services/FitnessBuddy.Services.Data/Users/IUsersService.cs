@@ -27,6 +27,8 @@
 
         public int FavoriteFoodsCount(string userId);
 
+        public int GetCount();
+
         public bool IsFoodFavorite(string userId, int foodId);
 
         public bool HasMeal(string userId);

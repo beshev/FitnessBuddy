@@ -74,6 +74,11 @@
             .AllAsNoTracking()
             .Any(x => x.Id == id);
 
+        public int GetCount()
+            => this.postsRepository
+            .AllAsNoTracking()
+            .Count();
+
         public bool IsUserAuthor(int postId, string userId)
             => this.postsRepository
             .AllAsNoTracking()
