@@ -2,6 +2,8 @@
 
 @{
     this.ViewData["Title"] = "Edit exercise";
+    this.TempData["categoryId"] = this.Model.CategoryId;
+    this.TempData["equipmentId"] = this.Model.EquipmentId;
 }
 
 <div class="container">
