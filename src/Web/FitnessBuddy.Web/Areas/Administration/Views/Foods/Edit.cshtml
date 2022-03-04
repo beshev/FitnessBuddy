@@ -1,0 +1,54 @@
+﻿@model FoodInputModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+
+<h4 class="text-center">Food</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4 offset-md-4 text-center">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProteinIn100Grams" class="control-label"></label>
+                <input asp-for="ProteinIn100Grams" class="form-control" />
+                <span asp-validation-for="ProteinIn100Grams" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CarbohydratesIn100Grams" class="control-label"></label>
+                <input asp-for="CarbohydratesIn100Grams" class="form-control" />
+                <span asp-validation-for="CarbohydratesIn100Grams" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FatIn100Grams" class="control-label"></label>
+                <input asp-for="FatIn100Grams" class="form-control" />
+                <span asp-validation-for="FatIn100Grams" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sodium" class="control-label"></label>
+                <input asp-for="Sodium" class="form-control" />
+                <span asp-validation-for="Sodium" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageUrl" class="control-label"></label>
+                <input asp-for="ImageUrl" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="text-center">
+    <a asp-action="Index">Back to List</a>
+</div>
