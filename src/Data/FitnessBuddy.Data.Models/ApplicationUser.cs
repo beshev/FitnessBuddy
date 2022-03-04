@@ -44,6 +44,14 @@ namespace FitnessBuddy.Data.Models
         [MaxLength(DataConstants.UserAboutMeMaxLength)]
         public string AboutMe { get; set; }
 
+        public bool IsBanned { get; set; }
+
+        public DateTime? BannedOn { get; set; }
+
+        [Required]
+        [MaxLength(DataConstants.UserBanReasonMaxLength)]
+        public string BanReason { get; set; }
+
         // Audit info
         public DateTime CreatedOn { get; set; }
 
