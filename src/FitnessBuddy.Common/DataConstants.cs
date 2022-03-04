@@ -23,6 +23,9 @@
         public const int UserAboutMeMinLength = 10;
         public const int UserAboutMeMaxLength = 500;
 
+        public const int UserBanReasonMinLength = 3;
+        public const int UserBanReasonMaxLength = 500;
+
         // Food model
         public const int FoodDescriptionMinLength = 10;
         public const int FoodDescriptionMaxLength = 500;
