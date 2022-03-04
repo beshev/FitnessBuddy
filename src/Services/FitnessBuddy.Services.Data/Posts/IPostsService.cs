@@ -9,6 +9,8 @@
     {
         public IEnumerable<TModel> GetPostsByCategory<TModel>(int categoryId);
 
+        public IEnumerable<TModel> GetAll<TModel>();
+
         public TModel GetById<TModel>(int id);
 
         public int GetCount();

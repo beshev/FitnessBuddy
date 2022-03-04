@@ -88,5 +88,11 @@
             => this.postsRepository
             .All()
             .FirstOrDefault(x => x.Id == id);
+
+        public IEnumerable<TModel> GetAll<TModel>()
+            => this.postsRepository
+            .AllAsNoTracking()
+            .To<TModel>()
+            .AsEnumerable();
     }
 }
