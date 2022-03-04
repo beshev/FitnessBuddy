@@ -29,8 +29,19 @@
 
         public IActionResult All(int id = 1, string search = "")
         {
+            if (id < 1)
+            {
+                return this.NotFound();
+            }
+
             int count = this.exercisesService.GetCount(search);
             int pagesCount = (int)Math.Ceiling((double)count / ExercisesPerPage);
+
+            if (id > pagesCount)
+            {
+                return this.NotFound();
+            }
+
             var skip = (id - 1) * ExercisesPerPage;
 
             var exercises = this.exercisesService.GetAll(search, skip, ExercisesPerPage);
