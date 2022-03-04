@@ -1,0 +1,41 @@
+﻿@model ArticleInputModel
+
+@{
+    ViewData["Title"] = "Edit";
+    this.TempData["categoryId"] = this.Model.CategoryId;
+}
+
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+
+<h4 class="text-center">Article</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-grup">
+                <label asp-for="Content"></label>
+                <textarea asp-for="Content" class="form-control" rows="20" placeholder="Content..."></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <vc:article-categories-select></vc:article-categories-select>
+            <div class="form-group">
+                <label asp-for="Picture" class="control-label"></label>
+                <input asp-for="Picture" class="form-control" />
+                <span asp-validation-for="Picture" class="text-danger"></span>
+            </div>
+            <div class="form-group text-center">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="text-center">
+    <a asp-action="Index">Back to List</a>
+</div>
