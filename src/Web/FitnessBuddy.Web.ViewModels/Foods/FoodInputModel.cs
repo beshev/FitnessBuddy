@@ -35,6 +35,8 @@
         [Display(Name = "Sodium in mg")]
         public double Sodium { get; set; }
 
+        [Url]
+        [Display(Name = "Image url (optional)")]
         public string ImageUrl { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
