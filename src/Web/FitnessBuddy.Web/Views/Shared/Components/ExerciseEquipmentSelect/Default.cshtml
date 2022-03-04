@@ -4,7 +4,7 @@
     <label id="select-meal">Equipment</label>
     <select id="select-meal" name="EquipmentId"
             class="form-select"
-            asp-items="@(new SelectList(Model,"Id","Name"))">
+            asp-items="@(new SelectList(Model,"Id","Name", this.TempData["equipmentId"]))">
     </select>
 </div>
 
