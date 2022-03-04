@@ -3,7 +3,6 @@
     using System;
     using System.Threading.Tasks;
 
-    using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Data.Articles;
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Articles;
