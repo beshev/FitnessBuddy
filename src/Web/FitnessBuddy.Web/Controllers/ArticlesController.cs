@@ -64,8 +64,6 @@
                 return this.View(model);
             }
 
-            // The binder set Id to 1 for no reason!
-            model.Id = 0;
             model.CreatorId = this.User.GetUserId();
 
             var path = $"{this.webHostEnvironment.WebRootPath}/images";
