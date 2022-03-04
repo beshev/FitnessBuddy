@@ -1,0 +1,44 @@
+﻿@model AllRepliesViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Description
+            </th>
+            <th>
+                Author
+            </th>
+            <th>
+                Created on
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Replies) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AuthorUsername)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedOn)
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<partial name="_PagingPartial" model="@Model" />
