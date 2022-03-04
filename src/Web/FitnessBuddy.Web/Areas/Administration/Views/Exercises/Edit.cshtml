@@ -1,0 +1,65 @@
+﻿@using FitnessBuddy.Data.Models.Enums
+@model ExerciseInputModel
+
+@{
+    this.ViewData["Title"] = "Edit";
+    this.TempData["categoryId"] = this.Model.CategoryId;
+    this.TempData["equipmentId"] = this.Model.EquipmentId;
+}
+
+<h1 class="text-center">@this.ViewData["Title"]</h1>
+
+<h4 class="text-center">Exercise</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Difficulty"></label>
+                <select asp-for="Difficulty" asp-items="Html.GetEnumSelectList<ExerciseDifficulty>()" class="form-select"></select>
+                <span asp-validation-for="Difficulty" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageUrl" class="control-label"></label>
+                <input asp-for="ImageUrl" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VideoUrl" class="control-label"></label>
+                <input asp-for="VideoUrl" class="form-control" />
+                <span asp-validation-for="VideoUrl" class="text-danger"></span>
+            </div>
+
+            <vc:exercise-categories-select></vc:exercise-categories-select>
+            <vc:exercise-equipment-select></vc:exercise-equipment-select>
+
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group text-center">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+
+    <div class="text-center">
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
