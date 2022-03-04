@@ -1,0 +1,55 @@
+﻿@model AllUsersViewModel
+
+
+@{
+    this.ViewData["Title"] = "Users";
+}
+
+<h1 class="text-center">
+    @this.ViewData["Title"]
+</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Username
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Created on
+            </th>
+            <th>
+                Gender
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td>
+                    @user.Username
+                </td>
+                <td>
+                    @user.Email
+                </td>
+                <td>
+                    @user.CreatedOn
+                </td>
+                <td>
+                    @user.Gender
+                </td>
+                <td>
+                    <a asp-action="Ban" asp-route-username="@user.Username">Ban</a>
+                    <a asp-action="Unban" asp-route-username="@user.Username">Unban</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<partial name="_PagingPartial" model="@Model" />
