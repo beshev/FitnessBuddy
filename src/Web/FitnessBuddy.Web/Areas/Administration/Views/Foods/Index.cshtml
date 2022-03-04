@@ -1,5 +1,5 @@
 ﻿@using FitnessBuddy.Web.ViewModels.Foods
-@model IEnumerable<FoodViewModel>
+@model AllFoodsViewModel
 
 @{
     this.ViewData["Title"] = "Foods";
@@ -10,35 +10,36 @@
 <p class="text-center">
     <a asp-action="Create">Create New</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FoodName)
+                Food name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProteinIn100Grams)
+               Protein per 100 grams
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CarbohydratesIn100Grams)
+                Carbohydrates per 100 grams
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FatIn100Grams)
+                Fat per 100 grams
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Sodium)
+                Sodium per 100 grams
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ImageUrl)
+                Image Url
             </th>
             <th>
-               @Html.DisplayNameFor(model => model.AddedByUserUsername)
+               AddedBy
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Foods) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.FoodName)
@@ -70,3 +71,5 @@
 }
     </tbody>
 </table>
+
+<partial name="_PagingPartial" model="@Model" />

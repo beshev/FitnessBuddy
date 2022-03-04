@@ -1,5 +1,6 @@
 ﻿namespace FitnessBuddy.Web.Areas.Administration.Controllers
 {
+    using System;
     using System.Threading.Tasks;
 
     using FitnessBuddy.Services.Data.Foods;
@@ -8,8 +9,7 @@
     using FitnessBuddy.Web.ViewModels.Foods;
     using Microsoft.AspNetCore.Mvc;
 
-    [Area("Administration")]
-    public class FoodsController : Controller
+    public class FoodsController : AdministrationController
     {
         private readonly IFoodsService foodsService;
 
@@ -19,9 +19,33 @@
             this.foodsService = foodsService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int id = 1)
         {
-            var viewModel = this.foodsService.GetAll<FoodViewModel>();
+            if (id < 1)
+            {
+                return this.NotFound();
+            }
+
+            var foodPerPage = 15;
+            int count = this.foodsService.GetCount(null);
+            int pagesCount = (int)Math.Ceiling((double)count / foodPerPage);
+
+            if (id > pagesCount)
+            {
+                return this.NotFound();
+            }
+
+            int skip = (id - 1) * foodPerPage;
+            var foods = this.foodsService.GetAll<FoodViewModel>(null, null, skip, foodPerPage);
+
+            var viewModel = new AllFoodsViewModel
+            {
+                PageNumber = id,
+                PagesCount = pagesCount,
+                Foods = foods,
+                ForAction = nameof(this.Index),
+                ForController = this.GetType().Name.Replace(nameof(Controller), string.Empty),
+            };
 
             return this.View(viewModel);
         }
