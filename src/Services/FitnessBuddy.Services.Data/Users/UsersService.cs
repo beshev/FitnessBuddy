@@ -150,15 +150,23 @@
             .Select(x => x.Id)
             .FirstOrDefault();
 
-        public IEnumerable<TModel> GetAll<TModel>(string username = "")
+        public IEnumerable<TModel> GetAll<TModel>(string username = "", int skip = 0, int? take = null)
         {
-            var query = this.usersRepository
-            .AllAsNoTracking();
+            IQueryable<ApplicationUser> query = this.usersRepository
+            .AllAsNoTracking()
+            .OrderByDescending(x => x.CreatedOn);
 
             if (string.IsNullOrWhiteSpace(username) == false)
             {
                 query = query
                     .Where(x => x.UserName == username);
+            }
+
+            if (take.HasValue)
+            {
+                query = query
+                    .Skip(skip)
+                    .Take(take.Value);
             }
 
             return query.To<TModel>()

@@ -15,7 +15,7 @@
 
         public IEnumerable<TModel> GetFollowing<TModel>(string userId);
 
-        public IEnumerable<TModel> GetAll<TModel>(string username = "");
+        public IEnumerable<TModel> GetAll<TModel>(string username = "", int skip = 0, int? take = null);
 
         public Task AddFoodToFavoriteAsync(string userId, Food food);
 
