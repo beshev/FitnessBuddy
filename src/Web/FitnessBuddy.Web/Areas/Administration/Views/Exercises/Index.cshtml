@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ExerciseViewModel>
+﻿@model AllExercisesViewModel
 
 @{
     this.ViewData["Title"] = "Exercises";
@@ -13,13 +13,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Difficulty)
+                Difficulty
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ImageUrl)
+                ImageUrl
             </th>
             <th>
                 Category
@@ -31,13 +31,13 @@
                 Added by
             </th>
             <th>
-                  @Html.DisplayNameFor(model => model.CreatedOn)
+                CreatedOn
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Exercises)
         {
             <tr>
                 <td>
@@ -70,3 +70,5 @@
         }
     </tbody>
 </table>
+
+<partial name="_PagingPartial" model="@Model" />
