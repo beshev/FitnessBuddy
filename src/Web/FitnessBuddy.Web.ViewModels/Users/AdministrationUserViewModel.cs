@@ -16,6 +16,8 @@
 
         public GenderType Gender { get; set; }
 
+        public DateTime? BannedOn { get; set; }
+
         public bool IsBanned { get; set; }
     }
 }

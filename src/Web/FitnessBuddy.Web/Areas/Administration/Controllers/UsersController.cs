@@ -48,13 +48,28 @@
             return this.View(viewModel);
         }
 
-        public async Task<IActionResult> Ban(string username)
+        public IActionResult Ban(string username)
         {
+            var viewModel = new UserBanInputModel
+            {
+                Username = username,
+            };
+
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Ban(UserBanInputModel model)
+        {
+            await this.usersService.BanUserAsync(model.Username, model.BanReason);
+
             return this.RedirectToAction(nameof(this.All));
         }
 
         public async Task<IActionResult> Unban(string username)
         {
+            await this.usersService.UnbanUserAsync(username);
+
             return this.RedirectToAction(nameof(this.All));
         }
     }

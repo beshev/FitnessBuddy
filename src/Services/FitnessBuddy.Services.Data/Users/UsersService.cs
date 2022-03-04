@@ -1,5 +1,6 @@
 ﻿namespace FitnessBuddy.Services.Data.Users
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -193,5 +194,31 @@
             => this.usersRepository
             .AllAsNoTracking()
             .Count();
+
+        public async Task BanUserAsync(string username, string banReason)
+        {
+            var user = await this.usersRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.UserName == username);
+
+            user.BannedOn = DateTime.UtcNow;
+            user.IsBanned = true;
+            user.BanReason = banReason;
+
+            await this.usersRepository.SaveChangesAsync();
+        }
+
+        public async Task UnbanUserAsync(string username)
+        {
+            var user = await this.usersRepository
+                   .All()
+                   .FirstOrDefaultAsync(x => x.UserName == username);
+
+            user.IsBanned = false;
+            user.BanReason = string.Empty;
+            user.BannedOn = null;
+
+           await this.usersRepository.SaveChangesAsync();
+        }
     }
 }

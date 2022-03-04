@@ -27,6 +27,10 @@
 
         public int FavoriteFoodsCount(string userId);
 
+        public Task BanUserAsync(string username, string banReason);
+
+        public Task UnbanUserAsync(string username);
+
         public int GetCount();
 
         public bool IsFoodFavorite(string userId, int foodId);

@@ -1,0 +1,24 @@
+﻿@model UserBanInputModel
+
+@{
+    this.ViewData["Titile"] = "Ban user";
+}
+
+<h1 class="text-center">
+    @this.ViewData["Titile"] '@Model.Username'
+</h1>
+<div class="col-md-6 offset-3 text-center">
+    <form asp-action="Ban" asp-controller="Users" asp-area="Administration">
+        <div class="form-group">
+            <label asp-for="BanReason"></label>
+            <textarea asp-for="BanReason" rows="10" class="form-control" placeholder="Write reason here..."></textarea>
+            <span asp-validation-for="BanReason" class="text-danger"></span>
+        </div>
+
+        <input asp-for="Username" hidden value="@Model.Username" />
+
+        <div class="form-group">
+            <input type="submit" class="btn btn-outline-danger" value="Ban" />
+        </div>
+    </form>
+</div>
