@@ -85,15 +85,25 @@
             .AllAsNoTracking()
             .Any(x => x.Id == postId && x.AuthorId == userId);
 
+        public IEnumerable<TModel> GetAll<TModel>(int skip = 0, int? take = null)
+        {
+            IQueryable<Post> query = this.postsRepository
+            .AllAsNoTracking()
+            .OrderByDescending(x => x.Views)
+            .ThenByDescending(x => x.CreatedOn);
+
+            if (take.HasValue)
+            {
+                query = query.Skip(skip).Take(take.Value);
+            }
+
+            return query.To<TModel>()
+                .AsEnumerable();
+        }
+
         private Post GetById(int id)
             => this.postsRepository
             .All()
             .FirstOrDefault(x => x.Id == id);
-
-        public IEnumerable<TModel> GetAll<TModel>()
-            => this.postsRepository
-            .AllAsNoTracking()
-            .To<TModel>()
-            .AsEnumerable();
     }
 }

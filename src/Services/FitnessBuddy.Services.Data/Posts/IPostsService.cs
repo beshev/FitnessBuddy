@@ -9,7 +9,7 @@
     {
         public IEnumerable<TModel> GetPostsByCategory<TModel>(int categoryId);
 
-        public IEnumerable<TModel> GetAll<TModel>();
+        public IEnumerable<TModel> GetAll<TModel>(int skip = 0, int? take = null);
 
         public TModel GetById<TModel>(int id);
 
