@@ -22,6 +22,12 @@
             .To<TModel>()
             .AsEnumerable();
 
+        public int GetCategoryPostsCount(int categoryId)
+            => this.postCategoriesRepository
+            .AllAsNoTracking()
+            .Where(x => x.Id == categoryId)
+            .Count();
+
         public string GetName(int categoryId)
             => this.postCategoriesRepository
             .AllAsNoTracking()
