@@ -1,5 +1,6 @@
 ﻿namespace FitnessBuddy.Services.Data.Replies
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -44,6 +45,22 @@
             reply.Description = model.Description;
 
             await this.repliesRepository.SaveChangesAsync();
+        }
+
+        public IEnumerable<TModel> GetAll<TModel>(int skip = 0, int? take = null)
+        {
+            IQueryable<Reply> query = this.repliesRepository
+            .AllAsNoTracking()
+            .OrderByDescending(x => x.CreatedOn);
+
+            if (take.HasValue)
+            {
+                query = query.Skip(skip).Take(take.Value);
+            }
+
+            return query
+                .To<TModel>()
+                .AsEnumerable();
         }
 
         public TModel GetById<TModel>(int id)
