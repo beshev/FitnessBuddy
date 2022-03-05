@@ -4,7 +4,7 @@
     using System.Threading.Tasks;
 
     using FitnessBuddy.Services.Data.Users;
-    using FitnessBuddy.Web.ViewModels.Users;
+    using FitnessBuddy.Web.ViewModels.Administration.Users;
     using Microsoft.AspNetCore.Mvc;
 
     public class UsersController : AdministrationController
