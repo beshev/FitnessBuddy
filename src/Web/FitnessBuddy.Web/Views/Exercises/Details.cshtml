@@ -5,11 +5,11 @@
 }
 
 <div class="container-fluid">
-    <div class="row shadow">
+    <div class="row">
 
         <vc:add-training-exercise exercise-id="Model.Id"></vc:add-training-exercise>
 
-        <div class="col-md-10 training-details-bg-color">
+        <div class="col-md-8 training-details-bg-color exercise">
 
             <div class="text-center">
                 <h2>
@@ -35,8 +35,8 @@
                     </p>
                 </div>
                 <div class="col-md-3">
-                   <a class="btn btn-outline-info" href=@($"/Exercises/Edit/{Model.Id}")>Edit</a>
-                   <a class="btn btn-outline-danger" href=@($"/Exercises/Delete/{Model.Id}")>Delete</a>
+                    <a class="btn btn-outline-info" href=@($"/Exercises/Edit/{Model.Id}")>Edit</a>
+                    <a class="btn btn-outline-danger" href=@($"/Exercises/Delete/{Model.Id}")>Delete</a>
                 </div>
             </div>
 
@@ -55,3 +55,21 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+<script>
+
+    $(document).ready(() => {
+        $(".add-to-training").hover(hoverIn, hoverOut);
+        $(".exercise").hover(hoverIn, hoverOut);
+    })
+
+    var hoverIn = (event) => {
+        $(event.currentTarget).addClass("shadow");
+    }
+
+    var hoverOut = (event) => {
+        $(event.currentTarget).removeClass("shadow");
+    }
+</script>
+}
