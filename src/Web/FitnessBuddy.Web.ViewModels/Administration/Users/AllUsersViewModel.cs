@@ -1,4 +1,4 @@
-﻿namespace FitnessBuddy.Web.ViewModels.Users
+﻿namespace FitnessBuddy.Web.ViewModels.Administration.Users
 {
     using System.Collections.Generic;
 
