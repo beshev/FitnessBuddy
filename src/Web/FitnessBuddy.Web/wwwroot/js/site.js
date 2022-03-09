@@ -3,18 +3,37 @@
 
 // Write your JavaScript code.
 
+hoverShadow();
+dashboardCounter();
 
-$(document).ready(function () {
 
-    $('.counter').each(function () {
-        $(this).prop('Counter', 0).animate({
-            Counter: $(this).text()
-        }, {
-            duration: 4000,
-            easing: 'swing',
-            step: function (now) {
-                $(this).text(Math.ceil(now));
-            }
+function hoverShadow() {
+    $(document).ready(() => {
+        $(`.hover-shadow`).hover(hoverIn, hoverOut);
+    })
+
+    var hoverIn = (event) => {
+        $(event.currentTarget).addClass("shadow");
+    }
+
+    var hoverOut = (event) => {
+        $(event.currentTarget).removeClass("shadow");
+    }
+}
+
+function dashboardCounter() {
+    $(document).ready(function () {
+
+        $('.counter').each(function () {
+            $(this).prop('Counter', 0).animate({
+                Counter: $(this).text()
+            }, {
+                duration: 4000,
+                easing: 'swing',
+                step: function (now) {
+                    $(this).text(Math.ceil(now));
+                }
+            });
         });
     });
-});
+}
