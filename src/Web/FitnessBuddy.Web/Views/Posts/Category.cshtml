@@ -1,7 +1,7 @@
-﻿@model CategoryPostsViewModel
+﻿@model AllPostsViewModel
 
 @{
-    this.ViewData["Title"] = @Model.Name;
+    this.ViewData["Title"] = @Model.CategoryName;
 }
 
 <h3 class="text-center">
@@ -39,3 +39,56 @@
         <a asp-action="Create" asp-controller="Posts">Create new post</a>
     </p>
 </div>
+
+<nav aria-label="...">
+    <ul class="pagination justify-content-center">
+        <li class="page-item @if(Model.HasPreviousPage == false) { <text>disabled</text> }">
+            <a class="page-link" asp-controller="Posts" asp-action="Category" asp-route-id="@Model.FirstPageNumber" asp-route-categoryId="@Model.CategoryId">
+                &laquo;&laquo;
+            </a>
+        </li>
+        <li class="page-item @if(Model.HasPreviousPage == false) {<text>disabled</text>}">
+            <a class="page-link" asp-controller="Posts" asp-action="Category" asp-route-id="@Model.PreviousPageNumber" asp-route-categoryId="@Model.CategoryId">
+                &laquo;
+            </a>
+        </li>
+        @for (int i = Model.PageNumber - 2; i < Model.PageNumber; i++)
+        {
+            if (i > 0)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Posts" asp-action="Category" asp-route-id="@i" asp-route-categoryId="@Model.CategoryId">
+                        @i
+                    </a>
+                </li>
+            }
+        }
+        <li class="page-item active" aria-current="page">
+            <span class="page-link">
+                @Model.PageNumber
+                <span class="sr-only">(current)</span>
+            </span>
+        </li>
+        @for (int i = Model.PageNumber + 1; i <= Model.PageNumber + 2; i++)
+        {
+            if (i <= Model.PagesCount)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Posts" asp-action="Category" asp-route-id="@i" asp-route-categoryId="@Model.CategoryId">
+                        @i
+                    </a>
+                </li>
+            }
+        }
+        <li class="page-item @if(Model.HasNextPage == false) { <text>disabled</text> }">
+            <a class="page-link" asp-controller="Posts" asp-action="Category" asp-route-id="@Model.NextPageNumber" asp-route-categoryId="@Model.CategoryId">
+                &raquo;
+            </a>
+        </li>
+        <li class="page-item @if(Model.HasNextPage == false) {<text>disabled</text>}">
+            <a class="page-link" asp-controller="Posts" asp-action="Category" asp-route-id="@Model.LastPageNumber" asp-route-categoryId="@Model.CategoryId">
+                &raquo;&raquo;
+            </a>
+        </li>
+    </ul>
+</nav>

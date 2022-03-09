@@ -1,5 +1,6 @@
 ﻿namespace FitnessBuddy.Web.Controllers
 {
+    using System;
     using System.Threading.Tasks;
 
     using FitnessBuddy.Common;
@@ -30,19 +31,33 @@
             return this.View(viewModel);
         }
 
-        public IActionResult Category(int categoryId)
+        public IActionResult Category(int categoryId, int id = 1)
         {
-            if (this.postCategoriesService.IsExist(categoryId) == false)
+            if (id < 1)
             {
                 return this.NotFound();
             }
 
-            var posts = this.postsService.GetPostsByCategory<PostViewModel>(categoryId);
+            var postsPerPage = 5;
+            int count = this.postsService.GetCount(categoryId);
+            int pagesCount = (int)Math.Ceiling((double)count / postsPerPage);
 
-            var viewModel = new CategoryPostsViewModel
+            if (pagesCount != 0 && id > pagesCount)
             {
-                Name = this.postCategoriesService.GetName(categoryId),
+                return this.NotFound();
+            }
+
+            var skip = (id - 1) * postsPerPage;
+
+            var posts = this.postsService.GetAll<PostViewModel>(categoryId, skip, postsPerPage);
+
+            var viewModel = new AllPostsViewModel
+            {
+                PageNumber = id,
+                PagesCount = pagesCount,
                 Posts = posts,
+                CategoryName = this.postCategoriesService.GetName(categoryId),
+                CategoryId = categoryId,
             };
 
             return this.View(viewModel);
