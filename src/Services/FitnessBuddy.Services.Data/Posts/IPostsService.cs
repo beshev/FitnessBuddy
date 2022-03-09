@@ -7,13 +7,11 @@
 
     public interface IPostsService
     {
-        public IEnumerable<TModel> GetPostsByCategory<TModel>(int categoryId);
-
-        public IEnumerable<TModel> GetAll<TModel>(int skip = 0, int? take = null);
+        public IEnumerable<TModel> GetAll<TModel>(int? categoryId = null, int skip = 0, int? take = null);
 
         public TModel GetById<TModel>(int id);
 
-        public int GetCount();
+        public int GetCount(int? categoryId = null);
 
         public bool IsExist(int id);
 

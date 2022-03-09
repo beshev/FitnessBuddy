@@ -52,15 +52,6 @@
             .To<TModel>()
             .FirstOrDefault();
 
-        public IEnumerable<TModel> GetPostsByCategory<TModel>(int categoryId)
-            => this.postsRepository
-            .AllAsNoTracking()
-            .Where(x => x.CategoryId == categoryId)
-            .OrderByDescending(x => x.Views)
-            .ThenByDescending(x => x.CreatedOn)
-            .To<TModel>()
-            .AsEnumerable();
-
         public async Task IncreaseViewsAsync(int id)
         {
             var post = this.GetById(id);
@@ -75,21 +66,35 @@
             .AllAsNoTracking()
             .Any(x => x.Id == id);
 
-        public int GetCount()
-            => this.postsRepository
-            .AllAsNoTracking()
-            .Count();
+        public int GetCount(int? categoryId = null)
+        {
+            var query = this.postsRepository
+            .AllAsNoTracking();
+
+            if (categoryId.HasValue)
+            {
+                query = query.Where(x => x.CategoryId == categoryId.Value);
+            }
+
+            return query.Count();
+        }
 
         public bool IsUserAuthor(int postId, string userId)
             => this.postsRepository
             .AllAsNoTracking()
             .Any(x => x.Id == postId && x.AuthorId == userId);
 
-        public IEnumerable<TModel> GetAll<TModel>(int skip = 0, int? take = null)
+        public IEnumerable<TModel> GetAll<TModel>(int? categoryId = null, int skip = 0, int? take = null)
         {
             IQueryable<Post> query = this.postsRepository
-            .AllAsNoTracking()
-            .OrderByDescending(x => x.Views)
+            .AllAsNoTracking();
+
+            if (categoryId.HasValue)
+            {
+                query = query.Where(x => x.CategoryId == categoryId);
+            }
+
+            query = query.OrderByDescending(x => x.Views)
             .ThenByDescending(x => x.CreatedOn);
 
             if (take.HasValue)
