@@ -37,7 +37,7 @@
             int count = this.exercisesService.GetCount(search);
             int pagesCount = (int)Math.Ceiling((double)count / ExercisesPerPage);
 
-            if (id > pagesCount)
+            if (pagesCount != 0 && id > pagesCount)
             {
                 return this.NotFound();
             }
