@@ -73,7 +73,7 @@
 
             var userId = this.User.GetUserId();
 
-            if (this.trainingsService.IsUserTraining(id, userId))
+            if (this.trainingsService.IsUserTraining(id, userId) == false)
             {
                 return this.Unauthorized();
             }
