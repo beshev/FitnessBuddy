@@ -7,7 +7,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-2 border shadow bg-light rounded">
+        <div class="col-md-2 border hover-shadow bg-light rounded">
             <h4 class="text-center">Workouts:</h4>
             <div class="row">
                 @foreach (var training in Model.Trainings)
@@ -47,7 +47,7 @@
         </div>
 
         <div class="col-md-9">
-            <h4 class="text-center shadow border">
+            <h4 class="text-center hover-shadow rounded">
                 <strong>@Model.TrainingName</strong>
             </h4>
             <hr />
@@ -62,7 +62,7 @@
                 @foreach (var exercise in Model.TrainingExercises)
                 {
                     <div class="col-lg-4">
-                        <div class="card mt-2 shadow rouded">
+                        <div class="card mt-2 rouded hover-shadow">
                             <div class="card-top text-center">
                                 <h5 class="card-title">@exercise.ExerciseName</h5>
                                 <img class="card-img img-thumbnail" style="height: 180px;" src="@exercise.ExerciseImageUrl" alt="Card image cap">

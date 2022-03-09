@@ -6,7 +6,7 @@
             @foreach (var article in Model)
             {
                 <div class="col-md-6">
-                    <div class="card flex-md-row mb-4 box-shadow h-md-250 shadow border">
+                    <div class="card flex-md-row mb-4 box-shadow h-md-250 hover-shadow border">
                         <div class="card-body d-flex flex-column align-items-start">
                             <a asp-contoller="Articles" asp-action="Category" asp-route-categoryName="@article.CategoryName" title="Aigars"><strong class="d-inline-block mb-2 text-info">@article.CategoryName</strong></a>
                             <h3 class="mb-0">

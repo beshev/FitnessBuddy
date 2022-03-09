@@ -38,7 +38,7 @@ else
         <div class="row">
             @foreach (var food in @Model.Foods)
             {
-                <div class="card col-md-3 offset-1 mb-3 card-bg-color shadow">
+                <div class="card col-md-3 offset-1 mb-3 card-bg-color hover-shadow">
                     <partial name="_FoodPartial" model="food" />
                     <ul class="list-group list-group-flush">
                         @if (this.User.Identity.IsAuthenticated)

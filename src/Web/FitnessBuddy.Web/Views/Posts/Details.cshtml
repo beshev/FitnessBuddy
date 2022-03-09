@@ -16,7 +16,7 @@
         @foreach (var reply in replies)
         {
             <div class="row">
-                <div class="card border-right border-bottom mb-3 offset-1 col-md-11">
+                <div class="card border-right border-bottom mb-3 offset-1 col-md-11 hover-shadow">
                     <div class="row li-bg-color">
                         <div class="card-header col-md-6 text-left">
                             <i class="fa-solid fa-user"></i> <a asp-action="Profile" asp-controller="Users" asp-route-username="@reply.AuthorUsername">@reply.AuthorUsername</a>
@@ -78,7 +78,7 @@
 @foreach (var reply in Model.Replies.Where(x => x.ParentId == null))
 {
     <div class="row">
-        <div class="card border-primary mb-3">
+        <div class="card border-primary mb-3 hover-shadow">
             <div class="row">
                 <div class="card-header col-md-6 text-left">
                     <i class="fa-solid fa-user"></i> <a asp-action="Profile" asp-controller="Users" asp-route-username="@reply.AuthorUsername">@reply.AuthorUsername</a>

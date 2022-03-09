@@ -18,7 +18,7 @@
 <div class="row">
     @foreach (var post in Model.Posts)
     {
-        <div class="card border-info mb-4 col-md-12 shadow">
+        <div class="card border-info mb-4 col-md-12 hover-shadow">
             <div class="card-body">
                 <a asp-action="Details" asp-controller="Posts" asp-route-id="@post.Id">
                     <h4 class="card-title">@post.Title</h4>
