@@ -28,14 +28,14 @@
             int count = this.postsService.GetCount();
             int pagesCount = (int)Math.Ceiling((double)count / postsPerPage);
 
-            if (id > pagesCount)
+            if (pagesCount != 0 && id > pagesCount)
             {
                 return this.NotFound();
             }
 
             var skip = (id - 1) * postsPerPage;
 
-            var posts = this.postsService.GetAll<PostViewModel>(skip, postsPerPage);
+            var posts = this.postsService.GetAll<PostViewModel>(null, skip, postsPerPage);
 
             var viewModel = new AllPostsViewModel
             {

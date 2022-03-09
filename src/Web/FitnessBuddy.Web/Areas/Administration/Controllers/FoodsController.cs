@@ -30,7 +30,7 @@
             int count = this.foodsService.GetCount(null);
             int pagesCount = (int)Math.Ceiling((double)count / foodPerPage);
 
-            if (id > pagesCount)
+            if (pagesCount != 0 && id > pagesCount)
             {
                 return this.NotFound();
             }

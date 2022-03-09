@@ -33,7 +33,7 @@
             int count = this.articlesService.GetCount();
             int pagesCount = (int)Math.Ceiling((double)count / articlesPerPage);
 
-            if (id > pagesCount)
+            if (pagesCount != 0 && id > pagesCount)
             {
                 return this.NotFound();
             }

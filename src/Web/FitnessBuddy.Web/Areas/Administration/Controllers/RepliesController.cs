@@ -27,7 +27,7 @@
             int count = this.repliesService.GetCount();
             int pagesCount = (int)Math.Ceiling((double)count / repliesPerPage);
 
-            if (id > pagesCount)
+            if (pagesCount != 0 && id > pagesCount)
             {
                 return this.NotFound();
             }
