@@ -8,7 +8,7 @@
 <div class="container">
     <div class="row d-flex justify-content-center">
         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 mb-4">
-            <div class="counter-box">
+            <div class="counter-box hover-shadow rounded card-bg-color">
                 <a asp-controller="Users" asp-action="All">
                     <i class="fa fa-user"></i>
                     <span class="counter">@Model.UsersCount</span>
@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 mb-4">
-            <div class="counter-box">
+            <div class="counter-box hover-shadow rounded">
                 <a asp-controller="Exercises" asp-action="Index">
                     <i class="fa fa-running"></i>
                     <span class="counter">@Model.ExercisesCount</span>
@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 mb-4">
-            <div class="counter-box">
+            <div class="counter-box hover-shadow rounded">
                 <a asp-controller="Articles" asp-action="Index">
                     <i class="fa fa-newspaper"></i>
                     <span class="counter">@Model.ArticlesCount</span>
@@ -39,7 +39,7 @@
 
 <div class="row d-flex justify-content-center">
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 mb-4">
-        <div class="counter-box">
+        <div class="counter-box hover-shadow rounded">
             <a asp-controller="Posts" asp-action="Index">
                 <i class="fa fa-edit"></i>
                 <span class="counter">@Model.PostsCount</span>
@@ -48,7 +48,7 @@
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 mb-4">
-        <div class="counter-box">
+        <div class="counter-box hover-shadow rounded">
             <a asp-controller="Foods" asp-action="Index">
                 <i class="fa fa-drumstick-bite"></i>
                 <span class="counter">@Model.FoodsCount</span>
@@ -57,7 +57,7 @@
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 mb-4">
-        <div class="counter-box">
+        <div class="counter-box hover-shadow rounded">
             <a asp-controller="Replies" asp-action="Index">
                 <i class="fa-solid fa-comment-dots"></i>
                 <span class="counter">@Model.RepliesCount</span>
