@@ -13,11 +13,11 @@ function hoverShadow() {
     })
 
     var hoverIn = (event) => {
-        $(event.currentTarget).addClass("shadow");
+        $(event.currentTarget).addClass("shadow-lg");
     }
 
     var hoverOut = (event) => {
-        $(event.currentTarget).removeClass("shadow");
+        $(event.currentTarget).removeClass("shadow-lg");
     }
 }
 
