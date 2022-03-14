@@ -224,23 +224,23 @@
             return this.RedirectToAction(nameof(this.MyFoods));
         }
 
-        public async Task<IActionResult> Delete(int pageNumber, int foodId)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (this.foodsService.IsExist(foodId) == false)
+            if (this.foodsService.IsExist(id) == false)
             {
                 return this.NotFound();
             }
 
-            if (this.foodsService.IsUserFood(this.User.GetUserId(), foodId) == false)
+            if (this.foodsService.IsUserFood(this.User.GetUserId(), id) == false)
             {
                 return this.Unauthorized();
             }
 
-            await this.foodsService.DeleteAsync(foodId);
+            await this.foodsService.DeleteAsync(id);
 
             this.TempData[GlobalConstants.NameOfDelete] = string.Format(GlobalConstants.DeleteMessage, GlobalConstants.NameOfFood);
 
-            return this.RedirectToAction(nameof(this.MyFoods), new { Id = pageNumber });
+            return this.RedirectToAction(nameof(this.MyFoods));
         }
     }
 }
