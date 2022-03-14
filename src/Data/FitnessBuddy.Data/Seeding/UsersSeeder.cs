@@ -14,6 +14,7 @@
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
             var password = "123456";
 
             if (!dbContext.Users.Any(x => x.Email == "user@user.com"))
@@ -21,8 +22,14 @@
                 var user = new ApplicationUser
                 {
                     Email = "user@user.com",
-                    UserName = "user@user.com",
+                    UserName = "User",
                 };
+
+                user.Roles.Add(new IdentityUserRole<string>()
+                {
+                    RoleId = dbContext.Roles
+                    .FirstOrDefault(r => r.Name == GlobalConstants.UserRoleName)?.Id,
+                });
 
                 await userManager.CreateAsync(user, password);
             }
@@ -40,7 +47,7 @@
             var admin = new ApplicationUser
             {
                 Email = "admin@admin.com",
-                UserName = "admin@admin.com",
+                UserName = "admin",
             };
 
             admin.Roles.Add(new IdentityUserRole<string>()
