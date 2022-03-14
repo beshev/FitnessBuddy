@@ -49,12 +49,14 @@ else
                                 <a class="btn btn-info" asp-action="Edit" asp-controller="Foods" asp-route-id="@food.Id">
                                     Edit
                                 </a>
-                                <a class="btn btn-danger" asp-action="Delete" asp-controller="Foods" asp-route-pageNumber="@Model.PageNumber" asp-route-foodId="@food.Id">
+                                <button class="btn btn-danger" data-toggle="modal" data-target="#@($"deleteModal{food.Id}")">
                                     Delete
-                                </a>
+                                </button>
                             </li>
                         </ul>
                 </div>
+
+                <vc:delete-modal item-id="@food.Id" item-name="@food.FoodName" controller-name="Foods"></vc:delete-modal>
             }
         </div>
     </div>

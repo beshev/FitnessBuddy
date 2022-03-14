@@ -53,7 +53,7 @@
                             <a asp-controller="Posts" asp-action="Edit" asp-route-id="@Model.Id" class="mr-2 ml-2">
                                 <i class="fa-solid fa-pen-to-square text-info"></i>
                             </a>
-                            <a asp-controller="Posts" asp-action="Delete" asp-route-id="@Model.Id">
+                            <a data-toggle="modal" data-target="#@($"deleteModal{Model.Id}")" href="javascript:void(0)">
                                 <i class="fa-solid fa-trash text-danger"></i>
                             </a>
 
@@ -100,4 +100,7 @@
         </div>
     </div>
 }
+
 <vc:add-reply post-id="@Model.Id"></vc:add-reply>
+
+<vc:delete-modal item-id="@Model.Id" item-name="@Model.Title" controller-name="Posts"></vc:delete-modal>

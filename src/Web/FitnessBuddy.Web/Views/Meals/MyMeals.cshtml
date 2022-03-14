@@ -48,10 +48,11 @@ else
                         @meal.CurrentFats.ToString("F2") gr. / @meal.TargetFat.ToString("F2") gr.
                     </th>
                     <th>
-                        <a class="btn btn-danger" asp-action="Delete" asp-controller="Meals" asp-route-mealId="@meal.Id">
-                            <strong>Delete</strong>
-                        </a>
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#@($"deleteModal{meal.Id}")">
+                            Delete
+                        </button>
                     </th>
+                    <vc:delete-modal item-id="@meal.Id" item-name="@meal.Name" controller-name="Meals"></vc:delete-modal>
                 </tr>
                 @foreach (var mealFood in meal.MealFoods)
                 {

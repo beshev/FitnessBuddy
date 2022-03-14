@@ -4,7 +4,9 @@
     this.ViewData["Title"] = "Exercise details";
 }
 
-<div class="container-fluid">
+<vc:delete-modal item-id="@Model.Id" item-name="@Model.Name" controller-name="Exercises"></vc:delete-modal>
+
+<div class="container">
     <div class="row">
 
         <vc:add-training-exercise exercise-id="Model.Id"></vc:add-training-exercise>
@@ -36,7 +38,7 @@
                 </div>
                 <div class="col-md-3">
                     <a class="btn btn-outline-info" href=@($"/Exercises/Edit/{Model.Id}")>Edit</a>
-                    <a class="btn btn-outline-danger" href=@($"/Exercises/Delete/{Model.Id}")>Delete</a>
+                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#@($"deleteModal{Model.Id}")">Delete</button>
                 </div>
             </div>
 
