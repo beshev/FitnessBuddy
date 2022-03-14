@@ -10,6 +10,7 @@
 
     using FitnessBuddy.Common;
     using FitnessBuddy.Data.Models;
+    using FitnessBuddy.Data.Models.Enums;
     using FitnessBuddy.Services.Data.Users;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
@@ -74,6 +75,36 @@
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            public GenderType Gender { get; set; }
+
+            [Range(DataConstants.UserWeightMinValue, DataConstants.UserWeightMaxValue)]
+            [Display(Name = "Current weights (in kg)")]
+            public double CurrentWeight { get; set; }
+
+            [Range(DataConstants.UserWeightMinValue, DataConstants.UserWeightMaxValue)]
+            [Display(Name = "Goal weights (in kg)")]
+            public double GoalWeight { get; set; }
+
+            [Range(DataConstants.UserHeightMinValue, DataConstants.UserHeightMaxValue)]
+            [Display(Name = "Height (in cm)")]
+            public double Height { get; set; }
+
+            [Range(DataConstants.UserDailyNutritionsMinValue, DataConstants.UserDailyNutritionsMaxValue)]
+            [Display(Name = "Daily Protein Goal")]
+            public double DailyProteinGoal { get; set; }
+
+            [Range(DataConstants.UserDailyNutritionsMinValue, DataConstants.UserDailyNutritionsMaxValue)]
+            [Display(Name = "Daily Carbohydrates Goal")]
+            public double DailyCarbsGoal { get; set; }
+
+            [Range(DataConstants.UserDailyNutritionsMinValue, DataConstants.UserDailyNutritionsMaxValue)]
+            [Display(Name = "Daily Fat Goal")]
+            public double DailyFatGoal { get; set; }
+
+            [Display(Name = "About me")]
+            public string AboutMe { get; set; }
+
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -98,6 +129,14 @@
                 {
                     UserName = this.Input.Username,
                     Email = this.Input.Email,
+                    WeightInKg = this.Input.CurrentWeight,
+                    GoalWeightInKg = this.Input.GoalWeight,
+                    HeightInCm = this.Input.Height,
+                    DailyProteinGoal = this.Input.DailyProteinGoal,
+                    DailyCarbohydratesGoal = this.Input.DailyCarbsGoal,
+                    DailyFatGoal = this.Input.DailyFatGoal,
+                    Gender = this.Input.Gender,
+                    AboutMe = this.Input.AboutMe,
                 };
 
                 var result = await this.userManager.CreateAsync(user, this.Input.Password);

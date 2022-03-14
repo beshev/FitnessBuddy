@@ -1,72 +1,92 @@
 ﻿@page
+@using FitnessBuddy.Data.Models.Enums
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
 }
 
-<h1>@ViewData["Title"]</h1>
+<form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" class="text-center hover-shadow col-md-6 offset-3" method="post">
+    <h1>@ViewData["Title"]</h1>
 
-<div class="row">
-    <div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
-            <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Input.Username"></label>
-                <input asp-for="Input.Username" class="form-control" autocomplete="username" aria-required="true" />
-                <span asp-validation-for="Input.Username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.Password"></label>
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.ConfirmPassword"></label>
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
-        </form>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to register.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
-    </div>
-</div>
+    <div asp-validation-summary="All" class="text-danger"></div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+    <!-- One "tab" for each step in the form: -->
+    <div class="tab">
+        <div class="form-group">
+            <label asp-for="Input.Username"></label>
+            <input class="form-control" asp-for="Input.Username" placeholder="Username..." oninput="this.className = ''">
+            <span asp-validation-for="Input.Username" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.Email"></label>
+            <input class="form-control" asp-for="Input.Email" placeholder="Email..." oninput="this.className = ''">
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.Password"></label>
+            <input class="form-control" asp-for="Input.Password" placeholder="Password..." oninput="this.className = ''">
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.ConfirmPassword"></label>
+            <input class="form-control" asp-for="Input.ConfirmPassword" placeholder="Confirm Password..." oninput="this.className = ''">
+            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="tab">
+        <div class="form-grup">
+            <label asp-for="Input.Gender"></label>
+            <select asp-for="Input.Gender" asp-items="Html.GetEnumSelectList<GenderType>()" class="form-select"></select>
+            <span asp-validation-for="Input.Gender" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.CurrentWeight"></label>
+            <input asp-for="Input.CurrentWeight" placeholder="Current Weight..." oninput="this.className = ''">
+            <span asp-validation-for="Input.CurrentWeight" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.GoalWeight"></label>
+            <input asp-for="Input.GoalWeight" placeholder="Goal Weight..." oninput="this.className = ''">
+            <span asp-validation-for="Input.GoalWeight" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.Height"></label>
+            <input asp-for="Input.Height" placeholder="Height..." oninput="this.className = ''">
+            <span asp-validation-for="Input.Height" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.DailyProteinGoal"></label>
+            <input asp-for="Input.DailyProteinGoal" placeholder="Daily protein goal..." oninput="this.className = ''">
+            <span asp-validation-for="Input.DailyProteinGoal" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.DailyCarbsGoal"></label>
+            <input asp-for="Input.DailyCarbsGoal" placeholder="Daily carbs goal..." oninput="this.className = ''">
+            <span asp-validation-for="Input.DailyCarbsGoal" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.DailyFatGoal"></label>
+            <input asp-for="Input.DailyFatGoal" placeholder="Daily fat goal..." oninput="this.className = ''">
+            <span asp-validation-for="Input.DailyFatGoal" class="text-danger"></span>
+        </div>
+        <div class="form-grup">
+            <label asp-for="Input.AboutMe"></label>
+            <textarea asp-for="Input.AboutMe" class="form-control" rows="5"></textarea>
+            <span asp-validation-for="Input.AboutMe" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div style="overflow:auto;">
+        <div class="text-center">
+            <button class="btn btn-outline-secondary" type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+            <button class="btn btn-outline-info" type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+        </div>
+    </div>
+
+    <!-- Circles which indicates the steps of the form: -->
+    <div style="text-align:center;margin-top:40px;">
+        <span class="step"></span>
+        <span class="step"></span>
+    </div>
+</form>
