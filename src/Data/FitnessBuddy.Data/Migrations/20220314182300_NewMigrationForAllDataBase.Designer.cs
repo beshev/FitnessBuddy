@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessBuddy.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220304172221_UserBanPropertiesAdded")]
-    partial class UserBanPropertiesAdded
+    [Migration("20220314182300_NewMigrationForAllDataBase")]
+    partial class NewMigrationForAllDataBase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -78,7 +78,6 @@ namespace FitnessBuddy.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("BanReason")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
