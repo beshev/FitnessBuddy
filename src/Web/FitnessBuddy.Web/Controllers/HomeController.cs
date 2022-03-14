@@ -2,9 +2,11 @@
 {
     using System.Diagnostics;
 
+    using FitnessBuddy.Web.Infrastructure.Filters;
     using FitnessBuddy.Web.ViewModels;
     using Microsoft.AspNetCore.Mvc;
 
+    [TypeFilter(typeof(RestrictBannedUsersAttribute))]
     public class HomeController : Controller
     {
         public IActionResult Index()
