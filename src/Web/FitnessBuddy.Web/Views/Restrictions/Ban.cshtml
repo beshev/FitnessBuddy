@@ -1,0 +1,17 @@
+﻿@model FitnessBuddy.Web.ViewModels.Restrictions.UserBanViewModel
+
+@{
+    this.ViewData["Title"] = "Banned";
+}
+
+<h1 class="text-danger text-center">
+    You are banned by the Administrator.
+</h1>
+
+<hr />
+
+<h3 class="heading-margin text-center">Reason for ban:</h3>
+<p class="heading-margin text-center">@Model.BanReason</p>
+<hr />
+<p class="heading-margin text-center">Banned on: <span class="text-primary">@Model.BannedOn.ToLongDateString()</span></p>
+<p class="heading-margin text-center">Contact with: <span class="text-primary"><u>admin@admin.com</u></span></p>
