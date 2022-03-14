@@ -8,7 +8,7 @@
 
     <div class="form-grup">
         <label asp-for="Gender"></label>
-        <select asp-for="Gender" asp-items="Html.GetEnumSelectList<GenderType>()" class="form-control">
+        <select asp-for="Gender" asp-items="Html.GetEnumSelectList<GenderType>()" class="form-select">
         </select>
         <span asp-validation-for="Gender" class="text-danger"></span>
     </div>
