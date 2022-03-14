@@ -6091,7 +6091,7 @@ fieldset:disabled .btn {
   -ms-flex-align: center;
   align-items: center;
   -ms-flex-pack: end;
-  justify-content: flex-end;
+  justify-content: center;
   padding: 0.75rem;
   border-top: 2px solid #333;
   border-bottom-right-radius: 33px;
