@@ -48,7 +48,6 @@ namespace FitnessBuddy.Data.Models
 
         public DateTime? BannedOn { get; set; }
 
-        [Required]
         [MaxLength(DataConstants.UserBanReasonMaxLength)]
         public string BanReason { get; set; }
 
