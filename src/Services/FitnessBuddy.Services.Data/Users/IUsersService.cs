@@ -37,6 +37,8 @@
 
         public bool HasMeal(string userId);
 
+        public bool IsUserBanned(string userId);
+
         public string GetIdByUsername(string username);
 
         public bool IsUsernameExist(string username);

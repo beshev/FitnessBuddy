@@ -218,7 +218,14 @@
             user.BanReason = string.Empty;
             user.BannedOn = null;
 
-           await this.usersRepository.SaveChangesAsync();
+            await this.usersRepository.SaveChangesAsync();
         }
+
+        public bool IsUserBanned(string userId)
+            => this.usersRepository
+            .AllAsNoTracking()
+            .Where(x => x.Id == userId)
+            .Select(x => x.IsBanned)
+            .FirstOrDefault();
     }
 }
