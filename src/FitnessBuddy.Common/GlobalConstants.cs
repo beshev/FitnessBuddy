@@ -14,6 +14,7 @@
         // Constants for redirect
         public const string MyMealsUrl = "/Meals/MyMeals";
         public const string UserTrainings = "/Trainings/MyTrainings";
+        public const string RestrictionBan = "/Restrictions/Ban";
 
         // Names
         public const string NameOfFollowers = "followers";
