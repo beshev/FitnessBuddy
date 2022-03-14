@@ -9,11 +9,9 @@
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Meals;
     using FitnessBuddy.Web.ViewModels.Users;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    [Authorize]
-    public class MealsController : Controller
+    public class MealsController : BaseController
     {
         private readonly IMealsService mealsService;
         private readonly IFoodsService foodsService;
@@ -32,7 +30,6 @@
             this.usersService = usersService;
         }
 
-        [Authorize]
         public IActionResult MyMeals()
         {
             string userId = this.User.GetUserId();
@@ -48,13 +45,11 @@
             return this.View(viewModel);
         }
 
-        [Authorize]
         public IActionResult Create()
         {
             return this.View();
         }
 
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(MealInputModel model)
         {
@@ -69,7 +64,6 @@
             return this.RedirectToAction(nameof(this.MyMeals));
         }
 
-        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             if (this.mealsService.IsExist(id) == false)

@@ -7,11 +7,9 @@
     using FitnessBuddy.Services.Data.Posts;
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Posts;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    [Authorize]
-    public class PostsController : Controller
+    public class PostsController : BaseController
     {
         private readonly IPostCategoriesService postCategoriesService;
         private readonly IPostsService postsService;

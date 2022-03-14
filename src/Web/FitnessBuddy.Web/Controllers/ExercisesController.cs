@@ -8,11 +8,9 @@
     using FitnessBuddy.Services.Data.TrainingsExercises;
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Exercises;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    [Authorize]
-    public class ExercisesController : Controller
+    public class ExercisesController : BaseController
     {
         private const int ExercisesPerPage = 6;
 

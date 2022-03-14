@@ -11,11 +11,9 @@
     using FitnessBuddy.Web.ViewModels;
     using FitnessBuddy.Web.ViewModels.Trainings;
     using FitnessBuddy.Web.ViewModels.TrainingsExercises;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    [Authorize]
-    public class TrainingsController : Controller
+    public class TrainingsController : BaseController
     {
         private readonly ITrainingsService trainingsService;
         private readonly ITrainingsExercisesService trainingsExercisesService;

@@ -5,11 +5,9 @@
     using FitnessBuddy.Services.Data.Replies;
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Replies;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    [Authorize]
-    public class RepliesController : Controller
+    public class RepliesController : BaseController
     {
         private readonly IRepliesService repliesService;
 

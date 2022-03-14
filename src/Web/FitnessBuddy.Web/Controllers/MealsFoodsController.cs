@@ -9,11 +9,9 @@
     using FitnessBuddy.Services.Data.Users;
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Meals;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    [Authorize]
-    public class MealsFoodsController : Controller
+    public class MealsFoodsController : BaseController
     {
         private readonly IFoodsService foodsService;
         private readonly IMealsService mealsService;
@@ -75,7 +73,6 @@
             return this.Redirect(GlobalConstants.MyMealsUrl);
         }
 
-        [Authorize]
         public async Task<IActionResult> RemoveFood(int mealFoodId)
         {
             var mealFood = this.mealsFoodsService.GetById(mealFoodId);

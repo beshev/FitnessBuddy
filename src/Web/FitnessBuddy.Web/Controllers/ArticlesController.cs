@@ -11,8 +11,7 @@
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
 
-    [Authorize]
-    public class ArticlesController : Controller
+    public class ArticlesController : BaseController
     {
         private const int ArticlesPerPage = 4;
 

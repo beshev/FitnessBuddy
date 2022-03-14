@@ -9,13 +9,11 @@
     using FitnessBuddy.Services.Data.UsersFollowers;
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Users;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
-    [Authorize]
-    public class UsersController : Controller
+    public class UsersController : BaseController
     {
         private readonly RoleManager<ApplicationRole> roleManager;
         private readonly IUsersService userService;

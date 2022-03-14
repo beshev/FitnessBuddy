@@ -13,8 +13,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    [Authorize]
-    public class FoodsController : Controller
+    public class FoodsController : BaseController
     {
         private const int FoodsPerPage = 6;
 
