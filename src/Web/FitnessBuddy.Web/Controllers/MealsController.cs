@@ -70,19 +70,19 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> Delete(int mealId)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (this.mealsService.IsExist(mealId) == false)
+            if (this.mealsService.IsExist(id) == false)
             {
                 return this.NotFound();
             }
 
-            if (this.mealsService.IsUserMeal(mealId, this.User.GetUserId()) == false)
+            if (this.mealsService.IsUserMeal(id, this.User.GetUserId()) == false)
             {
                 return this.Unauthorized();
             }
 
-            await this.mealsService.DeleteAsync(mealId);
+            await this.mealsService.DeleteAsync(id);
 
             return this.RedirectToAction(nameof(this.MyMeals));
         }
