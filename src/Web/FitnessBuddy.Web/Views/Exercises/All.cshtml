@@ -29,21 +29,11 @@
 
 <partial name="_AlertDeletePartial" />
 
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         @foreach (var exercise in Model.Exercises)
         {
-            <div class="card col-md-3 offset-1 mb-4 hover-shadow bg-info">
-                <a asp-action="Details" asp-controller="Exercises" asp-route-id="@exercise.Id">
-                    <h3 class="card-header text-white">@exercise.Name</h3>
-                    <img src="@exercise.ImageUrl" class="d-block user-select-none" width="100%" height="200" aria-label="Placeholder: Image cap" focusable="false" role="img" preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item li-bg-color">Difficulty: @exercise.Difficulty</li>
-                        <li class="list-group-item li-bg-color">Category: @exercise.CategoryName</li>
-                        <li class="list-group-item li-bg-color">Equipment: @exercise.EquipmentName</li>
-                    </ul>
-                </a>
-            </div>
+            <partial name="_ExercisePartial" model="exercise" />
         }
     </div>
 </div>
