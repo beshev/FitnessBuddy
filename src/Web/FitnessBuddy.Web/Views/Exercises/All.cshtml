@@ -12,9 +12,9 @@
     </h2>
 </div>
 
-<div class="row justify-content-center" style="margin-bottom: 1%">
+<div class="row col-md-7 offset-3" style="margin-bottom: 1%">
     <form class="form-inline col-lg-6 offset-lg-3" asp-action="All" asp-controller="Exercises">
-        <input class="form-control mr-sm-2" type="search" placeholder="Name or Category" aria-label="Search" name="search">
+        <input class="form-control mr-sm-2" type="search" placeholder="Exercise name..." aria-label="Search" name="search">
         <input type="hidden" name="id" value="1" />
         <button class="btn btn-outline-info my-2 my-sm-0" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
     </form>
@@ -26,15 +26,17 @@
 {
     <h3 class="text-center">No exercises found!</h3>
 }
+else
+{
+    <partial name="_AlertDeletePartial" />
 
-<partial name="_AlertDeletePartial" />
-
-<div class="container">
-    <div class="row">
-        @foreach (var exercise in Model.Exercises)
-        {
-            <partial name="_ExercisePartial" model="exercise" />
-        }
+    <div class="container">
+        <div class="row">
+            @foreach (var exercise in Model.Exercises)
+            {
+                <partial name="_ExercisePartial" model="exercise" />
+            }
+        </div>
     </div>
-</div>
-<partial name="_PagingPartial" model="@Model" />
+    <partial name="_PagingPartial" model="@Model" />
+}
