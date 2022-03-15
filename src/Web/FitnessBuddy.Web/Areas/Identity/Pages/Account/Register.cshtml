@@ -52,7 +52,7 @@
         </div>
         <div class="form-group">
             <label asp-for="Input.Height"></label>
-            <input class="form-control" asp-for="Input.Height" placeholder="Height..." oninput="this.className = ''">
+            <input class="form-control" asp-for="Input.Height" placeholder="Height..." oninput="this.className = 'form-control'">
             <span asp-validation-for="Input.Height" class="text-danger"></span>
         </div>
         <div class="form-group">
@@ -72,7 +72,7 @@
         </div>
         <div class="form-grup">
             <label asp-for="Input.AboutMe"></label>
-            <textarea asp-for="Input.AboutMe" class="form-control" rows="5"></textarea>
+            <textarea asp-for="Input.AboutMe" class="form-control" placeholder="Tell us more about you..." rows="5"></textarea>
             <span asp-validation-for="Input.AboutMe" class="text-danger"></span>
         </div>
     </div>
