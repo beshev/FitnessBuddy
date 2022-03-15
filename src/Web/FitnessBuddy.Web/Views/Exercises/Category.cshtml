@@ -1,20 +1,20 @@
 ﻿@using FitnessBuddy.Common
 @using FitnessBuddy.Web.ViewModels.Exercises
-@model IEnumerable<ExerciseViewModel>
+@model AllExercisesViewModel
 
 @{
-    this.ViewData["Title"] = "All exercise";
+    this.ViewData["Title"] = "Category exercises";
 }
 
 <div class="text-center">
     <h2>
-        Category: <span class="text-muted">@this.TempData["Category"]</span>
+        Category: <span class="text-muted">@Model.CategoryName</span>
     </h2>
 </div>
 
 <hr />
 
-@if (Model.Any() == false)
+@if (Model.Exercises.Any() == false)
 {
     <h3 class="text-center">No exercises found!</h3>
 }
@@ -22,10 +22,63 @@ else
 {
     <div class="container">
         <div class="row">
-            @foreach (var exercise in Model)
+            @foreach (var exercise in Model.Exercises)
             {
                 <partial name="_ExercisePartial" model="exercise" />
             }
         </div>
     </div>
+
+    <nav aria-label="...">
+        <ul class="pagination justify-content-center">
+            <li class="page-item @if(Model.HasPreviousPage == false) {<text>disabled</text>}">
+                <a class="page-link" asp-controller="Exercises" asp-action="Category" asp-route-id="@Model.FirstPageNumber" asp-route-categoryName="@Model.CategoryName">
+                    &laquo;&laquo;
+                </a>
+            </li>
+            <li class="page-item @if(Model.HasPreviousPage == false) {<text>disabled</text>}">
+                <a class="page-link" asp-controller="Exercises" asp-action="Category" asp-route-id="@Model.PreviousPageNumber" asp-route-categoryName="@Model.CategoryName">
+                    &laquo;
+                </a>
+            </li>
+            @for (int i = Model.PageNumber - 2; i < Model.PageNumber; i++)
+            {
+                if (i > 0)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-controller="Exercises" asp-action="Category" asp-route-id="@i" asp-route-categoryName="@Model.CategoryName">
+                            @i
+                        </a>
+                    </li>
+                }
+            }
+            <li class="page-item active" aria-current="page">
+                <span class="page-link">
+                    @Model.PageNumber
+                    <span class="sr-only">(current)</span>
+                </span>
+            </li>
+            @for (int i = Model.PageNumber + 1; i <= Model.PageNumber + 2; i++)
+            {
+                if (i <= Model.PagesCount)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-controller="Exercises" asp-action="Category" asp-route-id="@i" asp-route-categoryName="@Model.CategoryName">
+                            @i
+                        </a>
+                    </li>
+                }
+            }
+            <li class="page-item @if(Model.HasNextPage == false) {<text>disabled</text>}">
+                <a class="page-link" asp-controller="Exercises" asp-action="Category" asp-route-id="@Model.NextPageNumber" asp-route-categoryName="@Model.CategoryName">
+                    &raquo;
+                </a>
+            </li>
+            <li class="page-item @if(Model.HasNextPage == false) {<text>disabled</text>}">
+                <a class="page-link" asp-controller="Exercises" asp-action="Category" asp-route-id="@Model.LastPageNumber" asp-route-categoryName="@Model.CategoryName">
+                    &raquo;&raquo;
+                </a>
+            </li>
+        </ul>
+    </nav>
 }

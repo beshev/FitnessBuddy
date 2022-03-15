@@ -152,11 +152,34 @@
             return this.View(viewModel);
         }
 
-        public IActionResult Category(string categoryName)
+        public IActionResult Category(string categoryName, int id = 1)
         {
-            this.TempData["Category"] = categoryName;
+            if (id < 1)
+            {
+                return this.NotFound();
+            }
 
-            var viewModel = this.exerciseCategoriesService.GetCategoryExercises<ExerciseViewModel>(categoryName);
+            int count = this.exerciseCategoriesService.GetCategoryExercisesCount(categoryName);
+            int pagesCount = (int)Math.Ceiling((double)count / ExercisesPerPage);
+
+            if (pagesCount != 0 && id > pagesCount)
+            {
+                return this.NotFound();
+            }
+
+            var skip = (id - 1) * ExercisesPerPage;
+
+            var exercises = this.exerciseCategoriesService.GetCategoryExercises<ExerciseViewModel>(categoryName, skip, ExercisesPerPage);
+
+            var viewModel = new AllExercisesViewModel
+            {
+                PageNumber = id,
+                PagesCount = pagesCount,
+                Exercises = exercises,
+                CategoryName = categoryName,
+                ForAction = nameof(this.All),
+                ForController = this.GetType().Name.Replace(nameof(Controller), string.Empty),
+            };
 
             return this.View(viewModel);
         }

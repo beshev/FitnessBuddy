@@ -6,6 +6,8 @@
     {
         public IEnumerable<TModel> GetAll<TModel>();
 
-        public IEnumerable<TModel> GetCategoryExercises<TModel>(string categoryName);
+        public IEnumerable<TModel> GetCategoryExercises<TModel>(string categoryName, int skip = 0, int? take = null);
+
+        public int GetCategoryExercisesCount(string categoryName);
     }
 }

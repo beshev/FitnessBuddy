@@ -4,6 +4,8 @@
 
     public class AllExercisesViewModel : PagingViewModel
     {
+        public string CategoryName { get; set; }
+
         public IEnumerable<ExerciseViewModel> Exercises { get; set; }
     }
 }
