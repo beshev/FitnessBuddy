@@ -47,7 +47,7 @@
 
             if (string.IsNullOrWhiteSpace(search) == false)
             {
-                query = query.Where(x => x.Name.Contains(search) || x.Category.Name.Contains(search));
+                query = query.Where(x => x.Name.Contains(search));
             }
 
             query = query.OrderByDescending(x => x.CreatedOn);
