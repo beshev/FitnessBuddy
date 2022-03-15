@@ -21,5 +21,13 @@
             .AllAsNoTracking()
             .To<TModel>()
             .AsEnumerable();
+
+        public IEnumerable<TModel> GetCategoryExercises<TModel>(string categoryName)
+            => this.exerciseCategoryRepository
+            .AllAsNoTracking()
+            .Where(x => x.Name == categoryName)
+            .SelectMany(x => x.Exercises)
+            .To<TModel>()
+            .AsEnumerable();
     }
 }

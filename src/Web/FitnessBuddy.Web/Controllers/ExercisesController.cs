@@ -15,13 +15,16 @@
         private const int ExercisesPerPage = 6;
 
         private readonly IExercisesService exercisesService;
+        private readonly IExerciseCategoriesService exerciseCategoriesService;
         private readonly ITrainingsExercisesService trainingsExercisesService;
 
         public ExercisesController(
             IExercisesService exercisesService,
+            IExerciseCategoriesService exerciseCategoriesService,
             ITrainingsExercisesService trainingsExercisesService)
         {
             this.exercisesService = exercisesService;
+            this.exerciseCategoriesService = exerciseCategoriesService;
             this.trainingsExercisesService = trainingsExercisesService;
         }
 
@@ -145,6 +148,15 @@
 
             var viewModel = this.exercisesService.GetById<ExerciseDetailsModel>(id);
             viewModel.IsCreator = this.exercisesService.IsUserCreator(this.User.GetUserId(), id);
+
+            return this.View(viewModel);
+        }
+
+        public IActionResult Category(string categoryName)
+        {
+            this.TempData["Category"] = categoryName;
+
+            var viewModel = this.exerciseCategoriesService.GetCategoryExercises<ExerciseViewModel>(categoryName);
 
             return this.View(viewModel);
         }

@@ -1,0 +1,31 @@
+﻿@using FitnessBuddy.Common
+@using FitnessBuddy.Web.ViewModels.Exercises
+@model IEnumerable<ExerciseViewModel>
+
+@{
+    this.ViewData["Title"] = "All exercise";
+}
+
+<div class="text-center">
+    <h2>
+        Category: <span class="text-muted">@this.TempData["Category"]</span>
+    </h2>
+</div>
+
+<hr />
+
+@if (Model.Any() == false)
+{
+    <h3 class="text-center">No exercises found!</h3>
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            @foreach (var exercise in Model)
+            {
+                <partial name="_ExercisePartial" model="exercise" />
+            }
+        </div>
+    </div>
+}
