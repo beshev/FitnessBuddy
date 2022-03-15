@@ -2,7 +2,7 @@
 
 muscleMap.addEventListener("click", (event) => {
     var muscleId = event.target.id;
-    var url = `${window.location}Exercises/Category/`;
+    var url = `${window.location}Exercises/Category?categoryName=`;
 
     if (muscleId.includes("traps")) {
         url += "Traps"
@@ -23,13 +23,15 @@ muscleMap.addEventListener("click", (event) => {
     } else if (muscleId.includes("triceps")) {
         url += "Triceps"
     } else if (muscleId.includes("lower")) {
-        url += "Lower body"
+        url += "Lower back"
     } else if (muscleId.includes("glutes")) {
         url += "Glutes"
     } else if (muscleId.includes("hamstrings")) {
         url += "Hamstrings"
     } else if (muscleId.includes("lats")) {
         url += "Back"
+    } else {
+        return;
     }
 
     window.location = url;
