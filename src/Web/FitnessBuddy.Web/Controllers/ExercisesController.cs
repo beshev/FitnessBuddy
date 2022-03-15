@@ -177,8 +177,6 @@
                 PagesCount = pagesCount,
                 Exercises = exercises,
                 CategoryName = categoryName,
-                ForAction = nameof(this.All),
-                ForController = this.GetType().Name.Replace(nameof(Controller), string.Empty),
             };
 
             return this.View(viewModel);
