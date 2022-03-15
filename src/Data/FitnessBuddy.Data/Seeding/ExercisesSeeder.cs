@@ -1007,6 +1007,47 @@ Go back slowly to the starting position as you breathe in by lowering your heels
                     ImageUrl = "/images/exercises/calves3.jpg",
                     VideoUrl = "https://www.youtube.com/embed/XEZUIXn5mgc",
                 },
+
+                // Lower back
+                new Exercise
+                {
+                    Name = "Superman",
+                    Description = @"Set up in a prone position with your hands by your side (or behind your back) and your feet together.
+Extend your lower back by contracting your spinal erectors.
+Slowly lower back to the starting position and repeat for the desired number of repetitions.",
+                    Difficulty = ExerciseDifficulty.Beginner,
+                    AddedByUserId = adminId,
+                    CategoryId = dbContext.ExerciseCategories
+                    .Where(x => x.Name == "Lower back")
+                    .Select(x => x.Id)
+                    .FirstOrDefault(),
+                    EquipmentId = dbContext.ExerciseEquipment
+                    .Where(x => x.Name == "Body only")
+                    .Select(x => x.Id)
+                    .FirstOrDefault(),
+                    ImageUrl = "/images/exercises/lowerback1.jpg",
+                    VideoUrl = "https://www.youtube.com/embed/D07urmRplHQ",
+                },
+                new Exercise
+                {
+                    Name = "90/90 Hip Crossover",
+                    Description = @"In a supine position, lift your legs so that your hips and knees are at a 90 degree angle and ensure that your lower back is flat on the floor.
+Reach your arms out to the side for support and slowly rotate your legs side to side.
+Keep your head neutral and focus on controlling the rotation by utilizing your abdominals.
+Repeat for the desired number of repetitions.",
+                    Difficulty = ExerciseDifficulty.Beginner,
+                    AddedByUserId = adminId,
+                    CategoryId = dbContext.ExerciseCategories
+                    .Where(x => x.Name == "Lower back")
+                    .Select(x => x.Id)
+                    .FirstOrDefault(),
+                    EquipmentId = dbContext.ExerciseEquipment
+                    .Where(x => x.Name == "Body only")
+                    .Select(x => x.Id)
+                    .FirstOrDefault(),
+                    ImageUrl = "/images/exercises/lowerback2.jpg",
+                    VideoUrl = "https://www.youtube.com/embed/rPqdiiX2aZA&t=13s",
+                },
             };
 
             dbContext.Exercises.AddRange(exercises);
