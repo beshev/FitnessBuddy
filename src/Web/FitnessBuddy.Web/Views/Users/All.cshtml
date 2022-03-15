@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ShortUserViewModel>
+﻿@model UserListViewModel
 
 @{
     this.ViewData["Title"] = "All Users";
@@ -11,16 +11,26 @@
     </form>
 </div>
 
-@if (Model.Any() == false)
+@if (this.ViewData["Username"] != string.Empty && Model.Users.Any() == false)
 {
     <h4 class="text-center">
         User '@this.ViewData["Username"]' does not exist!
     </h4>
 }
+else if (this.ViewData["Username"] == string.Empty && Model.Users.Any() == false)
+{
+    <h4 class="text-center">
+        There are no users.
+    </h4>
+}
+else
+{
+    <div class="row">
+        @foreach (var user in Model.Users)
+        {
+            <partial name="_UserPartial" model="user" />
+        }
 
-<div class="row">
-    @foreach (var user in Model)
-    {
-        <partial name="_UserPartial" model="user" />
-    }
-</div>
+        <partial name="_PagingPartial" model="Model" />
+    </div>
+}

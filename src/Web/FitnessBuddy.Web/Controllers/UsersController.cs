@@ -1,5 +1,6 @@
 ﻿namespace FitnessBuddy.Web.Controllers
 {
+    using System;
     using System.Threading.Tasks;
 
     using FitnessBuddy.Common;
@@ -106,11 +107,36 @@
             return this.RedirectToAction(nameof(this.Profile), new { Username = username });
         }
 
-        public IActionResult All(string username = "")
+        public IActionResult All(int id = 1, string username = "")
         {
-            var viewModel = this.userService.GetAll<ShortUserViewModel>(username);
-
             this.ViewData["Username"] = username;
+
+            if (id < 1)
+            {
+                return this.NotFound();
+            }
+
+            var usersPerPage = 6;
+            int count = this.userService.GetCount();
+            int pagesCount = (int)Math.Ceiling((double)count / usersPerPage);
+
+            if (pagesCount != 0 && id > pagesCount)
+            {
+                return this.NotFound();
+            }
+
+            var skip = (id - 1) * usersPerPage;
+
+            var users = this.userService.GetAll<ShortUserViewModel>(username, skip, usersPerPage);
+
+            var viewModel = new UserListViewModel
+            {
+                PageNumber = id,
+                PagesCount = pagesCount,
+                Users = users,
+                ForAction = nameof(this.All),
+                ForController = this.GetType().Name.Replace(nameof(Controller), string.Empty),
+            };
 
             return this.View(viewModel);
         }
