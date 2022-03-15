@@ -5,7 +5,7 @@
     ViewData["Title"] = "Register";
 }
 
-<form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" class="text-center hover-shadow col-md-6 offset-3" method="post">
+<form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" class="text-center hover-shadow col-md-6 offset-3 login-register-form" method="post">
     <h1>@ViewData["Title"]</h1>
 
     <div asp-validation-summary="All" class="text-danger"></div>
