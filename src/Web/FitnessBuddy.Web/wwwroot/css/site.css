@@ -143,7 +143,7 @@ body {
 
 
 /* Style the form */
-#registerForm {
+.login-register-form {
     background-color: #ffffff;
     margin: 100px auto;
     padding: 40px;
