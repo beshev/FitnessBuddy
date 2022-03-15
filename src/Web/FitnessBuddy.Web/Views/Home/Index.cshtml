@@ -3,7 +3,55 @@
     this.ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@if (this.User.Identity.IsAuthenticated)
+{
+    <div id="muscle-map">
+        <img id="background" src="~/images/muscle/00.-Blank-Figures.png">
+        <img id="traps-a" src="~/images/muscle/08.-TrapsLeft.png">
+        <img id="traps-b" src="~/images/muscle/08.-TrapsRight.png">
+        <img id="shoulders-a" src="~/images/muscle/07.A-Deltoids.png">
+        <img id="shoulders-b" src="~/images/muscle/07.B-Deltoids.png">
+        <img id="chest" src="~/images/muscle/06.-Chest.png">
+        <img id="biceps-a" src="~/images/muscle/05.A-Biceps.png">
+        <img id="biceps-b" src="~/images/muscle/05.B-Biceps.png">
+        <img id="forearm-a" src="~/images/muscle/14.A-Forearms.png">
+        <img id="forearm-b" src="~/images/muscle/14.B-Forearms.png">
+        <img id="abs" src="~/images/muscle/04.-Obliques.png">
+        <img id="quads-a" src="~/images/muscle/01.A-Quads.png">
+        <img id="quads-b" src="~/images/muscle/01.B-Quads.png">
+        <img id="calves-a" src="~/images/muscle/13.A-Calves.png">
+        <img id="calves-b" src="~/images/muscle/13.B-Calves.png">
+        <img id="back-traps-a" src="~/images/muscle/08.B-Traps.png">
+        <img id="back-traps-b" src="~/images/muscle/08.C-Traps.png">
+        <img id="back-shoulders-a" src="~/images/muscle/07.C-Deltoids.png">
+        <img id="back-shoulders-b" src="~/images/muscle/07.D-Deltoids.png">
+        <img id="triceps-a" src="~/images/muscle/09.A-Triceps.png">
+        <img id="triceps-b" src="~/images/muscle/09.B-Triceps.png">
+        <img id="back-lats-a" src="~/images/muscle/10.A-Lats.png">
+        <img id="back-lats-b" src="~/images/muscle/10.B-Lats.png">
+        <img id="back-lower" src="~/images/muscle/15.-Lower-Back.png">
+        <img id="back-forearms-a" src="~/images/muscle/14.C-Forearms.png">
+        <img id="back-forearms-b" src="~/images/muscle/14.D-Forearms.png">
+        <img id="back-glutes" src="~/images/muscle/11.-Glutes.png">
+        <img id="back-hamstrings-a" src="~/images/muscle/12.A-Hamstrings.png">
+        <img id="back-hamstrings-b" src="~/images/muscle/12.B-Hamstrings.png">
+        <img id="back-calves-a" src="~/images/muscle/13.C-Calves.png">
+        <img id="back-calves-b" src="~/images/muscle/13.D-Calves.png">
+    </div>
+
+
+    @section Scripts{
+        <script src="~/js/muscleDiagram.js"></script>
+    }
+
+    @section CustomCss{
+        <link rel="stylesheet" href="~/css/muscle-map.css" asp-append-version="true" />
+    }
+}
+else
+{
+    <div class="text-center">
+        <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    </div>
+}

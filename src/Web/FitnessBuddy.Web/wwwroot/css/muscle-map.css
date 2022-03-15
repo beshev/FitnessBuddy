@@ -1,0 +1,842 @@
+﻿@media screen and (min-width:640px) {
+    #mobilebg {
+        display: none
+    }
+
+    #mobile-muscle-map {
+        display: none
+    }
+
+    #muscle-map {
+        position: relative
+    }
+
+    #background {
+        width: 100%
+    }
+
+    #muscle-map > img:not(#background) {
+        display: block;
+        position: absolute;
+        transition: opacity .2s;
+        opacity: 0
+    }
+
+        #muscle-map > img:not(#background):hover {
+            opacity: 1
+        }
+
+    #muscle-map > #traps-a {
+        top: 17.4%;
+        left: 26.7%;
+        width: 3.39%
+    }
+
+    #muscle-map > #traps-b {
+        top: 17.4%;
+        left: 31.48%;
+        width: 3.39%
+    }
+
+    #muscle-map > #chest {
+        top: 22%;
+        left: 24.3%;
+        width: 13%
+    }
+
+    #muscle-map > #shoulders-a {
+        top: 21.1%;
+        left: 21.84%;
+        width: 5.61%
+    }
+
+    #muscle-map > #shoulders-b {
+        top: 21.1%;
+        left: 34.1%;
+        width: 5.61%
+    }
+
+    #muscle-map > #biceps-a {
+        top: 26.9%;
+        left: 20.89%;
+        width: 4.05%
+    }
+
+    #muscle-map > #biceps-b {
+        top: 26.9%;
+        left: 36.67%;
+        width: 4.05%
+    }
+
+    #muscle-map > #forearm-a {
+        top: 33.6%;
+        left: 16.75%;
+        width: 6.62%
+    }
+
+    #muscle-map > #forearm-b {
+        top: 33.6%;
+        left: 38.18%;
+        width: 6.61%
+    }
+
+    #muscle-map > #abs {
+        top: 28.67%;
+        left: 27.44%;
+        width: 6.42%
+    }
+
+    #muscle-map > #quads-b {
+        top: 42.2%;
+        left: 31.4%;
+        width: 6.55%
+    }
+
+    #muscle-map > #quads-a {
+        top: 42.2%;
+        left: 23.6%;
+        width: 6.55%
+    }
+
+    #muscle-map > #calves-a {
+        top: 64.59%;
+        left: 23.19%;
+        width: 4.67%
+    }
+
+    #muscle-map > #calves-b {
+        top: 64.49%;
+        left: 33.74%;
+        width: 4.67%
+    }
+
+    #muscle-map > #back-traps-a {
+        top: 15.38%;
+        left: 67.3%;
+        width: 7%
+    }
+
+    #muscle-map > #back-traps-b {
+        top: 17.82%;
+        left: 66.87%;
+        width: 8.1%
+    }
+
+    #muscle-map > #back-shoulders-a {
+        top: 19.29%;
+        left: 61.5%;
+        width: 5.7%
+    }
+
+    #muscle-map > #back-shoulders-b {
+        top: 19.29%;
+        left: 74.6%;
+        width: 5.7%
+    }
+
+    #muscle-map > #triceps-a {
+        top: 24.83%;
+        left: 60.2%;
+        width: 4.58%
+    }
+
+    #muscle-map > #triceps-b {
+        top: 24.83%;
+        left: 77.1%;
+        width: 4.58%
+    }
+
+    #muscle-map > #back-upper-a {
+        top: 20.4%;
+        left: 64.28%;
+        width: 6.41%
+    }
+
+    #muscle-map > #back-upper-b {
+        top: 20.4%;
+        left: 71.2%;
+        width: 6.41%
+    }
+
+    #muscle-map > #back-lats-a {
+        top: 26.66%;
+        left: 64.7%;
+        width: 6%
+    }
+
+    #muscle-map > #back-lats-b {
+        top: 26.66%;
+        left: 71.2%;
+        width: 6%
+    }
+
+    #muscle-map > #back-lower {
+        top: 32.86%;
+        left: 67.62%;
+        width: 6.59%
+    }
+
+    #muscle-map > #back-forearms-a {
+        top: 33.5%;
+        left: 56.1%;
+        width: 6.36%
+    }
+
+    #muscle-map > #back-forearms-b {
+        top: 33.5%;
+        left: 79.34%;
+        width: 6.36%
+    }
+
+    #muscle-map > #back-glutes {
+        top: 41%;
+        left: 64.89%;
+        width: 12.08%
+    }
+
+    #muscle-map > #back-hamstrings-a {
+        top: 47.49%;
+        left: 63.75%;
+        width: 6.67%
+    }
+
+    #muscle-map > #back-hamstrings-b {
+        top: 47.49%;
+        left: 71.47%;
+        width: 6.7%
+    }
+
+    #muscle-map > #back-calves-a {
+        top: 64.43%;
+        left: 61.94%;
+        width: 4.8%
+    }
+
+    #muscle-map > #back-calves-b {
+        top: 64.43%;
+        left: 75.1%;
+        width: 4.8%
+    }
+}
+
+@media screen and (min-width:641px) {
+    #malefigures {
+        z-index: 0;
+        position: relative
+    }
+
+    #femalefigures {
+        z-index: 0;
+        position: relative
+    }
+
+    #mobilebg-female {
+        display: none
+    }
+
+    #mobile-muscle-map-female {
+        display: none
+    }
+
+    #muscle-map-female {
+        position: relative
+    }
+
+    #background-female {
+        width: 100%
+    }
+
+    #muscle-map-female > img:not(#background-female) {
+        display: block;
+        position: absolute;
+        transition: opacity .2s;
+        opacity: 0
+    }
+
+        #muscle-map-female > img:not(#background-female):hover {
+            opacity: 1
+        }
+
+    #muscle-map-female > #female-traps-a {
+        top: 21.8%;
+        left: 25.8%;
+        width: 3%
+    }
+
+    #muscle-map-female > #female-traps-b {
+        top: 21.8%;
+        left: 30.57%;
+        width: 3%
+    }
+
+    #muscle-map-female > #female-pecs {
+        top: 25.37%;
+        left: 24.6%;
+        width: 10.4%
+    }
+
+    #muscle-map-female > #female-shoulders-a {
+        top: 24.22%;
+        left: 22.1%;
+        width: 4.22%
+    }
+
+    #muscle-map-female > #female-shoulders-b {
+        top: 24.26%;
+        left: 33.21%;
+        width: 4.22%
+    }
+
+    #muscle-map-female > #female-biceps-a {
+        top: 29.48%;
+        left: 21.47%;
+        width: 3.3%
+    }
+
+    #muscle-map-female > #female-biceps-b {
+        top: 29.48%;
+        left: 34.8%;
+        width: 3.3%
+    }
+
+    #muscle-map-female > #female-forearm-a {
+        top: 36.1%;
+        left: 18.42%;
+        width: 5%
+    }
+
+    #muscle-map-female > #female-forearm-b {
+        top: 36.1%;
+        left: 36.1%;
+        width: 5%
+    }
+
+    #muscle-map-female > #female-abdominals {
+        top: 32.48%;
+        left: 26.99%;
+        width: 5.57%
+    }
+
+    #muscle-map-female > #female-quads-b {
+        top: 46.7%;
+        left: 30.5%;
+        width: 5.2%
+    }
+
+    #muscle-map-female > #female-quads-a {
+        top: 46.7%;
+        left: 23.7%;
+        width: 5.2%
+    }
+
+    #muscle-map-female > #female-calves-a {
+        top: 72%;
+        left: 23.1%;
+        width: 3.8%
+    }
+
+    #muscle-map-female > #female-calves-b {
+        top: 72%;
+        left: 32.58%;
+        width: 3.8%
+    }
+
+    #muscle-map-female > #female-back-traps-a {
+        top: 20.53%;
+        left: 66.36%;
+        width: 7.47%
+    }
+
+    #muscle-map-female > #female-back-traps-b {
+        top: 22.5%;
+        left: 65.97%;
+        width: 8.36%
+    }
+
+    #muscle-map-female > #female-back-shoulders-a {
+        top: 23.25%;
+        left: 61.9%;
+        width: 4.7%
+    }
+
+    #muscle-map-female > #female-back-shoulders-b {
+        top: 23.2%;
+        left: 73.66%;
+        width: 4.7%
+    }
+
+    #muscle-map-female > #female-triceps-a {
+        top: 28.6%;
+        left: 61.5%;
+        width: 3.2%
+    }
+
+    #muscle-map-female > #female-triceps-b {
+        top: 28.72%;
+        left: 75.52%;
+        width: 3.22%
+    }
+
+    #muscle-map-female > #female-back-lats-a {
+        top: 31%;
+        left: 65.3%;
+        width: 4.7%
+    }
+
+    #muscle-map-female > #female-back-lats-b {
+        top: 31%;
+        left: 70.2%;
+        width: 4.7%
+    }
+
+    #muscle-map-female > #female-back-lower {
+        top: 37.21%;
+        left: 67.09%;
+        width: 6.12%
+    }
+
+    #muscle-map-female > #female-back-forearms-a {
+        top: 37.55%;
+        left: 59.3%;
+        width: 3.9%
+    }
+
+    #muscle-map-female > #female-back-forearms-b {
+        top: 37.69%;
+        left: 76.96%;
+        width: 3.9%
+    }
+
+    #muscle-map-female > #female-back-glutes {
+        top: 45.5%;
+        left: 64.53%;
+        width: 11.2%
+    }
+
+    #muscle-map-female > #female-back-hamstrings-a {
+        top: 51.2%;
+        left: 63.79%;
+        width: 5.46%
+    }
+
+    #muscle-map-female > #female-back-hamstrings-b {
+        top: 51.2%;
+        left: 71%;
+        width: 5.46%
+    }
+
+    #muscle-map-female > #female-back-calves-a {
+        top: 68.6%;
+        left: 63.77%;
+        width: 4.12%
+    }
+
+    #muscle-map-female > #female-back-calves-b {
+        top: 68.6%;
+        left: 72.38%;
+        width: 4.12%
+    }
+}
+
+@media screen and (min-width:640px) {
+    #mobilebg {
+        display: none
+    }
+
+    #mobile-muscle-map {
+        display: none
+    }
+
+    #muscle-map {
+        position: relative
+    }
+
+    #background {
+        width: 100%
+    }
+
+    #muscle-map > img:not(#background) {
+        display: block;
+        position: absolute;
+        transition: opacity .2s;
+        opacity: 0
+    }
+
+        #muscle-map > img:not(#background):hover {
+            opacity: 1
+        }
+
+    #muscle-map > #stretch-traps-a {
+        top: 17.4%;
+        left: 26.7%;
+        width: 3.39%
+    }
+
+    #muscle-map > #stretch-traps-b {
+        top: 17.4%;
+        left: 31.48%;
+        width: 3.39%
+    }
+
+    #muscle-map > #stretch-pecs {
+        top: 22%;
+        left: 24.3%;
+        width: 13%
+    }
+
+    #muscle-map > #stretch-shoulders-a {
+        top: 21.1%;
+        left: 21.84%;
+        width: 5.61%
+    }
+
+    #muscle-map > #stretch-shoulders-b {
+        top: 21.1%;
+        left: 34.1%;
+        width: 5.61%
+    }
+
+    #muscle-map > #stretch-biceps-a {
+        top: 26.9%;
+        left: 20.89%;
+        width: 4.05%
+    }
+
+    #muscle-map > #stretch-biceps-b {
+        top: 26.9%;
+        left: 36.67%;
+        width: 4.05%
+    }
+
+    #muscle-map > #stretch-forearm-a {
+        top: 33.6%;
+        left: 16.75%;
+        width: 6.62%
+    }
+
+    #muscle-map > #stretch-forearm-b {
+        top: 33.6%;
+        left: 38.18%;
+        width: 6.61%
+    }
+
+    #muscle-map > #stretch-obliques {
+        top: 28.67%;
+        left: 27.44%;
+        width: 6.42%
+    }
+
+    #muscle-map > #stretch-quads-b {
+        top: 42.2%;
+        left: 31.4%;
+        width: 6.55%
+    }
+
+    #muscle-map > #stretch-quads-a {
+        top: 42.2%;
+        left: 23.6%;
+        width: 6.55%
+    }
+
+    #muscle-map > #stretch-calves-a {
+        top: 64.59%;
+        left: 23.19%;
+        width: 4.67%
+    }
+
+    #muscle-map > #stretch-calves-b {
+        top: 64.49%;
+        left: 33.74%;
+        width: 4.67%
+    }
+
+    #muscle-map > #stretch-back-traps-a {
+        top: 15.38%;
+        left: 67.3%;
+        width: 7%
+    }
+
+    #muscle-map > #stretch-back-traps-b {
+        top: 17.82%;
+        left: 66.87%;
+        width: 8.1%
+    }
+
+    #muscle-map > #stretch-back-shoulders-a {
+        top: 19.29%;
+        left: 61.5%;
+        width: 5.7%
+    }
+
+    #muscle-map > #stretch-back-shoulders-b {
+        top: 19.29%;
+        left: 74.6%;
+        width: 5.7%
+    }
+
+    #muscle-map > #stretch-triceps-a {
+        top: 24.83%;
+        left: 60.2%;
+        width: 4.58%
+    }
+
+    #muscle-map > #stretch-triceps-b {
+        top: 24.83%;
+        left: 77.1%;
+        width: 4.58%
+    }
+
+    #muscle-map > #stretch-back-upper-a {
+        top: 20.4%;
+        left: 64.28%;
+        width: 6.41%
+    }
+
+    #muscle-map > #stretch-back-upper-b {
+        top: 20.4%;
+        left: 71.2%;
+        width: 6.41%
+    }
+
+    #muscle-map > #stretch-back-lats-a {
+        top: 26.66%;
+        left: 64.7%;
+        width: 6%
+    }
+
+    #muscle-map > #stretch-back-lats-b {
+        top: 26.66%;
+        left: 71.2%;
+        width: 6%
+    }
+
+    #muscle-map > #stretch-back-lower {
+        top: 32.86%;
+        left: 67.62%;
+        width: 6.59%
+    }
+
+    #muscle-map > #stretch-back-forearms-a {
+        top: 33.5%;
+        left: 56.1%;
+        width: 6.36%
+    }
+
+    #muscle-map > #stretch-back-forearms-b {
+        top: 33.5%;
+        left: 79.34%;
+        width: 6.36%
+    }
+
+    #muscle-map > #stretch-back-glutes {
+        top: 41%;
+        left: 64.89%;
+        width: 12.08%
+    }
+
+    #muscle-map > #stretch-back-hamstrings-a {
+        top: 47.49%;
+        left: 63.75%;
+        width: 6.67%
+    }
+
+    #muscle-map > #stretch-back-hamstrings-b {
+        top: 47.49%;
+        left: 71.47%;
+        width: 6.7%
+    }
+
+    #muscle-map > #stretch-back-calves-a {
+        top: 64.43%;
+        left: 61.94%;
+        width: 4.8%
+    }
+
+    #muscle-map > #stretch-back-calves-b {
+        top: 64.43%;
+        left: 75.1%;
+        width: 4.8%
+    }
+}
+
+@media screen and (min-width:641px) {
+    #muscle-map-female > #stretch-female-traps-a {
+        top: 21.8%;
+        left: 25.8%;
+        width: 3%
+    }
+
+    #muscle-map-female > #stretch-female-traps-b {
+        top: 21.8%;
+        left: 30.57%;
+        width: 3%
+    }
+
+    #muscle-map-female > #stretch-female-pecs {
+        top: 25.37%;
+        left: 24.6%;
+        width: 10.4%
+    }
+
+    #muscle-map-female > #stretch-female-shoulders-a {
+        top: 24.22%;
+        left: 22.1%;
+        width: 4.22%
+    }
+
+    #muscle-map-female > #stretch-female-shoulders-b {
+        top: 24.26%;
+        left: 33.21%;
+        width: 4.22%
+    }
+
+    #muscle-map-female > #stretch-female-biceps-a {
+        top: 29.48%;
+        left: 21.47%;
+        width: 3.3%
+    }
+
+    #muscle-map-female > #stretch-female-biceps-b {
+        top: 29.48%;
+        left: 34.8%;
+        width: 3.3%
+    }
+
+    #muscle-map-female > #stretch-female-forearm-a {
+        top: 36.1%;
+        left: 18.42%;
+        width: 5%
+    }
+
+    #muscle-map-female > #stretch-female-forearm-b {
+        top: 36.1%;
+        left: 36.1%;
+        width: 5%
+    }
+
+    #muscle-map-female > #stretch-female-abdominals {
+        top: 32.48%;
+        left: 26.99%;
+        width: 5.57%
+    }
+
+    #muscle-map-female > #stretch-female-quads-b {
+        top: 46.7%;
+        left: 30.5%;
+        width: 5.2%
+    }
+
+    #muscle-map-female > #stretch-female-quads-a {
+        top: 46.7%;
+        left: 23.7%;
+        width: 5.2%
+    }
+
+    #muscle-map-female > #stretch-female-calves-a {
+        top: 72%;
+        left: 23.1%;
+        width: 3.8%
+    }
+
+    #muscle-map-female > #stretch-female-calves-b {
+        top: 72%;
+        left: 32.58%;
+        width: 3.8%
+    }
+
+    #muscle-map-female > #stretch-female-back-traps-a {
+        top: 20.53%;
+        left: 66.36%;
+        width: 7.47%
+    }
+
+    #muscle-map-female > #stretch-female-back-traps-b {
+        top: 22.5%;
+        left: 65.97%;
+        width: 8.36%
+    }
+
+    #muscle-map-female > #stretch-female-back-shoulders-a {
+        top: 23.25%;
+        left: 61.9%;
+        width: 4.7%
+    }
+
+    #muscle-map-female > #stretch-female-back-shoulders-b {
+        top: 23.2%;
+        left: 73.66%;
+        width: 4.7%
+    }
+
+    #muscle-map-female > #stretch-female-triceps-a {
+        top: 28.6%;
+        left: 61.5%;
+        width: 3.2%
+    }
+
+    #muscle-map-female > #stretch-female-triceps-b {
+        top: 28.72%;
+        left: 75.52%;
+        width: 3.22%
+    }
+
+    #muscle-map-female > #stretch-female-back-lats-a {
+        top: 31%;
+        left: 65.3%;
+        width: 4.7%
+    }
+
+    #muscle-map-female > #stretch-female-back-lats-b {
+        top: 31%;
+        left: 70.2%;
+        width: 4.7%
+    }
+
+    #muscle-map-female > #stretch-female-back-lower {
+        top: 37.21%;
+        left: 67.09%;
+        width: 6.12%
+    }
+
+    #muscle-map-female > #stretch-female-back-forearms-a {
+        top: 37.55%;
+        left: 59.3%;
+        width: 3.9%
+    }
+
+    #muscle-map-female > #stretch-female-back-forearms-b {
+        top: 37.69%;
+        left: 76.96%;
+        width: 3.9%
+    }
+
+    #muscle-map-female > #stretch-female-back-glutes {
+        top: 45.5%;
+        left: 64.53%;
+        width: 11.2%
+    }
+
+    #muscle-map-female > #stretch-female-back-hamstrings-a {
+        top: 51.2%;
+        left: 63.79%;
+        width: 5.46%
+    }
+
+    #muscle-map-female > #stretch-female-back-hamstrings-b {
+        top: 51.2%;
+        left: 71%;
+        width: 5.46%
+    }
+
+    #muscle-map-female > #stretch-female-back-calves-a {
+        top: 68.6%;
+        left: 63.77%;
+        width: 4.12%
+    }
+
+    #muscle-map-female > #stretch-female-back-calves-b {
+        top: 68.6%;
+        left: 72.38%;
+        width: 4.12%
+    }
+}
