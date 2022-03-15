@@ -11,8 +11,22 @@
     </h1>
 </div>
 
-<partial name="_AlertSuccessPartial" />
-<partial name="_AlertDeletePartial" />
+@if (Model.Articles.Any())
+{
+    <partial name="_AlertSuccessPartial" />
+    <partial name="_AlertDeletePartial" />
 
-<partial name="_AllArticlesPartial" model="@Model.Articles" />
-<partial name="_PagingPartial" model="@Model" />
+    <partial name="_AllArticlesPartial" model="@Model.Articles" />
+    <partial name="_PagingPartial" model="@Model" />
+}
+else
+{
+    <div class="text-center">
+        <h2>
+            There are no articles
+        </h2>
+        <a asp-action="Create" asp-controller="Articles" class="btn btn-outline-info">
+            Create new
+        </a>
+    </div>
+}

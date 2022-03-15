@@ -8,87 +8,92 @@
     Category: <span class="text-muted">@this.ViewData["Title"]</span>
 </h3>
 
-@if(Model.Posts.Any() == false)
+@if (Model.Posts.Any() == false)
 {
     <h5 class="text-center text-info">Currently there are no post in this category.</h5>
-}
-
-<partial name="_AlertSuccessPartial" />
-
-<div class="row">
-    @foreach (var post in Model.Posts)
-    {
-        <div class="card border-info mb-4 col-md-12 hover-shadow">
-            <div class="card-body">
-                <a asp-action="Details" asp-controller="Posts" asp-route-id="@post.Id">
-                    <h4 class="card-title">@post.Title</h4>
-                </a>
-                <hr>
-                <p class="card-text">@(post.Description.Substring(0, post.Description.Length / 4))...</p>
-            </div>
-            <div class="row text-center">
-                <div class="card-header col-md-2"><i class="fa-solid fa-user"></i> <a asp-action="Profile" asp-controller="Users" asp-route-username="@post.AuthorUsername">@post.AuthorUsername</a></div>
-                <div class="card-header col-md-4"><i class="fa-solid fa-calendar-days"></i> @post.CreatedOn.ToShortDateString()</div>
-                <div class="card-header col-md-2"><i class="fa-solid fa-eye"></i> @post.Views</div>
-                <div class="card-header col-md-2"><i class="fa-solid fa-comment-dots"></i> @post.RepliesCount</div>
-                <div class="card-header col-md-2"><i class="fa-solid fa-folder-open"></i> @post.CategoryName</div>
-            </div>
-        </div>
-    }
     <p class="display-6 text-center">
         <a asp-action="Create" asp-controller="Posts">Create new post</a>
     </p>
-</div>
+}
+else
+{
+    <partial name="_AlertSuccessPartial" />
 
-<nav aria-label="...">
-    <ul class="pagination justify-content-center">
-        <li class="page-item @if(Model.HasPreviousPage == false) { <text>disabled</text> }">
-            <a class="page-link" asp-controller="Posts" asp-action="Category" asp-route-id="@Model.FirstPageNumber" asp-route-categoryId="@Model.CategoryId">
-                &laquo;&laquo;
-            </a>
-        </li>
-        <li class="page-item @if(Model.HasPreviousPage == false) {<text>disabled</text>}">
-            <a class="page-link" asp-controller="Posts" asp-action="Category" asp-route-id="@Model.PreviousPageNumber" asp-route-categoryId="@Model.CategoryId">
-                &laquo;
-            </a>
-        </li>
-        @for (int i = Model.PageNumber - 2; i < Model.PageNumber; i++)
+    <div class="row">
+        @foreach (var post in Model.Posts)
         {
-            if (i > 0)
-            {
-                <li class="page-item">
-                    <a class="page-link" asp-controller="Posts" asp-action="Category" asp-route-id="@i" asp-route-categoryId="@Model.CategoryId">
-                        @i
+            <div class="card border-info mb-4 col-md-12 hover-shadow">
+                <div class="card-body">
+                    <a asp-action="Details" asp-controller="Posts" asp-route-id="@post.Id">
+                        <h4 class="card-title">@post.Title</h4>
                     </a>
-                </li>
-            }
+                    <hr>
+                    <p class="card-text">@(post.Description.Substring(0, post.Description.Length / 4))...</p>
+                </div>
+                <div class="row text-center">
+                    <div class="card-header col-md-2"><i class="fa-solid fa-user"></i> <a asp-action="Profile" asp-controller="Users" asp-route-username="@post.AuthorUsername">@post.AuthorUsername</a></div>
+                    <div class="card-header col-md-4"><i class="fa-solid fa-calendar-days"></i> @post.CreatedOn.ToShortDateString()</div>
+                    <div class="card-header col-md-2"><i class="fa-solid fa-eye"></i> @post.Views</div>
+                    <div class="card-header col-md-2"><i class="fa-solid fa-comment-dots"></i> @post.RepliesCount</div>
+                    <div class="card-header col-md-2"><i class="fa-solid fa-folder-open"></i> @post.CategoryName</div>
+                </div>
+            </div>
         }
-        <li class="page-item active" aria-current="page">
-            <span class="page-link">
-                @Model.PageNumber
-                <span class="sr-only">(current)</span>
-            </span>
-        </li>
-        @for (int i = Model.PageNumber + 1; i <= Model.PageNumber + 2; i++)
-        {
-            if (i <= Model.PagesCount)
+        <p class="display-6 text-center">
+            <a asp-action="Create" asp-controller="Posts">Create new post</a>
+        </p>
+    </div>
+
+    <nav aria-label="...">
+        <ul class="pagination justify-content-center">
+            <li class="page-item @if(Model.HasPreviousPage == false) {<text>disabled</text>}">
+                <a class="page-link" asp-controller="Posts" asp-action="Category" asp-route-id="@Model.FirstPageNumber" asp-route-categoryId="@Model.CategoryId">
+                    &laquo;&laquo;
+                </a>
+            </li>
+            <li class="page-item @if(Model.HasPreviousPage == false) {<text>disabled</text>}">
+                <a class="page-link" asp-controller="Posts" asp-action="Category" asp-route-id="@Model.PreviousPageNumber" asp-route-categoryId="@Model.CategoryId">
+                    &laquo;
+                </a>
+            </li>
+            @for (int i = Model.PageNumber - 2; i < Model.PageNumber; i++)
             {
-                <li class="page-item">
-                    <a class="page-link" asp-controller="Posts" asp-action="Category" asp-route-id="@i" asp-route-categoryId="@Model.CategoryId">
-                        @i
-                    </a>
-                </li>
+                if (i > 0)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-controller="Posts" asp-action="Category" asp-route-id="@i" asp-route-categoryId="@Model.CategoryId">
+                            @i
+                        </a>
+                    </li>
+                }
             }
-        }
-        <li class="page-item @if(Model.HasNextPage == false) { <text>disabled</text> }">
-            <a class="page-link" asp-controller="Posts" asp-action="Category" asp-route-id="@Model.NextPageNumber" asp-route-categoryId="@Model.CategoryId">
-                &raquo;
-            </a>
-        </li>
-        <li class="page-item @if(Model.HasNextPage == false) {<text>disabled</text>}">
-            <a class="page-link" asp-controller="Posts" asp-action="Category" asp-route-id="@Model.LastPageNumber" asp-route-categoryId="@Model.CategoryId">
-                &raquo;&raquo;
-            </a>
-        </li>
-    </ul>
-</nav>
+            <li class="page-item active" aria-current="page">
+                <span class="page-link">
+                    @Model.PageNumber
+                    <span class="sr-only">(current)</span>
+                </span>
+            </li>
+            @for (int i = Model.PageNumber + 1; i <= Model.PageNumber + 2; i++)
+            {
+                if (i <= Model.PagesCount)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-controller="Posts" asp-action="Category" asp-route-id="@i" asp-route-categoryId="@Model.CategoryId">
+                            @i
+                        </a>
+                    </li>
+                }
+            }
+            <li class="page-item @if(Model.HasNextPage == false) {<text>disabled</text>}">
+                <a class="page-link" asp-controller="Posts" asp-action="Category" asp-route-id="@Model.NextPageNumber" asp-route-categoryId="@Model.CategoryId">
+                    &raquo;
+                </a>
+            </li>
+            <li class="page-item @if(Model.HasNextPage == false) {<text>disabled</text>}">
+                <a class="page-link" asp-controller="Posts" asp-action="Category" asp-route-id="@Model.LastPageNumber" asp-route-categoryId="@Model.CategoryId">
+                    &raquo;&raquo;
+                </a>
+            </li>
+        </ul>
+    </nav>
+}
