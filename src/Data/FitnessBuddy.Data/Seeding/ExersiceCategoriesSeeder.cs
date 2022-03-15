@@ -75,6 +75,11 @@
                 Name = "Calves",
             });
 
+            dbContext.ExerciseCategories.Add(new ExerciseCategory
+            {
+                Name = "Lower back",
+            });
+
             await dbContext.SaveChangesAsync();
         }
     }
