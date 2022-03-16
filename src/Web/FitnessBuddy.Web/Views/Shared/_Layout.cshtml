@@ -40,47 +40,32 @@
                                     </div>
                                 </div>
                             </li>
-                        }
-                        else
-                        {
                             <li class="nav-item">
-                                <a class="nav-link btn text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-                        }
-                        <li class="nav-item">
-                            <div class="dropdown show">
-                                <a class="btn dropdown-toggle text-white" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Foods
-                                </a>
-                                <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" asp-area="" asp-controller="Foods" asp-action="All">All foods</a>
-                                    @if (this.User.Identity.IsAuthenticated)
-                                    {
+                                <div class="dropdown show">
+                                    <a class="btn dropdown-toggle text-white" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Foods
+                                    </a>
+                                    <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" asp-area="" asp-controller="Foods" asp-action="All">All foods</a>
                                         <a class="dropdown-item" asp-area="" asp-action="MyFoods" asp-controller="Foods">My foods</a>
                                         <a class="dropdown-item" asp-area="" asp-action="Favorites" asp-controller="Foods">My favorite foods</a>
                                         <a class="dropdown-item" asp-area="" asp-controller="Meals" asp-action="MyMeals">My meals</a>
                                         <a class="dropdown-item" asp-area="" asp-controller="Foods" asp-action="Add">Add food</a>
-                                    }
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <div class="dropdown show">
-                                <a class="btn dropdown-toggle text-white" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Articles
-                                </a>
-                                <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" asp-area="" asp-controller="Articles" asp-action="All">All</a>
-                                    @if (this.User.Identity.IsAuthenticated)
-                                    {
+                            </li>
+                            <li class="nav-item">
+                                <div class="dropdown show">
+                                    <a class="btn dropdown-toggle text-white" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Articles
+                                    </a>
+                                    <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" asp-area="" asp-controller="Articles" asp-action="All">All</a>
                                         <a class="dropdown-item" asp-area="" asp-action="Create" asp-controller="Articles">Create</a>
                                         <a class="dropdown-item" asp-area="" asp-action="Categories" asp-controller="Articles">Categories</a>
-                                    }
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                        @if (this.User.Identity.IsAuthenticated)
-                        {
+                            </li>
                             <li class="nav-item">
                                 <div class="dropdown show">
                                     <a class="btn dropdown-toggle text-white" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -92,6 +77,12 @@
                                         <a class="dropdown-item" asp-area="" asp-action="All" asp-controller="Users">Users</a>
                                     </div>
                                 </div>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link btn text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
                         }
                     </ul>
