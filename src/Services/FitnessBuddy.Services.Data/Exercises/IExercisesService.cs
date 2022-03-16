@@ -9,6 +9,8 @@
     {
         public IEnumerable<ExerciseViewModel> GetAll(string search = null, int skip = 0, int? take = null);
 
+        public IEnumerable<TModel> GetRandom<TModel>(int count);
+
         public Task EditAsync(ExerciseInputModel model);
 
         public Task DeleteAsync(int id);

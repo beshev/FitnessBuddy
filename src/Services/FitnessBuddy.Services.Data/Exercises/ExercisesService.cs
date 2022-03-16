@@ -1,5 +1,6 @@
 ﻿namespace FitnessBuddy.Services.Data.Exercises
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
@@ -119,6 +120,14 @@
             => this.exerciseRepository
             .AllAsNoTracking()
             .Any(x => x.Id == id);
+
+        public IEnumerable<TModel> GetRandom<TModel>(int count)
+            => this.exerciseRepository
+            .AllAsNoTracking()
+            .OrderBy(x => Guid.NewGuid())
+            .To<TModel>()
+            .Take(count)
+            .AsEnumerable();
 
         private static string GetYouTubeEmbededLink(string url)
         {
