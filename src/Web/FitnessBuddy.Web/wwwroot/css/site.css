@@ -47,6 +47,10 @@ html {
     box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
+.img-mix-blend {
+    mix-blend-mode: darken;
+}
+
 button.accept-policy {
     font-size: 1rem;
     line-height: inherit;
@@ -109,19 +113,19 @@ body {
     text-align: center
 }
 
-.counter-box p {
-    margin: 5px 0 0;
-    padding: 0;
-    color: #909090;
-    font-size: 18px;
-    font-weight: 500
-}
+    .counter-box p {
+        margin: 5px 0 0;
+        padding: 0;
+        color: #909090;
+        font-size: 18px;
+        font-weight: 500
+    }
 
-.counter-box i {
-    font-size: 60px;
-    margin: 0 0 15px;
-    color: #d2d2d2
-}
+    .counter-box i {
+        font-size: 60px;
+        margin: 0 0 15px;
+        color: #d2d2d2
+    }
 
 .counter {
     display: block;
@@ -135,11 +139,11 @@ body {
     background: #3acf87
 }
 
-.counter-box.colored p,
-.counter-box.colored i,
-.counter-box.colored .counter {
-    color: #fff
-}
+    .counter-box.colored p,
+    .counter-box.colored i,
+    .counter-box.colored .counter {
+        color: #fff
+    }
 
 
 /* Style the form */
@@ -154,8 +158,8 @@ body {
 /* Style the input fields */
 /*input {
     padding: 10px;*/
-    /*width: 100%;*/
-    /*font-size: 17px;
+/*width: 100%;*/
+/*font-size: 17px;
     font-family: Raleway;
     border: 1px solid #aaaaaa;
 }*/
@@ -182,12 +186,12 @@ input.invalid {
     opacity: 0.5;
 }
 
-/* Mark the active step: */
-.step.active {
-    opacity: 1;
-}
+    /* Mark the active step: */
+    .step.active {
+        opacity: 1;
+    }
 
-/* Mark the steps that are finished and valid: */
-.step.finish {
-    background-color: #04AA6D;
-}
+    /* Mark the steps that are finished and valid: */
+    .step.finish {
+        background-color: #04AA6D;
+    }
