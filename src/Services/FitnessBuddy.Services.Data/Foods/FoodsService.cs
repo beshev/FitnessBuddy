@@ -1,5 +1,6 @@
 ﻿namespace FitnessBuddy.Services.Data.Foods
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -131,5 +132,13 @@
 
             return query.Count();
         }
+
+        public IEnumerable<TModel> GetRandom<TModel>(int count)
+            => this.foodRepository
+            .AllAsNoTracking()
+            .OrderBy(x => Guid.NewGuid())
+            .To<TModel>()
+            .Take(count)
+            .AsEnumerable();
     }
 }
