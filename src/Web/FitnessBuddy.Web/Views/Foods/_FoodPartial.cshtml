@@ -1,9 +1,13 @@
 ﻿@using FitnessBuddy.Web.ViewModels.Foods
 @model FoodViewModel
 
+@{
+    var imageUrl = string.IsNullOrWhiteSpace(@Model.ImageUrl) ? "/images/foods/default-food.jpg" : Model.ImageUrl;
+}
+
 <div class="card-header text-center">
     <strong>@Model.FoodName</strong>
-    <img src="@Model.ImageUrl" alt="..." class="img-thumbnail db center mb3 br-100" width="250" height="130" style="height:120px!important;">
+    <img src="@imageUrl" class="img-thumbnail db center mb3 br-100" width="250" height="130" style="height:120px!important;">
     <strong>Nutrients per 100 grams</strong>
 </div>
 
