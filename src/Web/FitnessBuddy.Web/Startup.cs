@@ -1,7 +1,7 @@
 ﻿namespace FitnessBuddy.Web
 {
     using System.Reflection;
-
+    using FitnessBuddy.Common;
     using FitnessBuddy.Data;
     using FitnessBuddy.Data.Common;
     using FitnessBuddy.Data.Common.Repositories;
@@ -64,6 +64,7 @@
                     }).AddRazorRuntimeCompilation();
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter();
+            services.AddAntiforgery(options => options.HeaderName = GlobalConstants.AntiforgeryHeaderName);
 
             services.AddSingleton(this.configuration);
 
