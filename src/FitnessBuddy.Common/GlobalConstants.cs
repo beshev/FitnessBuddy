@@ -3,6 +3,7 @@
     public static class GlobalConstants
     {
         public const string SystemName = "FitnessBuddy";
+        public const string AntiforgeryHeaderName = "X-CSRF-TOKEN";
 
         public const string AdministratorRoleName = "Administrator";
         public const string UserRoleName = "User";
