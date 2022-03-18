@@ -15,12 +15,18 @@
             this.exercisesLikesRepository = exercisesLikesRepository;
         }
 
+        public int GetExerciseLikesCount(int exerciseId)
+            => this.exercisesLikesRepository
+            .AllAsNoTracking()
+            .Where(x => x.ExerciseId == exerciseId)
+            .Count();
+
         public bool IsExists(string userId, int exerciseId)
             => this.exercisesLikesRepository
             .AllAsNoTracking()
             .Any(x => x.UserId == userId && x.ExerciseId == exerciseId);
 
-        public async Task Like(string userId, int exerciseId)
+        public async Task LikeAsync(string userId, int exerciseId)
         {
             var exerciseLike = new ExerciseLike
             {
@@ -32,7 +38,7 @@
             await this.exercisesLikesRepository.SaveChangesAsync();
         }
 
-        public async Task UnLike(string userId, int exerciseId)
+        public async Task UnLikeAsync(string userId, int exerciseId)
         {
             var exerciseLike = this.exercisesLikesRepository
                 .AllAsNoTracking()

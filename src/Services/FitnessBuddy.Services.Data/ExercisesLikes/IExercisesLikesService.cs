@@ -4,10 +4,12 @@
 
     public interface IExercisesLikesService
     {
-        public Task Like(string userId, int exerciseId);
+        public Task LikeAsync(string userId, int exerciseId);
 
-        public Task UnLike(string userId, int exerciseId);
+        public Task UnLikeAsync(string userId, int exerciseId);
 
         public bool IsExists(string userId, int exerciseId);
+
+        public int GetExerciseLikesCount(int exerciseId);
     }
 }
