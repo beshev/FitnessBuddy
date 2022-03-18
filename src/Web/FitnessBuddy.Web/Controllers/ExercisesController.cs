@@ -5,6 +5,7 @@
 
     using FitnessBuddy.Common;
     using FitnessBuddy.Services.Data.Exercises;
+    using FitnessBuddy.Services.Data.ExercisesLikes;
     using FitnessBuddy.Services.Data.TrainingsExercises;
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Exercises;
@@ -17,15 +18,18 @@
         private readonly IExercisesService exercisesService;
         private readonly IExerciseCategoriesService exerciseCategoriesService;
         private readonly ITrainingsExercisesService trainingsExercisesService;
+        private readonly IExercisesLikesService exercisesLikesService;
 
         public ExercisesController(
             IExercisesService exercisesService,
             IExerciseCategoriesService exerciseCategoriesService,
-            ITrainingsExercisesService trainingsExercisesService)
+            ITrainingsExercisesService trainingsExercisesService,
+            IExercisesLikesService exercisesLikesService)
         {
             this.exercisesService = exercisesService;
             this.exerciseCategoriesService = exerciseCategoriesService;
             this.trainingsExercisesService = trainingsExercisesService;
+            this.exercisesLikesService = exercisesLikesService;
         }
 
         public IActionResult All(int id = 1, string search = "")
@@ -146,8 +150,11 @@
                 return this.NotFound();
             }
 
+            var userId = this.User.GetUserId();
+
             var viewModel = this.exercisesService.GetById<ExerciseDetailsModel>(id);
-            viewModel.IsCreator = this.exercisesService.IsUserCreator(this.User.GetUserId(), id);
+            viewModel.IsCreator = this.exercisesService.IsUserCreator(userId, id);
+            viewModel.IsUserLikeExercise = this.exercisesLikesService.IsExists(userId, id);
 
             return this.View(viewModel);
         }

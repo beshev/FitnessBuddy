@@ -6,54 +6,128 @@
 
 <vc:delete-modal item-id="@Model.Id" item-name="@Model.Name" controller-name="Exercises"></vc:delete-modal>
 
-<div class="container">
-    <div class="row">
+<div class="row">
 
-        <vc:add-training-exercise exercise-id="Model.Id"></vc:add-training-exercise>
+    <vc:add-training-exercise exercise-id="Model.Id"></vc:add-training-exercise>
 
-        <div class="col-md-8 training-details-bg-color hover-shadow">
+    <div class="col-md-9 training-details-bg-color hover-shadow">
 
-            <div class="text-center">
-                <h2>
-                    @Model.Name
-                </h2>
+        <div class="text-center">
+            <h2>
+                @Model.Name
+            </h2>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <p class="img">
+                    <img src="@Model.ImageUrl" class="img-fluid" alt="Responsive image" />
+                </p>
             </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <p class="img" ">
-                        <img src="@Model.ImageUrl" class="img-fluid" alt="Responsive image" />
-                    </p>
-                </div>
-                <div class="col-md-3">
-                    <p class="item-description">
-                        <strong>Muscle group: </strong>@Model.CategoryName
-                    </p>
-                    <p class="item-description">
-                        <strong>Equipment: </strong>@Model.EquipmentName
-                    </p>
-                    <p class="item-description">
-                        <strong>Difficulty: </strong>@Model.Difficulty
-                    </p>
-                </div>
-                <div class="col-md-3">
-                    <a class="btn btn-outline-info" href=@($"/Exercises/Edit/{Model.Id}")>Edit</a>
-                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#@($"deleteModal{Model.Id}")">Delete</button>
-                </div>
+            <div class="col-md-3">
+                <p class="item-description">
+                    <strong>Muscle group: </strong>@Model.CategoryName
+                </p>
+                <p class="item-description">
+                    <strong>Equipment: </strong>@Model.EquipmentName
+                </p>
+                <p class="item-description">
+                    <strong>Difficulty: </strong>@Model.Difficulty
+                </p>
             </div>
+            <div class="col-md-3">
+                <div class="row">
+                    @if(Model.IsCreator)
+                    {
+                        <div class="col-md-3 offset-2">
+                            <a class="btn btn-outline-info" asp-controller="Exercises" asp-action="Edit" asp-route-id="@Model.Id")>Edit</a>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#@($"deleteModal{Model.Id}")">Delete</button>
+                        </div>
+                    }
+                </div>
+                <div class="row">
+                    <div class="text-center mt-2" id="exercise-likes">
+                        @if(Model.IsUserLikeExercise)
+                        {
+                            var message = Model.ExerciseLikesCount == 1
+                            ? "You like this exercise"
+                            : $"You and {Model.ExerciseLikesCount - 1} others like this exercise";
 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src="@Model.VideoUrl" allowfullscreen></iframe>
+                        <span>@message</span>
+                        }
+                        else
+                        {
+                            @Model.ExerciseLikesCount <text> people like this exercise</text>
+                        }
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <p class="item-description">
-                        <strong>Instructions: </strong>@Model.Description
-                    </p>
+                <div class="row">
+                    <div class="text-center">
+                        <form method="post" id="like-form"></form>
+                        <a id="like-a" href="javascript:void(0)" onclick="sendLike()">
+                            @if(Model.IsUserLikeExercise)
+                            {
+                            <i class="fa-solid fa-thumbs-down fa-1x text-danger"></i> <span class="text-danger">Dislike</span>
+                            }
+                            else
+                            {
+                            <i class="fa-solid fa-thumbs-up fa-1x text-info" onclick="sendLike()"></i> <span>Like</span>
+                            }
+                        </a>
+                    </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src="@Model.VideoUrl" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <p class="item-description">
+                    <strong>Instructions: </strong>@Model.Description
+                </p>
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts{
+<script>
+    var token = $("#like-form input[name=__RequestVerificationToken]").val();
+
+    function sendLike() {
+        $.ajax({
+            type: "POST",
+             url: "/api/ExercisesLikes?exerciseId=" + @Model.Id,
+             headers: {'X-CSRF-TOKEN': token},
+             success: function(json) {
+                 var icon = '';
+                 var likesMessage = '';
+
+                 if(json.isUserLikeExercise){
+                     icon = '<i class="fa-solid fa-thumbs-down fa-1x text-danger"></i> <span>Dislike</span>';
+                     likesMessage = json.likesCount == 1
+                     ? 'You like this exercise'
+                     : `You and ${json.likesCount - 1} others like this exercise`;
+
+                     $("#like-a").addClass("text-danger");
+                 } else{
+                     icon = '<i class="fa-solid fa-thumbs-up fa-1x text-info"></i> <span>Like</span>';
+                     likesMessage = `${json.likesCount} people like this exercise`;
+
+                     $("#like-a").removeClass("text-danger");
+                 }
+
+
+                 $("#like-a").html(icon);
+                 $("#exercise-likes").html(likesMessage);
+             },
+        })
+    }
+</script>
+}
