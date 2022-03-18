@@ -3,7 +3,7 @@
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
 
-    public class ExerciseDetailsModel : IMapFrom<Exercise>
+    public class ExerciseDetailsModel : IMapFrom<Exercise>, IMapFrom<ExerciseLike>
     {
         public int Id { get; set; }
 
@@ -21,6 +21,10 @@
 
         public string EquipmentName { get; set; }
 
+        public int ExerciseLikesCount { get; set; }
+
         public bool IsCreator { get; set; }
+
+        public bool IsUserLikeExercise { get; set; }
     }
 }
