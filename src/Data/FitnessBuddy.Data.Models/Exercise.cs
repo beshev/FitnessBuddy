@@ -12,6 +12,7 @@
         public Exercise()
         {
             this.ExerciseTranings = new HashSet<TrainingExercise>();
+            this.ExerciseLikes = new HashSet<ExerciseLike>();
         }
 
         [Required]
@@ -43,5 +44,7 @@
         public virtual ApplicationUser AddedByUser { get; set; }
 
         public virtual ICollection<TrainingExercise> ExerciseTranings { get; set; }
+
+        public virtual ICollection<ExerciseLike> ExerciseLikes { get; set; }
     }
 }

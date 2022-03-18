@@ -23,6 +23,7 @@ namespace FitnessBuddy.Data.Models
             this.Meals = new HashSet<Meal>();
             this.AddedFoods = new HashSet<Food>();
             this.FavoriteFoods = new HashSet<Food>();
+            this.LikedExercises = new HashSet<ExerciseLike>();
         }
 
         public GenderType Gender { get; set; }
@@ -81,6 +82,8 @@ namespace FitnessBuddy.Data.Models
         public virtual ICollection<Post> Posts { get; set; }
 
         public virtual ICollection<Reply> Replies { get; set; }
+
+        public virtual ICollection<ExerciseLike> LikedExercises { get; set; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 

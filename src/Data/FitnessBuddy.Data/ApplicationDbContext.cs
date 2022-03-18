@@ -56,6 +56,8 @@
 
         public DbSet<UserFollower> UsersFollowers { get; set; }
 
+        public DbSet<ExerciseLike> ExercisesLikes { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
