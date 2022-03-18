@@ -106,8 +106,10 @@
              url: "/api/ExercisesLikes?exerciseId=" + @Model.Id,
              headers: {'X-CSRF-TOKEN': token},
              success: function(json) {
-                 var icon = '';
-                 var likesMessage = '';
+                 let icon = '';
+                 let likesMessage = '';
+
+                 let $likeAnchor =  $("#like-a");
 
                  if(json.isUserLikeExercise){
                      icon = '<i class="fa-solid fa-thumbs-down fa-1x text-danger"></i> <span>Dislike</span>';
@@ -115,16 +117,16 @@
                      ? 'You like this exercise'
                      : `You and ${json.likesCount - 1} others like this exercise`;
 
-                     $("#like-a").addClass("text-danger");
+                    $likeAnchor.addClass("text-danger");
                  } else{
                      icon = '<i class="fa-solid fa-thumbs-up fa-1x text-info"></i> <span>Like</span>';
                      likesMessage = `${json.likesCount} people like this exercise`;
 
-                     $("#like-a").removeClass("text-danger");
+                     $likeAnchor.removeClass("text-danger");
                  }
 
 
-                 $("#like-a").html(icon);
+                 $likeAnchor.html(icon);
                  $("#exercise-likes").html(likesMessage);
              },
         })
