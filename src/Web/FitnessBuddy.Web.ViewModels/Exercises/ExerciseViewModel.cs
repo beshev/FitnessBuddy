@@ -22,5 +22,7 @@
         public string AddedByUserUsername { get; set; }
 
         public DateTime CreatedOn { get; set; }
+
+        public int ExerciseLikesCount { get; set; }
     }
 }
