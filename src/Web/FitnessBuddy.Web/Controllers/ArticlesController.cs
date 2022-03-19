@@ -5,6 +5,7 @@
 
     using FitnessBuddy.Common;
     using FitnessBuddy.Services.Data.Articles;
+    using FitnessBuddy.Services.Data.ArticlesRatings;
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Articles;
     using Microsoft.AspNetCore.Authorization;
@@ -18,15 +19,18 @@
         private readonly IArticlesService articlesService;
         private readonly IArticleCategoriesService articleCategoriesService;
         private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly IArticlesRatingsService articlesRatingsService;
 
         public ArticlesController(
             IArticlesService articlesService,
             IArticleCategoriesService articleCategoriesService,
-            IWebHostEnvironment webHostEnvironment)
+            IWebHostEnvironment webHostEnvironment,
+            IArticlesRatingsService articlesRatingsService)
         {
             this.articlesService = articlesService;
             this.articleCategoriesService = articleCategoriesService;
             this.webHostEnvironment = webHostEnvironment;
+            this.articlesRatingsService = articlesRatingsService;
         }
 
         [AllowAnonymous]
@@ -83,6 +87,7 @@
 
             var viewModel = this.articlesService.GetById<ArticleDetailsModel>(id);
             viewModel.IsCreator = viewModel.CreatorId == this.User.GetUserId();
+            viewModel.AvgRating = this.articlesRatingsService.CalcAvgRate(id);
 
             return this.View(viewModel);
         }

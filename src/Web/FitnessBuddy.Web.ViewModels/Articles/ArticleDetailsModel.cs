@@ -27,6 +27,8 @@
 
         public DateTime CreatedOn { get; set; }
 
+        public double AvgRating { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Article, ArticleDetailsModel>()
