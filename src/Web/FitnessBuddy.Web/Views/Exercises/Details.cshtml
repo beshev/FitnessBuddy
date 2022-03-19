@@ -109,24 +109,17 @@
                  let icon = '';
                  let likesMessage = '';
 
-                 let $likeAnchor =  $("#like-a");
-
                  if(json.isUserLikeExercise){
-                     icon = '<i class="fa-solid fa-thumbs-down fa-1x text-danger"></i> <span>Dislike</span>';
+                     icon = '<i class="fa-solid fa-thumbs-down fa-1x text-danger"></i> <span class="text-danger">Dislike</span>';
                      likesMessage = json.likesCount == 1
                      ? 'You like this exercise'
                      : `You and ${json.likesCount - 1} others like this exercise`;
-
-                    $likeAnchor.addClass("text-danger");
                  } else{
                      icon = '<i class="fa-solid fa-thumbs-up fa-1x text-info"></i> <span>Like</span>';
                      likesMessage = `${json.likesCount} people like this exercise`;
-
-                     $likeAnchor.removeClass("text-danger");
                  }
 
-
-                 $likeAnchor.html(icon);
+                 $("#like-a").html(icon);
                  $("#exercise-likes").html(likesMessage);
              },
         })
