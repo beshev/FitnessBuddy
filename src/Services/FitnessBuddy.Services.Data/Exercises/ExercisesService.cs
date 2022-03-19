@@ -48,14 +48,20 @@
 
             if (string.IsNullOrWhiteSpace(search) == false)
             {
-                query = query.Where(x => x.Name.Contains(search));
+                query = query
+                    .Where(x => x.Name
+                    .Contains(search));
             }
 
-            query = query.OrderByDescending(x => x.CreatedOn);
+            query = query
+                .OrderByDescending(x => x.ExerciseLikes.Count)
+                .ThenByDescending(x => x.CreatedOn);
 
             if (take.HasValue)
             {
-                query = query.Skip(skip).Take(take.Value);
+                query = query
+                    .Skip(skip)
+                    .Take(take.Value);
             }
 
             return query
