@@ -2,7 +2,7 @@
 {
     using System;
     using System.IO;
-
+    using System.Linq;
     using AutoMapper;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
@@ -23,12 +23,17 @@
 
         public DateTime CreatedOn { get; set; }
 
+        public double AvarageRating { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Article, ArticleViewModel>()
                 .ForMember(
                 dest => dest.ImageUrl,
-                opt => opt.MapFrom(x => $"/images/articles/{Path.GetFileName(x.ImageUrl)}"));
+                opt => opt.MapFrom(x => $"/images/articles/{Path.GetFileName(x.ImageUrl)}"))
+                .ForMember(
+                dest => dest.AvarageRating,
+                opt => opt.MapFrom(x => x.ArticleRatings.Any() ? x.ArticleRatings.Average(r => r.Rating) : 0));
         }
     }
 }
