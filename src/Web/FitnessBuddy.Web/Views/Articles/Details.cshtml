@@ -4,6 +4,7 @@
     this.ViewData["Title"] = "Article";
 }
 
+
 <div id="primary" class="col-md-12 mb-xs-24 text-center">
     <article id="post-996" class="post-content post-grid-wide post-996 post type-post status-publish format-standard has-post-thumbnail hentry category-news category-template-2 tag-content-2 tag-read-more tag-template">
         <div class="entry-content bg-light hover-shadow">
@@ -12,6 +13,16 @@
             </h2>
             <div class="entry-meta">
                 <ul class="post-meta" style="list-style-type: none;">
+                    <li>
+                        <div class="rating">
+                            <i class="rating-star far fa-star" value="2"></i>
+                            <i class="rating-star far fa-star" value="4"></i>
+                            <i class="rating-star far fa-star" value="6"></i>
+                            <i class="rating-star far fa-star" value="8"></i>
+                            <i class="rating-star far fa-star" value="10"></i>
+                            <span class="ml-2 rating-result"></span>
+                        </div>
+                    </li>
                     <li><span class="posted-on"><time class="entry-date published"><strong>Written in:</strong> @Model.CreatedOn.ToString("dddd, dd MMMM, yyyy")</time></span></li>
                     <li><span><strong>Written by:</strong> <a asp-action="Profile" asp-controller="Users" asp-route-username="@Model.CreatorUsername" title="Aigars" class="text-info">@Model.CreatorUsername</a></span></li>
                     <li><span><strong>Category:</strong> <a asp-contoller="Articles" asp-action="Category" asp-route-categoryName="@Model.CategoryName" title="Aigars" class="text-info">@Model.CategoryName</a></span></li>
@@ -33,4 +44,65 @@
     }
 </div>
 
+
+<form id="article-rating" method="post"></form>
+
 <vc:delete-modal item-id="@Model.Id" item-name="@Model.Title" controller-name="Articles"></vc:delete-modal>
+
+
+@section CustomCss {
+<link rel="stylesheet" href="~/css/ArticleStars.css" />
+}
+
+@section Scripts {
+<script>
+    const ratingStars = Array.from(document.querySelectorAll(".rating-star"));
+
+    fillStars(@Model.AvgRating);
+
+    ratingStars.forEach((star) => {
+        var rating = ratingStars.indexOf(star) + 1;
+
+        star.onclick = () => {
+            rateArticle(rating);
+        }
+    })
+
+    function rateArticle(rating) {
+        let jsonData = JSON.stringify({
+            ArticleId: @Model.Id,
+            Rating: rating,
+        });
+
+        var token = $("#article-rating input[name=__RequestVerificationToken]").val();
+
+       $.ajax({
+           method: 'POST',
+           url: '/api/ArticlesRatings',
+           headers: {'X-CSRF-TOKEN': token},
+           data: jsonData,
+           contentType: "application/json",
+           success: function(jsonResult) {
+              fillStars(jsonResult.avgRating);
+           }
+       })
+    }
+
+    function fillStars(rating){
+        const starClassActive = "rating-star fas fa-star";
+        const starClassUnActive = "rating-star far fa-star";
+
+        var count = Math.floor(rating);
+
+        document.querySelector(".rating-result").textContent = `${rating.toFixed(1)} / 5.0`;
+
+        for(let i = 0; i < count; i++){
+            ratingStars[i].className = starClassActive;
+        }
+
+        for(let i = count; i < ratingStars.length; i++){
+            ratingStars[i].className = starClassUnActive;
+        }
+    }
+</script>
+}
