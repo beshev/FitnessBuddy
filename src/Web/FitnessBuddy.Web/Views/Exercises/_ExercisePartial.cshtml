@@ -4,7 +4,7 @@
     <a asp-action="Details" asp-controller="Exercises" asp-route-id="@Model.Id">
         <h3 class="card-header text-white">@Model.Name</h3>
         <img src="@Model.ImageUrl" class="d-block user-select-none" width="100%" height="200" aria-label="Placeholder: Image cap">
-        <ul class="list-group">
+        <ul class="list-group mt-2">
             <li class="list-group-item li-bg-color">Difficulty: @Model.Difficulty</li>
             <li class="list-group-item li-bg-color">Category: @Model.CategoryName</li>
             <li class="list-group-item li-bg-color">Equipment: @Model.EquipmentName</li>
