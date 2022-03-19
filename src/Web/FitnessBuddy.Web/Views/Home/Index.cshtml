@@ -99,7 +99,7 @@ else
                     <div class="card card-bg-color col-md-5 mr-5 hover-shadow">
                         <div class="card-header text-center">
                             <strong>@food.FoodName</strong>
-                            <img src="@food.ImageUrl" alt="..." class="img-thumbnail db center mb3 br-100" width="250" height="130" style="height:120px!important;">
+                            <img src="@(string.IsNullOrWhiteSpace(@food.ImageUrl) ? "/images/foods/default-food.jpg" : food.ImageUrl)" class="img-thumbnail db center mb3 br-100" width="250" height="130" style="height:120px!important;">
                             <strong>Nutrients per 100 grams</strong>
                         </div>
 
