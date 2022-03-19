@@ -17,11 +17,20 @@
 
         public double CalcAvgRate(int articleId)
         {
-            var query = this.articlesRatingsRepository
+            var ratings = this.articlesRatingsRepository
                 .AllAsNoTracking()
-                .Where(x => x.ArticleId == articleId);
+                .Where(x => x.ArticleId == articleId)
+                .Select(x => x.Rating)
+                .AsEnumerable();
 
-            return query.Count() == 0 ? 0 : query.Average(x => x.Rating);
+            double avgRating = 0;
+
+            if (ratings.Any())
+            {
+                avgRating = ratings.Average(x => x);
+            }
+
+            return avgRating;
         }
 
         public async Task RateAsync(int articleId, string userId, double rating)
