@@ -9,6 +9,7 @@
     using FitnessBuddy.Data.Repositories;
     using FitnessBuddy.Data.Seeding;
     using FitnessBuddy.Services.Data.Articles;
+    using FitnessBuddy.Services.Data.ArticlesRatings;
     using FitnessBuddy.Services.Data.Exercises;
     using FitnessBuddy.Services.Data.ExercisesLikes;
     using FitnessBuddy.Services.Data.Foods;
@@ -92,6 +93,7 @@
             services.AddTransient<IRepliesService, RepliesService>();
             services.AddTransient<IUsersFollowersService, UsersFollowersService>();
             services.AddTransient<IExercisesLikesService, ExercisesLikesService>();
+            services.AddTransient<IArticlesRatingsService, ArticlesRatingsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
