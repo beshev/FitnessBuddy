@@ -87,7 +87,6 @@
 
             var viewModel = this.articlesService.GetById<ArticleDetailsModel>(id);
             viewModel.IsCreator = viewModel.CreatorId == this.User.GetUserId();
-            viewModel.AvgRating = this.articlesRatingsService.CalcAvgRate(id);
 
             return this.View(viewModel);
         }
