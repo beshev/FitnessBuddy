@@ -11,6 +11,8 @@
 
         public Task DeleteAsync(int trainingId, string userId);
 
+        public string GetNameById(int trainingId);
+
         public IEnumerable<TModel> GetAll<TModel>(string userId);
 
         public int GetTrainingId(string name, string userId);

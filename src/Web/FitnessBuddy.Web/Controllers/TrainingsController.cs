@@ -97,7 +97,11 @@
 
             await this.trainingsExercisesService.AddAsync(model);
 
-            return this.Redirect(GlobalConstants.UserTrainings);
+            var trainingName = this.trainingsService.GetNameById(model.TrainingId);
+
+            var redirectURL = string.Format(GlobalConstants.UserTrainings, trainingName);
+
+            return this.Redirect(redirectURL);
         }
 
         public async Task<IActionResult> RemoveExercise(int trainingExerciseId, string name)

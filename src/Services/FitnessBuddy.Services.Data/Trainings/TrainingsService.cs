@@ -53,6 +53,13 @@
             .To<TModel>()
             .AsEnumerable();
 
+        public string GetNameById(int trainingId)
+            => this.trainingRepository
+            .AllAsNoTracking()
+            .Where(x => x.Id == trainingId)
+            .Select(x => x.Name)
+            .FirstOrDefault();
+
         public int GetTrainingId(string name, string userId)
         {
             var training = this.trainingRepository
