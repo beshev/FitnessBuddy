@@ -61,7 +61,8 @@
         {
             IQueryable<Article> query = this.articlesRepository
                 .AllAsNoTracking()
-                .OrderByDescending(x => x.CreatedOn);
+                .OrderByDescending(x => x.ArticleRatings.Any() ? x.ArticleRatings.Average(x => x.Rating) : 0)
+                .ThenByDescending(x => x.CreatedOn);
 
             if (take.HasValue)
             {
