@@ -1,5 +1,6 @@
 ﻿namespace FitnessBuddy.Data.Models
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using FitnessBuddy.Common;
@@ -7,6 +8,11 @@
 
     public class Article : BaseDeletableModel<int>
     {
+        public Article()
+        {
+            this.ArticleRatings = new HashSet<ArticleRating>();
+        }
+
         [Required]
         [MaxLength(DataConstants.ArticleTitleMaxLength)]
         public string Title { get; set; }
@@ -27,5 +33,7 @@
         public string CreatorId { get; set; }
 
         public virtual ApplicationUser Creator { get; set; }
+
+        public ICollection<ArticleRating> ArticleRatings { get; set; }
     }
 }

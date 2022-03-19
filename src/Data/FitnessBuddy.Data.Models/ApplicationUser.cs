@@ -85,6 +85,8 @@ namespace FitnessBuddy.Data.Models
 
         public virtual ICollection<ExerciseLike> LikedExercises { get; set; }
 
+        public virtual ICollection<ArticleRating> RatedArticles { get; set; }
+
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
