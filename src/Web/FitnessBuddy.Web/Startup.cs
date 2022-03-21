@@ -24,6 +24,7 @@
     using FitnessBuddy.Services.Data.UsersFollowers;
     using FitnessBuddy.Services.Mapping;
     using FitnessBuddy.Services.Messaging;
+    using FitnessBuddy.Web.Hubs;
     using FitnessBuddy.Web.ViewModels;
 
     using Microsoft.AspNetCore.Builder;
@@ -64,7 +65,9 @@
                     {
                         options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                     }).AddRazorRuntimeCompilation();
+
             services.AddRazorPages();
+            services.AddSignalR();
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddAntiforgery(options => options.HeaderName = GlobalConstants.AntiforgeryHeaderName);
 
@@ -141,6 +144,7 @@
             app.UseEndpoints(
                 endpoints =>
                     {
+                        endpoints.MapHub<ChatHub>("/chat");
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapRazorPages();

@@ -390,3 +390,5 @@ obj
 bin
 *.zip
 .vs/
+/src/Web/FitnessBuddy.Web/wwwroot/images/articles/5.jpg
+/src/Web/FitnessBuddy.Web/wwwroot/images/articles/6.jpg
