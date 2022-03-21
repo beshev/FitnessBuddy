@@ -28,6 +28,30 @@
             await this.messagesRepository.SaveChangesAsync();
         }
 
+        public IEnumerable<TModel> GetConversations<TModel>(string userId)
+        {
+            var sendMessages = this.messagesRepository
+                .All()
+                .Where(x => x.AuthorId == userId)
+                .OrderBy(x => x.CreatedOn)
+                .Select(x => x.Receiver);
+
+            var receivedMessages = this.messagesRepository
+                .All()
+                .Where(x => x.ReceiverId == userId)
+                .OrderBy(x => x.CreatedOn)
+                .Select(x => x.Author);
+
+            var conversationsWithUsers = sendMessages
+                .Concat(receivedMessages)
+                .Where(x => x.Id != userId)
+                .Distinct()
+                .To<TModel>()
+                .AsEnumerable();
+
+            return conversationsWithUsers;
+        }
+
         public IEnumerable<TModel> GetMessages<TModel>(string firstUserId, string secondUserId)
             => this.messagesRepository
             .AllAsNoTrackingWithDeleted()

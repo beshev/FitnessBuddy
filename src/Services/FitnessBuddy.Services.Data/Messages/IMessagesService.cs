@@ -10,5 +10,7 @@
         public IEnumerable<TModel> GetMessages<TModel>(string firstUserId, string secondUserId);
 
         public Task DeleteMessageAsync(string authorId, string receiverId);
+
+        public IEnumerable<TModel> GetConversations<TModel>(string userId);
     }
 }
