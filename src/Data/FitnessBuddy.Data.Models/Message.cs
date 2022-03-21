@@ -5,7 +5,7 @@
     using FitnessBuddy.Common;
     using FitnessBuddy.Data.Common.Models;
 
-    public class Message : BaseModel<int>
+    public class Message : BaseDeletableModel<int>
     {
         [Required]
         public string AuthorId { get; set; }

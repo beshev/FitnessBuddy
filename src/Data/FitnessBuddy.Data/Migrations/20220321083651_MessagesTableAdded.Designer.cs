@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessBuddy.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220321081658_MessagesTableAdded")]
+    [Migration("20220321083651_MessagesTableAdded")]
     partial class MessagesTableAdded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -650,6 +650,12 @@ namespace FitnessBuddy.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
@@ -660,6 +666,8 @@ namespace FitnessBuddy.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
+
+                    b.HasIndex("IsDeleted");
 
                     b.HasIndex("ReceiverId");
 
