@@ -1,6 +1,7 @@
 ﻿namespace FitnessBuddy.Web
 {
     using System.Reflection;
+
     using FitnessBuddy.Common;
     using FitnessBuddy.Data;
     using FitnessBuddy.Data.Common;

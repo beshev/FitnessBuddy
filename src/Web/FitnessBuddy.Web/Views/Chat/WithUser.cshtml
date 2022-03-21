@@ -1,0 +1,79 @@
+﻿@model UserChatViewModel
+
+@{
+    this.ViewData["Title"] = "Messages";
+}
+
+<div class="row">
+    <vc:chat-conversation></vc:chat-conversation>
+    <div class="col-md-9">
+        <h3 class="text-center">@Model.ReceiverUsername</h3>
+        <div id="messagesList" style="overflow-y: auto; overflow-x: hidden; height:600px; display:block; word-break: break-word;">
+            @foreach (var message in Model.Messages)
+            {
+                <div class="text-left">
+                    <p>
+                        ([@message.AuthorUsername]) Says -> @message.Content
+                    </p>
+                </div>
+            }
+        </div>
+        <hr />
+        <div class="text-center">
+            <textarea id="messageInput" rows="5" cols="100"></textarea>
+        </div>
+        <button id="sendButton" class="btn btn-primary offset-5">Send message</button>
+    </div>
+
+</div>
+
+
+@section Scripts{
+<script>
+    var connection =
+          new signalR.HubConnectionBuilder()
+              .withUrl("/chat")
+              .build();
+
+      connection.on("NewMessage",
+          function (message) {
+              var chatInfo = `<div>([${message.user}]) ${message.text}</div>`;
+
+              var isFromCurrentConversation = 
+              message.user.toLowerCase() == '@Model.AuthorUsername'.toLowerCase() 
+              || message.user.toLowerCase() == '@Model.ReceiverUsername'.toLowerCase();
+
+              if(isFromCurrentConversation){
+                $('#messagesList').append(chatInfo);
+              }
+
+          });
+
+      $("#sendButton").click(function() {
+          var message = $.trim($('#messageInput').val());
+            $('#messageInput').val('');
+            connection.invoke("SendMessage", escapeHtml(message), '@Model.ReceiverId');
+      });
+
+      connection.start().catch(function (err) {
+          return console.error(err.toString());
+      });
+
+       function escapeHtml(unsafe) {
+        return unsafe
+            .replace(':)', "🙂")
+            .replace(':(', "🙁")
+            .replace(';)', "😉")
+            .replace(':*', "😘")
+            .replace(/<3/g, "❤")
+            .replace(/:D/g, "😀")
+            .replace(/:P/g, "😜")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+</script>
+}
+
