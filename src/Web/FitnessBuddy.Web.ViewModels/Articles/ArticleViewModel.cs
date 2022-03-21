@@ -3,6 +3,7 @@
     using System;
     using System.IO;
     using System.Linq;
+
     using AutoMapper;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
