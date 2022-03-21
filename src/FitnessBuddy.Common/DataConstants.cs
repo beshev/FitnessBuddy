@@ -89,5 +89,9 @@
         // PostCategory model
         public const int PostCategoryNameMinLength = 1;
         public const int PostCategoryNameMaxLength = 100;
+
+        // Message model
+        public const int MessageContentMaxLength = 300;
+        public const int MessageContentMinLength = 1;
     }
 }
