@@ -9,8 +9,6 @@
 
     public class UserChatViewModel : IMapFrom<ApplicationUser>, IHaveCustomMappings
     {
-        public string AuthorUsername { get; set; }
-
         public string ReceiverId { get; set; }
 
         public string ReceiverUsername { get; set; }
