@@ -1,6 +1,9 @@
 ﻿namespace FitnessBuddy.Web.ViewModels.Chats
 {
+    using System.Globalization;
+
     using AutoMapper;
+    using FitnessBuddy.Common;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
 
@@ -16,7 +19,9 @@
         {
             configuration.CreateMap<Message, MessageViewModel>()
                    .ForMember(
-                   dest => dest.CreatedOn, opt => opt.MapFrom(x => x.CreatedOn.ToString("MM/dd/yyyy HH:mm")));
+                   dest => dest.CreatedOn,
+                   opt =>
+                   opt.MapFrom(x => x.CreatedOn.ToString(GlobalConstants.DateTimeFormat, CultureInfo.InvariantCulture)));
         }
     }
 }
