@@ -41,6 +41,8 @@
 
         public string GetIdByUsername(string username);
 
+        public string GetUsernameById(string userId);
+
         public bool IsUsernameExist(string username);
 
         public Task EditAsync(string userId, UserInputModel model, string picturePath);

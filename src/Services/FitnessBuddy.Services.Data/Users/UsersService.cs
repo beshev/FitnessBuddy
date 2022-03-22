@@ -227,5 +227,12 @@
             .Where(x => x.Id == userId)
             .Select(x => x.IsBanned)
             .FirstOrDefault();
+
+        public string GetUsernameById(string userId)
+            => this.usersRepository
+            .AllAsNoTracking()
+            .Where(x => x.Id == userId)
+            .Select(x => x.UserName)
+            .FirstOrDefault();
     }
 }
