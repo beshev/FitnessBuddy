@@ -18,9 +18,15 @@
         {
             var userId = this.UserClaimsPrincipal.GetUserId();
 
-            var viewModel = this.messagesService.GetConversations<UserChatViewModel>(userId);
+            var conversations = this.messagesService.GetConversations<ConversationViewModel>(userId);
 
-            return this.View(viewModel);
+            foreach (var currentUser in conversations)
+            {
+                currentUser.LastMessage = this.messagesService.GetLastMessage(userId, currentUser.Id);
+                currentUser.LastActivity = this.messagesService.GetLastActivity(userId, currentUser.Id);
+            }
+
+            return this.View(conversations);
         }
     }
 }
