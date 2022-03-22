@@ -1,18 +1,23 @@
-﻿@model IEnumerable<UserChatViewModel>
+﻿@model IEnumerable<ConversationViewModel>
 
 @{
     this.ViewData["Title"] = "Messages";
 }
 
-<div class="col-md-3 text-center">
-    Conversation
-    @foreach (var chat in this.Model)
+<div class="col-md-3 text-center div-scroll">
+    <h6>@this.ViewData["Title"]</h6>
+    @foreach (var user in this.Model)
     {
-        <div>
-            <a class="hover-shadow" asp-action="WithUser" asp-controller="Chat" asp-route-username="@chat.ReceiverUsername">
-                <span>With: @chat.ReceiverUsername</span>
-                <p>Started on: @chat.CreatedOn</p>
-            </a>
-        </div>
+        <a asp-controller="Chat" asp-action="WithUser" asp-route-username="@user.Username" class="list-group-item list-group-item-action border-3 mb-1">
+            <div class="float-right">Followers: @user.FollowersCount</div>
+            <div class="d-flex align-items-start text-left">
+                <img src="@user.ProfilePicture" class="rounded-circle mr-1" alt="@user.Username" width="40" height="40">
+                <div class="flex-grow-1 ml-3">
+                    <strong>@user.Username</strong>
+                    <div class="small">Last activity:</div>
+                    <div class="small">@user.LastActivity</div>
+                </div>
+            </div>
+        </a>
     }
 </div>

@@ -6,47 +6,92 @@
 
 <div class="row">
     <vc:chat-conversation></vc:chat-conversation>
-    <div class="col-md-9">
-        <h3 class="text-center">@Model.ReceiverUsername</h3>
-        <div id="messagesList" style="overflow-y: auto; overflow-x: hidden; height:600px; display:block; word-break: break-word;">
-            @foreach (var message in Model.Messages)
-            {
-                <div class="text-left">
-                    <p>
-                        ([@message.AuthorUsername]) Says -> @message.Content
-                    </p>
-                </div>
-            }
-        </div>
-        <hr />
-        <div class="text-center">
-            <textarea id="messageInput" rows="5" cols="100"></textarea>
-        </div>
-        <button id="sendButton" class="btn btn-primary offset-5">Send message</button>
+    <div class="col-md-8">
+        @if (string.IsNullOrWhiteSpace(this.Model.ReceiverUsername))
+        {
+            <div class="text-center">
+                <h5>Want to start a new conversation?</h5>
+                <a asp-controller="Users" asp-action="All">
+                    <h6>Find some buddy</h6>
+                </a>
+            </div>
+        }
+        else
+        {
+            <h3 class="text-center">@Model.ReceiverUsername</h3>
+            <div id="messagesList" class="div-scroll">
+                @foreach (var message in Model.Messages)
+                {
+                    if (message.AuthorUsername == this.Model.ReceiverUsername)
+                    {
+                        <div class="text-left">
+                            <p>
+                                <strong>@Model.ReceiverUsername</strong>
+                                <span>@message.CreatedOn</span>
+                            </p>
+                            <p>
+                                <span class="bg-secondary text-white rounded p-2">@this.Html.Raw(@message.SanitizedContent)</span>
+                            </p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-right">
+                            <p>
+                                <strong>You</strong>
+                                <span>@message.CreatedOn</span>
+                            </p>
+                            <p>
+                                <span class="bg-info text-white rounded p-2">@this.Html.Raw(@message.SanitizedContent)</span>
+                            </p>
+                        </div>
+                    }
+                }
+            </div>
+            <hr />
+            <div class="text-center">
+                <textarea id="messageInput" rows="5" cols="100"></textarea>
+            </div>
+            <button id="sendButton" class="btn btn-primary offset-5">Send message</button>
+        }
     </div>
-
 </div>
 
 
 @section Scripts{
 <script>
-    var connection =
-          new signalR.HubConnectionBuilder()
-              .withUrl("/chat")
-              .build();
+    $('#messagesList')[0].scrollTop = $('#messagesList')[0].scrollHeight;
+
+    var connection = new signalR.HubConnectionBuilder().withUrl("/chat").build();
 
       connection.on("NewMessage",
           function (message) {
-              var chatInfo = `<div>([${message.user}]) ${message.text}</div>`;
+                let chatInfo;
+                  if(message.authorUsername.toLowerCase() == '@Model.ReceiverUsername'.toLowerCase()){
+                    chatInfo = `<div class="text-left">
+                            <p>
+                                <strong>${message.authorUsername}</strong>
+                                <span>${message.createdOn}</span>
+                            </p>
+                            <p>
+                                <span class="bg-secondary text-white rounded p-2">${message.content}</span>
+                            </p>
+                        </div>`
+                  } else {
+                     chatInfo = `<div class="text-right">
+                            <p>
+                                <strong>You</strong>
+                                <span>${message.createdOn}</span>
+                            </p>
+                            <p>
+                                <span class="bg-info text-white rounded p-2">${message.content}</span>
+                            </p>
+                        </div>`
+                  }
 
-              var isFromCurrentConversation = 
-              message.user.toLowerCase() == '@Model.AuthorUsername'.toLowerCase() 
-              || message.user.toLowerCase() == '@Model.ReceiverUsername'.toLowerCase();
 
-              if(isFromCurrentConversation){
                 $('#messagesList').append(chatInfo);
-              }
-
+                $('#messagesList')[0].scrollTop = $('#messagesList')[0].scrollHeight;
           });
 
       $("#sendButton").click(function() {
@@ -55,7 +100,12 @@
             connection.invoke("SendMessage", escapeHtml(message), '@Model.ReceiverId');
       });
 
-      connection.start().catch(function (err) {
+      connection
+     .start()
+     .then(() => {
+        connection.invoke('JoinGroup', '@Model.ReceiverId');
+     })
+     .catch(function (err) {
           return console.error(err.toString());
       });
 

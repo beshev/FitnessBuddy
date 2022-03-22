@@ -6,14 +6,24 @@
     using FitnessBuddy.Common;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
+    using Ganss.XSS;
 
     public class MessageViewModel : IMapFrom<Message>, IHaveCustomMappings
     {
+        private readonly IHtmlSanitizer htmlSanitizer;
+
+        public MessageViewModel()
+        {
+            this.htmlSanitizer = new HtmlSanitizer();
+        }
+
         public string AuthorUsername { get; set; }
 
         public string CreatedOn { get; set; }
 
         public string Content { get; set; }
+
+        public string SanitizedContent => this.htmlSanitizer.Sanitize(this.Content);
 
         public void CreateMappings(IProfileExpression configuration)
         {
