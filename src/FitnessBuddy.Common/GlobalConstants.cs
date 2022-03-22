@@ -34,5 +34,8 @@
         public const string AddFoodToFavoriteMessage = "The food was added successfully to favorites";
         public const string RemoveFoodFromFavoriteMessage = "The food was removed successfully from favorites";
         public const string EditFoodMessage = "The food was edited successfully";
+
+        // Format
+        public const string DateTimeFormat = "MM/dd/yyyy HH:mm";
     }
 }
