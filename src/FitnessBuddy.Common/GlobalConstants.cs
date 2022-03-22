@@ -37,5 +37,6 @@
 
         // Format
         public const string DateTimeFormat = "MM/dd/yyyy HH:mm";
+        public const string HubGroupNameFormat = "{0}{1}";
     }
 }
