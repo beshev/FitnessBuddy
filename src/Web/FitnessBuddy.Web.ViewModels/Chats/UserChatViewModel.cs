@@ -13,7 +13,7 @@
 
         public string ReceiverUsername { get; set; }
 
-        public DateTime CreatedOn { get; set; }
+        public string CreatedOn { get; set; }
 
         public IEnumerable<MessageViewModel> Messages { get; set; }
 
@@ -23,7 +23,9 @@
                 .ForMember(
                 dest => dest.ReceiverId, opt => opt.MapFrom(x => x.Id))
                 .ForMember(
-                dest => dest.ReceiverUsername, opt => opt.MapFrom(x => x.UserName));
+                dest => dest.ReceiverUsername, opt => opt.MapFrom(x => x.UserName))
+                .ForMember(
+                dest => dest.CreatedOn, opt => opt.MapFrom(x => x.CreatedOn.ToString("MM/dd/yyyy HH:mm")));
         }
     }
 }

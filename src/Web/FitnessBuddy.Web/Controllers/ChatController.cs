@@ -28,7 +28,6 @@
             {
                 ReceiverUsername = username,
                 ReceiverId = receiverId,
-                AuthorUsername = this.User.Identity.Name,
                 Messages = this.messagesService.GetMessages<MessageViewModel>(authorId, receiverId),
             };
 

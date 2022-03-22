@@ -11,7 +11,7 @@
         <div>
             <a class="hover-shadow" asp-action="WithUser" asp-controller="Chat" asp-route-username="@chat.ReceiverUsername">
                 <span>With: @chat.ReceiverUsername</span>
-                <p>Started on: @chat.CreatedOn.ToLongDateString()</p>
+                <p>Started on: @chat.CreatedOn</p>
             </a>
         </div>
     }
