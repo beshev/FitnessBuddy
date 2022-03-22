@@ -1,11 +1,10 @@
 ﻿namespace FitnessBuddy.Web.Hubs
 {
     using System;
+    using System.Globalization;
     using System.Threading.Tasks;
-
+    using FitnessBuddy.Common;
     using FitnessBuddy.Services.Data.Messages;
-    using FitnessBuddy.Services.Data.Users;
-    using FitnessBuddy.Services.Format;
     using FitnessBuddy.Services.Hubs;
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Chats;
@@ -17,16 +16,13 @@
     {
         private readonly IMessagesService messagesService;
         private readonly IGroupNameProvider groupNameProvider;
-        private readonly IDateTimeFormatProvider dateTimeFormatProvider;
 
         public ChatHub(
             IMessagesService messagesService,
-            IGroupNameProvider groupNameProvider,
-            IDateTimeFormatProvider dateTimeFormatProvider)
+            IGroupNameProvider groupNameProvider)
         {
             this.messagesService = messagesService;
             this.groupNameProvider = groupNameProvider;
-            this.dateTimeFormatProvider = dateTimeFormatProvider;
         }
 
         public async Task JoinGroup(string receiverId)
@@ -65,7 +61,7 @@
             {
                 AuthorUsername = this.Context.User.Identity.Name,
                 Content = message,
-                CreatedOn = this.dateTimeFormatProvider.GetDateFormat(DateTime.Now),
+                CreatedOn = DateTime.Now.ToString(GlobalConstants.DateTimeFormat, CultureInfo.InvariantCulture),
             };
 
             await this.Clients.Group(groupName).SendAsync("NewMessage", result);
