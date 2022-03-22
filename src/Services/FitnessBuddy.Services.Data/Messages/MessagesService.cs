@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using FitnessBuddy.Common;
     using FitnessBuddy.Data.Common.Repositories;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
@@ -12,7 +13,8 @@
     {
         private readonly IDeletableEntityRepository<Message> messagesRepository;
 
-        public MessagesService(IDeletableEntityRepository<Message> messagesRepository)
+        public MessagesService(
+            IDeletableEntityRepository<Message> messagesRepository)
         {
             this.messagesRepository = messagesRepository;
         }
@@ -47,10 +49,31 @@
                 .Where(x => x.Id != userId)
                 .Distinct()
                 .To<TModel>()
-                .AsEnumerable();
+                .ToList();
 
             return conversationsWithUsers;
         }
+
+        public string GetLastActivity(string authorId, string receiverId)
+             => this.messagesRepository
+            .AllAsNoTracking()
+            .Where(x =>
+                    (x.AuthorId == authorId && x.ReceiverId == receiverId)
+                    || (x.AuthorId == receiverId && x.ReceiverId == authorId))
+            .OrderByDescending(x => x.CreatedOn)
+            .Select(x => x.CreatedOn)
+            .FirstOrDefault()
+            .ToString(GlobalConstants.DateTimeFormat);
+
+        public string GetLastMessage(string authorId, string receiverId)
+            => this.messagesRepository
+            .AllAsNoTracking()
+            .Where(x =>
+                    (x.AuthorId == authorId && x.ReceiverId == receiverId)
+                    || (x.AuthorId == receiverId && x.ReceiverId == authorId))
+            .OrderByDescending(x => x.CreatedOn)
+            .Select(x => x.Content)
+            .FirstOrDefault();
 
         public IEnumerable<TModel> GetMessages<TModel>(string firstUserId, string secondUserId)
             => this.messagesRepository
