@@ -13,8 +13,6 @@
 
         public IEnumerable<TModel> GetConversations<TModel>(string userId);
 
-        public string GetLastMessage(string authorId, string receiverId);
-
         public string GetLastActivity(string authorId, string receiverId);
     }
 }

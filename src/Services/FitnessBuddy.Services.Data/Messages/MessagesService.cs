@@ -1,6 +1,7 @@
 ﻿namespace FitnessBuddy.Services.Data.Messages
 {
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -63,17 +64,7 @@
             .OrderByDescending(x => x.CreatedOn)
             .Select(x => x.CreatedOn)
             .FirstOrDefault()
-            .ToString(GlobalConstants.DateTimeFormat);
-
-        public string GetLastMessage(string authorId, string receiverId)
-            => this.messagesRepository
-            .AllAsNoTracking()
-            .Where(x =>
-                    (x.AuthorId == authorId && x.ReceiverId == receiverId)
-                    || (x.AuthorId == receiverId && x.ReceiverId == authorId))
-            .OrderByDescending(x => x.CreatedOn)
-            .Select(x => x.Content)
-            .FirstOrDefault();
+            .ToString(GlobalConstants.DateTimeFormat, CultureInfo.InvariantCulture);
 
         public IEnumerable<TModel> GetMessages<TModel>(string firstUserId, string secondUserId)
             => this.messagesRepository
