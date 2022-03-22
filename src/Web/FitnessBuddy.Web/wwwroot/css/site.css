@@ -81,6 +81,7 @@ body {
     margin-top: 0;
 }
 
+/*From me*/
 .body-bg-color {
     /*background-color: #EEEEEE;*/
     background-color: #F2F2F2;
@@ -105,6 +106,16 @@ body {
 .text-green {
     color: #0D8900;
 }
+
+.div-scroll {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 600px;
+    display: block;
+    word-break: break-word;
+}
+
+/*------------------------*/
 
 .counter-box {
     display: block;
