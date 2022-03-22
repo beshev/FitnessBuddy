@@ -37,7 +37,7 @@
                                 }
                                 else
                                 {
-                                    <span class="bg-secondary text-white rounded p-2">@this.Html.Raw(@message.SanitizedContent)</span>
+                                    <span class="bg-secondary text-white rounded p-2" id="message@(message.Id)">@this.Html.Raw(@message.SanitizedContent)</span>
                                 }
                             </p>
                         </div>
@@ -51,9 +51,7 @@
                                     @message.CreatedOn
                                     @if (message.IsDeleted == false)
                                     {
-                                        <a asp-action="Delete"
-                                           asp-controller="Chat"
-                                           asp-route-id="@message.Id">
+                                        <a href="javascript:void(0)" onclick="deleteMessage(this, @message.Id)">
                                             <i class="fa-solid fa-ban text-danger"></i>
                                         </a>
                                     }
@@ -66,7 +64,7 @@
                                 }
                                 else
                                 {
-                                    <span class="bg-info text-white rounded p-2">@this.Html.Raw(@message.SanitizedContent)</span>
+                                    <span class="bg-info text-white rounded p-2" id="message@(message.Id)">@this.Html.Raw(@message.SanitizedContent)</span>
                                 }
                             </p>
                         </div>
@@ -99,7 +97,7 @@
                                 <span>${message.createdOn}</span>
                             </p>
                             <p>
-                                <span class="bg-secondary text-white rounded p-2">${message.content}</span>
+                                <span class="bg-secondary text-white rounded p-2" id="message${message.id}">${message.content}</span>
                             </p>
                         </div>`
                   } else {
@@ -108,13 +106,13 @@
                                 <strong>You</strong>
                                 <span>
                                     ${message.createdOn}
-                                    <a href="/Chat/Delete/${message.id}">
-                                            <i class="fa-solid fa-ban text-danger"></i>
+                                    <a href="javascript:void(0)" onclick="deleteMessage(this, ${message.id})">
+                                        <i class="fa-solid fa-ban text-danger"></i>
                                     </a>
                                 </span>
                             </p>
                             <p>
-                                <span class="bg-info text-white rounded p-2">${message.content}</span>
+                                <span class="bg-info text-white rounded p-2" id="message${message.id}">${message.content}</span>
                             </p>
                         </div>`
                   }
@@ -124,11 +122,26 @@
                 $('#messagesList')[0].scrollTop = $('#messagesList')[0].scrollHeight;
           });
 
+      connection.on("DeleteMessage",
+          function (message){
+              let $messageSpan = $(`#message${message.id}`)[0];
+
+              $messageSpan.classList.remove('bg-info', 'text-white');
+              $messageSpan.classList.add('text-secondary');
+              $messageSpan.innerHTML = 'This message was deleted';
+          }
+      )
       $("#sendButton").click(function() {
           var message = $.trim($('#messageInput').val());
             $('#messageInput').val('');
             connection.invoke("SendMessage", escapeHtml(message), '@Model.ReceiverId');
       });
+
+      function deleteMessage(element, messageId) {
+          connection.invoke('DeleteMessage', messageId);
+
+          element.remove();
+      }
 
       connection
      .start()

@@ -68,5 +68,22 @@
 
             await this.Clients.Group(groupName).SendAsync("NewMessage", result);
         }
+
+        public async Task DeleteMessage(int messageId)
+        {
+            var message = this.messagesService.GetById<DeleteMessageModel>(messageId);
+
+            if (message == null
+                || message.AuthorId != this.Context.User.GetUserId())
+            {
+                return;
+            }
+
+            await this.messagesService.DeleteMessageAsync(messageId);
+
+            var groupName = this.groupNameProvider.GetGroupName(message.AuthorId, message.ReceiverId);
+
+            await this.Clients.Group(groupName).SendAsync("DeleteMessage", new { Id = messageId });
+        }
     }
 }

@@ -35,20 +35,5 @@
 
             return this.View(viewModel);
         }
-
-        public async Task<IActionResult> Delete(int id)
-        {
-            var message = this.messagesService.GetById<DeleteMessageModel>(id);
-
-            if (message == null
-                || message.AuthorId != this.User.GetUserId())
-            {
-                return this.BadRequest();
-            }
-
-            await this.messagesService.DeleteMessageAsync(id);
-
-            return this.RedirectToAction(nameof(this.WithUser), new { Username = message.ReceiverUsername });
-        }
     }
 }
