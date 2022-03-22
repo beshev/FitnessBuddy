@@ -126,7 +126,7 @@
           function (message){
               let $messageSpan = $(`#message${message.id}`)[0];
 
-              $messageSpan.classList.remove('bg-info', 'text-white');
+              $messageSpan.classList.remove('bg-info','bg-secondary','text-white');
               $messageSpan.classList.add('text-secondary');
               $messageSpan.innerHTML = 'This message was deleted';
           }
