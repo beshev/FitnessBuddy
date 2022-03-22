@@ -1,5 +1,7 @@
 ﻿namespace FitnessBuddy.Web.Controllers
 {
+    using System.Threading.Tasks;
+
     using FitnessBuddy.Services.Data.Messages;
     using FitnessBuddy.Services.Data.Users;
     using FitnessBuddy.Web.Infrastructure.Extensions;
@@ -32,6 +34,21 @@
             };
 
             return this.View(viewModel);
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var message = this.messagesService.GetById<DeleteMessageModel>(id);
+
+            if (message == null
+                || message.AuthorId != this.User.GetUserId())
+            {
+                return this.BadRequest();
+            }
+
+            await this.messagesService.DeleteMessageAsync(id);
+
+            return this.RedirectToAction(nameof(this.WithUser), new { Username = message.ReceiverUsername });
         }
     }
 }

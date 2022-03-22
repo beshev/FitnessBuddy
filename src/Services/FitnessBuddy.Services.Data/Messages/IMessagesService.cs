@@ -5,11 +5,13 @@
 
     public interface IMessagesService
     {
-        public Task SendMessageAsync(string authorId, string receiverId, string content);
+        public TModel GetById<TModel>(int id);
+
+        public Task<int> SendMessageAsync(string authorId, string receiverId, string content);
 
         public IEnumerable<TModel> GetMessages<TModel>(string firstUserId, string secondUserId);
 
-        public Task DeleteMessageAsync(string authorId, string receiverId);
+        public Task DeleteMessageAsync(int id);
 
         public IEnumerable<TModel> GetConversations<TModel>(string userId);
 

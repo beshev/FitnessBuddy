@@ -3,6 +3,7 @@
     using System;
     using System.Globalization;
     using System.Threading.Tasks;
+
     using FitnessBuddy.Common;
     using FitnessBuddy.Services.Data.Messages;
     using FitnessBuddy.Services.Hubs;
@@ -55,12 +56,13 @@
 
             var groupName = this.groupNameProvider.GetGroupName(authorId, receiverId);
 
-            await this.messagesService.SendMessageAsync(authorId, receiverId, message);
+            var messageId = await this.messagesService.SendMessageAsync(authorId, receiverId, message);
 
             var result = new MessageViewModel
             {
                 AuthorUsername = this.Context.User.Identity.Name,
                 Content = message,
+                Id = messageId,
                 CreatedOn = DateTime.Now.ToString(GlobalConstants.DateTimeFormat, CultureInfo.InvariantCulture),
             };
 

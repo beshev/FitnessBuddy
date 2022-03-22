@@ -20,16 +20,23 @@
             this.messagesRepository = messagesRepository;
         }
 
-        public async Task DeleteMessageAsync(string authorId, string receiverId)
+        public async Task DeleteMessageAsync(int id)
         {
             var message = this.messagesRepository
                 .All()
-                .FirstOrDefault(x => x.AuthorId == authorId && x.ReceiverId == receiverId);
+                .FirstOrDefault(x => x.Id == id);
 
             this.messagesRepository.Delete(message);
 
             await this.messagesRepository.SaveChangesAsync();
         }
+
+        public TModel GetById<TModel>(int id)
+            => this.messagesRepository
+            .AllAsNoTracking()
+            .Where(x => x.Id == id)
+            .To<TModel>()
+            .FirstOrDefault();
 
         public IEnumerable<TModel> GetConversations<TModel>(string userId)
         {
@@ -76,7 +83,12 @@
             .To<TModel>()
             .AsEnumerable();
 
-        public async Task SendMessageAsync(string authorId, string receiverId, string content)
+        public bool IsExist(int id)
+            => this.messagesRepository
+            .AllAsNoTracking()
+            .Any(x => x.Id == id);
+
+        public async Task<int> SendMessageAsync(string authorId, string receiverId, string content)
         {
             var message = new Message
             {
@@ -87,6 +99,8 @@
 
             await this.messagesRepository.AddAsync(message);
             await this.messagesRepository.SaveChangesAsync();
+
+            return message.Id;
         }
     }
 }

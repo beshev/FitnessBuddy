@@ -17,6 +17,8 @@
             this.htmlSanitizer = new HtmlSanitizer();
         }
 
+        public int Id { get; set; }
+
         public string AuthorUsername { get; set; }
 
         public string CreatedOn { get; set; }
@@ -24,6 +26,8 @@
         public string Content { get; set; }
 
         public string SanitizedContent => this.htmlSanitizer.Sanitize(this.Content);
+
+        public bool IsDeleted { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {
