@@ -23,7 +23,6 @@
     using FitnessBuddy.Services.Data.TrainingsExercises;
     using FitnessBuddy.Services.Data.Users;
     using FitnessBuddy.Services.Data.UsersFollowers;
-    using FitnessBuddy.Services.Format;
     using FitnessBuddy.Services.Hubs;
     using FitnessBuddy.Services.Mapping;
     using FitnessBuddy.Services.Messaging;
@@ -103,7 +102,6 @@
             services.AddTransient<IArticlesRatingsService, ArticlesRatingsService>();
             services.AddTransient<IMessagesService, MessagesService>();
             services.AddTransient<IGroupNameProvider, GroupNameProvider>();
-            services.AddTransient<IDateTimeFormatProvider, DateTimeFormatProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
