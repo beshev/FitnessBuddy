@@ -392,3 +392,4 @@ bin
 .vs/
 /src/Web/FitnessBuddy.Web/wwwroot/images/articles/5.jpg
 /src/Web/FitnessBuddy.Web/wwwroot/images/articles/6.jpg
+/src/Web/FitnessBuddy.Web/appsettings.Production.json

@@ -79,7 +79,7 @@
 
             if (this.ModelState.IsValid)
             {
-                var user = await this.userManager.FindByNameAsync(this.Input.Email) ?? await this.userManager.FindByEmailAsync(this.Input.Email);
+                var user = await this.userManager.FindByEmailAsync(this.Input.Email) ?? new ApplicationUser();
 
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true

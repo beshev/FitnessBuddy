@@ -28,7 +28,7 @@
     using FitnessBuddy.Services.Messaging;
     using FitnessBuddy.Web.Hubs;
     using FitnessBuddy.Web.ViewModels;
-
+    using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -67,6 +67,18 @@
                     {
                         options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                     }).AddRazorRuntimeCompilation();
+
+            services.AddAuthentication()
+                .AddFacebook(options =>
+                {
+                    options.AppId = this.configuration.GetValue<string>("Facebook:AppId");
+                    options.AppSecret = this.configuration.GetValue<string>("Facebook:AppSecret");
+                })
+                .AddGoogle(options =>
+                {
+                    options.ClientId = this.configuration.GetValue<string>("Google:ClientId");
+                    options.ClientSecret = this.configuration.GetValue<string>("Google:ClientSecret");
+                });
 
             services.AddRazorPages();
             services.AddSignalR();

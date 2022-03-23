@@ -35,6 +35,10 @@
                 </div>
                 <div>
                     <p>
+                        <button id="facebook-button" class="btn btn-primary mt-1" type="submit" name="provider"><i class="fa-brands fa-facebook-f text-white"></i> Facebook</button>
+                        <button id="google-button" class="btn btn-danger mt-1" type="submit" name="provider"><i class="fa-brands fa-google"></i> Google</button>
+                    </p>
+                    <p>
                         <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
                     </p>
                     <p>
@@ -47,36 +51,35 @@
             </form>
         </section>
     </div>
-    @*<div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to log in.</h3>
-            <hr />
+
+    <form asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" style="display: none" id="external-account">
+        <div>
             @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                var fbProvider = Model.ExternalLogins?.FirstOrDefault(l => l.DisplayName == "Facebook");
+                var googleProvider = Model.ExternalLogins?.FirstOrDefault(l => l.DisplayName == "Google");
+
+                @if (fbProvider != null)
                 {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
-                                article
-                                about setting up this ASP.NET application to support logging in via external services
-                            </a>.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
+                    <button id="fb-form-button" type="submit" class="btn btn-primary" name="provider" value="@fbProvider.Name"></button>
+                    <button id="google-form-button" type="submit" name="provider" value="@googleProvider.Name"></button>
                 }
             }
-        </section>
-    </div>*@
+
+        </div>
+    </form>
 </div>
+
+@section Scripts {
+<script>
+    $("#facebook-button").on("click", function (e) {
+        e.preventDefault();
+
+        document.getElementById('fb-form-button').click();
+    });
+    $("#google-button").on("click", function (e) {
+        e.preventDefault();
+
+        document.getElementById('google-form-button').click();
+    });
+</script>
+}
