@@ -4,15 +4,15 @@
 
     using FitnessBuddy.Services.Data.Exercises;
     using FitnessBuddy.Services.Data.Foods;
-    using FitnessBuddy.Web.Infrastructure.Filters;
     using FitnessBuddy.Web.ViewModels;
     using FitnessBuddy.Web.ViewModels.Exercises;
     using FitnessBuddy.Web.ViewModels.Foods;
     using FitnessBuddy.Web.ViewModels.Home;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    [TypeFilter(typeof(RestrictBannedUsersAttribute))]
-    public class HomeController : Controller
+    [AllowAnonymous]
+    public class HomeController : BaseController
     {
         private readonly IExercisesService exercisesService;
         private readonly IFoodsService foodsService;
