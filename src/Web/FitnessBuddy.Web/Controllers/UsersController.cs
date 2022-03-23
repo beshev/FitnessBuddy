@@ -61,8 +61,7 @@
             }
 
             viewModel.IsMyProfile = userId == loggedUserId;
-            viewModel.UserInfo.UserRole = 
-                (await this.roleManager.FindByIdAsync(viewModel.UserInfo.UserRoleId))?.Name ?? "External User";
+            viewModel.UserInfo.UserRole = (await this.roleManager.FindByIdAsync(viewModel.UserInfo.UserRoleId)).Name;
             viewModel.IsFollowingByUser = this.usersFollowersService.IsFollowingByUser(userId, this.User.GetUserId());
 
             return this.View(viewModel);
