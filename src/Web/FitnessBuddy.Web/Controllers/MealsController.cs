@@ -66,12 +66,12 @@
 
         public async Task<IActionResult> Delete(int id)
         {
-            if (this.mealsService.IsExist(id) == false)
+            if (await this.mealsService.IsExistAsync(id) == false)
             {
                 return this.NotFound();
             }
 
-            if (this.mealsService.IsUserMeal(id, this.User.GetUserId()) == false)
+            if (await this.mealsService.IsUserMealAsync(id, this.User.GetUserId()) == false)
             {
                 return this.Unauthorized();
             }

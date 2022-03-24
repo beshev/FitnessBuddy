@@ -20,10 +20,10 @@
             this.mealRepository = mealRepository;
         }
 
-        public bool IsExist(int mealId)
-            => this.mealRepository
+        public async Task<bool> IsExistAsync(int mealId)
+            => await this.mealRepository
             .AllAsNoTracking()
-            .Any(x => x.Id == mealId);
+            .AnyAsync(x => x.Id == mealId);
 
         public async Task<Meal> CreateAsync(string userId, MealInputModel model)
         {
@@ -61,9 +61,9 @@
             .To<TViewModel>()
             .ToListAsync();
 
-        public bool IsUserMeal(int mealId, string userId)
-            => this.mealRepository
+        public async Task<bool> IsUserMealAsync(int mealId, string userId)
+            => await this.mealRepository
             .AllAsNoTracking()
-            .Any(x => x.Id == mealId && x.ForUserId == userId);
+            .AnyAsync(x => x.Id == mealId && x.ForUserId == userId);
     }
 }

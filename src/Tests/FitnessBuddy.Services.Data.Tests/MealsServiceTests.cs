@@ -81,7 +81,7 @@
         }
 
         [Fact]
-        public void IsExistMethodShouldReturnFalseIfMealNotExist()
+        public async void IsExistMethodShouldReturnFalseIfMealNotExist()
         {
             var list = new List<Meal>()
             {
@@ -89,15 +89,15 @@
             };
 
             var mockRepo = new Mock<IDeletableEntityRepository<Meal>>();
-            mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable());
+            mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new MealsService(mockRepo.Object);
 
-            Assert.False(service.IsExist(1));
+            Assert.False(await service.IsExistAsync(1));
         }
 
         [Fact]
-        public void IsExistMethodShouldReturnTrueIfMealExist()
+        public async void IsExistMethodShouldReturnTrueIfMealExist()
         {
             var list = new List<Meal>()
             {
@@ -105,11 +105,11 @@
             };
 
             var mockRepo = new Mock<IDeletableEntityRepository<Meal>>();
-            mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable());
+            mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new MealsService(mockRepo.Object);
 
-            Assert.True(service.IsExist(2));
+            Assert.True(await service.IsExistAsync(2));
         }
 
         [Fact]
@@ -200,7 +200,7 @@
         }
 
         [Fact]
-        public void IsUserMealReturnFalseIfMealIsNotForUser()
+        public async void IsUserMealReturnFalseIfMealIsNotForUser()
         {
             var list = new List<Meal>
             {
@@ -209,18 +209,18 @@
             };
 
             var mockRepo = new Mock<IDeletableEntityRepository<Meal>>();
-            mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable());
+            mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new MealsService(mockRepo.Object);
 
             var userId = "2";
 
-            Assert.False(service.IsUserMeal(1, userId));
-            Assert.False(service.IsUserMeal(2, userId));
+            Assert.False(await service.IsUserMealAsync(1, userId));
+            Assert.False(await service.IsUserMealAsync(2, userId));
         }
 
         [Fact]
-        public void IsUserMealReturnTrueIfMealIsForUser()
+        public async void IsUserMealReturnTrueIfMealIsForUser()
         {
             var list = new List<Meal>
             {
@@ -229,14 +229,14 @@
             };
 
             var mockRepo = new Mock<IDeletableEntityRepository<Meal>>();
-            mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable());
+            mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new MealsService(mockRepo.Object);
 
             var userId = "1";
 
-            Assert.True(service.IsUserMeal(1, userId));
-            Assert.True(service.IsUserMeal(2, userId));
+            Assert.True(await service.IsUserMealAsync(1, userId));
+            Assert.True(await service.IsUserMealAsync(2, userId));
         }
     }
 }

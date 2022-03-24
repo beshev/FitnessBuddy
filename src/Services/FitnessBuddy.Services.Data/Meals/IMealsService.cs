@@ -14,9 +14,9 @@
 
         public Task<Meal> DeleteAsync(int mealId);
 
-        public bool IsExist(int mealId);
+        public Task<bool> IsExistAsync(int mealId);
 
-        public bool IsUserMeal(int mealId, string userId);
+        public Task<bool> IsUserMealAsync(int mealId, string userId);
 
         public Task<IEnumerable<TModel>> GetUserMealsAsync<TModel>(string userId);
     }

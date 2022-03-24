@@ -57,13 +57,13 @@
                 return this.View(model);
             }
 
-            if (this.mealsService.IsExist(model.MealId) == false
+            if (await this.mealsService.IsExistAsync(model.MealId) == false
                 || await this.foodsService.IsExistAsync(model.FoodId) == false)
             {
                 return this.NotFound();
             }
 
-            if (this.mealsService.IsUserMeal(model.MealId, this.User.GetUserId()) == false)
+            if (await this.mealsService.IsUserMealAsync(model.MealId, this.User.GetUserId()) == false)
             {
                 return this.Unauthorized();
             }
