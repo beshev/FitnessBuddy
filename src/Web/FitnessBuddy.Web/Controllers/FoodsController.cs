@@ -29,14 +29,14 @@
         }
 
         [AllowAnonymous]
-        public IActionResult All(int id = 1, string search = null)
+        public async Task<IActionResult> All(int id = 1, string search = null)
         {
             if (id < 1)
             {
                 id = 1;
             }
 
-            int count = this.foodsService.GetCount(null, search);
+            int count = await this.foodsService.GetCountAsync(null, search);
             int pagesCount = (int)Math.Ceiling((double)count / FoodsPerPage);
 
             if (pagesCount > 0 && id > pagesCount)
@@ -45,7 +45,7 @@
             }
 
             int skip = (id - 1) * FoodsPerPage;
-            var foods = this.foodsService.GetAll<FoodViewModel>(null, search, skip, FoodsPerPage);
+            var foods = await this.foodsService.GetAllAsync<FoodViewModel>(null, search, skip, FoodsPerPage);
 
             var viewModel = new AllFoodsViewModel
             {
@@ -60,7 +60,7 @@
             return this.View(viewModel);
         }
 
-        public IActionResult MyFoods(int id = 1, string search = null)
+        public async Task<IActionResult> MyFoods(int id = 1, string search = null)
         {
             if (id < 1)
             {
@@ -68,7 +68,7 @@
             }
 
             var userId = this.User.GetUserId();
-            int count = this.foodsService.GetCount(userId, search);
+            int count = await this.foodsService.GetCountAsync(userId, search);
             int pagesCount = (int)Math.Ceiling((double)count / FoodsPerPage);
 
             if (pagesCount > 0 && id > pagesCount)
@@ -77,7 +77,7 @@
             }
 
             int skip = (id - 1) * FoodsPerPage;
-            var foods = this.foodsService.GetAll<FoodViewModel>(userId, search, skip, FoodsPerPage);
+            var foods = await this.foodsService.GetAllAsync<FoodViewModel>(userId, search, skip, FoodsPerPage);
 
             var viewModel = new AllFoodsViewModel
             {
@@ -147,12 +147,12 @@
 
         public async Task<IActionResult> AddToFavorite(int pageNumber, int foodId)
         {
-            if (this.foodsService.IsExist(foodId) == false)
+            if (await this.foodsService.IsExistAsync(foodId) == false)
             {
                 return this.NotFound();
             }
 
-            var food = this.foodsService.GetById(foodId);
+            var food = await this.foodsService.GetByIdAsync(foodId);
             var userId = this.User.GetUserId();
 
             await this.usersService.AddFoodToFavoriteAsync(userId, food);
@@ -164,13 +164,13 @@
 
         public async Task<IActionResult> RemoveFromFavorite(int pageNumber, int foodId)
         {
-            if (this.foodsService.IsExist(foodId) == false)
+            if (await this.foodsService.IsExistAsync(foodId) == false)
             {
                 return this.NotFound();
             }
 
             var userId = this.User.GetUserId();
-            var food = this.foodsService.GetById(foodId);
+            var food = await this.foodsService.GetByIdAsync(foodId);
 
             await this.usersService.RemoveFoodFromFavoriteAsync(userId, food);
 
@@ -179,19 +179,19 @@
             return this.RedirectToAction(nameof(this.Favorites), new { Id = pageNumber });
         }
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (this.foodsService.IsExist(id) == false)
+            if (await this.foodsService.IsExistAsync(id) == false)
             {
                 return this.NotFound();
             }
 
-            if (this.foodsService.IsUserFood(this.User.GetUserId(), id) == false)
+            if (await this.foodsService.IsUserFoodAsync(this.User.GetUserId(), id) == false)
             {
                 return this.Unauthorized();
             }
 
-            var food = this.foodsService.GetById(id);
+            var food = await this.foodsService.GetByIdAsync(id);
 
             var viewModel = AutoMapperConfig.MapperInstance.Map<Food, FoodInputModel>(food);
 
@@ -201,12 +201,12 @@
         [HttpPost]
         public async Task<IActionResult> Edit(FoodInputModel model)
         {
-            if (this.foodsService.IsExist(model.Id) == false)
+            if (await this.foodsService.IsExistAsync(model.Id) == false)
             {
                 return this.NotFound();
             }
 
-            if (this.foodsService.IsUserFood(this.User.GetUserId(), model.Id) == false)
+            if (await this.foodsService.IsUserFoodAsync(this.User.GetUserId(), model.Id) == false)
             {
                 return this.Unauthorized();
             }
@@ -225,12 +225,12 @@
 
         public async Task<IActionResult> Delete(int id)
         {
-            if (this.foodsService.IsExist(id) == false)
+            if (await this.foodsService.IsExistAsync(id) == false)
             {
                 return this.NotFound();
             }
 
-            if (this.foodsService.IsUserFood(this.User.GetUserId(), id) == false)
+            if (await this.foodsService.IsUserFoodAsync(this.User.GetUserId(), id) == false)
             {
                 return this.Unauthorized();
             }

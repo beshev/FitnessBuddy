@@ -19,7 +19,7 @@
             this.foodsService = foodsService;
         }
 
-        public IActionResult Index(int id = 1)
+        public async Task<IActionResult> Index(int id = 1)
         {
             if (id < 1)
             {
@@ -27,7 +27,7 @@
             }
 
             var foodPerPage = 15;
-            int count = this.foodsService.GetCount(null);
+            int count = await this.foodsService.GetCountAsync(null);
             int pagesCount = (int)Math.Ceiling((double)count / foodPerPage);
 
             if (pagesCount != 0 && id > pagesCount)
@@ -36,7 +36,7 @@
             }
 
             int skip = (id - 1) * foodPerPage;
-            var foods = this.foodsService.GetAll<FoodViewModel>(null, null, skip, foodPerPage);
+            var foods = await this.foodsService.GetAllAsync<FoodViewModel>(null, null, skip, foodPerPage);
 
             var viewModel = new AllFoodsViewModel
             {
@@ -50,14 +50,14 @@
             return this.View(viewModel);
         }
 
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return this.NotFound();
             }
 
-            var viewModel = this.foodsService.GetByIdAsNoTracking<FoodDetailsViewModel>(id.Value);
+            var viewModel = await this.foodsService.GetByIdAsNoTrackingAsync<FoodDetailsViewModel>(id.Value);
 
             if (viewModel == null)
             {
@@ -86,14 +86,14 @@
             return this.RedirectToAction(nameof(this.Index));
         }
 
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return this.NotFound();
             }
 
-            var viewModel = this.foodsService.GetByIdAsNoTracking<FoodInputModel>(id.Value);
+            var viewModel = await this.foodsService.GetByIdAsNoTrackingAsync<FoodInputModel>(id.Value);
 
             if (viewModel == null)
             {
@@ -107,7 +107,7 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(FoodInputModel model)
         {
-            if (this.foodsService.IsExist(model.Id) == false)
+            if (await this.foodsService.IsExistAsync(model.Id) == false)
             {
                 return this.NotFound();
             }
@@ -122,14 +122,14 @@
             return this.RedirectToAction(nameof(this.Index));
         }
 
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return this.NotFound();
             }
 
-            var viewModel = this.foodsService.GetById(id.Value);
+            var viewModel = await this.foodsService.GetByIdAsync(id.Value);
 
             if (viewModel == null)
             {

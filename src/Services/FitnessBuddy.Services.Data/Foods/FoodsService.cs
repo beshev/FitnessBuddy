@@ -38,7 +38,7 @@
 
         public async Task<FoodInputModel> EditAsync(FoodInputModel model)
         {
-            var food = this.GetById(model.Id);
+            var food = await this.GetByIdAsync(model.Id);
 
             var foodName = await this.foodNamesService.GetByNameAsync(model.Name);
 
@@ -56,14 +56,14 @@
 
         public async Task DeleteAsync(int id)
         {
-            var food = this.GetById(id);
+            var food = await this.GetByIdAsync(id);
 
             this.foodRepository.Delete(food);
 
             await this.foodRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<TModel> GetAll<TModel>(string userId = null, string search = null, int skip = 0, int? take = null)
+        public async Task<IEnumerable<TModel>> GetAllAsync<TModel>(string userId = null, string search = null, int skip = 0, int? take = null)
         {
             var query = this.foodRepository
                 .AllAsNoTracking();
@@ -87,35 +87,35 @@
                     .Take(take.Value);
             }
 
-            return query
+            return await query
                 .To<TModel>()
-                .AsEnumerable();
+                .ToListAsync();
         }
 
-        public Food GetById(int id)
-            => this.foodRepository
+        public async Task<Food> GetByIdAsync(int id)
+            => await this.foodRepository
                  .All()
                  .Include(x => x.FoodName)
-                 .FirstOrDefault(x => x.Id == id);
+                 .FirstOrDefaultAsync(x => x.Id == id);
 
-        public TModel GetByIdAsNoTracking<TModel>(int id)
-        => this.foodRepository
+        public async Task<TModel> GetByIdAsNoTrackingAsync<TModel>(int id)
+        => await this.foodRepository
             .AllAsNoTracking()
             .Where(x => x.Id == id)
             .To<TModel>()
-            .FirstOrDefault();
+            .FirstOrDefaultAsync();
 
-        public bool IsUserFood(string userId, int foodId)
-            => this.foodRepository
+        public async Task<bool> IsUserFoodAsync(string userId, int foodId)
+            => await this.foodRepository
                 .AllAsNoTracking()
-                .Any(x => x.Id == foodId && x.AddedByUserId == userId);
+                .AnyAsync(x => x.Id == foodId && x.AddedByUserId == userId);
 
-        public bool IsExist(int id)
-            => this.foodRepository
+        public async Task<bool> IsExistAsync(int id)
+            => await this.foodRepository
             .AllAsNoTracking()
-            .Any(x => x.Id == id);
+            .AnyAsync(x => x.Id == id);
 
-        public int GetCount(string userId = null, string search = null)
+        public async Task<int> GetCountAsync(string userId = null, string search = null)
         {
             var query = this.foodRepository
                 .AllAsNoTracking();
@@ -130,15 +130,15 @@
                 query = query.Where(x => x.FoodName.Name.Contains(search));
             }
 
-            return query.Count();
+            return await query.CountAsync();
         }
 
-        public IEnumerable<TModel> GetRandom<TModel>(int count)
-            => this.foodRepository
+        public async Task<IEnumerable<TModel>> GetRandomAsync<TModel>(int count)
+            => await this.foodRepository
             .AllAsNoTracking()
             .OrderBy(x => Guid.NewGuid())
             .To<TModel>()
             .Take(count)
-            .AsEnumerable();
+            .ToListAsync();
     }
 }

@@ -33,7 +33,7 @@
             var viewModel = new HomeViewModel
             {
                 Exercises = await this.exercisesService.GetRandomAsync<ExerciseViewModel>(count),
-                Foods = this.foodsService.GetRandom<FoodViewModel>(count),
+                Foods = await this.foodsService.GetRandomAsync<FoodViewModel>(count),
             };
 
             return this.View(viewModel);

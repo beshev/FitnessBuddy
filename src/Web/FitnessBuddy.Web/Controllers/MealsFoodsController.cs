@@ -32,7 +32,7 @@
 
         public async Task<IActionResult> AddFood(int foodId, int mealId = 0)
         {
-            var viewModel = this.foodsService.GetByIdAsNoTracking<MealFoodInputModel>(foodId);
+            var viewModel = await this.foodsService.GetByIdAsNoTrackingAsync<MealFoodInputModel>(foodId);
 
             if (viewModel == null)
             {
@@ -58,7 +58,7 @@
             }
 
             if (this.mealsService.IsExist(model.MealId) == false
-                || this.foodsService.IsExist(model.FoodId) == false)
+                || await this.foodsService.IsExistAsync(model.FoodId) == false)
             {
                 return this.NotFound();
             }
