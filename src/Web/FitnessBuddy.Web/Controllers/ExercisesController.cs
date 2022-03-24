@@ -159,14 +159,14 @@
             return this.View(viewModel);
         }
 
-        public IActionResult Category(string categoryName, int id = 1)
+        public async Task<IActionResult> Category(string categoryName, int id = 1)
         {
             if (id < 1)
             {
                 return this.NotFound();
             }
 
-            int count = this.exerciseCategoriesService.GetCategoryExercisesCount(categoryName);
+            int count = await this.exerciseCategoriesService.GetCategoryExercisesCountAsync(categoryName);
             int pagesCount = (int)Math.Ceiling((double)count / ExercisesPerPage);
 
             if (pagesCount != 0 && id > pagesCount)
@@ -176,7 +176,7 @@
 
             var skip = (id - 1) * ExercisesPerPage;
 
-            var exercises = this.exerciseCategoriesService.GetCategoryExercises<ExerciseViewModel>(categoryName, skip, ExercisesPerPage);
+            var exercises = await this.exerciseCategoriesService.GetCategoryExercisesAsync<ExerciseViewModel>(categoryName, skip, ExercisesPerPage);
 
             var viewModel = new AllExercisesViewModel
             {

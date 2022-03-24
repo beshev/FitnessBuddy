@@ -2,10 +2,12 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     using FitnessBuddy.Data.Common.Repositories;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
+    using Microsoft.EntityFrameworkCore;
 
     public class ExerciseCategoriesService : IExerciseCategoriesService
     {
@@ -16,13 +18,13 @@
             this.exerciseCategoryRepository = exerciseCategoryRepository;
         }
 
-        public IEnumerable<TModel> GetAll<TModel>()
-            => this.exerciseCategoryRepository
+        public async Task<IEnumerable<TModel>> GetAllAsync<TModel>()
+            => await this.exerciseCategoryRepository
             .AllAsNoTracking()
             .To<TModel>()
-            .AsEnumerable();
+            .ToListAsync();
 
-        public IEnumerable<TModel> GetCategoryExercises<TModel>(string categoryName, int skip = 0, int? take = null)
+        public async Task<IEnumerable<TModel>> GetCategoryExercisesAsync<TModel>(string categoryName, int skip = 0, int? take = null)
         {
             var query = this.exerciseCategoryRepository
             .AllAsNoTracking()
@@ -34,16 +36,16 @@
                 query = query.Skip(skip).Take(take.Value);
             }
 
-            return query
+            return await query
                 .To<TModel>()
-                .AsEnumerable();
+                .ToListAsync();
         }
 
-        public int GetCategoryExercisesCount(string categoryName)
-            => this.exerciseCategoryRepository
+        public async Task<int> GetCategoryExercisesCountAsync(string categoryName)
+            => await this.exerciseCategoryRepository
             .AllAsNoTracking()
             .Where(x => x.Name == categoryName)
             .SelectMany(x => x.Exercises)
-            .Count();
+            .CountAsync();
     }
 }
