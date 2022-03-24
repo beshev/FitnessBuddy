@@ -25,7 +25,7 @@
         public async Task<ActionResult<ExerciseLikeReturnModel>> Post(int exerciseId)
         {
             var userId = this.User.GetUserId();
-            var isLike = this.exercisesLikesService.IsExists(userId, exerciseId);
+            var isLike = await this.exercisesLikesService.IsExists(userId, exerciseId);
 
             if (isLike)
             {
@@ -40,7 +40,7 @@
 
             var returnModel = new ExerciseLikeReturnModel()
             {
-                LikesCount = this.exercisesLikesService.GetExerciseLikesCount(exerciseId),
+                LikesCount = await this.exercisesLikesService.GetExerciseLikesCountAsync(exerciseId),
                 IsUserLikeExercise = isLike,
             };
 

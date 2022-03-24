@@ -154,7 +154,7 @@
 
             var viewModel = await this.exercisesService.GetByIdAsync<ExerciseDetailsModel>(id);
             viewModel.IsCreator = await this.exercisesService.IsUserCreatorAsync(userId, id);
-            viewModel.IsUserLikeExercise = this.exercisesLikesService.IsExists(userId, id);
+            viewModel.IsUserLikeExercise = await this.exercisesLikesService.IsExists(userId, id);
 
             return this.View(viewModel);
         }

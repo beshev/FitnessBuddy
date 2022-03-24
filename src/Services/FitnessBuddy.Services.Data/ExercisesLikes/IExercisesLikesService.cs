@@ -8,8 +8,8 @@
 
         public Task UnLikeAsync(string userId, int exerciseId);
 
-        public bool IsExists(string userId, int exerciseId);
+        public Task<bool> IsExists(string userId, int exerciseId);
 
-        public int GetExerciseLikesCount(int exerciseId);
+        public Task<int> GetExerciseLikesCountAsync(int exerciseId);
     }
 }

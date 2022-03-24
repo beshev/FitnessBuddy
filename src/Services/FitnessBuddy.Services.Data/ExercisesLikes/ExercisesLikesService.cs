@@ -5,6 +5,7 @@
 
     using FitnessBuddy.Data.Common.Repositories;
     using FitnessBuddy.Data.Models;
+    using Microsoft.EntityFrameworkCore;
 
     public class ExercisesLikesService : IExercisesLikesService
     {
@@ -15,16 +16,16 @@
             this.exercisesLikesRepository = exercisesLikesRepository;
         }
 
-        public int GetExerciseLikesCount(int exerciseId)
-            => this.exercisesLikesRepository
+        public async Task<int> GetExerciseLikesCountAsync(int exerciseId)
+            => await this.exercisesLikesRepository
             .AllAsNoTracking()
             .Where(x => x.ExerciseId == exerciseId)
-            .Count();
+            .CountAsync();
 
-        public bool IsExists(string userId, int exerciseId)
-            => this.exercisesLikesRepository
+        public async Task<bool> IsExists(string userId, int exerciseId)
+            => await this.exercisesLikesRepository
             .AllAsNoTracking()
-            .Any(x => x.UserId == userId && x.ExerciseId == exerciseId);
+            .AnyAsync(x => x.UserId == userId && x.ExerciseId == exerciseId);
 
         public async Task LikeAsync(string userId, int exerciseId)
         {
