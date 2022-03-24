@@ -34,13 +34,13 @@
         }
 
         [AllowAnonymous]
-        public IActionResult All(int id = 1)
+        public async Task<IActionResult> All(int id = 1)
         {
-            int count = this.articlesService.GetCount();
+            int count = await this.articlesService.GetCountAsync();
             int pagesCount = (int)Math.Ceiling((double)count / ArticlesPerPage);
             var skip = (id - 1) * ArticlesPerPage;
 
-            var articles = this.articlesService.GetAll<ArticleViewModel>(skip, ArticlesPerPage);
+            var articles = await this.articlesService.GetAllAsync<ArticleViewModel>(skip, ArticlesPerPage);
 
             var viewModel = new AllArticlesViewModel
             {
@@ -78,14 +78,14 @@
             return this.RedirectToAction(nameof(this.All));
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (this.articlesService.IsExist(id) == false)
+            if (await this.articlesService.IsExistAsync(id) == false)
             {
                 return this.NotFound();
             }
 
-            var viewModel = this.articlesService.GetById<ArticleDetailsModel>(id);
+            var viewModel = await this.articlesService.GetByIdAsync<ArticleDetailsModel>(id);
             viewModel.IsCreator = viewModel.CreatorId == this.User.GetUserId();
 
             return this.View(viewModel);
@@ -114,12 +114,12 @@
 
         public async Task<IActionResult> Delete(int id)
         {
-            if (this.articlesService.IsExist(id) == false)
+            if (await this.articlesService.IsExistAsync(id) == false)
             {
                 return this.NotFound();
             }
 
-            if (this.articlesService.IsUserCreator(this.User.GetUserId(), id) == false)
+            if (await this.articlesService.IsUserCreatorAsync(this.User.GetUserId(), id) == false)
             {
                 return this.Unauthorized();
             }
@@ -131,14 +131,14 @@
             return this.RedirectToAction(nameof(this.All));
         }
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (this.articlesService.IsExist(id) == false)
+            if (await this.articlesService.IsExistAsync(id) == false)
             {
                 return this.NotFound();
             }
 
-            var viewModel = this.articlesService.GetById<ArticleInputModel>(id);
+            var viewModel = await this.articlesService.GetByIdAsync<ArticleInputModel>(id);
 
             if (viewModel.CreatorId != this.User.GetUserId())
             {
@@ -151,7 +151,7 @@
         [HttpPost]
         public async Task<IActionResult> Edit(ArticleInputModel model)
         {
-            if (this.articlesService.IsExist(model.Id) == false)
+            if (await this.articlesService.IsExistAsync(model.Id) == false)
             {
                 return this.NotFound();
             }

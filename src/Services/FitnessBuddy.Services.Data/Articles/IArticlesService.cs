@@ -7,9 +7,9 @@
 
     public interface IArticlesService
     {
-        public IEnumerable<TModel> GetAll<TModel>(int skip = 0, int? take = null);
+        public Task<IEnumerable<TModel>> GetAllAsync<TModel>(int skip = 0, int? take = null);
 
-        public TModel GetById<TModel>(int id);
+        public Task<TModel> GetByIdAsync<TModel>(int id);
 
         public Task CreateAsync(ArticleInputModel model, string picturePath);
 
@@ -17,10 +17,10 @@
 
         public Task DeleteAsync(int id);
 
-        public bool IsExist(int id);
+        public Task<bool> IsExistAsync(int id);
 
-        public bool IsUserCreator(string userId, int articleId);
+        public Task<bool> IsUserCreatorAsync(string userId, int articleId);
 
-        public int GetCount();
+        public Task<int> GetCountAsync();
     }
 }

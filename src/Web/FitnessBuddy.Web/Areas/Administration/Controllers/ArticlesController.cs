@@ -22,7 +22,7 @@
             this.webHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult Index(int id = 1)
+        public async Task<IActionResult> Index(int id = 1)
         {
             if (id < 1)
             {
@@ -30,7 +30,7 @@
             }
 
             var articlesPerPage = 15;
-            int count = this.articlesService.GetCount();
+            int count = await this.articlesService.GetCountAsync();
             int pagesCount = (int)Math.Ceiling((double)count / articlesPerPage);
 
             if (pagesCount != 0 && id > pagesCount)
@@ -40,7 +40,7 @@
 
             var skip = (id - 1) * articlesPerPage;
 
-            var articles = this.articlesService.GetAll<ArticleViewModel>(skip, articlesPerPage);
+            var articles = await this.articlesService.GetAllAsync<ArticleViewModel>(skip, articlesPerPage);
 
             var viewModel = new AllArticlesViewModel
             {
@@ -54,14 +54,14 @@
             return this.View(viewModel);
         }
 
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return this.NotFound();
             }
 
-            var article = this.articlesService.GetById<ArticleDetailsModel>(id.Value);
+            var article = await this.articlesService.GetByIdAsync<ArticleDetailsModel>(id.Value);
 
             if (article == null)
             {
@@ -94,14 +94,14 @@
             return this.RedirectToAction(nameof(this.Index));
         }
 
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return this.NotFound();
             }
 
-            var article = this.articlesService.GetById<ArticleInputModel>(id.Value);
+            var article = await this.articlesService.GetByIdAsync<ArticleInputModel>(id.Value);
 
             if (article == null)
             {
@@ -115,7 +115,7 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(ArticleInputModel model)
         {
-            if (this.articlesService.IsExist(model.Id) == false)
+            if (await this.articlesService.IsExistAsync(model.Id) == false)
             {
                 return this.NotFound();
             }
@@ -132,14 +132,14 @@
             return this.RedirectToAction(nameof(this.Index));
         }
 
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return this.NotFound();
             }
 
-            var viewModel = this.articlesService.GetById<ArticleDetailsModel>(id.Value);
+            var viewModel = await this.articlesService.GetByIdAsync<ArticleDetailsModel>(id.Value);
 
             if (viewModel == null)
             {

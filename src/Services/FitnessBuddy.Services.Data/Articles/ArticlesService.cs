@@ -10,6 +10,7 @@
     using FitnessBuddy.Services.Mapping;
     using FitnessBuddy.Web.ViewModels.Articles;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.EntityFrameworkCore;
 
     public class ArticlesService : IArticlesService
     {
@@ -57,7 +58,7 @@
             await this.articlesRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<TModel> GetAll<TModel>(int skip = 0, int? take = null)
+        public async Task<IEnumerable<TModel>> GetAllAsync<TModel>(int skip = 0, int? take = null)
         {
             IQueryable<Article> query = this.articlesRepository
                 .AllAsNoTracking()
@@ -71,32 +72,32 @@
                     .Take(take.Value);
             }
 
-            return query
+            return await query
                 .To<TModel>()
-                .AsEnumerable();
+                .ToListAsync();
         }
 
-        public TModel GetById<TModel>(int id)
-            => this.articlesRepository
+        public async Task<TModel> GetByIdAsync<TModel>(int id)
+            => await this.articlesRepository
             .AllAsNoTracking()
             .Where(x => x.Id == id)
             .To<TModel>()
-            .FirstOrDefault();
+            .FirstOrDefaultAsync();
 
-        public bool IsUserCreator(string userId, int articleId)
-            => this.articlesRepository
+        public async Task<bool> IsUserCreatorAsync(string userId, int articleId)
+            => await this.articlesRepository
             .AllAsNoTracking()
-            .Any(x => x.Id == articleId && x.CreatorId == userId);
+            .AnyAsync(x => x.Id == articleId && x.CreatorId == userId);
 
-        public int GetCount()
-            => this.articlesRepository
+        public async Task<int> GetCountAsync()
+            => await this.articlesRepository
                 .AllAsNoTracking()
-                .Count();
+                .CountAsync();
 
-        public bool IsExist(int id)
-            => this.articlesRepository
+        public async Task<bool> IsExistAsync(int id)
+            => await this.articlesRepository
             .AllAsNoTracking()
-            .Any(x => x.Id == id);
+            .AnyAsync(x => x.Id == id);
 
         private static async Task<string> SavePictureAsync(IFormFile picture, int articleId, string picturePath)
         {

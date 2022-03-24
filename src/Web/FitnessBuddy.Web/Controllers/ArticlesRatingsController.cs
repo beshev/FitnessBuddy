@@ -24,7 +24,7 @@
         [HttpPost]
         public async Task<ActionResult> Post(ArticleRatingInputModel model)
         {
-            if (this.articlesService.IsExist(model.ArticleId) == false)
+            if (await this.articlesService.IsExistAsync(model.ArticleId) == false)
             {
                 return this.NotFound();
             }
