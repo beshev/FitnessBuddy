@@ -91,21 +91,21 @@
             return this.View(viewModel);
         }
 
-        public IActionResult Categories()
+        public async Task<IActionResult> Categories()
         {
-            var viewModel = this.articleCategoriesService.GetAll<ArticleCategoryViewModel>();
+            var viewModel = await this.articleCategoriesService.GetAllAsync<ArticleCategoryViewModel>();
 
             return this.View(viewModel);
         }
 
-        public IActionResult Category(string categoryName)
+        public async Task<IActionResult> Category(string categoryName)
         {
-            if (this.articleCategoriesService.IsExist(categoryName) == false)
+            if (await this.articleCategoriesService.IsExistAsync(categoryName) == false)
             {
                 return this.NotFound();
             }
 
-            var viewModel = this.articleCategoriesService.GetCategoryArticles<ArticleViewModel>(categoryName);
+            var viewModel = await this.articleCategoriesService.GetCategoryArticlesAsync<ArticleViewModel>(categoryName);
 
             this.ViewData["CategoryName"] = categoryName;
 

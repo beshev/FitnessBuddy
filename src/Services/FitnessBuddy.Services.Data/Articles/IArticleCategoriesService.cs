@@ -1,13 +1,14 @@
 ﻿namespace FitnessBuddy.Services.Data.Articles
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public interface IArticleCategoriesService
     {
-        public IEnumerable<TModel> GetAll<TModel>();
+        public Task<IEnumerable<TModel>> GetAllAsync<TModel>();
 
-        public IEnumerable<TModel> GetCategoryArticles<TModel>(string categoryName);
+        public Task<IEnumerable<TModel>> GetCategoryArticlesAsync<TModel>(string categoryName);
 
-        public bool IsExist(string categoryName);
+        public Task<bool> IsExistAsync(string categoryName);
     }
 }

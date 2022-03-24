@@ -2,10 +2,12 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     using FitnessBuddy.Data.Common.Repositories;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
+    using Microsoft.EntityFrameworkCore;
 
     public class ArticleCategoriesService : IArticleCategoriesService
     {
@@ -16,23 +18,23 @@
             this.articleCategoriesRepository = articleCategoriesRepository;
         }
 
-        public IEnumerable<TModel> GetAll<TModel>()
-            => this.articleCategoriesRepository
+        public async Task<IEnumerable<TModel>> GetAllAsync<TModel>()
+            => await this.articleCategoriesRepository
             .AllAsNoTracking()
             .To<TModel>()
-            .AsEnumerable();
+            .ToListAsync();
 
-        public IEnumerable<TModel> GetCategoryArticles<TModel>(string categoryName)
-            => this.articleCategoriesRepository
+        public async Task<IEnumerable<TModel>> GetCategoryArticlesAsync<TModel>(string categoryName)
+            => await this.articleCategoriesRepository
             .AllAsNoTracking()
             .Where(x => x.Name == categoryName)
             .SelectMany(x => x.Articles)
             .To<TModel>()
-            .AsEnumerable();
+            .ToListAsync();
 
-        public bool IsExist(string categoryName)
-            => this.articleCategoriesRepository
+        public async Task<bool> IsExistAsync(string categoryName)
+            => await this.articleCategoriesRepository
             .AllAsNoTracking()
-            .Any(x => x.Name == categoryName);
+            .AnyAsync(x => x.Name == categoryName);
     }
 }

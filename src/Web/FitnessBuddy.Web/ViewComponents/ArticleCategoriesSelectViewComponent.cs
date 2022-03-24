@@ -15,7 +15,7 @@
 
         public IViewComponentResult Invoke()
         {
-            var viewModel = this.articleCategoriesService.GetAll<SelectViewModel>();
+            var viewModel = this.articleCategoriesService.GetAllAsync<SelectViewModel>().GetAwaiter().GetResult();
 
             return this.View(viewModel);
         }
