@@ -32,14 +32,14 @@
             this.exercisesLikesService = exercisesLikesService;
         }
 
-        public IActionResult All(int id = 1, string search = "")
+        public async Task<IActionResult> All(int id = 1, string search = "")
         {
             if (id < 1)
             {
                 return this.NotFound();
             }
 
-            int count = this.exercisesService.GetCount(search);
+            int count = await this.exercisesService.GetCountAsync(search);
             int pagesCount = (int)Math.Ceiling((double)count / ExercisesPerPage);
 
             if (pagesCount != 0 && id > pagesCount)
@@ -49,7 +49,7 @@
 
             var skip = (id - 1) * ExercisesPerPage;
 
-            var exercises = this.exercisesService.GetAll(search, skip, ExercisesPerPage);
+            var exercises = await this.exercisesService.GetAllAsync(search, skip, ExercisesPerPage);
 
             var viewModel = new AllExercisesViewModel
             {
@@ -84,19 +84,19 @@
             return this.RedirectToAction(nameof(this.Details), new { Id = exerciseId });
         }
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (this.exercisesService.IsExist(id) == false)
+            if (await this.exercisesService.IsExistAsync(id) == false)
             {
                 return this.NotFound();
             }
 
-            if (this.exercisesService.IsUserCreator(this.User.GetUserId(), id) == false)
+            if (await this.exercisesService.IsUserCreatorAsync(this.User.GetUserId(), id) == false)
             {
                 return this.Unauthorized();
             }
 
-            var viewModel = this.exercisesService.GetById<ExerciseInputModel>(id);
+            var viewModel = await this.exercisesService.GetByIdAsync<ExerciseInputModel>(id);
 
             return this.View(viewModel);
         }
@@ -104,12 +104,12 @@
         [HttpPost]
         public async Task<IActionResult> Edit(ExerciseInputModel model)
         {
-            if (this.exercisesService.IsExist(model.Id) == false)
+            if (await this.exercisesService.IsExistAsync(model.Id) == false)
             {
                 return this.NotFound();
             }
 
-            if (this.exercisesService.IsUserCreator(this.User.GetUserId(), model.Id) == false)
+            if (await this.exercisesService.IsUserCreatorAsync(this.User.GetUserId(), model.Id) == false)
             {
                 return this.Unauthorized();
             }
@@ -126,12 +126,12 @@
 
         public async Task<IActionResult> Delete(int id)
         {
-            if (this.exercisesService.IsExist(id) == false)
+            if (await this.exercisesService.IsExistAsync(id) == false)
             {
                 return this.NotFound();
             }
 
-            if (this.exercisesService.IsUserCreator(this.User.GetUserId(), id) == false)
+            if (await this.exercisesService.IsUserCreatorAsync(this.User.GetUserId(), id) == false)
             {
                 return this.Unauthorized();
             }
@@ -143,17 +143,17 @@
             return this.RedirectToAction(nameof(this.All));
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (this.exercisesService.IsExist(id) == false)
+            if (await this.exercisesService.IsExistAsync(id) == false)
             {
                 return this.NotFound();
             }
 
             var userId = this.User.GetUserId();
 
-            var viewModel = this.exercisesService.GetById<ExerciseDetailsModel>(id);
-            viewModel.IsCreator = this.exercisesService.IsUserCreator(userId, id);
+            var viewModel = await this.exercisesService.GetByIdAsync<ExerciseDetailsModel>(id);
+            viewModel.IsCreator = await this.exercisesService.IsUserCreatorAsync(userId, id);
             viewModel.IsUserLikeExercise = this.exercisesLikesService.IsExists(userId, id);
 
             return this.View(viewModel);

@@ -84,7 +84,7 @@
         [HttpPost]
         public async Task<IActionResult> AddExercise(TrainingExerciseInputModel model)
         {
-            if (this.exercisesService.IsExist(model.ExerciseId) == false
+            if (await this.exercisesService.IsExistAsync(model.ExerciseId) == false
                 || this.trainingsService.IsExist(model.TrainingId) == false)
             {
                 return this.NotFound();

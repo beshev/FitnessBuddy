@@ -41,7 +41,7 @@
             var viewModel = new IndexViewModel
             {
                 UsersCount = await this.usersService.GetCountAsync(),
-                ExercisesCount = this.exercisesService.GetCount(),
+                ExercisesCount = await this.exercisesService.GetCountAsync(),
                 ArticlesCount = await this.articlesService.GetCountAsync(),
                 PostsCount = this.postsService.GetCount(),
                 FoodsCount = this.foodsService.GetCount(),

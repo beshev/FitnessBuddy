@@ -10,6 +10,7 @@
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
     using FitnessBuddy.Web.ViewModels.Exercises;
+    using Microsoft.EntityFrameworkCore;
 
     public class ExercisesService : IExercisesService
     {
@@ -41,7 +42,7 @@
             return exercise.Id;
         }
 
-        public IEnumerable<ExerciseViewModel> GetAll(string search = "", int skip = 0, int? take = null)
+        public async Task<IEnumerable<ExerciseViewModel>> GetAllAsync(string search = "", int skip = 0, int? take = null)
         {
             var query = this.exerciseRepository
                 .AllAsNoTracking();
@@ -64,19 +65,19 @@
                     .Take(take.Value);
             }
 
-            return query
+            return await query
                 .To<ExerciseViewModel>()
-                .AsEnumerable();
+                .ToListAsync();
         }
 
-        public TModel GetById<TModel>(int id)
-            => this.exerciseRepository
+        public async Task<TModel> GetByIdAsync<TModel>(int id)
+            => await this.exerciseRepository
             .AllAsNoTracking()
             .Where(x => x.Id == id)
             .To<TModel>()
-            .FirstOrDefault();
+            .FirstOrDefaultAsync();
 
-        public int GetCount(string search = "")
+        public Task<int> GetCountAsync(string search = "")
         {
             var query = this.exerciseRepository
                 .AllAsNoTracking();
@@ -86,13 +87,13 @@
                 query = query.Where(x => x.Name.Contains(search) || x.Category.Name.Contains(search));
             }
 
-            return query.Count();
+            return query.CountAsync();
         }
 
-        public bool IsUserCreator(string userId, int exerciseId)
-            => this.exerciseRepository
+        public async Task<bool> IsUserCreatorAsync(string userId, int exerciseId)
+            => await this.exerciseRepository
             .AllAsNoTracking()
-            .Any(x => x.AddedByUserId == userId && x.Id == exerciseId);
+            .AnyAsync(x => x.AddedByUserId == userId && x.Id == exerciseId);
 
         public async Task EditAsync(ExerciseInputModel model)
         {
@@ -122,18 +123,18 @@
             await this.exerciseRepository.SaveChangesAsync();
         }
 
-        public bool IsExist(int id)
-            => this.exerciseRepository
+        public async Task<bool> IsExistAsync(int id)
+            => await this.exerciseRepository
             .AllAsNoTracking()
-            .Any(x => x.Id == id);
+            .AnyAsync(x => x.Id == id);
 
-        public IEnumerable<TModel> GetRandom<TModel>(int count)
-            => this.exerciseRepository
+        public async Task<IEnumerable<TModel>> GetRandomAsync<TModel>(int count)
+            => await this.exerciseRepository
             .AllAsNoTracking()
             .OrderBy(x => Guid.NewGuid())
             .To<TModel>()
             .Take(count)
-            .AsEnumerable();
+            .ToListAsync();
 
         private static string GetYouTubeEmbededLink(string url)
         {

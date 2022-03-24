@@ -17,7 +17,7 @@
             this.exercisesService = exercisesService;
         }
 
-        public IActionResult Index(int id = 1)
+        public async Task<IActionResult> Index(int id = 1)
         {
             if (id < 1)
             {
@@ -25,7 +25,7 @@
             }
 
             var exercisesPerPage = 15;
-            int count = this.exercisesService.GetCount();
+            int count = await this.exercisesService.GetCountAsync();
             int pagesCount = (int)Math.Ceiling((double)count / exercisesPerPage);
 
             if (pagesCount != 0 && id > pagesCount)
@@ -35,7 +35,7 @@
 
             var skip = (id - 1) * exercisesPerPage;
 
-            var exercises = this.exercisesService.GetAll(null, skip, exercisesPerPage);
+            var exercises = await this.exercisesService.GetAllAsync(null, skip, exercisesPerPage);
 
             var viewModel = new AllExercisesViewModel
             {
@@ -49,14 +49,14 @@
             return this.View(viewModel);
         }
 
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return this.NotFound();
             }
 
-            var exercise = this.exercisesService.GetById<ExerciseDetailsModel>(id.Value);
+            var exercise = await this.exercisesService.GetByIdAsync<ExerciseDetailsModel>(id.Value);
 
             if (exercise == null)
             {
@@ -85,14 +85,14 @@
             return this.RedirectToAction(nameof(this.Index));
         }
 
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return this.NotFound();
             }
 
-            var exercise = this.exercisesService.GetById<ExerciseInputModel>(id.Value);
+            var exercise = await this.exercisesService.GetByIdAsync<ExerciseInputModel>(id.Value);
 
             if (exercise == null)
             {
@@ -106,7 +106,7 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(ExerciseInputModel model)
         {
-            if (this.exercisesService.IsExist(model.Id) == false)
+            if (await this.exercisesService.IsExistAsync(model.Id) == false)
             {
                 return this.NotFound();
             }
@@ -121,14 +121,14 @@
             return this.RedirectToAction(nameof(this.Index));
         }
 
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return this.NotFound();
             }
 
-            var exercise = this.exercisesService.GetById<ExerciseViewModel>(id.Value);
+            var exercise = await this.exercisesService.GetByIdAsync<ExerciseViewModel>(id.Value);
 
             if (exercise == null)
             {

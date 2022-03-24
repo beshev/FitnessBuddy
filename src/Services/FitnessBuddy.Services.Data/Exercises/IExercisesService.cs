@@ -7,21 +7,21 @@
 
     public interface IExercisesService
     {
-        public IEnumerable<ExerciseViewModel> GetAll(string search = null, int skip = 0, int? take = null);
+        public Task<IEnumerable<ExerciseViewModel>> GetAllAsync(string search = null, int skip = 0, int? take = null);
 
-        public IEnumerable<TModel> GetRandom<TModel>(int count);
+        public Task<IEnumerable<TModel>> GetRandomAsync<TModel>(int count);
 
         public Task EditAsync(ExerciseInputModel model);
 
         public Task DeleteAsync(int id);
 
-        public int GetCount(string search = "");
+        public Task<int> GetCountAsync(string search = "");
 
-        public bool IsUserCreator(string userId, int exerciseId);
+        public Task<bool> IsUserCreatorAsync(string userId, int exerciseId);
 
-        public bool IsExist(int id);
+        public Task<bool> IsExistAsync(int id);
 
-        public TModel GetById<TModel>(int id);
+        public Task<TModel> GetByIdAsync<TModel>(int id);
 
         public Task<int> AddAsync(string userId, ExerciseInputModel model);
     }

@@ -1,6 +1,7 @@
 ﻿namespace FitnessBuddy.Web.Controllers
 {
     using System.Diagnostics;
+    using System.Threading.Tasks;
 
     using FitnessBuddy.Services.Data.Exercises;
     using FitnessBuddy.Services.Data.Foods;
@@ -25,13 +26,13 @@
             this.foodsService = foodsService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var count = 2;
 
             var viewModel = new HomeViewModel
             {
-                Exercises = this.exercisesService.GetRandom<ExerciseViewModel>(count),
+                Exercises = await this.exercisesService.GetRandomAsync<ExerciseViewModel>(count),
                 Foods = this.foodsService.GetRandom<FoodViewModel>(count),
             };
 
