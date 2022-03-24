@@ -62,7 +62,7 @@
 
             viewModel.IsMyProfile = userId == loggedUserId;
             viewModel.UserInfo.UserRole = (await this.roleManager.FindByIdAsync(viewModel.UserInfo.UserRoleId)).Name;
-            viewModel.IsFollowingByUser = this.usersFollowersService.IsFollowingByUser(userId, this.User.GetUserId());
+            viewModel.IsFollowingByUser = await this.usersFollowersService.IsFollowingByUserAsync(userId, this.User.GetUserId());
 
             return this.View(viewModel);
         }
@@ -77,7 +77,7 @@
                 return this.NotFound();
             }
 
-            if (this.usersFollowersService.IsFollowingByUser(userId, followerId))
+            if (await this.usersFollowersService.IsFollowingByUserAsync(userId, followerId))
             {
                 return this.Unauthorized();
             }
@@ -97,7 +97,7 @@
                 return this.NotFound();
             }
 
-            if (this.usersFollowersService.IsFollowingByUser(userId, followerId) == false)
+            if (await this.usersFollowersService.IsFollowingByUserAsync(userId, followerId) == false)
             {
                 return this.Unauthorized();
             }
@@ -141,11 +141,11 @@
             return this.View(viewModel);
         }
 
-        public IActionResult Edit()
+        public async Task<IActionResult> Edit()
         {
             var userId = this.User.GetUserId();
 
-            var viewModel = this.userService.GetUserInfoAsync<UserInputModel>(userId);
+            var viewModel = await this.userService.GetUserInfoAsync<UserInputModel>(userId);
 
             return this.View(viewModel);
         }

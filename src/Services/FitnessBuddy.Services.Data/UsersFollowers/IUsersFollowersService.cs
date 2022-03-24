@@ -8,6 +8,6 @@
 
         public Task UnFollowAsync(string userId, string followerId);
 
-        public bool IsFollowingByUser(string userUsername, string followerUsername);
+        public Task<bool> IsFollowingByUserAsync(string userUsername, string followerUsername);
     }
 }

@@ -5,6 +5,7 @@
 
     using FitnessBuddy.Data.Common.Repositories;
     using FitnessBuddy.Data.Models;
+    using Microsoft.EntityFrameworkCore;
 
     public class UsersFollowersService : IUsersFollowersService
     {
@@ -27,10 +28,10 @@
             await this.usersFollowerRepository.SaveChangesAsync();
         }
 
-        public bool IsFollowingByUser(string userId, string followerId)
-            => this.usersFollowerRepository
+        public async Task<bool> IsFollowingByUserAsync(string userId, string followerId)
+            => await this.usersFollowerRepository
             .AllAsNoTracking()
-            .Any(x => x.UserId == userId && x.FollowerId == followerId);
+            .AnyAsync(x => x.UserId == userId && x.FollowerId == followerId);
 
         public async Task UnFollowAsync(string userId, string followerId)
         {
