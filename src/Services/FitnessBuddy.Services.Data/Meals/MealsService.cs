@@ -8,6 +8,7 @@
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
     using FitnessBuddy.Web.ViewModels.Meals;
+    using Microsoft.EntityFrameworkCore;
 
     public class MealsService : IMealsService
     {
@@ -48,17 +49,17 @@
             return meal;
         }
 
-        public Meal GetById(int mealId)
-            => this.mealRepository
+        public async Task<Meal> GetByIdAsync(int mealId)
+            => await this.mealRepository
             .AllAsNoTracking()
-            .FirstOrDefault(x => x.Id == mealId);
+            .FirstOrDefaultAsync(x => x.Id == mealId);
 
-        public IEnumerable<TViewModel> GetUserMeals<TViewModel>(string userId)
-            => this.mealRepository
+        public async Task<IEnumerable<TViewModel>> GetUserMealsAsync<TViewModel>(string userId)
+            => await this.mealRepository
             .AllAsNoTracking()
             .Where(x => x.ForUserId == userId)
             .To<TViewModel>()
-            .AsEnumerable();
+            .ToListAsync();
 
         public bool IsUserMeal(int mealId, string userId)
             => this.mealRepository
