@@ -11,14 +11,14 @@
 
         public Task DeleteAsync(int trainingId, string userId);
 
-        public string GetNameById(int trainingId);
+        public Task<string> GetNameByIdAsync(int trainingId);
 
-        public IEnumerable<TModel> GetAll<TModel>(string userId);
+        public Task<IEnumerable<TModel>> GetAllAsync<TModel>(string userId);
 
-        public int GetTrainingId(string name, string userId);
+        public Task<int> GetTrainingIdAsync(string name, string userId);
 
-        public bool IsExist(int id);
+        public Task<bool> IsExistAsync(int id);
 
-        public bool IsUserTraining(int id, string userId);
+        public Task<bool> IsUserTrainingAsync(int id, string userId);
     }
 }

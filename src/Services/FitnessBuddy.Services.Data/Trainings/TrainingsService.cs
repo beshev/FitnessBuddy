@@ -7,6 +7,7 @@
     using FitnessBuddy.Data.Common.Repositories;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
+    using Microsoft.EntityFrameworkCore;
 
     public class TrainingsService : ITrainingsService
     {
@@ -46,37 +47,37 @@
             await this.trainingRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<TModel> GetAll<TModel>(string userId)
-            => this.trainingRepository
+        public async Task<IEnumerable<TModel>> GetAllAsync<TModel>(string userId)
+            => await this.trainingRepository
             .AllAsNoTracking()
             .Where(x => x.ForUserId == userId)
             .To<TModel>()
-            .AsEnumerable();
+            .ToListAsync();
 
-        public string GetNameById(int trainingId)
-            => this.trainingRepository
+        public async Task<string> GetNameByIdAsync(int trainingId)
+            => await this.trainingRepository
             .AllAsNoTracking()
             .Where(x => x.Id == trainingId)
             .Select(x => x.Name)
-            .FirstOrDefault();
+            .FirstOrDefaultAsync();
 
-        public int GetTrainingId(string name, string userId)
+        public async Task<int> GetTrainingIdAsync(string name, string userId)
         {
-            var training = this.trainingRepository
+            var training = await this.trainingRepository
                 .AllAsNoTracking()
-                .FirstOrDefault(x => x.Name == name && x.ForUserId == userId);
+                .FirstOrDefaultAsync(x => x.Name == name && x.ForUserId == userId);
 
             return training != null ? training.Id : -1;
         }
 
-        public bool IsExist(int id)
-            => this.trainingRepository
+        public async Task<bool> IsExistAsync(int id)
+            => await this.trainingRepository
             .AllAsNoTracking()
-            .Any(x => x.Id == id);
+            .AnyAsync(x => x.Id == id);
 
-        public bool IsUserTraining(int id, string userId)
-            => this.trainingRepository
+        public async Task<bool> IsUserTrainingAsync(int id, string userId)
+            => await this.trainingRepository
             .AllAsNoTracking()
-            .Any(x => x.Id == id && x.ForUserId == userId);
+            .AnyAsync(x => x.Id == id && x.ForUserId == userId);
     }
 }

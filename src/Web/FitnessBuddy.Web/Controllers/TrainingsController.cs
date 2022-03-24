@@ -29,14 +29,14 @@
             this.exercisesService = exercisesService;
         }
 
-        public IActionResult MyTrainings(string trainingName = "")
+        public async Task<IActionResult> MyTrainings(string trainingName = "")
         {
             var userId = this.User.GetUserId();
 
-            var trainings = this.trainingsService.GetAll<SelectViewModel>(userId);
+            var trainings = await this.trainingsService.GetAllAsync<SelectViewModel>(userId);
             trainingName = string.IsNullOrWhiteSpace(trainingName) ? trainings.FirstOrDefault()?.Name : trainingName;
 
-            var trainingId = this.trainingsService.GetTrainingId(trainingName, userId);
+            var trainingId = await this.trainingsService.GetTrainingIdAsync(trainingName, userId);
 
             var viewModel = new AllTrainingsViewModel
             {
@@ -64,14 +64,14 @@
 
         public async Task<IActionResult> Delete(int id)
         {
-            if (this.trainingsService.IsExist(id) == false)
+            if (await this.trainingsService.IsExistAsync(id) == false)
             {
                 return this.NotFound();
             }
 
             var userId = this.User.GetUserId();
 
-            if (this.trainingsService.IsUserTraining(id, userId) == false)
+            if (await this.trainingsService.IsUserTrainingAsync(id, userId) == false)
             {
                 return this.Unauthorized();
             }
@@ -85,7 +85,7 @@
         public async Task<IActionResult> AddExercise(TrainingExerciseInputModel model)
         {
             if (await this.exercisesService.IsExistAsync(model.ExerciseId) == false
-                || this.trainingsService.IsExist(model.TrainingId) == false)
+                || await this.trainingsService.IsExistAsync(model.TrainingId) == false)
             {
                 return this.NotFound();
             }
@@ -97,7 +97,7 @@
 
             await this.trainingsExercisesService.AddAsync(model);
 
-            var trainingName = this.trainingsService.GetNameById(model.TrainingId);
+            var trainingName = await this.trainingsService.GetNameByIdAsync(model.TrainingId);
 
             var redirectURL = string.Format(GlobalConstants.UserTrainings, trainingName);
 

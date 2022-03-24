@@ -16,7 +16,7 @@
 
         public IViewComponentResult Invoke()
         {
-            var viewModel = this.trainingsService.GetAll<SelectViewModel>(this.UserClaimsPrincipal.GetUserId());
+            var viewModel = this.trainingsService.GetAllAsync<SelectViewModel>(this.UserClaimsPrincipal.GetUserId()).GetAwaiter().GetResult();
 
             return this.View(viewModel);
         }
