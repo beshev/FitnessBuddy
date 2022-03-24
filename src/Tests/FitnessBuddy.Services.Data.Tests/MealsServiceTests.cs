@@ -113,7 +113,7 @@
         }
 
         [Fact]
-        public void GetByIdMethodShouldReturnExistingMeal()
+        public async Task GetByIdMethodShouldReturnExistingMeal()
         {
             var list = new List<Meal>()
             {
@@ -122,18 +122,18 @@
             };
 
             var mockRepo = new Mock<IDeletableEntityRepository<Meal>>();
-            mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable());
+            mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new MealsService(mockRepo.Object);
 
-            var actualMeal = service.GetById(2);
+            var actualMeal = await service.GetByIdAsync(2);
 
             Assert.Equal("Test 2", actualMeal.Name);
             Assert.Equal(2, actualMeal.Id);
         }
 
         [Fact]
-        public void GetByIdMethodShouldReturnNullIfMealNotExist()
+        public async Task GetByIdMethodShouldReturnNullIfMealNotExist()
         {
             var list = new List<Meal>()
             {
@@ -142,11 +142,11 @@
             };
 
             var mockRepo = new Mock<IDeletableEntityRepository<Meal>>();
-            mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable());
+            mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new MealsService(mockRepo.Object);
 
-            var actualMeal = service.GetById(3);
+            var actualMeal = await service.GetByIdAsync(3);
 
             Assert.Null(actualMeal);
         }
