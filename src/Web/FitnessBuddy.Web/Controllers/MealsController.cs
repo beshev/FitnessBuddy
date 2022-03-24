@@ -30,10 +30,10 @@
             this.usersService = usersService;
         }
 
-        public IActionResult MyMeals()
+        public async Task<IActionResult> MyMeals()
         {
             string userId = this.User.GetUserId();
-            var allMeals = this.mealsService.GetUserMeals<MealViewModel>(userId);
+            var allMeals = await this.mealsService.GetUserMealsAsync<MealViewModel>(userId);
             var userNutrients = this.usersService.GetUserInfo<UserTargetNutrientsViewModel>(userId);
 
             var viewModel = new AllMealsViewModel

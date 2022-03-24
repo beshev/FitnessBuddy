@@ -48,7 +48,7 @@
                 userId = loggedUserId;
             }
 
-            var viewModel = this.userService.GetProfileData(userId);
+            var viewModel = await this.userService.GetProfileDataAsync(userId);
 
             if (tab == GlobalConstants.NameOfFollowers)
             {
