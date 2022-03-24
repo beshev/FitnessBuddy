@@ -1,11 +1,12 @@
 ﻿namespace FitnessBuddy.Services.Data.Exercises
 {
     using System.Collections.Generic;
-    using System.Linq;
+    using System.Threading.Tasks;
 
     using FitnessBuddy.Data.Common.Repositories;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
+    using Microsoft.EntityFrameworkCore;
 
     public class ExerciseEquipmentService : IExerciseEquipmentService
     {
@@ -16,10 +17,10 @@
             this.exerciseEquipmentRepository = exerciseEquipmentRepository;
         }
 
-        public IEnumerable<TModel> GetAll<TModel>()
-            => this.exerciseEquipmentRepository
+        public async Task<IEnumerable<TModel>> GetAllAsync<TModel>()
+            => await this.exerciseEquipmentRepository
             .AllAsNoTracking()
             .To<TModel>()
-            .AsEnumerable();
+            .ToListAsync();
     }
 }

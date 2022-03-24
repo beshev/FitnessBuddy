@@ -1,11 +1,10 @@
 ﻿namespace FitnessBuddy.Services.Data.Exercises
 {
     using System.Collections.Generic;
-
-    using FitnessBuddy.Data.Models;
+    using System.Threading.Tasks;
 
     public interface IExerciseEquipmentService
     {
-        public IEnumerable<TModel> GetAll<TModel>();
+        public Task<IEnumerable<TModel>> GetAllAsync<TModel>();
     }
 }
