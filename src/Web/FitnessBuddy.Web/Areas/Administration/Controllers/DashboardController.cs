@@ -45,7 +45,7 @@
                 ArticlesCount = await this.articlesService.GetCountAsync(),
                 PostsCount = await this.postsService.GetCountAsync(),
                 FoodsCount = await this.foodsService.GetCountAsync(),
-                RepliesCount = this.repliesService.GetCount(),
+                RepliesCount = await this.repliesService.GetCountAsync(),
             };
 
             return this.View(viewModel);

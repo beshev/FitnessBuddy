@@ -8,6 +8,7 @@
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
     using FitnessBuddy.Web.ViewModels.Replies;
+    using Microsoft.EntityFrameworkCore;
 
     public class RepliesService : IRepliesService
     {
@@ -47,7 +48,7 @@
             await this.repliesRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<TModel> GetAll<TModel>(int skip = 0, int? take = null)
+        public async Task<IEnumerable<TModel>> GetAllAsync<TModel>(int skip = 0, int? take = null)
         {
             IQueryable<Reply> query = this.repliesRepository
             .AllAsNoTracking()
@@ -58,38 +59,38 @@
                 query = query.Skip(skip).Take(take.Value);
             }
 
-            return query
+            return await query
                 .To<TModel>()
-                .AsEnumerable();
+                .ToListAsync();
         }
 
-        public TModel GetById<TModel>(int id)
-            => this.repliesRepository
+        public async Task<TModel> GetByIdAsync<TModel>(int id)
+            => await this.repliesRepository
             .AllAsNoTracking()
             .Where(x => x.Id == id)
             .To<TModel>()
-            .FirstOrDefault();
+            .FirstOrDefaultAsync();
 
-        public int GetCount()
-            => this.repliesRepository
+        public async Task<int> GetCountAsync()
+            => await this.repliesRepository
             .AllAsNoTracking()
-            .Count();
+            .CountAsync();
 
-        public int GetReplyPostId(int replyId)
-            => this.repliesRepository
+        public async Task<int> GetReplyPostIdAsync(int replyId)
+            => await this.repliesRepository
             .AllAsNoTracking()
             .Where(x => x.Id == replyId)
             .Select(x => x.PostId)
-            .FirstOrDefault();
+            .FirstOrDefaultAsync();
 
-        public bool IsExist(int replyId)
-            => this.repliesRepository
+        public async Task<bool> IsExistAsync(int replyId)
+            => await this.repliesRepository
             .AllAsNoTracking()
-            .Any(x => x.Id == replyId);
+            .AnyAsync(x => x.Id == replyId);
 
-        public bool IsUserAuthor(int replyId, string userId)
-            => this.repliesRepository
+        public async Task<bool> IsUserAuthorAsync(int replyId, string userId)
+            => await this.repliesRepository
             .AllAsNoTracking()
-            .Any(x => x.Id == replyId & x.AuthorId == userId);
+            .AnyAsync(x => x.Id == replyId & x.AuthorId == userId);
     }
 }

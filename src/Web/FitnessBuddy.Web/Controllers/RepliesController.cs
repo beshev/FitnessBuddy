@@ -16,9 +16,9 @@
             this.repliesService = repliesService;
         }
 
-        public IActionResult Add(int parentId)
+        public async Task<IActionResult> Add(int parentId)
         {
-            var viewModel = this.repliesService.GetById<ReplyViewModel>(parentId);
+            var viewModel = await this.repliesService.GetByIdAsync<ReplyViewModel>(parentId);
 
             if (viewModel == null)
             {
@@ -42,19 +42,19 @@
             return this.RedirectToAction("Details", "Posts", new { Id = model.PostId });
         }
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (this.repliesService.IsExist(id) == false)
+            if (await this.repliesService.IsExistAsync(id) == false)
             {
                 return this.NotFound();
             }
 
-            if (this.repliesService.IsUserAuthor(id, this.User.GetUserId()) == false)
+            if (await this.repliesService.IsUserAuthorAsync(id, this.User.GetUserId()) == false)
             {
                 return this.Unauthorized();
             }
 
-            var viewModel = this.repliesService.GetById<ReplyEditInputModel>(id);
+            var viewModel = await this.repliesService.GetByIdAsync<ReplyEditInputModel>(id);
 
             return this.View(viewModel);
         }
@@ -62,31 +62,31 @@
         [HttpPost]
         public async Task<IActionResult> Edit(ReplyEditInputModel model)
         {
-            if (this.repliesService.IsExist(model.Id) == false)
+            if (await this.repliesService.IsExistAsync(model.Id) == false)
             {
                 return this.NotFound();
             }
 
-            if (this.repliesService.IsUserAuthor(model.Id, this.User.GetUserId()) == false)
+            if (await this.repliesService.IsUserAuthorAsync(model.Id, this.User.GetUserId()) == false)
             {
                 return this.Unauthorized();
             }
 
             await this.repliesService.EditAsync(model);
 
-            var postId = this.repliesService.GetReplyPostId(model.Id);
+            var postId = await this.repliesService.GetReplyPostIdAsync(model.Id);
 
             return this.RedirectToAction("Details", "Posts", new { Id = postId });
         }
 
         public async Task<IActionResult> Delete(int replyId, int postId)
         {
-            if (this.repliesService.IsExist(replyId) == false)
+            if (await this.repliesService.IsExistAsync(replyId) == false)
             {
                 return this.NotFound();
             }
 
-            if (this.repliesService.IsUserAuthor(replyId, this.User.GetUserId()) == false)
+            if (await this.repliesService.IsUserAuthorAsync(replyId, this.User.GetUserId()) == false)
             {
                 return this.Unauthorized();
             }

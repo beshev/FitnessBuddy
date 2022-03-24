@@ -7,7 +7,7 @@
 
     public interface IRepliesService
     {
-        public IEnumerable<TModel> GetAll<TModel>(int skip = 0, int? take = null);
+        public Task<IEnumerable<TModel>> GetAllAsync<TModel>(int skip = 0, int? take = null);
 
         public Task AddAsync(ReplyInputModel model);
 
@@ -15,14 +15,14 @@
 
         public Task EditAsync(ReplyEditInputModel model);
 
-        public int GetReplyPostId(int replyId);
+        public Task<int> GetReplyPostIdAsync(int replyId);
 
-        public int GetCount();
+        public Task<int> GetCountAsync();
 
-        public TModel GetById<TModel>(int id);
+        public Task<TModel> GetByIdAsync<TModel>(int id);
 
-        public bool IsUserAuthor(int replyId, string userId);
+        public Task<bool> IsUserAuthorAsync(int replyId, string userId);
 
-        public bool IsExist(int replyId);
+        public Task<bool> IsExistAsync(int replyId);
     }
 }

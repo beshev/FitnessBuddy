@@ -16,7 +16,7 @@
             this.repliesService = repliesService;
         }
 
-        public IActionResult Index(int id = 1)
+        public async Task<IActionResult> Index(int id = 1)
         {
             if (id < 1)
             {
@@ -24,7 +24,7 @@
             }
 
             var repliesPerPage = 15;
-            int count = this.repliesService.GetCount();
+            int count = await this.repliesService.GetCountAsync();
             int pagesCount = (int)Math.Ceiling((double)count / repliesPerPage);
 
             if (pagesCount != 0 && id > pagesCount)
@@ -34,7 +34,7 @@
 
             var skip = (id - 1) * repliesPerPage;
 
-            var replies = this.repliesService.GetAll<ReplyViewModel>(skip, repliesPerPage);
+            var replies = await this.repliesService.GetAllAsync<ReplyViewModel>(skip, repliesPerPage);
 
             var viewModel = new AllRepliesViewModel
             {
@@ -48,14 +48,14 @@
             return this.View(viewModel);
         }
 
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return this.NotFound();
             }
 
-            var reply = this.repliesService.GetById<ReplyViewModel>(id.Value);
+            var reply = await this.repliesService.GetByIdAsync<ReplyViewModel>(id.Value);
 
             if (reply == null)
             {
