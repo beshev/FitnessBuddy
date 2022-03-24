@@ -5,6 +5,7 @@
 
     using FitnessBuddy.Data.Common.Repositories;
     using FitnessBuddy.Data.Models;
+    using Microsoft.EntityFrameworkCore;
 
     public class ArticlesRatingsService : IArticlesRatingsService
     {
@@ -15,13 +16,13 @@
             this.articlesRatingsRepository = articlesRatingsRepository;
         }
 
-        public double CalcAvgRate(int articleId)
+        public async Task<double> CalcAvgRateAsync(int articleId)
         {
-            var ratings = this.articlesRatingsRepository
+            var ratings = await this.articlesRatingsRepository
                 .AllAsNoTracking()
                 .Where(x => x.ArticleId == articleId)
                 .Select(x => x.Rating)
-                .AsEnumerable();
+                .ToListAsync();
 
             double avgRating = 0;
 

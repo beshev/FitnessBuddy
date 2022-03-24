@@ -6,6 +6,6 @@
     {
         public Task RateAsync(int articleId, string userId, double rating);
 
-        public double CalcAvgRate(int articleId);
+        public Task<double> CalcAvgRateAsync(int articleId);
     }
 }
