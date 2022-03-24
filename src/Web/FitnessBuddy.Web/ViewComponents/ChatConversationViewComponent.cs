@@ -18,11 +18,11 @@
         {
             var userId = this.UserClaimsPrincipal.GetUserId();
 
-            var conversations = this.messagesService.GetConversations<ConversationViewModel>(userId);
+            var conversations = this.messagesService.GetConversationsAsync<ConversationViewModel>(userId).GetAwaiter().GetResult();
 
             foreach (var currentUser in conversations)
             {
-                currentUser.LastActivity = this.messagesService.GetLastActivity(userId, currentUser.Id);
+                currentUser.LastActivity = this.messagesService.GetLastActivityAsync(userId, currentUser.Id).GetAwaiter().GetResult();
             }
 
             return this.View(conversations);

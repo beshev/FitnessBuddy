@@ -71,7 +71,7 @@
 
         public async Task DeleteMessage(int messageId)
         {
-            var message = this.messagesService.GetById<DeleteMessageModel>(messageId);
+            var message = await this.messagesService.GetByIdAsync<DeleteMessageModel>(messageId);
 
             if (message == null
                 || message.AuthorId != this.Context.User.GetUserId())

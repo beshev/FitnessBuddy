@@ -30,7 +30,7 @@
             {
                 ReceiverUsername = username,
                 ReceiverId = receiverId,
-                Messages = this.messagesService.GetMessages<MessageViewModel>(authorId, receiverId),
+                Messages = await this.messagesService.GetMessagesAsync<MessageViewModel>(authorId, receiverId),
             };
 
             return this.View(viewModel);

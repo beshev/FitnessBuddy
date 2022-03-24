@@ -9,6 +9,7 @@
     using FitnessBuddy.Data.Common.Repositories;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
+    using Microsoft.EntityFrameworkCore;
 
     public class MessagesService : IMessagesService
     {
@@ -31,14 +32,14 @@
             await this.messagesRepository.SaveChangesAsync();
         }
 
-        public TModel GetById<TModel>(int id)
-            => this.messagesRepository
+        public async Task<TModel> GetByIdAsync<TModel>(int id)
+            => await this.messagesRepository
             .AllAsNoTracking()
             .Where(x => x.Id == id)
             .To<TModel>()
-            .FirstOrDefault();
+            .FirstOrDefaultAsync();
 
-        public IEnumerable<TModel> GetConversations<TModel>(string userId)
+        public async Task<IEnumerable<TModel>> GetConversationsAsync<TModel>(string userId)
         {
             var sendMessages = this.messagesRepository
                 .All()
@@ -52,41 +53,36 @@
                 .OrderBy(x => x.CreatedOn)
                 .Select(x => x.Author);
 
-            var conversationsWithUsers = sendMessages
+            var conversationsWithUsers = await sendMessages
                 .Concat(receivedMessages)
                 .Where(x => x.Id != userId)
                 .Distinct()
                 .To<TModel>()
-                .ToList();
+                .ToListAsync();
 
             return conversationsWithUsers;
         }
 
-        public string GetLastActivity(string authorId, string receiverId)
-             => this.messagesRepository
+        public async Task<string> GetLastActivityAsync(string authorId, string receiverId)
+             => (await this.messagesRepository
             .AllAsNoTracking()
             .Where(x =>
                     (x.AuthorId == authorId && x.ReceiverId == receiverId)
                     || (x.AuthorId == receiverId && x.ReceiverId == authorId))
             .OrderByDescending(x => x.CreatedOn)
             .Select(x => x.CreatedOn)
-            .FirstOrDefault()
+            .FirstOrDefaultAsync())
             .ToString(GlobalConstants.DateTimeFormat, CultureInfo.InvariantCulture);
 
-        public IEnumerable<TModel> GetMessages<TModel>(string firstUserId, string secondUserId)
-            => this.messagesRepository
+        public async Task<IEnumerable<TModel>> GetMessagesAsync<TModel>(string firstUserId, string secondUserId)
+            => await this.messagesRepository
             .AllAsNoTrackingWithDeleted()
             .Where(x =>
                 (x.AuthorId == firstUserId && x.ReceiverId == secondUserId)
                 || (x.AuthorId == secondUserId && x.ReceiverId == firstUserId))
             .OrderBy(x => x.CreatedOn)
             .To<TModel>()
-            .AsEnumerable();
-
-        public bool IsExist(int id)
-            => this.messagesRepository
-            .AllAsNoTracking()
-            .Any(x => x.Id == id);
+            .ToListAsync();
 
         public async Task<int> SendMessageAsync(string authorId, string receiverId, string content)
         {
