@@ -18,7 +18,7 @@
         {
             var userId = this.UserClaimsPrincipal.GetUserId();
 
-            var viewModel = this.mealsService.GetUserMeals<SelectViewModel>(userId);
+            var viewModel = this.mealsService.GetUserMealsAsync<SelectViewModel>(userId).GetAwaiter().GetResult();
 
             return this.View(viewModel);
         }
