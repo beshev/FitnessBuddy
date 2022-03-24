@@ -43,7 +43,7 @@
                 UsersCount = await this.usersService.GetCountAsync(),
                 ExercisesCount = await this.exercisesService.GetCountAsync(),
                 ArticlesCount = await this.articlesService.GetCountAsync(),
-                PostsCount = this.postsService.GetCount(),
+                PostsCount = await this.postsService.GetCountAsync(),
                 FoodsCount = await this.foodsService.GetCountAsync(),
                 RepliesCount = this.repliesService.GetCount(),
             };

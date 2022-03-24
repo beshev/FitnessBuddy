@@ -17,7 +17,7 @@
             this.postsService = postsService;
         }
 
-        public IActionResult Index(int id = 1)
+        public async Task<IActionResult> Index(int id = 1)
         {
             if (id < 1)
             {
@@ -25,7 +25,7 @@
             }
 
             var postsPerPage = 15;
-            int count = this.postsService.GetCount();
+            int count = await this.postsService.GetCountAsync();
             int pagesCount = (int)Math.Ceiling((double)count / postsPerPage);
 
             if (pagesCount != 0 && id > pagesCount)
@@ -35,7 +35,7 @@
 
             var skip = (id - 1) * postsPerPage;
 
-            var posts = this.postsService.GetAll<PostViewModel>(null, skip, postsPerPage);
+            var posts = await this.postsService.GetAllAsync<PostViewModel>(null, skip, postsPerPage);
 
             var viewModel = new AllPostsViewModel
             {
@@ -49,14 +49,14 @@
             return this.View(viewModel);
         }
 
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return this.NotFound();
             }
 
-            var post = this.postsService.GetById<PostDetailsViewModel>(id.Value);
+            var post = await this.postsService.GetByIdAsync<PostDetailsViewModel>(id.Value);
 
             if (post == null)
             {
@@ -86,14 +86,14 @@
             return this.RedirectToAction(nameof(this.Index));
         }
 
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return this.NotFound();
             }
 
-            var post = this.postsService.GetById<PostInputModel>(id.Value);
+            var post = await this.postsService.GetByIdAsync<PostInputModel>(id.Value);
 
             if (post == null)
             {
@@ -107,7 +107,7 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(PostInputModel model)
         {
-            if (this.postsService.IsExist(model.Id) == false)
+            if (await this.postsService.IsExistAsync(model.Id) == false)
             {
                 return this.NotFound();
             }
@@ -122,14 +122,14 @@
             return this.RedirectToAction(nameof(this.Index));
         }
 
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return this.NotFound();
             }
 
-            var post = this.postsService.GetById<PostDetailsViewModel>(id.Value);
+            var post = await this.postsService.GetByIdAsync<PostDetailsViewModel>(id.Value);
 
             if (post == null)
             {

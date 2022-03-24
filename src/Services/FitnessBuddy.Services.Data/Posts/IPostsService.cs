@@ -7,15 +7,15 @@
 
     public interface IPostsService
     {
-        public IEnumerable<TModel> GetAll<TModel>(int? categoryId = null, int skip = 0, int? take = null);
+        public Task<IEnumerable<TModel>> GetAllAsync<TModel>(int? categoryId = null, int skip = 0, int? take = null);
 
-        public TModel GetById<TModel>(int id);
+        public Task<TModel> GetByIdAsync<TModel>(int id);
 
-        public int GetCount(int? categoryId = null);
+        public Task<int> GetCountAsync(int? categoryId = null);
 
-        public bool IsExist(int id);
+        public Task<bool> IsExistAsync(int id);
 
-        public bool IsUserAuthor(int postId, string userId);
+        public Task<bool> IsUserAuthorAsync(int postId, string userId);
 
         public Task CreateAsync(PostInputModel model);
 

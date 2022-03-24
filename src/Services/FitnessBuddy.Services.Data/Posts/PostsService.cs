@@ -8,6 +8,7 @@
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
     using FitnessBuddy.Web.ViewModels.Posts;
+    using Microsoft.EntityFrameworkCore;
 
     public class PostsService : IPostsService
     {
@@ -45,12 +46,12 @@
             await this.postsRepository.SaveChangesAsync();
         }
 
-        public TModel GetById<TModel>(int id)
-            => this.postsRepository
+        public async Task<TModel> GetByIdAsync<TModel>(int id)
+            => await this.postsRepository
             .AllAsNoTracking()
             .Where(x => x.Id == id)
             .To<TModel>()
-            .FirstOrDefault();
+            .FirstOrDefaultAsync();
 
         public async Task IncreaseViewsAsync(int id)
         {
@@ -61,12 +62,12 @@
             await this.postsRepository.SaveChangesAsync();
         }
 
-        public bool IsExist(int id)
-            => this.postsRepository
+        public async Task<bool> IsExistAsync(int id)
+            => await this.postsRepository
             .AllAsNoTracking()
-            .Any(x => x.Id == id);
+            .AnyAsync(x => x.Id == id);
 
-        public int GetCount(int? categoryId = null)
+        public async Task<int> GetCountAsync(int? categoryId = null)
         {
             var query = this.postsRepository
             .AllAsNoTracking();
@@ -76,15 +77,15 @@
                 query = query.Where(x => x.CategoryId == categoryId.Value);
             }
 
-            return query.Count();
+            return await query.CountAsync();
         }
 
-        public bool IsUserAuthor(int postId, string userId)
-            => this.postsRepository
+        public async Task<bool> IsUserAuthorAsync(int postId, string userId)
+            => await this.postsRepository
             .AllAsNoTracking()
-            .Any(x => x.Id == postId && x.AuthorId == userId);
+            .AnyAsync(x => x.Id == postId && x.AuthorId == userId);
 
-        public IEnumerable<TModel> GetAll<TModel>(int? categoryId = null, int skip = 0, int? take = null)
+        public async Task<IEnumerable<TModel>> GetAllAsync<TModel>(int? categoryId = null, int skip = 0, int? take = null)
         {
             IQueryable<Post> query = this.postsRepository
             .AllAsNoTracking();
@@ -102,8 +103,8 @@
                 query = query.Skip(skip).Take(take.Value);
             }
 
-            return query.To<TModel>()
-                .AsEnumerable();
+            return await query.To<TModel>()
+                .ToListAsync();
         }
 
         private Post GetById(int id)

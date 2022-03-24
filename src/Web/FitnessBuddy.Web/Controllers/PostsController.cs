@@ -37,7 +37,7 @@
             }
 
             var postsPerPage = 5;
-            int count = this.postsService.GetCount(categoryId);
+            int count = await this.postsService.GetCountAsync(categoryId);
             int pagesCount = (int)Math.Ceiling((double)count / postsPerPage);
 
             if (pagesCount != 0 && id > pagesCount)
@@ -47,7 +47,7 @@
 
             var skip = (id - 1) * postsPerPage;
 
-            var posts = this.postsService.GetAll<PostViewModel>(categoryId, skip, postsPerPage);
+            var posts = await this.postsService.GetAllAsync<PostViewModel>(categoryId, skip, postsPerPage);
 
             var viewModel = new AllPostsViewModel
             {
@@ -88,19 +88,19 @@
             return this.RedirectToAction(nameof(this.Category), new { model.CategoryId });
         }
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (this.postsService.IsExist(id) == false)
+            if (await this.postsService.IsExistAsync(id) == false)
             {
                 return this.NotFound();
             }
 
-            if (this.postsService.IsUserAuthor(id, this.User.GetUserId()) == false)
+            if (await this.postsService.IsUserAuthorAsync(id, this.User.GetUserId()) == false)
             {
                 return this.Unauthorized();
             }
 
-            var viewModel = this.postsService.GetById<PostInputModel>(id);
+            var viewModel = await this.postsService.GetByIdAsync<PostInputModel>(id);
 
             return this.View(viewModel);
         }
@@ -113,12 +113,12 @@
                 return this.View(model);
             }
 
-            if (this.postsService.IsExist(model.Id) == false)
+            if (await this.postsService.IsExistAsync(model.Id) == false)
             {
                 return this.NotFound();
             }
 
-            if (this.postsService.IsUserAuthor(model.Id, this.User.GetUserId()) == false)
+            if (await this.postsService.IsUserAuthorAsync(model.Id, this.User.GetUserId()) == false)
             {
                 return this.Unauthorized();
             }
@@ -128,28 +128,28 @@
             return this.RedirectToAction(nameof(this.Details), new { model.Id });
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (this.postsService.IsExist(id) == false)
+            if (await this.postsService.IsExistAsync(id) == false)
             {
                 return this.NotFound();
             }
 
-            var viewModel = this.postsService.GetById<PostDetailsViewModel>(id);
+            var viewModel = await this.postsService.GetByIdAsync<PostDetailsViewModel>(id);
 
-            this.postsService.IncreaseViewsAsync(id);
+            await this.postsService.IncreaseViewsAsync(id);
 
             return this.View(viewModel);
         }
 
         public async Task<IActionResult> Delete(int id)
         {
-            if (this.postsService.IsExist(id) == false)
+            if (await this.postsService.IsExistAsync(id) == false)
             {
                 return this.NotFound();
             }
 
-            if (this.postsService.IsUserAuthor(id, this.User.GetUserId()) == false)
+            if (await this.postsService.IsUserAuthorAsync(id, this.User.GetUserId()) == false)
             {
                 return this.Unauthorized();
             }
