@@ -22,14 +22,14 @@
             this.postsService = postsService;
         }
 
-        public IActionResult Categories()
+        public async Task<IActionResult> Categories()
         {
-            var viewModel = this.postCategoriesService.GetAll<PostCategoryViewModel>();
+            var viewModel = await this.postCategoriesService.GetAllAsync<PostCategoryViewModel>();
 
             return this.View(viewModel);
         }
 
-        public IActionResult Category(int categoryId, int id = 1)
+        public async Task<IActionResult> Category(int categoryId, int id = 1)
         {
             if (id < 1)
             {
@@ -54,7 +54,7 @@
                 PageNumber = id,
                 PagesCount = pagesCount,
                 Posts = posts,
-                CategoryName = this.postCategoriesService.GetName(categoryId),
+                CategoryName = await this.postCategoriesService.GetNameAsync(categoryId),
                 CategoryId = categoryId,
             };
 
@@ -69,7 +69,7 @@
         [HttpPost]
         public async Task<IActionResult> Create(PostInputModel model)
         {
-            if (this.postCategoriesService.IsExist(model.CategoryId) == false)
+            if (await this.postCategoriesService.IsExistAsync(model.CategoryId) == false)
             {
                 this.ModelState.AddModelError("Category", "Invalid category!");
             }

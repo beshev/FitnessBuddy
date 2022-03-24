@@ -1,15 +1,16 @@
 ﻿namespace FitnessBuddy.Services.Data.Posts
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public interface IPostCategoriesService
     {
-        public IEnumerable<TModel> GetAll<TModel>();
+        public Task<IEnumerable<TModel>> GetAllAsync<TModel>();
 
-        public int GetCategoryPostsCount(int categoryId);
+        public Task<int> GetCategoryPostsCountAsync(int categoryId);
 
-        public string GetName(int categoryId);
+        public Task<string> GetNameAsync(int categoryId);
 
-        public bool IsExist(int categoryId);
+        public Task<bool> IsExistAsync(int categoryId);
     }
 }

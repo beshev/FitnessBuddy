@@ -2,10 +2,12 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     using FitnessBuddy.Data.Common.Repositories;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
+    using Microsoft.EntityFrameworkCore;
 
     public class PostCategoriesService : IPostCategoriesService
     {
@@ -16,28 +18,28 @@
             this.postCategoriesRepository = postCategoriesRepository;
         }
 
-        public IEnumerable<TModel> GetAll<TModel>()
-            => this.postCategoriesRepository
+        public async Task<IEnumerable<TModel>> GetAllAsync<TModel>()
+            => await this.postCategoriesRepository
             .AllAsNoTracking()
             .To<TModel>()
-            .AsEnumerable();
+            .ToListAsync();
 
-        public int GetCategoryPostsCount(int categoryId)
-            => this.postCategoriesRepository
+        public async Task<int> GetCategoryPostsCountAsync(int categoryId)
+            => await this.postCategoriesRepository
             .AllAsNoTracking()
             .Where(x => x.Id == categoryId)
-            .Count();
+            .CountAsync();
 
-        public string GetName(int categoryId)
-            => this.postCategoriesRepository
+        public async Task<string> GetNameAsync(int categoryId)
+            => await this.postCategoriesRepository
             .AllAsNoTracking()
             .Where(x => x.Id == categoryId)
             .Select(x => x.Name)
-            .FirstOrDefault();
+            .FirstOrDefaultAsync();
 
-        public bool IsExist(int categoryId)
-            => this.postCategoriesRepository
+        public async Task<bool> IsExistAsync(int categoryId)
+            => await this.postCategoriesRepository
             .AllAsNoTracking()
-            .Any(x => x.Id == categoryId);
+            .AnyAsync(x => x.Id == categoryId);
     }
 }
