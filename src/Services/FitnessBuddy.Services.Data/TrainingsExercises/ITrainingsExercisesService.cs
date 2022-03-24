@@ -11,10 +11,10 @@
 
         public Task RemoveAsync(int id);
 
-        public bool IsExist(int id);
+        public Task<bool> IsExistAsync(int id);
 
-        public bool IsForUser(int id, string userId);
+        public Task<bool> IsForUserAsync(int id, string userId);
 
-        public IEnumerable<TModel> GetTrainingExercises<TModel>(int id);
+        public Task<IEnumerable<TModel>> GetTrainingExercisesAsync<TModel>(int id);
     }
 }

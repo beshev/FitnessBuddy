@@ -42,8 +42,8 @@
             {
                 TrainingName = trainingName,
                 Trainings = trainings,
-                TrainingExercises = this.trainingsExercisesService
-                .GetTrainingExercises<TrainingExerciseViewModel>(trainingId),
+                TrainingExercises = await this.trainingsExercisesService
+                .GetTrainingExercisesAsync<TrainingExerciseViewModel>(trainingId),
             };
 
             return this.View(viewModel);
@@ -106,12 +106,12 @@
 
         public async Task<IActionResult> RemoveExercise(int trainingExerciseId, string name)
         {
-            if (this.trainingsExercisesService.IsExist(trainingExerciseId) == false)
+            if (await this.trainingsExercisesService.IsExistAsync(trainingExerciseId) == false)
             {
                 return this.NotFound();
             }
 
-            if (this.trainingsExercisesService.IsForUser(trainingExerciseId, this.User.GetUserId()) == false)
+            if (await this.trainingsExercisesService.IsForUserAsync(trainingExerciseId, this.User.GetUserId()) == false)
             {
                 return this.Unauthorized();
             }

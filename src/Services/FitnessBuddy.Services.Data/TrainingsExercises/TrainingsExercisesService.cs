@@ -8,6 +8,7 @@
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
     using FitnessBuddy.Web.ViewModels.Trainings;
+    using Microsoft.EntityFrameworkCore;
 
     public class TrainingsExercisesService : ITrainingsExercisesService
     {
@@ -47,22 +48,22 @@
             await this.trainingExerciseRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<TModel> GetTrainingExercises<TModel>(int id)
-            => this.trainingExerciseRepository
+        public async Task<IEnumerable<TModel>> GetTrainingExercisesAsync<TModel>(int id)
+            => await this.trainingExerciseRepository
             .AllAsNoTracking()
             .Where(x => x.TrainingId == id)
             .To<TModel>()
-            .AsEnumerable();
+            .ToListAsync();
 
-        public bool IsExist(int id)
-            => this.trainingExerciseRepository
+        public async Task<bool> IsExistAsync(int id)
+            => await this.trainingExerciseRepository
             .AllAsNoTracking()
-            .Any(x => x.Id == id);
+            .AnyAsync(x => x.Id == id);
 
-        public bool IsForUser(int id, string userId)
-            => this.trainingExerciseRepository
+        public async Task<bool> IsForUserAsync(int id, string userId)
+            => await this.trainingExerciseRepository
             .AllAsNoTracking()
-            .Any(x => x.Id == id && x.Training.ForUserId == userId);
+            .AnyAsync(x => x.Id == id && x.Training.ForUserId == userId);
 
         public async Task RemoveAsync(int id)
         {
