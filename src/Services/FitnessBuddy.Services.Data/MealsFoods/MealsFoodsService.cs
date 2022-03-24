@@ -42,16 +42,16 @@
             return mealFood;
         }
 
-        public bool Contains(int mealFoodId)
-            => this.mealFoodRepository
+        public async Task<bool> ContainsAsync(int mealFoodId)
+            => await this.mealFoodRepository
             .AllAsNoTracking()
-            .Any(x => x.Id == mealFoodId);
+            .AnyAsync(x => x.Id == mealFoodId);
 
-        public MealFood GetById(int mealFoodId)
-            => this.mealFoodRepository
+        public async Task<MealFood> GetByIdAsync(int mealFoodId)
+            => await this.mealFoodRepository
             .All()
             .Include(x => x.Meal)
-            .FirstOrDefault(x => x.Id == mealFoodId);
+            .FirstOrDefaultAsync(x => x.Id == mealFoodId);
 
         public async Task<MealFood> DeleteAsync(MealFood mealFood)
         {

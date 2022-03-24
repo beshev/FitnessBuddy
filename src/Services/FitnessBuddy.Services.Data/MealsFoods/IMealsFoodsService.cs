@@ -7,9 +7,9 @@
 
     public interface IMealsFoodsService
     {
-        public MealFood GetById(int mealFoodId);
+        public Task<MealFood> GetByIdAsync(int mealFoodId);
 
-        public bool Contains(int mealFoodId);
+        public Task<bool> ContainsAsync(int mealFoodId);
 
         public Task<MealFood> DeleteAsync(MealFood mealFood);
 

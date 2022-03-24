@@ -75,7 +75,7 @@
 
         public async Task<IActionResult> RemoveFood(int mealFoodId)
         {
-            var mealFood = this.mealsFoodsService.GetById(mealFoodId);
+            var mealFood = await this.mealsFoodsService.GetByIdAsync(mealFoodId);
 
             if (mealFood == null)
             {
