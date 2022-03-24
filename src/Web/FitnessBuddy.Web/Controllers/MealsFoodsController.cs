@@ -30,7 +30,7 @@
             this.usersService = usersService;
         }
 
-        public IActionResult AddFood(int foodId, int mealId = 0)
+        public async Task<IActionResult> AddFood(int foodId, int mealId = 0)
         {
             var viewModel = this.foodsService.GetByIdAsNoTracking<MealFoodInputModel>(foodId);
 
@@ -42,7 +42,7 @@
             var userId = this.User.GetUserId();
 
             viewModel.UserId = userId;
-            viewModel.HasMeals = this.usersService.HasMeal(userId);
+            viewModel.HasMeals = await this.usersService.HasMealAsync(userId);
 
             this.ViewData["Selected"] = mealId;
 

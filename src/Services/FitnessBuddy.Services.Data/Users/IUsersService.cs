@@ -9,41 +9,41 @@
 
     public interface IUsersService
     {
-        public TModel GetUserInfo<TModel>(string userId);
+        public Task<TModel> GetUserInfoAsync<TModel>(string userId);
 
-        public IEnumerable<TModel> GetFollowers<TModel>(string userId);
+        public Task<IEnumerable<TModel>> GetFollowersAsync<TModel>(string userId);
 
-        public IEnumerable<TModel> GetFollowing<TModel>(string userId);
+        public Task<IEnumerable<TModel>> GetFollowingAsync<TModel>(string userId);
 
-        public IEnumerable<TModel> GetAll<TModel>(string username = "", int skip = 0, int? take = null);
+        public Task<IEnumerable<TModel>> GetAllAsync<TModel>(string username = "", int skip = 0, int? take = null);
 
         public Task AddFoodToFavoriteAsync(string userId, Food food);
 
         public Task RemoveFoodFromFavoriteAsync(string userId, Food food);
 
-        public ProfileViewModel GetProfileData(string userId);
+        public Task<ProfileViewModel> GetProfileDataAsync(string userId);
 
-        public IEnumerable<FoodViewModel> GetFavoriteFoods(string userId, int skip = 0, int? take = null);
+        public Task<IEnumerable<FoodViewModel>> GetFavoriteFoodsAsync(string userId, int skip = 0, int? take = null);
 
-        public int FavoriteFoodsCount(string userId);
+        public Task<int> FavoriteFoodsCountAsync(string userId);
 
         public Task BanUserAsync(string username, string banReason);
 
         public Task UnbanUserAsync(string username);
 
-        public int GetCount();
+        public Task<int> GetCountAsync();
 
-        public bool IsFoodFavorite(string userId, int foodId);
+        public Task<bool> IsFoodFavoriteAsync(string userId, int foodId);
 
-        public bool HasMeal(string userId);
+        public Task<bool> HasMealAsync(string userId);
 
-        public bool IsUserBanned(string userId);
+        public Task<bool> IsUserBannedAsync(string userId);
 
-        public string GetIdByUsername(string username);
+        public Task<string> GetIdByUsernameAsync(string username);
 
-        public string GetUsernameById(string userId);
+        public Task<string> GetUsernameByIdAsync(string userId);
 
-        public bool IsUsernameExist(string username);
+        public Task<bool> IsUsernameExistAsync(string username);
 
         public Task EditAsync(string userId, UserInputModel model, string picturePath);
     }

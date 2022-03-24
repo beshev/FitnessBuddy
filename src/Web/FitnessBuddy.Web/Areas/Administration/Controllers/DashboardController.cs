@@ -1,5 +1,7 @@
 ﻿namespace FitnessBuddy.Web.Areas.Administration.Controllers
 {
+    using System.Threading.Tasks;
+
     using FitnessBuddy.Services.Data.Articles;
     using FitnessBuddy.Services.Data.Exercises;
     using FitnessBuddy.Services.Data.Foods;
@@ -34,11 +36,11 @@
             this.repliesService = repliesService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var viewModel = new IndexViewModel
             {
-                UsersCount = this.usersService.GetCount(),
+                UsersCount = await this.usersService.GetCountAsync(),
                 ExercisesCount = this.exercisesService.GetCount(),
                 ArticlesCount = this.articlesService.GetCount(),
                 PostsCount = this.postsService.GetCount(),

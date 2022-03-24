@@ -82,7 +82,7 @@
             await this.usersRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<FoodViewModel> GetFavoriteFoods(string userId, int skip = 0, int? take = null)
+        public async Task<IEnumerable<FoodViewModel>> GetFavoriteFoodsAsync(string userId, int skip = 0, int? take = null)
         {
             var query = this.usersRepository
                 .AllAsNoTracking()
@@ -96,47 +96,47 @@
                     .Take(take.Value);
             }
 
-            return query
+            return await query
                 .To<FoodViewModel>()
-                .AsEnumerable();
+                .ToListAsync();
         }
 
-        public TViewModel GetUserInfo<TViewModel>(string userId)
-            => this.usersRepository
+        public async Task<TModel> GetUserInfoAsync<TModel>(string userId)
+            => await this.usersRepository
                 .AllAsNoTracking()
                 .Where(x => x.Id == userId)
-                .To<TViewModel>()
-                .FirstOrDefault();
+                .To<TModel>()
+                .FirstOrDefaultAsync();
 
-        public bool IsFoodFavorite(string userId, int foodId)
-            => this.usersRepository
+        public async Task<bool> IsFoodFavoriteAsync(string userId, int foodId)
+            => await this.usersRepository
                 .AllAsNoTracking()
                 .Where(x => x.Id == userId)
                 .SelectMany(x => x.FavoriteFoods)
-                .Any(x => x.Id == foodId);
+                .AnyAsync(x => x.Id == foodId);
 
-        public bool HasMeal(string userId)
-            => this.usersRepository
+        public async Task<bool> HasMealAsync(string userId)
+            => await this.usersRepository
             .AllAsNoTracking()
             .Where(x => x.Id == userId)
-            .Any(x => x.Meals.Count > 0);
+            .AnyAsync(x => x.Meals.Count > 0);
 
-        public bool IsUsernameExist(string username)
-            => this.usersRepository
+        public async Task<bool> IsUsernameExistAsync(string username)
+            => await this.usersRepository
             .AllAsNoTracking()
-            .Any(x => x.UserName == username);
+            .AnyAsync(x => x.UserName == username);
 
-        public int FavoriteFoodsCount(string userId)
-            => this.usersRepository
+        public async Task<int> FavoriteFoodsCountAsync(string userId)
+            => await this.usersRepository
             .AllAsNoTracking()
             .Where(x => x.Id == userId)
             .SelectMany(x => x.FavoriteFoods)
-            .Count();
+            .CountAsync();
 
-        public ProfileViewModel GetProfileData(string userId)
+        public async Task<ProfileViewModel> GetProfileDataAsync(string userId)
         {
-            var userInfo = this.GetUserInfo<UserViewModel>(userId);
-            var userMeals = this.mealsService.GetUserMeals<MealViewModel>(userId);
+            var userInfo = await this.GetUserInfoAsync<UserViewModel>(userId);
+            var userMeals = await this.mealsService.GetUserMealsAsync<MealViewModel>(userId);
 
             var profileInfo = AutoMapperConfig.MapperInstance.Map<IEnumerable<MealViewModel>, ProfileViewModel>(userMeals);
             profileInfo.UserInfo = userInfo;
@@ -144,14 +144,14 @@
             return profileInfo;
         }
 
-        public string GetIdByUsername(string username)
-            => this.usersRepository
+        public async Task<string> GetIdByUsernameAsync(string username)
+            => await this.usersRepository
             .AllAsNoTracking()
             .Where(x => x.UserName == username)
             .Select(x => x.Id)
-            .FirstOrDefault();
+            .FirstOrDefaultAsync();
 
-        public IEnumerable<TModel> GetAll<TModel>(string username = "", int skip = 0, int? take = null)
+        public async Task<IEnumerable<TModel>> GetAllAsync<TModel>(string username = "", int skip = 0, int? take = null)
         {
             IQueryable<ApplicationUser> query = this.usersRepository
             .AllAsNoTracking()
@@ -170,30 +170,30 @@
                     .Take(take.Value);
             }
 
-            return query.To<TModel>()
-            .AsEnumerable();
+            return await query.To<TModel>()
+            .ToListAsync();
         }
 
-        public IEnumerable<TModel> GetFollowers<TModel>(string userId)
-            => this.usersRepository
+        public async Task<IEnumerable<TModel>> GetFollowersAsync<TModel>(string userId)
+            => await this.usersRepository
             .AllAsNoTracking()
             .Where(x => x.Id == userId)
             .SelectMany(x => x.Followers)
             .To<TModel>()
-            .AsEnumerable();
+            .ToListAsync();
 
-        public IEnumerable<TModel> GetFollowing<TModel>(string userId)
-        => this.usersRepository
+        public async Task<IEnumerable<TModel>> GetFollowingAsync<TModel>(string userId)
+        => await this.usersRepository
             .AllAsNoTracking()
             .Where(x => x.Id == userId)
             .SelectMany(x => x.Following)
             .To<TModel>()
-            .AsEnumerable();
+            .ToListAsync();
 
-        public int GetCount()
-            => this.usersRepository
+        public async Task<int> GetCountAsync()
+            => await this.usersRepository
             .AllAsNoTracking()
-            .Count();
+            .CountAsync();
 
         public async Task BanUserAsync(string username, string banReason)
         {
@@ -221,18 +221,18 @@
             await this.usersRepository.SaveChangesAsync();
         }
 
-        public bool IsUserBanned(string userId)
-            => this.usersRepository
+        public async Task<bool> IsUserBannedAsync(string userId)
+            => await this.usersRepository
             .AllAsNoTracking()
             .Where(x => x.Id == userId)
             .Select(x => x.IsBanned)
-            .FirstOrDefault();
+            .FirstOrDefaultAsync();
 
-        public string GetUsernameById(string userId)
-            => this.usersRepository
+        public  async Task<string> GetUsernameByIdAsync(string userId)
+            => await this.usersRepository
             .AllAsNoTracking()
             .Where(x => x.Id == userId)
             .Select(x => x.UserName)
-            .FirstOrDefault();
+            .FirstOrDefaultAsync();
     }
 }

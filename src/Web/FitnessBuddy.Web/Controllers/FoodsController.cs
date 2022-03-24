@@ -92,7 +92,7 @@
             return this.View(viewModel);
         }
 
-        public IActionResult Favorites(int id = 1)
+        public async Task<IActionResult> Favorites(int id = 1)
         {
             if (id < 1)
             {
@@ -100,7 +100,7 @@
             }
 
             var userId = this.User.GetUserId();
-            int count = this.usersService.FavoriteFoodsCount(userId);
+            int count = await this.usersService.FavoriteFoodsCountAsync(userId);
             int pagesCount = (int)Math.Ceiling((double)count / FoodsPerPage);
 
             if (pagesCount > 0 && id > pagesCount)
@@ -109,7 +109,7 @@
             }
 
             int skip = (id - 1) * FoodsPerPage;
-            var foods = this.usersService.GetFavoriteFoods(userId, skip, FoodsPerPage);
+            var foods = await this.usersService.GetFavoriteFoodsAsync(userId, skip, FoodsPerPage);
 
             var viewModel = new AllFoodsViewModel
             {

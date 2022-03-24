@@ -43,7 +43,7 @@ else
                     <ul class="list-group list-group-flush">
                         @if (this.User.Identity.IsAuthenticated)
                         {
-                            @if (this.userService.IsFoodFavorite(this.User.GetUserId(), food.Id) == false)
+                            @if (await this.userService.IsFoodFavoriteAsync(this.User.GetUserId(), food.Id) == false)
                             {
                                 <li class="list-group-item text-center">
                                     <a asp-action="AddToFavorite" asp-controller="Foods" asp-route-foodId="@food.Id" asp-route-pageNumber="@Model.PageNumber" class="btn btn-outline-secondary btn-sm text-center">

@@ -16,7 +16,7 @@
             this.usersService = usersService;
         }
 
-        public IActionResult All(int id = 1)
+        public async Task<IActionResult> All(int id = 1)
         {
             if (id < 1)
             {
@@ -24,7 +24,7 @@
             }
 
             var usersPerPage = 15;
-            int count = this.usersService.GetCount();
+            int count = await this.usersService.GetCountAsync();
             int pagesCount = (int)Math.Ceiling((double)count / usersPerPage);
 
             if (pagesCount != 0 && id > pagesCount)
@@ -34,7 +34,7 @@
 
             var skip = (id - 1) * usersPerPage;
 
-            var users = this.usersService.GetAll<AdministrationUserViewModel>(null, skip, usersPerPage);
+            var users = await this.usersService.GetAllAsync<AdministrationUserViewModel>(null, skip, usersPerPage);
 
             var viewModel = new AllUsersViewModel
             {

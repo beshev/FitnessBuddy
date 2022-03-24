@@ -34,7 +34,7 @@
         {
             string userId = this.User.GetUserId();
             var allMeals = await this.mealsService.GetUserMealsAsync<MealViewModel>(userId);
-            var userNutrients = this.usersService.GetUserInfo<UserTargetNutrientsViewModel>(userId);
+            var userNutrients = await this.usersService.GetUserInfoAsync<UserTargetNutrientsViewModel>(userId);
 
             var viewModel = new AllMealsViewModel
             {

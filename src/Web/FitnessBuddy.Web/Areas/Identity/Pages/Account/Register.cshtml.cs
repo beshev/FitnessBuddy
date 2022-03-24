@@ -25,7 +25,6 @@
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> signInManager;
-        private readonly RoleManager<ApplicationRole> roleManager;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ILogger<RegisterModel> logger;
         private readonly IUsersService usersService;
@@ -34,14 +33,12 @@
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            RoleManager<ApplicationRole> roleManager,
             ILogger<RegisterModel> logger,
             IUsersService usersService,
             IEmailSender emailSender)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
-            this.roleManager = roleManager;
             this.logger = logger;
             this.usersService = usersService;
             this.emailSender = emailSender;
@@ -119,7 +116,7 @@
             this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (this.ModelState.IsValid)
             {
-                if (this.usersService.IsUsernameExist(this.Input.Username))
+                if (await this.usersService.IsUsernameExistAsync(this.Input.Username))
                 {
                     this.ModelState.AddModelError(nameof(this.Input.Username), "There is already user with that username.");
                     return this.Page();

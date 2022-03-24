@@ -41,7 +41,7 @@
             this.ViewData[GlobalConstants.NameOfTab] = tab.ToLower();
 
             var loggedUserId = this.User.GetUserId();
-            var userId = this.userService.GetIdByUsername(username);
+            var userId = await this.userService.GetIdByUsernameAsync(username);
 
             if (string.IsNullOrWhiteSpace(userId))
             {
@@ -52,12 +52,12 @@
 
             if (tab == GlobalConstants.NameOfFollowers)
             {
-                viewModel.Followers = this.userService.GetFollowers<UserFollowers>(userId);
+                viewModel.Followers = await this.userService.GetFollowersAsync<UserFollowers>(userId);
             }
 
             if (tab == GlobalConstants.NameOfFollowing)
             {
-                viewModel.Following = this.userService.GetFollowing<UserFollowing>(userId);
+                viewModel.Following = await this.userService.GetFollowingAsync<UserFollowing>(userId);
             }
 
             viewModel.IsMyProfile = userId == loggedUserId;
@@ -69,7 +69,7 @@
 
         public async Task<IActionResult> Follow(string username)
         {
-            var userId = this.userService.GetIdByUsername(username);
+            var userId = await this.userService.GetIdByUsernameAsync(username);
             var followerId = this.User.GetUserId();
 
             if (userId == null)
@@ -89,7 +89,7 @@
 
         public async Task<IActionResult> UnFollow(string username)
         {
-            var userId = this.userService.GetIdByUsername(username);
+            var userId = await this.userService.GetIdByUsernameAsync(username);
             var followerId = this.User.GetUserId();
 
             if (userId == null)
@@ -107,7 +107,7 @@
             return this.RedirectToAction(nameof(this.Profile), new { Username = username });
         }
 
-        public IActionResult All(int id = 1, string username = "")
+        public async Task<IActionResult> All(int id = 1, string username = "")
         {
             this.ViewData["Username"] = username;
 
@@ -117,7 +117,7 @@
             }
 
             var usersPerPage = 6;
-            int count = this.userService.GetCount();
+            int count = await this.userService.GetCountAsync();
             int pagesCount = (int)Math.Ceiling((double)count / usersPerPage);
 
             if (pagesCount != 0 && id > pagesCount)
@@ -127,7 +127,7 @@
 
             var skip = (id - 1) * usersPerPage;
 
-            var users = this.userService.GetAll<ShortUserViewModel>(username, skip, usersPerPage);
+            var users = await this.userService.GetAllAsync<ShortUserViewModel>(username, skip, usersPerPage);
 
             var viewModel = new UserListViewModel
             {
@@ -145,7 +145,7 @@
         {
             var userId = this.User.GetUserId();
 
-            var viewModel = this.userService.GetUserInfo<UserInputModel>(userId);
+            var viewModel = this.userService.GetUserInfoAsync<UserInputModel>(userId);
 
             return this.View(viewModel);
         }

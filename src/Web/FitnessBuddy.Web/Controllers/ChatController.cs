@@ -21,10 +21,10 @@
             this.usersService = usersService;
         }
 
-        public IActionResult WithUser(string username = "")
+        public async Task<IActionResult> WithUser(string username = "")
         {
             var authorId = this.User.GetUserId();
-            var receiverId = this.usersService.GetIdByUsername(username);
+            var receiverId = await this.usersService.GetIdByUsernameAsync(username);
 
             var viewModel = new UserChatViewModel
             {

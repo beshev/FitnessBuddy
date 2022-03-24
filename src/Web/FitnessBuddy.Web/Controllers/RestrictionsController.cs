@@ -1,5 +1,7 @@
 ﻿namespace FitnessBuddy.Web.Controllers
 {
+    using System.Threading.Tasks;
+
     using FitnessBuddy.Services.Data.Users;
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Restrictions;
@@ -16,16 +18,16 @@
             this.usersService = usersService;
         }
 
-        public IActionResult Ban()
+        public async Task<IActionResult> Ban()
         {
             var userId = this.User.GetUserId();
 
-            if (this.usersService.IsUserBanned(userId) == false)
+            if (await this.usersService.IsUserBannedAsync(userId) == false)
             {
                 return this.NotFound();
             }
 
-            var viewModel = this.usersService.GetUserInfo<UserBanViewModel>(userId);
+            var viewModel = await this.usersService.GetUserInfoAsync<UserBanViewModel>(userId);
 
             return this.View(viewModel);
         }
