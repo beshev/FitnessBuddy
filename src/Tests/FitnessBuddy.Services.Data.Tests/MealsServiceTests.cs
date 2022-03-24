@@ -169,7 +169,7 @@
 
             var userId = "2";
 
-            var actualList = await service.GetUserMeals<MealViewModel>(userId);
+            var actualList = await service.GetUserMealsAsync<MealViewModel>(userId);
 
             Assert.Empty(actualList);
         }
@@ -192,7 +192,7 @@
 
             var userId = "1";
 
-            var actualList = (await service.GetUserMeals<MealViewModel>(userId)).ToList();
+            var actualList = (await service.GetUserMealsAsync<MealViewModel>(userId)).ToList();
 
             Assert.Equal(2, actualList.Count);
             Assert.Equal("Test", actualList[0].Name);
