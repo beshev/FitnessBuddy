@@ -14,7 +14,9 @@
         public static void InitializeAutoMapper()
         {
             var config = new MapperConfigurationExpression();
+            config.CreateMap<Exercise, Exercise>();
             config.CreateMap<Article, Article>();
+            config.CreateMap<ExerciseCategory, ExerciseCategory>();
             config.CreateMap<ArticleInputModel, Article>();
             config.CreateMap<ArticleCategory, ArticleCategory>();
             config.CreateMap<Meal, Meal>();
