@@ -22,6 +22,7 @@
             }
 
             var config = new MapperConfigurationExpression();
+            config.CreateMap<ExerciseEquipment, ExerciseEquipment>();
             config.CreateMap<Exercise, Exercise>();
             config.CreateMap<Article, Article>();
             config.CreateMap<ExerciseCategory, ExerciseCategory>();
