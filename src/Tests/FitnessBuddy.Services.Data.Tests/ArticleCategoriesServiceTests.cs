@@ -4,15 +4,10 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using AutoMapper;
-    using FitnessBuddy.Data.Common.Models;
-    using FitnessBuddy.Data.Common.Repositories;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Data.Articles;
-    using FitnessBuddy.Services.Mapping;
     using FluentAssertions;
     using MockQueryable.Moq;
-    using Moq;
     using Xunit;
 
     public class ArticleCategoriesServiceTests
@@ -28,7 +23,7 @@
                 new ArticleCategory { ImageUrl = "321", Name = "Test 2", Id = 1 },
             };
 
-            var mockRepo = this.MockDeletableRepository<ArticleCategory>();
+            var mockRepo = MockRepo.MockDeletableRepository<ArticleCategory>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(expected.AsQueryable().BuildMock());
 
             var service = new ArticleCategoriesService(mockRepo.Object);
@@ -46,7 +41,7 @@
 
             var list = new List<ArticleCategory>();
 
-            var mockRepo = this.MockDeletableRepository<ArticleCategory>();
+            var mockRepo = MockRepo.MockDeletableRepository<ArticleCategory>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new ArticleCategoriesService(mockRepo.Object);
@@ -82,7 +77,7 @@
                 new ArticleCategory { Id = 1, Name = "TestCategory",  Articles = articles },
             };
 
-            var mockRepo = this.MockDeletableRepository<ArticleCategory>();
+            var mockRepo = MockRepo.MockDeletableRepository<ArticleCategory>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(categories.AsQueryable().BuildMock());
 
             var service = new ArticleCategoriesService(mockRepo.Object);
@@ -103,7 +98,7 @@
                 new ArticleCategory { Id = 2, Name = "TestCategory",  Articles = new List<Article>() },
             };
 
-            var mockRepo = this.MockDeletableRepository<ArticleCategory>();
+            var mockRepo = MockRepo.MockDeletableRepository<ArticleCategory>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(categories.AsQueryable().BuildMock());
 
             var service = new ArticleCategoriesService(mockRepo.Object);
@@ -121,7 +116,7 @@
                 new ArticleCategory { Name = "Test" },
             };
 
-            var mockRepo = this.MockDeletableRepository<ArticleCategory>();
+            var mockRepo = MockRepo.MockDeletableRepository<ArticleCategory>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new ArticleCategoriesService(mockRepo.Object);
@@ -137,18 +132,12 @@
                 new ArticleCategory { Name = "Test" },
             };
 
-            var mockRepo = this.MockDeletableRepository<ArticleCategory>();
+            var mockRepo = MockRepo.MockDeletableRepository<ArticleCategory>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new ArticleCategoriesService(mockRepo.Object);
 
             (await service.IsExistAsync("Test2")).Should().BeFalse();
-        }
-
-        private Mock<IDeletableEntityRepository<TEntity>> MockDeletableRepository<TEntity>()
-            where TEntity : class, IDeletableEntity
-        {
-            return new Mock<IDeletableEntityRepository<TEntity>>();
         }
     }
 }

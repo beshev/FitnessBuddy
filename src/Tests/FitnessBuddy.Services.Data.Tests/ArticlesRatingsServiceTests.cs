@@ -4,11 +4,8 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using AutoMapper;
-    using FitnessBuddy.Data.Common.Repositories;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Data.ArticlesRatings;
-    using FitnessBuddy.Services.Mapping;
     using FluentAssertions;
     using MockQueryable.Moq;
     using Moq;
@@ -44,7 +41,7 @@
                 },
             };
 
-            var mockRepo = this.MockRepository<ArticleRating>();
+            var mockRepo = MockRepo.MockRepository<ArticleRating>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new ArticlesRatingsService(mockRepo.Object);
@@ -77,7 +74,7 @@
                 },
             };
 
-            var mockRepo = this.MockRepository<ArticleRating>();
+            var mockRepo = MockRepo.MockRepository<ArticleRating>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new ArticlesRatingsService(mockRepo.Object);
@@ -94,7 +91,7 @@
         {
             var list = new List<ArticleRating>();
 
-            var mockRepo = this.MockRepository<ArticleRating>();
+            var mockRepo = MockRepo.MockRepository<ArticleRating>();
             mockRepo.Setup(x => x.All()).Returns(list.AsQueryable().BuildMock());
             mockRepo.Setup(x => x.AddAsync(It.IsAny<ArticleRating>()))
                 .Callback((ArticleRating articleRating) => list.Add(articleRating));
@@ -120,7 +117,7 @@
         {
             var list = new List<ArticleRating>();
 
-            var mockRepo = this.MockRepository<ArticleRating>();
+            var mockRepo = MockRepo.MockRepository<ArticleRating>();
             mockRepo.Setup(x => x.All()).Returns(list.AsQueryable().BuildMock());
             mockRepo.Setup(x => x.AddAsync(It.IsAny<ArticleRating>()))
                 .Callback((ArticleRating articleRating) => list.Add(articleRating));
@@ -137,12 +134,6 @@
 
             list.Should().HaveCount(1);
             list[0].Rating.Should().Be(secondRate);
-        }
-
-        private Mock<IRepository<TEntity>> MockRepository<TEntity>()
-            where TEntity : class
-        {
-            return new Mock<IRepository<TEntity>>();
         }
     }
 }

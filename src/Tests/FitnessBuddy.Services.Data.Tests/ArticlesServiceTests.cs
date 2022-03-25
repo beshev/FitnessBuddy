@@ -5,12 +5,8 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using AutoMapper;
-    using FitnessBuddy.Data.Common.Models;
-    using FitnessBuddy.Data.Common.Repositories;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Data.Articles;
-    using FitnessBuddy.Services.Mapping;
     using FitnessBuddy.Web.ViewModels.Articles;
     using FluentAssertions;
     using Microsoft.AspNetCore.Http;
@@ -27,7 +23,7 @@
 
             var list = new List<Article>();
 
-            var mockRepo = this.MockDeletableRepository<Article>();
+            var mockRepo = MockRepo.MockDeletableRepository<Article>();
             mockRepo
                 .Setup(x => x.AddAsync(It.IsAny<Article>()))
                 .Callback((Article artile) => list.Add(artile));
@@ -64,7 +60,7 @@
 
             var dateTime = DateTime.Now;
 
-            var mockRepo = this.MockDeletableRepository<Article>();
+            var mockRepo = MockRepo.MockDeletableRepository<Article>();
             mockRepo.Setup(x => x.All()).Returns(list.AsQueryable().BuildMock());
             mockRepo.Setup(x => x.Delete(It.IsAny<Article>())).Callback((Article article) =>
             {
@@ -98,7 +94,7 @@
                 },
             };
 
-            var mockRepo = this.MockDeletableRepository<Article>();
+            var mockRepo = MockRepo.MockDeletableRepository<Article>();
             mockRepo.Setup(x => x.All()).Returns(list.AsQueryable().BuildMock());
 
             var service = new ArticlesService(mockRepo.Object);
@@ -156,7 +152,7 @@
                 },
             };
 
-            var mockRepo = this.MockDeletableRepository<Article>();
+            var mockRepo = MockRepo.MockDeletableRepository<Article>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new ArticlesService(mockRepo.Object);
@@ -203,7 +199,7 @@
                 },
             };
 
-            var mockRepo = this.MockDeletableRepository<Article>();
+            var mockRepo = MockRepo.MockDeletableRepository<Article>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new ArticlesService(mockRepo.Object);
@@ -235,7 +231,7 @@
                 },
             };
 
-            var mockRepo = this.MockDeletableRepository<Article>();
+            var mockRepo = MockRepo.MockDeletableRepository<Article>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new ArticlesService(mockRepo.Object);
@@ -262,7 +258,7 @@
                 },
             };
 
-            var mockRepo = this.MockDeletableRepository<Article>();
+            var mockRepo = MockRepo.MockDeletableRepository<Article>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new ArticlesService(mockRepo.Object);
@@ -287,7 +283,7 @@
                 },
             };
 
-            var mockRepo = this.MockDeletableRepository<Article>();
+            var mockRepo = MockRepo.MockDeletableRepository<Article>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new ArticlesService(mockRepo.Object);
@@ -313,7 +309,7 @@
                 },
             };
 
-            var mockRepo = this.MockDeletableRepository<Article>();
+            var mockRepo = MockRepo.MockDeletableRepository<Article>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new ArticlesService(mockRepo.Object);
@@ -347,7 +343,7 @@
                 },
             };
 
-            var mockRepo = this.MockDeletableRepository<Article>();
+            var mockRepo = MockRepo.MockDeletableRepository<Article>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new ArticlesService(mockRepo.Object);
@@ -380,7 +376,7 @@
                 },
             };
 
-            var mockRepo = this.MockDeletableRepository<Article>();
+            var mockRepo = MockRepo.MockDeletableRepository<Article>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new ArticlesService(mockRepo.Object);
@@ -412,19 +408,13 @@
                 },
             };
 
-            var mockRepo = this.MockDeletableRepository<Article>();
+            var mockRepo = MockRepo.MockDeletableRepository<Article>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new ArticlesService(mockRepo.Object);
 
             (await service.IsExistAsync(3)).Should().BeFalse();
             (await service.IsExistAsync(4)).Should().BeFalse();
-        }
-
-        private Mock<IDeletableEntityRepository<TEntity>> MockDeletableRepository<TEntity>()
-            where TEntity : class, IDeletableEntity
-        {
-            return new Mock<IDeletableEntityRepository<TEntity>>();
         }
     }
 }

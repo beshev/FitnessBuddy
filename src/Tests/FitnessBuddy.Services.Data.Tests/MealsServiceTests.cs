@@ -3,16 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Reflection;
     using System.Threading.Tasks;
 
-    using AutoMapper;
-    using FitnessBuddy.Data.Common.Models;
-    using FitnessBuddy.Data.Common.Repositories;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Data.Meals;
-    using FitnessBuddy.Services.Mapping;
-    using FitnessBuddy.Web.ViewModels;
     using FitnessBuddy.Web.ViewModels.Meals;
     using FluentAssertions;
     using MockQueryable.Moq;
@@ -28,7 +22,7 @@
 
             var list = new List<Meal>();
 
-            var mockRepo = this.MockDeletableRepository<Meal>();
+            var mockRepo = MockRepo.MockDeletableRepository<Meal>();
             mockRepo.Setup(x => x.AddAsync(It.IsAny<Meal>())).Callback((Meal meal) => list.Add(meal));
 
             var service = new MealsService(mockRepo.Object);
@@ -64,7 +58,7 @@
 
             var dateTime = DateTime.UtcNow;
 
-            var mockRepo = this.MockDeletableRepository<Meal>();
+            var mockRepo = MockRepo.MockDeletableRepository<Meal>();
             mockRepo.Setup(x => x.All()).Returns(list.AsQueryable());
             mockRepo.Setup(x => x.Delete(It.IsAny<Meal>())).Callback((Meal meal) =>
             {
@@ -88,7 +82,7 @@
                 new Meal { Id = 2, Name = "Test" },
             };
 
-            var mockRepo = this.MockDeletableRepository<Meal>();
+            var mockRepo = MockRepo.MockDeletableRepository<Meal>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new MealsService(mockRepo.Object);
@@ -104,7 +98,7 @@
                 new Meal { Id = 2, Name = "Test" },
             };
 
-            var mockRepo = this.MockDeletableRepository<Meal>();
+            var mockRepo = MockRepo.MockDeletableRepository<Meal>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new MealsService(mockRepo.Object);
@@ -121,7 +115,7 @@
                 new Meal { Name = "Test 2", Id = 2 },
             };
 
-            var mockRepo = this.MockDeletableRepository<Meal>();
+            var mockRepo = MockRepo.MockDeletableRepository<Meal>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new MealsService(mockRepo.Object);
@@ -141,7 +135,7 @@
                 new Meal { Name = "Test 2", Id = 2 },
             };
 
-            var mockRepo = this.MockDeletableRepository<Meal>();
+            var mockRepo = MockRepo.MockDeletableRepository<Meal>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new MealsService(mockRepo.Object);
@@ -162,7 +156,7 @@
                  new Meal { Name = "Test", Id = 2, ForUserId = "1" },
             };
 
-            var mockRepo = this.MockDeletableRepository<Meal>();
+            var mockRepo = MockRepo.MockDeletableRepository<Meal>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new MealsService(mockRepo.Object);
@@ -185,7 +179,7 @@
                  new Meal { Name = "Test 2", Id = 2, ForUserId = "1" },
             };
 
-            var mockRepo = this.MockDeletableRepository<Meal>();
+            var mockRepo = MockRepo.MockDeletableRepository<Meal>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new MealsService(mockRepo.Object);
@@ -207,7 +201,7 @@
                  new Meal { Name = "Test 2", Id = 2, ForUserId = "1" },
             };
 
-            var mockRepo = new Mock<IDeletableEntityRepository<Meal>>();
+            var mockRepo = MockRepo.MockDeletableRepository<Meal>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new MealsService(mockRepo.Object);
@@ -227,7 +221,7 @@
                  new Meal { Name = "Test 2", Id = 2, ForUserId = "1" },
             };
 
-            var mockRepo = new Mock<IDeletableEntityRepository<Meal>>();
+            var mockRepo = MockRepo.MockDeletableRepository<Meal>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
             var service = new MealsService(mockRepo.Object);
@@ -236,12 +230,6 @@
 
             (await service.IsUserMealAsync(1, userId)).Should().BeTrue();
             (await service.IsUserMealAsync(2, userId)).Should().BeTrue();
-        }
-
-        private Mock<IDeletableEntityRepository<TEntity>> MockDeletableRepository<TEntity>()
-           where TEntity : class, IDeletableEntity
-        {
-            return new Mock<IDeletableEntityRepository<TEntity>>();
         }
     }
 }
