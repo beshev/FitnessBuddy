@@ -20,7 +20,7 @@
         [Fact]
         public async Task GetAllMethodShouldReturnAllCategories()
         {
-            this.InitializeAutoMapper<ArticleCategory>();
+            TestMapper.InitializeAutoMapper();
 
             var expected = new List<ArticleCategory>
             {
@@ -42,7 +42,7 @@
         [Fact]
         public async Task GetAllMethodShouldReturnEmptyCollection()
         {
-            this.InitializeAutoMapper<ArticleCategory>();
+            TestMapper.InitializeAutoMapper();
 
             var list = new List<ArticleCategory>();
 
@@ -59,7 +59,7 @@
         [Fact]
         public async Task GetCategoryArticlesShouldReturnAllCategoryArticles()
         {
-            this.InitializeAutoMapper<Article>();
+            TestMapper.InitializeAutoMapper();
 
             var articles = new List<Article>
             {
@@ -96,7 +96,7 @@
         [Fact]
         public async Task GetCategoryArticlesShouldReturnEmptyCollectionIfCategoryDontHaveArticles()
         {
-            this.InitializeAutoMapper<Article>();
+            TestMapper.InitializeAutoMapper();
 
             var categories = new List<ArticleCategory>
             {
@@ -143,15 +143,6 @@
             var service = new ArticleCategoriesService(mockRepo.Object);
 
             (await service.IsExistAsync("Test2")).Should().BeFalse();
-        }
-
-        private void InitializeAutoMapper<TSource>()
-            where TSource : class
-        {
-            var config = new MapperConfigurationExpression();
-            config.CreateMap<TSource, TSource>();
-
-            AutoMapperConfig.MapperInstance = new Mapper(new MapperConfiguration(config));
         }
 
         private Mock<IDeletableEntityRepository<TEntity>> MockDeletableRepository<TEntity>()

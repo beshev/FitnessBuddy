@@ -24,7 +24,7 @@
         [Fact]
         public async Task CreateMethodShouldCreateMeal()
         {
-            this.InitializeAutoMapper<MealInputModel, Meal>();
+            TestMapper.InitializeAutoMapper();
 
             var list = new List<Meal>();
 
@@ -154,7 +154,7 @@
         [Fact]
         public async Task GetUserMealsMethodShouldReturnEmptyCollectionIfUserDontHaveMeals()
         {
-            this.InitializeAutoMapper<Meal>();
+            TestMapper.InitializeAutoMapper();
 
             var list = new List<Meal>
             {
@@ -177,7 +177,7 @@
         [Fact]
         public async Task GetUserMealsMethodShouldReturnUserMeals()
         {
-            this.InitializeAutoMapper<Meal>();
+            TestMapper.InitializeAutoMapper();
 
             var list = new List<Meal>
             {
@@ -236,25 +236,6 @@
 
             (await service.IsUserMealAsync(1, userId)).Should().BeTrue();
             (await service.IsUserMealAsync(2, userId)).Should().BeTrue();
-        }
-
-        private void InitializeAutoMapper<TSource>()
-            where TSource : class
-        {
-            var config = new MapperConfigurationExpression();
-            config.CreateMap<TSource, TSource>();
-
-            AutoMapperConfig.MapperInstance = new Mapper(new MapperConfiguration(config));
-        }
-
-        private void InitializeAutoMapper<TSource, TDestination>()
-            where TSource : class
-            where TDestination : class
-        {
-            var config = new MapperConfigurationExpression();
-            config.CreateMap<TSource, TDestination>();
-
-            AutoMapperConfig.MapperInstance = new Mapper(new MapperConfiguration(config));
         }
 
         private Mock<IDeletableEntityRepository<TEntity>> MockDeletableRepository<TEntity>()

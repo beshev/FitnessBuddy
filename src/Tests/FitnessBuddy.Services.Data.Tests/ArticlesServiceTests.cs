@@ -23,7 +23,7 @@
         [Fact]
         public async Task CreateAsyncShouldAddArtricle()
         {
-            this.InitializeAutoMapper<ArticleInputModel, Article>();
+            TestMapper.InitializeAutoMapper();
 
             var list = new List<Article>();
 
@@ -83,7 +83,7 @@
         [Fact]
         public async Task EditAsyncShouldEditArticle()
         {
-            this.InitializeAutoMapper<ArticleInputModel, Article>();
+            TestMapper.InitializeAutoMapper();
 
             var list = new List<Article>
             {
@@ -125,7 +125,7 @@
         [Fact]
         public async Task GetAllShouldReturnAllArticlesOrderedByAverageRatingDescendingAndCreatedOn()
         {
-            this.InitializeAutoMapper<Article>();
+            TestMapper.InitializeAutoMapper();
 
             var list = new List<Article>()
             {
@@ -172,7 +172,7 @@
         [Fact]
         public async Task GetAllShouldSkip1AndTake2ArticlesOrderedByAverageRatingDescendingAndCreatedOn()
         {
-            this.InitializeAutoMapper<Article>();
+            TestMapper.InitializeAutoMapper();
 
             var list = new List<Article>()
             {
@@ -221,7 +221,7 @@
         [Fact]
         public async Task GetByIdAsyncShouldReturnArticle()
         {
-            this.InitializeAutoMapper<Article>();
+            TestMapper.InitializeAutoMapper();
 
             var list = new List<Article>
             {
@@ -248,7 +248,7 @@
         [Fact]
         public async Task GetByIdAsyncShouldReturnNullIfArticleNotExist()
         {
-            this.InitializeAutoMapper<Article>();
+            TestMapper.InitializeAutoMapper();
 
             var list = new List<Article>
             {
@@ -419,25 +419,6 @@
 
             (await service.IsExistAsync(3)).Should().BeFalse();
             (await service.IsExistAsync(4)).Should().BeFalse();
-        }
-
-        private void InitializeAutoMapper<TSource>()
-            where TSource : class
-        {
-            var config = new MapperConfigurationExpression();
-            config.CreateMap<TSource, TSource>();
-
-            AutoMapperConfig.MapperInstance = new Mapper(new MapperConfiguration(config));
-        }
-
-        private void InitializeAutoMapper<TSource, TDestination>()
-           where TSource : class
-           where TDestination : class
-        {
-            var config = new MapperConfigurationExpression();
-            config.CreateMap<TSource, TDestination>();
-
-            AutoMapperConfig.MapperInstance = new Mapper(new MapperConfiguration(config));
         }
 
         private Mock<IDeletableEntityRepository<TEntity>> MockDeletableRepository<TEntity>()
