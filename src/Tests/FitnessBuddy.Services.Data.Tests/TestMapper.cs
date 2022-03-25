@@ -13,6 +13,14 @@
         /// </summary>
         public static void InitializeAutoMapper()
         {
+
+            // Because all tests use one instance of mapper there will be no need to instance it every time.
+            // For now, this is the solution I found. Maybe it has a better way!.
+            if (AutoMapperConfig.MapperInstance != null)
+            {
+                return;
+            }
+
             var config = new MapperConfigurationExpression();
             config.CreateMap<Exercise, Exercise>();
             config.CreateMap<Article, Article>();
@@ -22,12 +30,7 @@
             config.CreateMap<Meal, Meal>();
             config.CreateMap<MealInputModel, Meal>();
 
-            // Because all tests use one instance of mapper there will be no need to instance it every time.
-            // For now, this is the solution I found. Maybe it has a better way!.
-            if (AutoMapperConfig.MapperInstance == null)
-            {
-                AutoMapperConfig.MapperInstance = new Mapper(new MapperConfiguration(config));
-            }
+            AutoMapperConfig.MapperInstance = new Mapper(new MapperConfiguration(config));
         }
     }
 }
