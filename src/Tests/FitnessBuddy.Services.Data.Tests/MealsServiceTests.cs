@@ -192,7 +192,7 @@
 
             var userId = "1";
 
-            var actualList = (await service.GetUserMealsAsync<Meal>(userId)).ToList();
+            var actualList = await service.GetUserMealsAsync<Meal>(userId);
 
             actualList.Should().HaveCount(2);
             actualList.Should().BeEquivalentTo(list);
