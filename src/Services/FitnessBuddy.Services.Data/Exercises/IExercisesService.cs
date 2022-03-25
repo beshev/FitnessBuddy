@@ -7,7 +7,7 @@
 
     public interface IExercisesService
     {
-        public Task<IEnumerable<ExerciseViewModel>> GetAllAsync(string search = null, int skip = 0, int? take = null);
+        public Task<IEnumerable<TModel>> GetAllAsync<TModel>(string search = null, int skip = 0, int? take = null);
 
         public Task<IEnumerable<TModel>> GetRandomAsync<TModel>(int count);
 

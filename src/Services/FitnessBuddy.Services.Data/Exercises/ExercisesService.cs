@@ -42,7 +42,7 @@
             return exercise.Id;
         }
 
-        public async Task<IEnumerable<ExerciseViewModel>> GetAllAsync(string search = "", int skip = 0, int? take = null)
+        public async Task<IEnumerable<TModel>> GetAllAsync<TModel>(string search = "", int skip = 0, int? take = null)
         {
             var query = this.exerciseRepository
                 .AllAsNoTracking();
@@ -66,7 +66,7 @@
             }
 
             return await query
-                .To<ExerciseViewModel>()
+                .To<TModel>()
                 .ToListAsync();
         }
 
@@ -84,7 +84,7 @@
 
             if (string.IsNullOrWhiteSpace(search) == false)
             {
-                query = query.Where(x => x.Name.Contains(search) || x.Category.Name.Contains(search));
+                query = query.Where(x => x.Name.Contains(search));
             }
 
             return query.CountAsync();
@@ -104,7 +104,7 @@
             exercise.Name = model.Name;
             exercise.Description = model.Description;
             exercise.ImageUrl = model.ImageUrl;
-            exercise.VideoUrl = model.VideoUrl;
+            exercise.VideoUrl = GetYouTubeEmbededLink(model.VideoUrl);
             exercise.CategoryId = model.CategoryId;
             exercise.EquipmentId = model.EquipmentId;
             exercise.Difficulty = model.Difficulty;
