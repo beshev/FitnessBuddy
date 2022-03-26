@@ -10,6 +10,7 @@
     using FitnessBuddy.Services.Mapping;
     using FitnessBuddy.Web.ViewModels;
     using FitnessBuddy.Web.ViewModels.Articles;
+    using FitnessBuddy.Web.ViewModels.Foods;
     using FitnessBuddy.Web.ViewModels.Meals;
     using FitnessBuddy.Web.ViewModels.Users;
 
@@ -50,6 +51,7 @@
                     configuration.CreateMap<Meal, Meal>();
                     configuration.CreateMap<UserFollower, UserFollower>();
                     configuration.CreateMap<Food, Food>();
+                    configuration.CreateMap<FoodInputModel, Food>();
                     configuration.CreateMap<MealFood, MealFoodViewModel>();
                     configuration.CreateMap<Meal, MealViewModel>();
                     configuration.CreateMap<IEnumerable<MealViewModel>, ProfileViewModel>();
