@@ -35,7 +35,7 @@
 
             var skip = (id - 1) * exercisesPerPage;
 
-            var exercises = await this.exercisesService.GetAllAsync(null, skip, exercisesPerPage);
+            var exercises = await this.exercisesService.GetAllAsync<ExerciseViewModel>(null, skip, exercisesPerPage);
 
             var viewModel = new AllExercisesViewModel
             {
