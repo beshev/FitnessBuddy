@@ -23,7 +23,7 @@
 
         public Task<ProfileViewModel> GetProfileDataAsync(string userId);
 
-        public Task<IEnumerable<FoodViewModel>> GetFavoriteFoodsAsync(string userId, int skip = 0, int? take = null);
+        public Task<IEnumerable<TModel>> GetFavoriteFoodsAsync<TModel>(string userId, int skip = 0, int? take = null);
 
         public Task<int> FavoriteFoodsCountAsync(string userId);
 
@@ -40,8 +40,6 @@
         public Task<bool> IsUserBannedAsync(string userId);
 
         public Task<string> GetIdByUsernameAsync(string username);
-
-        public Task<string> GetUsernameByIdAsync(string userId);
 
         public Task<bool> IsUsernameExistAsync(string username);
 

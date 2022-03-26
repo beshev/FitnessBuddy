@@ -10,7 +10,6 @@
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Data.Meals;
     using FitnessBuddy.Services.Mapping;
-    using FitnessBuddy.Web.ViewModels.Foods;
     using FitnessBuddy.Web.ViewModels.Meals;
     using FitnessBuddy.Web.ViewModels.Users;
     using Microsoft.EntityFrameworkCore;
@@ -82,7 +81,7 @@
             await this.usersRepository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<FoodViewModel>> GetFavoriteFoodsAsync(string userId, int skip = 0, int? take = null)
+        public async Task<IEnumerable<TModel>> GetFavoriteFoodsAsync<TModel>(string userId, int skip = 0, int? take = null)
         {
             var query = this.usersRepository
                 .AllAsNoTracking()
@@ -97,7 +96,7 @@
             }
 
             return await query
-                .To<FoodViewModel>()
+                .To<TModel>()
                 .ToListAsync();
         }
 
@@ -226,13 +225,6 @@
             .AllAsNoTracking()
             .Where(x => x.Id == userId)
             .Select(x => x.IsBanned)
-            .FirstOrDefaultAsync();
-
-        public  async Task<string> GetUsernameByIdAsync(string userId)
-            => await this.usersRepository
-            .AllAsNoTracking()
-            .Where(x => x.Id == userId)
-            .Select(x => x.UserName)
             .FirstOrDefaultAsync();
     }
 }
