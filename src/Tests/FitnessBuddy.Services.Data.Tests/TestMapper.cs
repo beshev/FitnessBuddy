@@ -59,6 +59,7 @@
                     configuration.CreateMap<MealInputModel, Meal>();
                     configuration.CreateMap<PostInputModel, Post>();
                     configuration.CreateMap<Post, Post>();
+                    configuration.CreateMap<PostCategory, PostCategory>();
 
                     // IHaveCustomMappings
                     // Some of the tests have used models with custom mappings.
