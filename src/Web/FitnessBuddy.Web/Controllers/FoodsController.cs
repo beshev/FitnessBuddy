@@ -109,7 +109,7 @@
             }
 
             int skip = (id - 1) * FoodsPerPage;
-            var foods = await this.usersService.GetFavoriteFoodsAsync(userId, skip, FoodsPerPage);
+            var foods = await this.usersService.GetFavoriteFoodsAsync<FoodViewModel>(userId, skip, FoodsPerPage);
 
             var viewModel = new AllFoodsViewModel
             {
