@@ -12,6 +12,7 @@
     using FitnessBuddy.Web.ViewModels.Articles;
     using FitnessBuddy.Web.ViewModels.Foods;
     using FitnessBuddy.Web.ViewModels.Meals;
+    using FitnessBuddy.Web.ViewModels.Posts;
     using FitnessBuddy.Web.ViewModels.Users;
 
     public static class TestMapper
@@ -31,7 +32,7 @@
             AutoMapperConfig.MapperInstance = RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
         }
 
-        public static Mapper RegisterMappings(params Assembly[] assemblies)
+        private static Mapper RegisterMappings(params Assembly[] assemblies)
         {
             var types = assemblies.SelectMany(a => a.GetExportedTypes()).ToList();
 
@@ -56,8 +57,11 @@
                     configuration.CreateMap<Meal, MealViewModel>();
                     configuration.CreateMap<IEnumerable<MealViewModel>, ProfileViewModel>();
                     configuration.CreateMap<MealInputModel, Meal>();
+                    configuration.CreateMap<PostInputModel, Post>();
+                    configuration.CreateMap<Post, Post>();
 
                     // IHaveCustomMappings
+                    // Some of the tests have used models with custom mappings.
                     foreach (var map in GetCustomMappings(types))
                     {
                         map.CreateMappings(configuration);
