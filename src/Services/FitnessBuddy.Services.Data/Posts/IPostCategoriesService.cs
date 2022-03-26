@@ -7,8 +7,6 @@
     {
         public Task<IEnumerable<TModel>> GetAllAsync<TModel>();
 
-        public Task<int> GetCategoryPostsCountAsync(int categoryId);
-
         public Task<string> GetNameAsync(int categoryId);
 
         public Task<bool> IsExistAsync(int categoryId);

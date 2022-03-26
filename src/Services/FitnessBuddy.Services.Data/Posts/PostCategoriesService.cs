@@ -24,12 +24,6 @@
             .To<TModel>()
             .ToListAsync();
 
-        public async Task<int> GetCategoryPostsCountAsync(int categoryId)
-            => await this.postCategoriesRepository
-            .AllAsNoTracking()
-            .Where(x => x.Id == categoryId)
-            .CountAsync();
-
         public async Task<string> GetNameAsync(int categoryId)
             => await this.postCategoriesRepository
             .AllAsNoTracking()
