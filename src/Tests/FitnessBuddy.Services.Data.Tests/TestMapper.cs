@@ -62,6 +62,7 @@
                     configuration.CreateMap<Post, Post>();
                     configuration.CreateMap<ReplyInputModel, Reply>();
                     configuration.CreateMap<Reply, Reply>();
+                    configuration.CreateMap<Message, Message>();
                     configuration.CreateMap<Training, Training>();
                     configuration.CreateMap<TrainingExercise, TrainingExercise>();
                     configuration.CreateMap<PostCategory, PostCategory>();
