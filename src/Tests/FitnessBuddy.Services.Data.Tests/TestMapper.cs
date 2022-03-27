@@ -60,6 +60,7 @@
                     configuration.CreateMap<PostInputModel, Post>();
                     configuration.CreateMap<Post, Post>();
                     configuration.CreateMap<Training, Training>();
+                    configuration.CreateMap<TrainingExercise, TrainingExercise>();
                     configuration.CreateMap<PostCategory, PostCategory>();
 
                     // IHaveCustomMappings
