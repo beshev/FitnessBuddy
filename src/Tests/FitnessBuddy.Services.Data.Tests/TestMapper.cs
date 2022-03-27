@@ -13,6 +13,7 @@
     using FitnessBuddy.Web.ViewModels.Foods;
     using FitnessBuddy.Web.ViewModels.Meals;
     using FitnessBuddy.Web.ViewModels.Posts;
+    using FitnessBuddy.Web.ViewModels.Replies;
     using FitnessBuddy.Web.ViewModels.Users;
 
     public static class TestMapper
@@ -59,6 +60,8 @@
                     configuration.CreateMap<MealInputModel, Meal>();
                     configuration.CreateMap<PostInputModel, Post>();
                     configuration.CreateMap<Post, Post>();
+                    configuration.CreateMap<ReplyInputModel, Reply>();
+                    configuration.CreateMap<Reply, Reply>();
                     configuration.CreateMap<Training, Training>();
                     configuration.CreateMap<TrainingExercise, TrainingExercise>();
                     configuration.CreateMap<PostCategory, PostCategory>();
