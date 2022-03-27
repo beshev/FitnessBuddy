@@ -59,6 +59,7 @@
                     configuration.CreateMap<MealInputModel, Meal>();
                     configuration.CreateMap<PostInputModel, Post>();
                     configuration.CreateMap<Post, Post>();
+                    configuration.CreateMap<Training, Training>();
                     configuration.CreateMap<PostCategory, PostCategory>();
 
                     // IHaveCustomMappings
