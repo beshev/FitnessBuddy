@@ -33,7 +33,7 @@
                             <p>
                                 @if (message.IsDeleted)
                                 {
-                                    <span class="text-secondary rounded p-2">This message was deleted</span>
+                                    <span class="text-secondary rounded p-2 deleted-message">This message was deleted</span>
                                 }
                                 else
                                 {
@@ -60,7 +60,7 @@
                             <p>
                                 @if (message.IsDeleted)
                                 {
-                                    <span class="text-secondary rounded p-2">This message was deleted</span>
+                                    <span class="text-secondary rounded p-2 deleted-message">This message was deleted</span>
                                 }
                                 else
                                 {
@@ -127,7 +127,7 @@
               let $messageSpan = $(`#message${message.id}`)[0];
 
               $messageSpan.classList.remove('bg-info','bg-secondary','text-white');
-              $messageSpan.classList.add('text-secondary');
+              $messageSpan.classList.add('text-secondary', 'deleted-message');
               $messageSpan.innerHTML = 'This message was deleted';
           }
       )

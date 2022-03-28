@@ -115,6 +115,11 @@ body {
     word-break: break-word;
 }
 
+.deleted-message {
+    font-weight: bold;
+    font-style: italic;
+}
+
 /*------------------------*/
 
 .counter-box {
