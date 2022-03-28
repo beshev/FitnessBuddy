@@ -169,6 +169,14 @@
     <script src="~/lib/signalr/dist/browser/signalr.min.js" asp-append-version="true"></script>
     <script src="~/js/site.min.js" asp-append-version="true"></script>
     <script src="https://kit.fontawesome.com/bd669faeeb.js" crossorigin="anonymous"></script>
+
+    <script src="~/lib/tinymce/tinymce.min.js" asp-append-version="true"></script>
+    <script>
+          tinymce.init({
+          selector: 'textarea#editor',
+          menubar: false
+        });
+    </script>
     @await this.RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
