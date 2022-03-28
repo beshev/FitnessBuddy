@@ -7,15 +7,20 @@
     using FitnessBuddy.Services.Messaging;
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Emails;
+    using Ganss.XSS;
     using Microsoft.AspNetCore.Mvc;
 
     public class Emails : BaseController
     {
         private readonly IEmailSender emailSender;
+        private readonly IHtmlSanitizer htmlSanitizer;
 
-        public Emails(IEmailSender emailSender)
+        public Emails(
+            IEmailSender emailSender,
+            IHtmlSanitizer htmlSanitizer)
         {
             this.emailSender = emailSender;
+            this.htmlSanitizer = htmlSanitizer;
         }
 
         public IActionResult SendEmail()
@@ -37,7 +42,7 @@
             var html = new StringBuilder();
             html.AppendLine($"<h4>{senderUsername}({senderEmail}) invites you to join our app.</h4>");
             html.AppendLine("<hr />");
-            html.AppendLine($"<p>{model.Content}</p>");
+            html.AppendLine(this.htmlSanitizer.Sanitize(model.Content));
 
             await this.emailSender
                 .SendEmailAsync("bigdoom@abv.bg", senderUsername, model.Email, model.Subject, html.ToString());
