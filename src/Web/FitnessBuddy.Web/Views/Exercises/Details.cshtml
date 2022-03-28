@@ -1,4 +1,5 @@
 ﻿@model ExerciseDetailsModel
+@inject IHtmlSanitizer sanitizer
 
 @{
     this.ViewData["Title"] = "Exercise details";
@@ -89,7 +90,8 @@
             </div>
             <div class="col-md-6">
                 <p class="item-description">
-                    <strong>Instructions: </strong>@Model.Description
+                    <strong>Instructions: </strong><br />
+                    @this.Html.Raw(sanitizer.Sanitize(this.Model.Description))
                 </p>
             </div>
         </div>
