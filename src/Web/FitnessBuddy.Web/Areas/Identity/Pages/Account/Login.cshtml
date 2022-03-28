@@ -35,7 +35,7 @@
                 </div>
                 <div>
                     <p>
-                        <button id="facebook-button" class="btn btn-primary mt-1" type="submit" name="provider"><i class="fa-brands fa-facebook-f text-white"></i> Facebook</button>
+                        <button id="facebook-button" class="btn text-white fb-bg-color mt-1" type="submit" name="provider"><i class="fa-brands fa-facebook-f text-white"></i> Facebook</button>
                         <button id="google-button" class="btn btn-danger mt-1" type="submit" name="provider"><i class="fa-brands fa-google"></i> Google</button>
                     </p>
                     <p>
@@ -58,7 +58,7 @@
                 var fbProvider = Model.ExternalLogins?.FirstOrDefault(l => l.DisplayName == "Facebook");
                 var googleProvider = Model.ExternalLogins?.FirstOrDefault(l => l.DisplayName == "Google");
 
-                @if (fbProvider != null)
+                @if (fbProvider != null && googleProvider != null)
                 {
                     <button id="fb-form-button" type="submit" class="btn btn-primary" name="provider" value="@fbProvider.Name"></button>
                     <button id="google-form-button" type="submit" name="provider" value="@googleProvider.Name"></button>
