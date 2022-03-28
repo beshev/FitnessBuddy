@@ -5,10 +5,6 @@
     this.ViewData["Title"] = "My foods";
 }
 
-<h1 class="text-center">
-    My foods
-</h1>
-
 <partial name="_SearchFoodPartial" model="@("MyFoods")" />
 
 @if (Model.Foods.Any() == false)

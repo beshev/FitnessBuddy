@@ -5,9 +5,9 @@
         <h3 class="card-header text-white">@Model.Name</h3>
         <img src="@Model.ImageUrl" class="d-block user-select-none" width="100%" height="200" aria-label="Placeholder: Image cap">
         <ul class="list-group mt-2">
-            <li class="list-group-item li-bg-color">Difficulty: @Model.Difficulty</li>
-            <li class="list-group-item li-bg-color">Category: @Model.CategoryName</li>
-            <li class="list-group-item li-bg-color">Equipment: @Model.EquipmentName</li>
+            <li class="list-group-item li-bg-color">Difficulty: <strong>@Model.Difficulty</strong></li>
+            <li class="list-group-item li-bg-color">Category: <strong>@Model.CategoryName</strong></li>
+            <li class="list-group-item li-bg-color">Equipment: <strong>@Model.EquipmentName</strong></li>
         </ul>
         <p class="text-center text-primary mt-2"><i class="fa-solid fa-thumbs-up fa-1x text-primary"></i> Likes: @Model.ExerciseLikesCount</p>
     </a>

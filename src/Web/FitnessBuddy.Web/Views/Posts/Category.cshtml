@@ -11,7 +11,7 @@
 @if (Model.Posts.Any() == false)
 {
     <h5 class="text-center text-info">Currently there are no post in this category.</h5>
-    <p class="display-6 text-center">
+    <p class="post-create text-center">
         <a asp-action="Create" asp-controller="Posts">Create new post</a>
     </p>
 }
@@ -39,7 +39,7 @@ else
                 </div>
             </div>
         }
-        <p class="display-6 text-center">
+        <p class="post-create text-center">
             <a asp-action="Create" asp-controller="Posts">Create new post</a>
         </p>
     </div>
