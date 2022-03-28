@@ -160,6 +160,13 @@ else
     </div>
 }
 
+<figure class="highcharts-figure mt-5">
+    <div id="container"></div>
+</figure>
+
+@section CustomCss{
+<link rel="stylesheet" href="~/css/HighChart.css" />
+}
 
 @section Scripts{
 <script>
@@ -181,6 +188,52 @@ else
         else {
             $(this).addClass("text-green");
         }
+    });
+</script>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/variable-pie.js"></script>
+@*<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>*@
+
+<script>
+        Highcharts.chart('container', {
+      chart: {
+        type: 'variablepie',
+        backgroundColor: '#f2f2f2'
+      },
+      colors: ['#90ed7d', '#e4d354', '#f15c80'],
+      title: {
+        text: 'Nutritions'
+      },
+      tooltip: {
+        headerFormat: '',
+        pointFormat: '<span style="color:{point.color}">\u25CF</span> <b> {point.name}: {point.t} gr.</b><br/>' +
+          'Total: @Model.TotalCalories.ToString("F2") Kcal'
+      },
+      series: [{
+        minPointSize: 100,
+        innerSize: '20%',
+        zMin: 0,
+        name: 'countries',
+        data: [{
+          t: @Model.TotalProtein.ToString("F2"),
+          name: 'Protein',
+          y: @Model.TotalProtein,
+          z: @Model.TotalProtein
+        }, {
+          t: @Model.TotalCarbohydrates.ToString("F2"),
+          name: 'Carbs',
+          y: @Model.TotalCarbohydrates,
+          z: @Model.TotalCarbohydrates
+        }, {
+          t: @Model.TotalFats.ToString("F2"),
+          name: 'Fat',
+          y: @Model.TotalFats,
+          z: @Model.TotalFats
+        }]
+      }]
     });
 </script>
 }
