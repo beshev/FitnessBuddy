@@ -156,6 +156,7 @@
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseStatusCodePagesWithRedirects("/Home/NotFound{0}");
             app.UseEndpoints(
                 endpoints =>
                     {

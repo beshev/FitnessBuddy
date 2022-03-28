@@ -39,6 +39,11 @@
             return this.View(viewModel);
         }
 
+        public IActionResult NotFound404()
+        {
+            return this.View();
+        }
+
         public IActionResult Privacy()
         {
             return this.View();

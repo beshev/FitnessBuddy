@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "ERROR 404";
+}
+
+<div class="container text-center">
+    <div>
+        <span>
+            <img src="~/images/statuscode/404.png" class="img-mix-blend" />
+        </span>
+        <h5>@ViewData["Title"]</h5>
+        <p>
+            Sorry we can’t find what you are looking for<br />
+            <a asp-area=""
+               asp-controller="Home"
+               asp-action="Index">
+                back to home
+            </a>
+        </p>
+    </div>
+</div>
