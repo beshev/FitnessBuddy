@@ -28,6 +28,7 @@
     using FitnessBuddy.Services.Messaging;
     using FitnessBuddy.Web.Hubs;
     using FitnessBuddy.Web.ViewModels;
+    using Ganss.XSS;
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -114,6 +115,7 @@
             services.AddTransient<IArticlesRatingsService, ArticlesRatingsService>();
             services.AddTransient<IMessagesService, MessagesService>();
             services.AddTransient<IGroupNameProvider, GroupNameProvider>();
+            services.AddTransient<IHtmlSanitizer, HtmlSanitizer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,17 +1,19 @@
-﻿@model ArticleDetailsModel
+﻿@using Ganss.XSS
+@model ArticleDetailsModel
+@inject IHtmlSanitizer sanitizer
 
 @{
     this.ViewData["Title"] = "Article";
 }
 
 
-<div id="primary" class="col-md-12 mb-xs-24 text-center">
-    <article id="post-996" class="post-content post-grid-wide post-996 post type-post status-publish format-standard has-post-thumbnail hentry category-news category-template-2 tag-content-2 tag-read-more tag-template">
-        <div class="entry-content bg-light hover-shadow">
-            <h2 class="post-title entry-title">
+<div id="primary" class="col-md-12 mb-xs-24">
+    <article>
+        <div class="entry-content bg-light hover-shadow p-5">
+            <h2 class="post-title entry-title text-center">
                 @Model.Title
             </h2>
-            <div class="entry-meta">
+            <div class="entry-meta text-center">
                 <ul class="post-meta" style="list-style-type: none;">
                     <li>
                         <div class="rating">
@@ -28,20 +30,23 @@
                     <li><span><strong>Category:</strong> <a asp-contoller="Articles" asp-action="Category" asp-route-categoryName="@Model.CategoryName" title="Aigars" class="text-info">@Model.CategoryName</a></span></li>
                 </ul>
             </div>
-            <div>
+            <div class="text-center">
                 <img width="492" height="350" src="@Model.ImageUrl" class="border mb-3" alt="" data-lazy-loaded="1" loading="eager">
             </div>
-            <div class="shapely-content dropcaps-content alert-secondary">
-                <p class="text-dark">@Model.Content</p>
+            @if (Model.IsCreator)
+            {
+                <div class="text-center">
+                    <a asp-action="Edit" asp-controller="Articles" asp-route-id="@Model.Id" class="btn btn-info">Edit</a>
+                    <button class="btn btn-danger" data-toggle="modal" data-target="#@($"deleteModal{Model.Id}")">Delete</button>
+                </div>
+            }
+            <hr />
+            <div class="">
+                <p class="text-dark">@(this.Html.Raw(sanitizer.Sanitize(this.Model.Content)))</p>
                 <p><span id="more-996"></span></p>
             </div>
         </div>
     </article>
-    @if (Model.IsCreator)
-    {
-        <a asp-action="Edit" asp-controller="Articles" asp-route-id="@Model.Id" class="btn btn-info">Edit</a>
-        <button class="btn btn-danger" data-toggle="modal" data-target="#@($"deleteModal{Model.Id}")">Delete</button>
-    }
 </div>
 
 

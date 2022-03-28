@@ -1,4 +1,6 @@
-﻿@model IEnumerable<ArticleViewModel>
+﻿@using Ganss.XSS
+@model IEnumerable<ArticleViewModel>
+@inject IHtmlSanitizer sanitizer
 
 <div class="container-fluid">
     <div class="row">
@@ -13,7 +15,7 @@
                                 <span class="text-dark" asp-action="Details" asp-controller="Articles" asp-route-id="@article.Id">@article.Title</span>
                             </h3>
                             <div class="mb-1 text-muted">@article.CreatedOn.ToString("MMM-d")</div>
-                            <p class="card-text mb-auto">@article.Content...</p>
+                            <p class="card-text mb-auto">@this.Html.Raw(sanitizer.Sanitize(article.Content))...</p>
                             <a asp-action="Details" asp-controller="Articles" asp-route-id="@article.Id">Continue reading</a>
                             <strong class="d-inline-block mb-2 text-green">Rating: @article.AvarageRating.ToString("F1")</strong>
                         </div>
