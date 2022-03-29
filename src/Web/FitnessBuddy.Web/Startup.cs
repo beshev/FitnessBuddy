@@ -2,13 +2,9 @@
 {
     using System.Reflection;
 
-    using FitnessBuddy.Common;
     using FitnessBuddy.Data;
-    using FitnessBuddy.Data.Common;
-    using FitnessBuddy.Data.Common.Repositories;
-    using FitnessBuddy.Data.Models;
-    using FitnessBuddy.Data.Repositories;
     using FitnessBuddy.Data.Seeding;
+    using FitnessBuddy.Services.Cloudinary;
     using FitnessBuddy.Services.Data.Articles;
     using FitnessBuddy.Services.Data.ArticlesRatings;
     using FitnessBuddy.Services.Data.Exercises;
@@ -27,13 +23,11 @@
     using FitnessBuddy.Services.Mapping;
     using FitnessBuddy.Services.Messaging;
     using FitnessBuddy.Web.Hubs;
+    using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels;
     using Ganss.XSS;
-    using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -51,47 +45,22 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(
-                options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
-                .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
-
-            services.Configure<CookiePolicyOptions>(
-                options =>
-                    {
-                        options.CheckConsentNeeded = context => true;
-                        options.MinimumSameSitePolicy = SameSiteMode.None;
-                    });
-            services.AddControllersWithViews(
-                options =>
-                    {
-                        options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-                    }).AddRazorRuntimeCompilation();
-
-            services.AddAuthentication()
-                .AddFacebook(options =>
-                {
-                    options.AppId = this.configuration.GetValue<string>("Facebook:AppId");
-                    options.AppSecret = this.configuration.GetValue<string>("Facebook:AppSecret");
-                })
-                .AddGoogle(options =>
-                {
-                    options.ClientId = this.configuration.GetValue<string>("Google:ClientId");
-                    options.ClientSecret = this.configuration.GetValue<string>("Google:ClientSecret");
-                });
+            services
+                .AddDatabase(this.configuration)
+                .AddIdentity()
+                .ConfigureCookiePolicyOptions()
+                .AddControllersWithAutoAntiforgeryTokenAttribute()
+                .AddFacebookAuthentication(this.configuration)
+                .AddGoogleAuthentication(this.configuration)
+                .AddAntiforgeryHeader()
+                .AddCloudinaryConfiguration(this.configuration)
+                .AddRepositories();
 
             services.AddRazorPages();
             services.AddSignalR();
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddAntiforgery(options => options.HeaderName = GlobalConstants.AntiforgeryHeaderName);
 
             services.AddSingleton(this.configuration);
-
-            // Data repositories
-            services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
-            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-            services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
             services.AddTransient<IEmailSender>(x => new SendGridEmailSender(this.configuration["SendGrid:ApiKey"]));
@@ -116,6 +85,7 @@
             services.AddTransient<IMessagesService, MessagesService>();
             services.AddTransient<IGroupNameProvider, GroupNameProvider>();
             services.AddTransient<IHtmlSanitizer, HtmlSanitizer>();
+            services.AddTransient<ICloudinaryService, CloudinaryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
