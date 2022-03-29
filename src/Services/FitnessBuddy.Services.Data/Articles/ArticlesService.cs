@@ -1,24 +1,27 @@
 ﻿namespace FitnessBuddy.Services.Data.Articles
 {
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
 
     using FitnessBuddy.Data.Common.Repositories;
     using FitnessBuddy.Data.Models;
+    using FitnessBuddy.Services.Cloudinary;
     using FitnessBuddy.Services.Mapping;
     using FitnessBuddy.Web.ViewModels.Articles;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
 
     public class ArticlesService : IArticlesService
     {
         private readonly IDeletableEntityRepository<Article> articlesRepository;
+        private readonly ICloudinaryService cloudinaryService;
 
-        public ArticlesService(IDeletableEntityRepository<Article> articlesRepository)
+        public ArticlesService(
+            IDeletableEntityRepository<Article> articlesRepository,
+            ICloudinaryService cloudinaryService)
         {
             this.articlesRepository = articlesRepository;
+            this.cloudinaryService = cloudinaryService;
         }
 
         public async Task CreateAsync(ArticleInputModel model, string picturePath)
@@ -29,8 +32,10 @@
             article.ImageUrl = string.Empty;
             await this.articlesRepository.SaveChangesAsync();
 
+            var cloudFolder = $"articles/{article.Id}";
+
             // TODO: Find another way for saving the new picture. !!
-            article.ImageUrl = await SavePictureAsync(model.Picture, article.Id, picturePath);
+            article.ImageUrl = await this.cloudinaryService.UploadAsync(model.Picture, cloudFolder);
             await this.articlesRepository.SaveChangesAsync();
         }
 
@@ -50,10 +55,12 @@
                 .All()
                 .FirstOrDefault(x => x.Id == model.Id);
 
+            var cloudFolder = $"articles/{article.Id}";
+
             article.Title = model.Title;
             article.Content = model.Content;
             article.CategoryId = model.CategoryId.Value;
-            article.ImageUrl = await SavePictureAsync(model.Picture, article.Id, picturePath);
+            article.ImageUrl = await this.cloudinaryService.UploadAsync(model.Picture, cloudFolder);
 
             await this.articlesRepository.SaveChangesAsync();
         }
@@ -98,18 +105,5 @@
             => await this.articlesRepository
             .AllAsNoTracking()
             .AnyAsync(x => x.Id == id);
-
-        private static async Task<string> SavePictureAsync(IFormFile picture, int articleId, string picturePath)
-        {
-            Directory.CreateDirectory($@"{picturePath}\articles\");
-            var physicalPath = $@"{picturePath}\articles\{articleId}{Path.GetExtension(picture.FileName)}";
-
-            using (var fileStream = new FileStream(physicalPath, FileMode.Create))
-            {
-                await picture.CopyToAsync(fileStream);
-            }
-
-            return physicalPath;
-        }
     }
 }

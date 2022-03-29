@@ -8,6 +8,7 @@
 
     using FitnessBuddy.Data.Common.Repositories;
     using FitnessBuddy.Data.Models;
+    using FitnessBuddy.Services.Cloudinary;
     using FitnessBuddy.Services.Data.Meals;
     using FitnessBuddy.Services.Mapping;
     using FitnessBuddy.Web.ViewModels.Meals;
@@ -18,13 +19,16 @@
     {
         private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
         private readonly IMealsService mealsService;
+        private readonly ICloudinaryService cloudinaryService;
 
         public UsersService(
             IDeletableEntityRepository<ApplicationUser> usersRepository,
-            IMealsService mealsService)
+            IMealsService mealsService,
+            ICloudinaryService cloudinaryService)
         {
             this.usersRepository = usersRepository;
             this.mealsService = mealsService;
+            this.cloudinaryService = cloudinaryService;
         }
 
         public async Task AddFoodToFavoriteAsync(string userId, Food food)
@@ -44,6 +48,8 @@
                 .All()
                 .FirstOrDefault(x => x.Id == userId);
 
+            var cloundFolder = $"users/{user.UserName}";
+
             user.Gender = model.Gender;
             user.WeightInKg = model.WeightInKg;
             user.GoalWeightInKg = model.GoalWeightInKg;
@@ -52,19 +58,7 @@
             user.DailyCarbohydratesGoal = model.DailyCarbohydratesGoal;
             user.DailyFatGoal = model.DailyFatGoal;
             user.AboutMe = model.AboutMe;
-
-            if (model.ProfilePicture != null)
-            {
-                Directory.CreateDirectory($"{picturePath}/profileimages/");
-                var physicalPath = $"{picturePath}/profileimages/{userId}{Path.GetExtension(model.ProfilePicture.FileName)}";
-
-                using (var fileStream = new FileStream(physicalPath, FileMode.Create))
-                {
-                    await model.ProfilePicture.CopyToAsync(fileStream);
-                }
-
-                user.ProfilePicture = physicalPath;
-            }
+            user.ProfilePicture = await this.cloudinaryService.UploadAsync(model.ProfilePicture, cloundFolder);
 
             await this.usersRepository.SaveChangesAsync();
         }
