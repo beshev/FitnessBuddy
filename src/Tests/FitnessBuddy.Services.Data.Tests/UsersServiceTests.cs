@@ -7,6 +7,7 @@
 
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Data.Models.Enums;
+    using FitnessBuddy.Services.Cloudinary;
     using FitnessBuddy.Services.Data.Meals;
     using FitnessBuddy.Services.Data.Users;
     using FitnessBuddy.Web.ViewModels.Users;
@@ -37,7 +38,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<ApplicationUser>();
             mockRepo.Setup(x => x.All()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new UsersService(mockRepo.Object, null);
+            var service = new UsersService(mockRepo.Object, null, null);
 
             var food = new Food
             {
@@ -76,7 +77,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<ApplicationUser>();
             mockRepo.Setup(x => x.All()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new UsersService(mockRepo.Object, null);
+            var service = new UsersService(mockRepo.Object, null, null);
 
             await service.AddFoodToFavoriteAsync(userId, food);
             await service.RemoveFoodFromFavoriteAsync(userId, food);
@@ -114,7 +115,12 @@
             var mockFormFile = new Mock<IFormFile>();
             mockFormFile.Setup(x => x.FileName).Returns("test.txt");
 
-            var service = new UsersService(mockRepo.Object, null);
+            var mockCloudinaryService = new Mock<ICloudinaryService>();
+            mockCloudinaryService
+                .Setup(x => x.UploadAsync(It.IsAny<IFormFile>(), It.IsAny<string>()))
+                .Returns(Task.Run(() => "ImageUrl"));
+
+            var service = new UsersService(mockRepo.Object, null, mockCloudinaryService.Object);
 
             var expected = new UserInputModel
             {
@@ -129,59 +135,12 @@
                 ProfilePicture = mockFormFile.Object,
             };
 
-            await service.EditAsync(userId, expected, string.Empty);
+            await service.EditAsync(userId, expected);
 
             var actual = list[0];
 
             actual.Should().BeEquivalentTo(expected, opt => opt.Excluding(x => x.ProfilePicture));
-            actual.ProfilePicture.Should().Be($"/profileimages/{userId}.txt");
-        }
-
-        [Theory]
-        [InlineData("1")]
-        [InlineData("some GUID")]
-        public async Task EditAsyncShouldEditUserDataWithoutProfilePicture(string userId)
-        {
-            var list = new List<ApplicationUser>
-            {
-                new ApplicationUser
-                {
-                    Id = userId,
-                    UserName = "Tester",
-                    AboutMe = "Test me",
-                    DailyProteinGoal = 1,
-                    DailyCarbohydratesGoal = 1,
-                    DailyFatGoal = 1,
-                    HeightInCm = 120,
-                    WeightInKg = 20,
-                    GoalWeightInKg = 30,
-                    Gender = GenderType.Male,
-                },
-            };
-
-            var mockRepo = MockRepo.MockDeletableRepository<ApplicationUser>();
-            mockRepo.Setup(x => x.All()).Returns(list.AsQueryable().BuildMock());
-
-            var service = new UsersService(mockRepo.Object, null);
-
-            var expected = new UserInputModel
-            {
-                AboutMe = "Test me EDITED",
-                DailyProteinGoal = 3,
-                DailyCarbohydratesGoal = 6,
-                DailyFatGoal = 9,
-                HeightInCm = 150,
-                WeightInKg = 50,
-                GoalWeightInKg = 80,
-                Gender = GenderType.Female,
-            };
-
-            await service.EditAsync(userId, expected, string.Empty);
-
-            var actual = list[0];
-
-            actual.Should().BeEquivalentTo(expected, opt => opt.Excluding(x => x.ProfilePicture));
-            actual.ProfilePicture.Should().BeNull();
+            actual.ProfilePicture.Should().Be($"ImageUrl");
         }
 
         [Theory]
@@ -208,7 +167,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<ApplicationUser>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new UsersService(mockRepo.Object, null);
+            var service = new UsersService(mockRepo.Object, null, null);
 
             var actual = await service.GetFavoriteFoodsAsync<Food>(userId);
             var expected = list[0].FavoriteFoods;
@@ -246,7 +205,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<ApplicationUser>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new UsersService(mockRepo.Object, null);
+            var service = new UsersService(mockRepo.Object, null, null);
 
             var actual = await service.GetFavoriteFoodsAsync<Food>(userId, skip, take);
             var expected = list[0].FavoriteFoods
@@ -290,7 +249,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<ApplicationUser>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new UsersService(mockRepo.Object, null);
+            var service = new UsersService(mockRepo.Object, null, null);
 
             var actual = await service.GetUserInfoAsync<ApplicationUser>(userId);
             var expected = list.FirstOrDefault(x => x.Id == userId);
@@ -330,7 +289,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<ApplicationUser>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new UsersService(mockRepo.Object, null);
+            var service = new UsersService(mockRepo.Object, null, null);
 
             var actual = await service.GetUserInfoAsync<ApplicationUser>(userId);
 
@@ -370,7 +329,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<ApplicationUser>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new UsersService(mockRepo.Object, null);
+            var service = new UsersService(mockRepo.Object, null, null);
 
             var actual = await service.IsFoodFavoriteAsync(userId, foodId);
 
@@ -410,7 +369,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<ApplicationUser>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new UsersService(mockRepo.Object, null);
+            var service = new UsersService(mockRepo.Object, null, null);
 
             var actual = await service.IsFoodFavoriteAsync(userId, foodId);
 
@@ -448,7 +407,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<ApplicationUser>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new UsersService(mockRepo.Object, null);
+            var service = new UsersService(mockRepo.Object, null, null);
 
             var actual = await service.HasMealAsync(userId);
 
@@ -480,7 +439,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<ApplicationUser>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new UsersService(mockRepo.Object, null);
+            var service = new UsersService(mockRepo.Object, null, null);
 
             var actual = await service.HasMealAsync(userId);
 
@@ -511,7 +470,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<ApplicationUser>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new UsersService(mockRepo.Object, null);
+            var service = new UsersService(mockRepo.Object, null, null);
 
             var actual = await service.IsUsernameExistAsync(username);
 
@@ -542,7 +501,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<ApplicationUser>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new UsersService(mockRepo.Object, null);
+            var service = new UsersService(mockRepo.Object, null, null);
 
             var actual = await service.IsUsernameExistAsync(username);
 
@@ -579,7 +538,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<ApplicationUser>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new UsersService(mockRepo.Object, null);
+            var service = new UsersService(mockRepo.Object, null, null);
 
             var actual = await service.FavoriteFoodsCountAsync(userId);
 
@@ -647,7 +606,7 @@
             mockMealRepo.Setup(x => x.AllAsNoTracking()).Returns(meals.AsQueryable().BuildMock());
 
             var mealsService = new MealsService(mockMealRepo.Object);
-            var usersService = new UsersService(mockRepo.Object, mealsService);
+            var usersService = new UsersService(mockRepo.Object, mealsService, null);
 
             var expected = new ProfileViewModel
             {
@@ -661,7 +620,7 @@
                     Email = "Test@test.com",
                     WeightInKg = 10,
                     GoalWeightInKg = 20,
-                    ProfilePicture = "/images/profileimages/some URL",
+                    ProfilePicture = "some URL",
                     HeightInCm = 120,
                     DailyProteinGoal = 1,
                     DailyCarbohydratesGoal = 12,
@@ -709,7 +668,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<ApplicationUser>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new UsersService(mockRepo.Object, null);
+            var service = new UsersService(mockRepo.Object, null, null);
 
             var actual = await service.GetIdByUsernameAsync(username);
 
@@ -746,7 +705,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<ApplicationUser>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new UsersService(mockRepo.Object, null);
+            var service = new UsersService(mockRepo.Object, null, null);
 
             var actual = await service.GetIdByUsernameAsync(username);
 
@@ -782,7 +741,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<ApplicationUser>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new UsersService(mockRepo.Object, null);
+            var service = new UsersService(mockRepo.Object, null, null);
 
             var actual = await service.GetAllAsync<ApplicationUser>();
             var expected = list.OrderByDescending(x => x.CreatedOn);
@@ -819,7 +778,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<ApplicationUser>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new UsersService(mockRepo.Object, null);
+            var service = new UsersService(mockRepo.Object, null, null);
 
             var actual = (await service.GetAllAsync<ApplicationUser>("test user")).FirstOrDefault();
             var expected = list[0];
@@ -863,7 +822,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<ApplicationUser>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new UsersService(mockRepo.Object, null);
+            var service = new UsersService(mockRepo.Object, null, null);
 
             var actual = await service.GetAllAsync<ApplicationUser>(null, skip, take);
             var expected = list
@@ -905,7 +864,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<ApplicationUser>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new UsersService(mockRepo.Object, null);
+            var service = new UsersService(mockRepo.Object, null, null);
 
             var actual = await service.GetFollowersAsync<UserFollower>("1");
             var expected = list[0].Followers;
@@ -944,7 +903,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<ApplicationUser>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new UsersService(mockRepo.Object, null);
+            var service = new UsersService(mockRepo.Object, null, null);
 
             var actual = await service.GetFollowingAsync<UserFollower>("1");
             var expected = list[0].Following;
@@ -980,7 +939,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<ApplicationUser>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new UsersService(mockRepo.Object, null);
+            var service = new UsersService(mockRepo.Object, null, null);
 
             var actual = await service.GetCountAsync();
 
@@ -1003,7 +962,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<ApplicationUser>();
             mockRepo.Setup(x => x.All()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new UsersService(mockRepo.Object, null);
+            var service = new UsersService(mockRepo.Object, null, null);
 
             var banReason = "for test";
 
@@ -1032,7 +991,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<ApplicationUser>();
             mockRepo.Setup(x => x.All()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new UsersService(mockRepo.Object, null);
+            var service = new UsersService(mockRepo.Object, null, null);
 
             var banReason = "for test";
             var username = "test user";
@@ -1066,7 +1025,7 @@
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list);
             mockRepo.Setup(x => x.All()).Returns(list);
 
-            var service = new UsersService(mockRepo.Object, null);
+            var service = new UsersService(mockRepo.Object, null, null);
 
             var banReason = "for test";
             var username = "test user";
@@ -1096,7 +1055,7 @@
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list);
             mockRepo.Setup(x => x.All()).Returns(list);
 
-            var service = new UsersService(mockRepo.Object, null);
+            var service = new UsersService(mockRepo.Object, null, null);
 
             var banReason = "for test";
             var username = "test user";

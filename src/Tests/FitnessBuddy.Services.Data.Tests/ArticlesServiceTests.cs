@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
 
     using FitnessBuddy.Data.Models;
+    using FitnessBuddy.Services.Cloudinary;
     using FitnessBuddy.Services.Data.Articles;
     using FitnessBuddy.Web.ViewModels.Articles;
     using FluentAssertions;
@@ -28,7 +29,12 @@
                 .Setup(x => x.AddAsync(It.IsAny<Article>()))
                 .Callback((Article artile) => list.Add(artile));
 
-            var service = new ArticlesService(mockRepo.Object);
+            var mockCloudinaryService = new Mock<ICloudinaryService>();
+            mockCloudinaryService
+                .Setup(x => x.UploadAsync(It.IsAny<IFormFile>(), It.IsAny<string>()))
+                .Returns(Task.Run(() => "ImageUrl"));
+
+            var service = new ArticlesService(mockRepo.Object, mockCloudinaryService.Object);
 
             var mockIFormFile = new Mock<IFormFile>();
             mockIFormFile.Setup(_ => _.FileName).Returns("Mockfile.txt");
@@ -43,11 +49,11 @@
                 Id = 1,
             };
 
-            await service.CreateAsync(expected, string.Empty);
+            await service.CreateAsync(expected);
 
             list.Should().HaveCount(1);
             list[0].Should().BeEquivalentTo(expected, opt => opt.Excluding(prop => prop.Picture));
-            list[0].ImageUrl.Should().Be(@"\articles\1.txt");
+            list[0].ImageUrl.Should().Be("ImageUrl");
         }
 
         [Fact]
@@ -68,7 +74,7 @@
                 article.DeletedOn = dateTime;
             });
 
-            var service = new ArticlesService(mockRepo.Object);
+            var service = new ArticlesService(mockRepo.Object, null);
 
             await service.DeleteAsync(1);
 
@@ -90,14 +96,19 @@
                     Content = "For test content",
                     CategoryId = 1,
                     CreatorId = "2",
-                    ImageUrl = @"\articles\1.txt",
+                    ImageUrl = "ImageUrl",
                 },
             };
 
             var mockRepo = MockRepo.MockDeletableRepository<Article>();
             mockRepo.Setup(x => x.All()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new ArticlesService(mockRepo.Object);
+            var mockCloudinaryService = new Mock<ICloudinaryService>();
+            mockCloudinaryService
+                .Setup(x => x.UploadAsync(It.IsAny<IFormFile>(), It.IsAny<string>()))
+                .Returns(Task.Run(() => "ImageUrl"));
+
+            var service = new ArticlesService(mockRepo.Object, mockCloudinaryService.Object);
 
             var mockIFormFile = new Mock<IFormFile>();
             mockIFormFile.Setup(_ => _.FileName).Returns("Mockfile.txt");
@@ -112,10 +123,10 @@
                 Picture = mockIFormFile.Object,
             };
 
-            await service.EditAsync(expected, string.Empty);
+            await service.EditAsync(expected);
 
             list[0].Should().BeEquivalentTo(expected, opt => opt.Excluding(prop => prop.Picture));
-            list[0].ImageUrl.Should().Be(@"\articles\2.txt");
+            list[0].ImageUrl.Should().Be("ImageUrl");
         }
 
         [Fact]
@@ -155,7 +166,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<Article>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new ArticlesService(mockRepo.Object);
+            var service = new ArticlesService(mockRepo.Object, null);
 
             var actual = await service.GetAllAsync<Article>();
             var expected = list
@@ -202,7 +213,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<Article>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new ArticlesService(mockRepo.Object);
+            var service = new ArticlesService(mockRepo.Object, null);
 
             var actual = await service.GetAllAsync<Article>(1, 2);
             var expected = list
@@ -234,7 +245,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<Article>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new ArticlesService(mockRepo.Object);
+            var service = new ArticlesService(mockRepo.Object, null);
 
             var actual = await service.GetByIdAsync<Article>(1);
 
@@ -261,7 +272,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<Article>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new ArticlesService(mockRepo.Object);
+            var service = new ArticlesService(mockRepo.Object, null);
 
             var actual = await service.GetByIdAsync<Article>(1);
 
@@ -286,7 +297,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<Article>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new ArticlesService(mockRepo.Object);
+            var service = new ArticlesService(mockRepo.Object, null);
 
             var userId = "1";
             var actual = await service.IsUserCreatorAsync(userId, 2);
@@ -312,7 +323,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<Article>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new ArticlesService(mockRepo.Object);
+            var service = new ArticlesService(mockRepo.Object, null);
 
             var userId = "2";
             var actual = await service.IsUserCreatorAsync(userId, 2);
@@ -346,7 +357,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<Article>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new ArticlesService(mockRepo.Object);
+            var service = new ArticlesService(mockRepo.Object, null);
 
             var actual = await service.GetCountAsync();
 
@@ -379,7 +390,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<Article>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new ArticlesService(mockRepo.Object);
+            var service = new ArticlesService(mockRepo.Object, null);
 
             (await service.IsExistAsync(1)).Should().BeTrue();
             (await service.IsExistAsync(2)).Should().BeTrue();
@@ -411,7 +422,7 @@
             var mockRepo = MockRepo.MockDeletableRepository<Article>();
             mockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable().BuildMock());
 
-            var service = new ArticlesService(mockRepo.Object);
+            var service = new ArticlesService(mockRepo.Object, null);
 
             (await service.IsExistAsync(3)).Should().BeFalse();
             (await service.IsExistAsync(4)).Should().BeFalse();
