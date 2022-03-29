@@ -1,4 +1,5 @@
 ﻿@model ReplyViewModel
+@inject IHtmlSanitizer sanitizer
 
 <div class="row">
     <div class="card border-primary mb-3 hover-shadow">
@@ -9,7 +10,7 @@
             <div class="card-header col-md-6 text-right"> <i class="fa-solid fa-calendar-days"></i> @Model.CreatedOn.ToLongDateString()</div>
         </div>
         <div class="card-body">
-            <p class="card-text">@Model.Description</p>
+            <p class="card-text">@(this.Html.Raw(sanitizer.Sanitize(@Model.Description)))</p>
         </div>
     </div>
 </div>

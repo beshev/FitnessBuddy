@@ -1,4 +1,5 @@
 ﻿@model AllPostsViewModel
+@inject IHtmlSanitizer sanitizer
 
 @{
     this.ViewData["Title"] = @Model.CategoryName;
@@ -28,7 +29,7 @@ else
                         <h4 class="card-title">@post.Title</h4>
                     </a>
                     <hr>
-                    <p class="card-text">@(post.Description.Substring(0, post.Description.Length / 4))...</p>
+                    <p class="card-text">@(this.Html.Raw(sanitizer.Sanitize(post.Description)))</p>
                 </div>
                 <div class="row text-center">
                     <div class="card-header col-md-2"><i class="fa-solid fa-user"></i> <a asp-action="Profile" asp-controller="Users" asp-route-username="@post.AuthorUsername">@post.AuthorUsername</a></div>

@@ -1,5 +1,6 @@
 ﻿@using FitnessBuddy.Web.Infrastructure.Extensions
 @model PostDetailsViewModel
+@inject IHtmlSanitizer sanitizer
 
 @{
     this.ViewData["Title"] = "Post Details";
@@ -30,7 +31,7 @@
                         <div class="card-header col-md-6 text-right"> <i class="fa-solid fa-calendar-days"></i> @reply.CreatedOn.ToLongDateString()</div>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">@reply.Description</p>
+                        <p class="card-text">@(this.Html.Raw(sanitizer.Sanitize(@reply.Description)))</p>
                     </div>
                     @{
                         await GetReplies(reply.Id);
@@ -68,7 +69,7 @@
         </div>
         <div class="card-body">
             <h4 class="card-title text-center">@Model.Title</h4>
-            <p class="card-text">@Model.Description</p>
+            <p class="card-text">@this.Html.Raw(sanitizer.Sanitize(Model.Description))</p>
         </div>
     </div>
 </div>
@@ -92,7 +93,7 @@
                 <div class="card-header col-md-6 text-right"> <i class="fa-solid fa-calendar-days"></i> @reply.CreatedOn.ToLongDateString()</div>
             </div>
             <div class="card-body">
-                <p class="card-text">@reply.Description</p>
+                <p class="card-text">@(this.Html.Raw(sanitizer.Sanitize(@reply.Description)))</p>
             </div>
             @{
                 await GetReplies(reply.Id);

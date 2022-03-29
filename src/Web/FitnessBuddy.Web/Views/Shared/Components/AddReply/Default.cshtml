@@ -8,7 +8,7 @@
         <div asp-validation-summary="All" class="text-danger"></div>
 
         <div class="form-grup">
-            <textarea asp-for="Description" class="form-control" placeholder="Lets get started..." rows="15"></textarea>
+            <textarea id="editor" asp-for="Description" class="form-control" placeholder="Lets get started..." rows="15"></textarea>
         </div>
         <div class="form-grup">
             <input asp-for="ParentId" value="@Model.ParentId" hidden />
