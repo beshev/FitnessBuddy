@@ -6,7 +6,7 @@
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
 
-    public class ConversationViewModel : IMapFrom<ApplicationUser>, IHaveCustomMappings
+    public class ConversationViewModel : IMapFrom<ApplicationUser>
     {
         public string Id { get; set; }
 
@@ -17,15 +17,5 @@
         public string FollowersCount { get; set; }
 
         public string LastActivity { get; set; }
-
-        public void CreateMappings(IProfileExpression configuration)
-        {
-            configuration.CreateMap<ApplicationUser, ConversationViewModel>()
-                .ForMember(
-                dest => dest.ProfilePicture,
-                opt => opt.MapFrom(x => string.IsNullOrWhiteSpace(x.ProfilePicture)
-                ? "/images/profileimages/default-avatar.jpg"
-                : $"/images/profileimages/{Path.GetFileName(x.ProfilePicture)}"));
-        }
     }
 }

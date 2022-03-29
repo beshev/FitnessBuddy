@@ -1,7 +1,5 @@
 ﻿namespace FitnessBuddy.Web.ViewModels.Users
 {
-    using System.IO;
-
     using AutoMapper;
     using FitnessBuddy.Data.Models;
 
@@ -19,9 +17,7 @@
                 .ForMember(
                 dest => dest.Username, opt => opt.MapFrom(x => x.User.UserName))
                 .ForMember(
-                dest => dest.Email, opt => opt.MapFrom(x => x.User.Email))
-                .ForMember(
-                dest => dest.ProfilePicture, opt => opt.MapFrom(x => $"/images/profileimages/{Path.GetFileName(x.User.ProfilePicture)}"));
+                dest => dest.Email, opt => opt.MapFrom(x => x.User.Email));
         }
     }
 }

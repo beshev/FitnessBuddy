@@ -21,10 +21,6 @@
 
         public virtual void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<ApplicationUser, ShortUserViewModel>()
-                .ForMember(
-                dest => dest.ProfilePicture,
-                opt => opt.MapFrom(x => $"/images/profileimages/{Path.GetFileName(x.ProfilePicture)}"));
         }
     }
 }
