@@ -69,9 +69,7 @@
 
             model.CreatorId = this.User.GetUserId();
 
-            var path = $"{this.webHostEnvironment.WebRootPath}/images";
-
-            await this.articlesService.CreateAsync(model, path);
+            await this.articlesService.CreateAsync(model);
 
             this.TempData[GlobalConstants.NameOfSuccess] = string.Format(GlobalConstants.SuccessMessage, GlobalConstants.NameOfArticle);
 
@@ -166,9 +164,7 @@
                 return this.View();
             }
 
-            var path = $"{this.webHostEnvironment.WebRootPath}/images";
-
-            await this.articlesService.EditAsync(model, path);
+            await this.articlesService.EditAsync(model);
 
             return this.RedirectToAction(nameof(this.Details), new { model.Id });
         }

@@ -24,7 +24,7 @@
             this.cloudinaryService = cloudinaryService;
         }
 
-        public async Task CreateAsync(ArticleInputModel model, string picturePath)
+        public async Task CreateAsync(ArticleInputModel model)
         {
             var article = AutoMapperConfig.MapperInstance.Map<Article>(model);
 
@@ -49,7 +49,7 @@
             await this.articlesRepository.SaveChangesAsync();
         }
 
-        public async Task EditAsync(ArticleInputModel model, string picturePath)
+        public async Task EditAsync(ArticleInputModel model)
         {
             var article = this.articlesRepository
                 .All()

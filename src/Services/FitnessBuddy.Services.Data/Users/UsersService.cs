@@ -42,7 +42,7 @@
             await this.usersRepository.SaveChangesAsync();
         }
 
-        public async Task EditAsync(string userId, UserInputModel model, string picturePath)
+        public async Task EditAsync(string userId, UserInputModel model)
         {
             var user = this.usersRepository
                 .All()

@@ -4,7 +4,6 @@
     using System.Threading.Tasks;
 
     using FitnessBuddy.Data.Models;
-    using FitnessBuddy.Web.ViewModels.Foods;
     using FitnessBuddy.Web.ViewModels.Users;
 
     public interface IUsersService
@@ -43,6 +42,6 @@
 
         public Task<bool> IsUsernameExistAsync(string username);
 
-        public Task EditAsync(string userId, UserInputModel model, string picturePath);
+        public Task EditAsync(string userId, UserInputModel model);
     }
 }

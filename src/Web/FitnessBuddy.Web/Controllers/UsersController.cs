@@ -159,9 +159,8 @@
             }
 
             var userId = this.User.GetUserId();
-            var path = $"{this.webHostEnvironment.WebRootPath}/images";
 
-            await this.userService.EditAsync(userId, model, path);
+            await this.userService.EditAsync(userId, model);
 
             return this.RedirectToAction(nameof(this.Profile));
         }
