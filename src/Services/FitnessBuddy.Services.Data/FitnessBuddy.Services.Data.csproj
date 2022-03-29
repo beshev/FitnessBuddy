@@ -23,6 +23,7 @@
     <ProjectReference Include="..\..\Data\FitnessBuddy.Data.Models\FitnessBuddy.Data.Models.csproj" />
     <ProjectReference Include="..\..\Web\FitnessBuddy.Web.ViewModels\FitnessBuddy.Web.ViewModels.csproj" />
     <ProjectReference Include="..\FitnessBuddy.Services.Mapping\FitnessBuddy.Services.Mapping.csproj" />
+    <ProjectReference Include="..\FitnessBuddy.Services\FitnessBuddy.Services.csproj" />
   </ItemGroup>
 
 </Project>
