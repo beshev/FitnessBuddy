@@ -20,7 +20,7 @@
         [StringLength(DataConstants.ArticleContentMaxLength, MinimumLength = DataConstants.ArticleContentMinLength, ErrorMessage = "Content lenght must be betweem {2} and {1}")]
         public string Content { get; set; }
 
-        [Required]
+        [Display(Name = "Article picture(optional)")]
         [AllowedExtensions(".jpg", ".png")]
         public IFormFile Picture { get; set; }
 

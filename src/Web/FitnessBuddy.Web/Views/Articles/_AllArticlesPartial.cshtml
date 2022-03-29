@@ -18,7 +18,7 @@
                             <a asp-action="Details" asp-controller="Articles" asp-route-id="@article.Id">Continue reading</a>
                             <strong class="d-inline-block mb-2 text-green">Rating: @article.AvarageRating.ToString("F1")</strong>
                         </div>
-                        <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb" alt="Thumbnail [200x250]" style="width: 200px; height: 250px;" src="@article.ImageUrl" data-holder-rendered="true">
+                        <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb" alt="Thumbnail [200x250]" style="width: 200px; height: 250px;" src="@article.ImageUrl" onerror="src='https://res.cloudinary.com/beshev/image/upload/v1648570348/fitnessbuddy/articles/articledefault_qkhaee.png'" data-holder-rendered="true">
                     </div>
                 </div>
             }

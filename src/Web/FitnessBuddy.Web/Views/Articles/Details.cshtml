@@ -30,7 +30,7 @@
                 </ul>
             </div>
             <div class="text-center">
-                <img width="492" height="350" src="@Model.ImageUrl" class="border mb-3" alt="" data-lazy-loaded="1" loading="eager">
+                <img width="492" height="350" src="@Model.ImageUrl" class="border mb-3" alt="" data-lazy-loaded="1" loading="eager" onerror="src='https://res.cloudinary.com/beshev/image/upload/v1648570348/fitnessbuddy/articles/articledefault_qkhaee.png'">
             </div>
             @if (Model.IsCreator)
             {
