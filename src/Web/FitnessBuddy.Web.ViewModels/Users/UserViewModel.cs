@@ -58,9 +58,6 @@
         {
             configuration.CreateMap<ApplicationUser, UserViewModel>()
                    .ForMember(
-                   dest => dest.ProfilePicture,
-                   opt => opt.MapFrom(x => $"/images/profileimages/{Path.GetFileName(x.ProfilePicture)}"))
-                   .ForMember(
                    dest => dest.UserRoleId, opt => opt.MapFrom(x => x.Roles.FirstOrDefault().RoleId));
         }
     }

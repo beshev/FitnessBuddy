@@ -34,9 +34,6 @@
         {
             configuration.CreateMap<Article, ArticleDetailsModel>()
                 .ForMember(
-                dest => dest.ImageUrl,
-                opt => opt.MapFrom(x => $"/images/articles/{Path.GetFileName(x.ImageUrl)}"))
-                .ForMember(
                 dest => dest.AvgRating,
                 opt => opt.MapFrom(x => x.ArticleRatings.Any() ? x.ArticleRatings.Average(x => x.Rating) : 0));
         }
