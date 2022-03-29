@@ -1,4 +1,5 @@
 ﻿@model ArticleDetailsModel
+@inject IHtmlSanitizer sanitizer
 
 @{
     ViewData["Title"] = "Details";
@@ -20,7 +21,7 @@
             @Html.DisplayNameFor(model => model.Content)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Content)
+            @Html.Raw(sanitizer.Sanitize(Model.Content))
         </dd>
         <dt class="col-sm-2">
             Image Url

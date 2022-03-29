@@ -20,7 +20,7 @@
             </div>
             <div class="form-grup">
                 <label asp-for="Content"></label>
-                <textarea asp-for="Content" class="form-control" rows="20" placeholder="Content..."></textarea>
+                <textarea id="editor" asp-for="Content" class="form-control" rows="20" placeholder="Content..."></textarea>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
             <vc:article-categories-select></vc:article-categories-select>
