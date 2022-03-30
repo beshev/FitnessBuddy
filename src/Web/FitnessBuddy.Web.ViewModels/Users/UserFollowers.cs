@@ -4,10 +4,11 @@
 
     using AutoMapper;
     using FitnessBuddy.Data.Models;
+    using FitnessBuddy.Services.Mapping;
 
-    public class UserFollowers : ShortUserViewModel
+    public class UserFollowers : ShortUserViewModel, IHaveCustomMappings
     {
-        public override void CreateMappings(IProfileExpression configuration)
+        public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<UserFollower, UserFollowers>()
                 .ForMember(
@@ -21,7 +22,7 @@
                 .ForMember(
                 dest => dest.Email, opt => opt.MapFrom(x => x.Follower.Email))
                 .ForMember(
-                dest => dest.ProfilePicture, opt => opt.MapFrom(x => $"/images/profileimages/{Path.GetFileName(x.Follower.ProfilePicture)}"));
+                dest => dest.ProfilePicture, opt => opt.MapFrom(x => x.Follower.ProfilePicture));
         }
     }
 }

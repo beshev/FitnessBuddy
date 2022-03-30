@@ -7,7 +7,7 @@
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
 
-    public class ShortUserViewModel : IMapFrom<ApplicationUser>, IHaveCustomMappings
+    public class ShortUserViewModel : IMapFrom<ApplicationUser>
     {
         public string Username { get; set; }
 
@@ -18,9 +18,5 @@
         public int FollowersCount { get; set; }
 
         public int FollowingCount { get; set; }
-
-        public virtual void CreateMappings(IProfileExpression configuration)
-        {
-        }
     }
 }
