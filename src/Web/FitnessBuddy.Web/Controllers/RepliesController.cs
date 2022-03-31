@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
 
+    using FitnessBuddy.Common;
     using FitnessBuddy.Services.Data.Replies;
     using FitnessBuddy.Web.Infrastructure.Extensions;
     using FitnessBuddy.Web.ViewModels.Replies;
@@ -31,15 +32,13 @@
         [HttpPost]
         public async Task<IActionResult> Add(ReplyInputModel model)
         {
-            if (this.ModelState.IsValid == false)
+            if (this.ModelState.IsValid)
             {
-                return this.RedirectToAction("Details", "Posts", new { id = model.PostId });
+                model.AuthorId = this.User.GetUserId();
+                await this.repliesService.AddAsync(model);
             }
 
-            model.AuthorId = this.User.GetUserId();
-            await this.repliesService.AddAsync(model);
-
-            return this.RedirectToAction("Details", "Posts", new { Id = model.PostId });
+            return this.RedirectToAction(GlobalConstants.NameOfDetails, GlobalConstants.NameOfPosts, new { id = model.PostId });
         }
 
         public async Task<IActionResult> Edit(int id)
