@@ -50,18 +50,18 @@
 
             var viewModel = await this.userService.GetProfileDataAsync(userId);
 
-            if (tab == GlobalConstants.NameOfFollowers)
+            if (tab == GlobalConstants.NameOfFollowers.ToLower())
             {
                 viewModel.Followers = await this.userService.GetFollowersAsync<UserFollowers>(userId);
             }
 
-            if (tab == GlobalConstants.NameOfFollowing)
+            if (tab == GlobalConstants.NameOfFollowing.ToLower())
             {
                 viewModel.Following = await this.userService.GetFollowingAsync<UserFollowing>(userId);
             }
 
             viewModel.IsMyProfile = userId == loggedUserId;
-            viewModel.IsFollowingByUser = await this.usersFollowersService.IsFollowingByUserAsync(userId, this.User.GetUserId());
+            viewModel.IsFollowingByUser = await this.usersFollowersService.IsFollowingByUserAsync(userId, loggedUserId);
 
             return this.View(viewModel);
         }

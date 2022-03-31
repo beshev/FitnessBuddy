@@ -2,8 +2,8 @@
 @model ProfileViewModel
 
 @{
-    var isTabFollowers = (this.ViewData[GlobalConstants.NameOfTab] as string) == GlobalConstants.NameOfFollowers;
-    var isTabFollowing = (this.ViewData[GlobalConstants.NameOfTab] as string) == GlobalConstants.NameOfFollowing;
+    var isTabFollowers = (this.ViewData[GlobalConstants.NameOfTab] as string) == GlobalConstants.NameOfFollowers.ToLower();
+    var isTabFollowing = (this.ViewData[GlobalConstants.NameOfTab] as string) == GlobalConstants.NameOfFollowing.ToLower();
 }
 
 <section>
@@ -73,7 +73,7 @@
                     @if (Model.Followers.Any() == false)
                     {
                         <h4 class="text-center">
-                            You don't have any followers.
+                            Don't have any followers.
                         </h4>
                     }
 
@@ -91,7 +91,7 @@
                     @if (Model.Following.Any() == false)
                     {
                         <h4 class="text-center">
-                            You don't follow anyone.
+                            Don't follow anyone.
                         </h4>
                     }
 
