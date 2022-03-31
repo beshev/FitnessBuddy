@@ -32,6 +32,7 @@
         public const string NameOfCategory = "Category";
         public const string NameOfDetails = "Details";
         public const string NameOfPosts = "Posts";
+        public const string NameOfExercises = "Exercises";
 
         // CRUD messages
         public const string DeleteMessage = "The {0} was deleted successfully";

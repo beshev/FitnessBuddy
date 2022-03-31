@@ -92,7 +92,7 @@
 
             if (this.ModelState.IsValid == false)
             {
-                return this.RedirectToAction("Details", "Exercises", new { Id = model.ExerciseId });
+                return this.RedirectToAction(GlobalConstants.NameOfDetails, GlobalConstants.NameOfExercises, new { Id = model.ExerciseId });
             }
 
             await this.trainingsExercisesService.AddAsync(model);
