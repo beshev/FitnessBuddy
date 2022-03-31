@@ -32,7 +32,7 @@
                 await this.exercisesLikesService.UnLikeAsync(userId, exerciseId);
                 isLike = false;
             }
-            else if (await this.exercisesService.IsExistAsync(exerciseId))
+            else if (await this.exercisesService.IsExistAsync(exerciseId) && isLike == false)
             {
                 await this.exercisesLikesService.LikeAsync(userId, exerciseId);
                 isLike = true;
