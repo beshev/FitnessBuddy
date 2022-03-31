@@ -40,7 +40,7 @@
             var senderEmail = this.User.GetUserEmail();
 
             var html = new StringBuilder();
-            html.AppendLine($"<h4>{senderUsername}({senderEmail}) invites you to join our app.</h4> <span>https://fitness-buddy.azurewebsites.net/</span>");
+            html.AppendLine($"<h4>{senderUsername}({senderEmail}) invites you to join our app.</h4>: <span>https://fitness-buddy.azurewebsites.net/</span>");
             html.AppendLine("<hr />");
             html.AppendLine(this.htmlSanitizer.Sanitize(model.Content));
 
