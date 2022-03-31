@@ -110,7 +110,7 @@ body {
 .div-scroll {
     overflow-y: auto;
     overflow-x: hidden;
-    height: 600px;
+    height: 500px;
     display: block;
     word-break: break-word;
 }
