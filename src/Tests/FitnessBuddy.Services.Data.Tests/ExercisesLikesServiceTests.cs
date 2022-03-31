@@ -70,7 +70,7 @@
 
             var service = new ExercisesLikesService(mockRepo.Object);
 
-            var actual = await service.IsExists(userId, exerciseId);
+            var actual = await service.IsExistsAsync(userId, exerciseId);
 
             actual.Should().BeTrue();
         }
@@ -99,7 +99,7 @@
 
             var service = new ExercisesLikesService(mockRepo.Object);
 
-            var actual = await service.IsExists(userId, exerciseId);
+            var actual = await service.IsExistsAsync(userId, exerciseId);
 
             actual.Should().BeFalse();
         }
