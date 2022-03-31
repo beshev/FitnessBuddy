@@ -39,6 +39,11 @@
                 return this.NotFound();
             }
 
+            if (mealId > 0)
+            {
+                viewModel.QuantityInGrams = await this.mealsFoodsService.GetQuantityAsync(foodId, mealId);
+            }
+
             var userId = this.User.GetUserId();
 
             viewModel.UserId = userId;
