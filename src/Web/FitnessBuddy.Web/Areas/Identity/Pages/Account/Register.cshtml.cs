@@ -134,6 +134,7 @@
                     DailyFatGoal = this.Input.DailyFatGoal,
                     Gender = this.Input.Gender,
                     AboutMe = this.Input.AboutMe,
+                    ProfilePicture = string.Empty,
                 };
 
                 var result = await this.userManager.CreateAsync(user, this.Input.Password);
