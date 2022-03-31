@@ -38,7 +38,7 @@
 
             var avgRating = await this.articlesRatingsService.CalcAvgRateAsync(model.ArticleId);
 
-            return new JsonResult(new { AvgRating = avgRating });
+            return this.Ok(new { AvgRating = avgRating });
         }
     }
 }
