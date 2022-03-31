@@ -108,7 +108,7 @@
 
         public async Task<IActionResult> All(int id = 1, string username = "")
         {
-            this.ViewData["Username"] = username;
+            this.ViewData[GlobalConstants.NameOfUsername] = username;
 
             if (id < 1)
             {
@@ -152,9 +152,11 @@
         [HttpPost]
         public async Task<IActionResult> Edit(UserInputModel model)
         {
-            if (await this.userService.IsUsernameExistAsync(model.Username))
+            var isUsernameChanged = this.User.GetUsername().ToLower() != model.Username.ToLower();
+
+            if (isUsernameChanged && await this.userService.IsUsernameExistAsync(model.Username))
             {
-                this.ModelState.AddModelError("Username", "Username is taken");
+                this.ModelState.AddModelError(GlobalConstants.NameOfUsername, GlobalConstants.ExistingUsernameMessage);
             }
 
             if (this.ModelState.IsValid == false)

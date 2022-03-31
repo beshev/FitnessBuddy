@@ -33,6 +33,7 @@
         public const string NameOfDetails = "Details";
         public const string NameOfPosts = "Posts";
         public const string NameOfExercises = "Exercises";
+        public const string NameOfUsername = "Username";
 
         // CRUD messages
         public const string DeleteMessage = "The {0} was deleted successfully";
@@ -42,6 +43,7 @@
         public const string EditFoodMessage = "The food was edited successfully";
         public const string SentEmailMessage = "The email was sent successfully";
         public const string InvalidCategoryMessage = "Invalid category!";
+        public const string ExistingUsernameMessage = "The username is already taken!";
 
         // Format
         public const string DateTimeFormat = "MM/dd/yyyy HH:mm";
