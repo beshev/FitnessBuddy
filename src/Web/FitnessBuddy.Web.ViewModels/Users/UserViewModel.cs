@@ -1,15 +1,12 @@
 ﻿namespace FitnessBuddy.Web.ViewModels.Users
 {
     using System.ComponentModel.DataAnnotations;
-    using System.IO;
-    using System.Linq;
 
-    using AutoMapper;
     using FitnessBuddy.Common;
     using FitnessBuddy.Data.Models;
     using FitnessBuddy.Services.Mapping;
 
-    public class UserViewModel : IMapFrom<ApplicationUser>, IHaveCustomMappings
+    public class UserViewModel : IMapFrom<ApplicationUser>
     {
         [Display(Name = "Username")]
         public string UserName { get; set; }
@@ -46,19 +43,8 @@
 
         public string Gender { get; set; }
 
-        public string UserRoleId { get; set; }
-
-        public string UserRole { get; set; }
-
         public int FollowersCount { get; set; }
 
         public int FollowingCount { get; set; }
-
-        public void CreateMappings(IProfileExpression configuration)
-        {
-            configuration.CreateMap<ApplicationUser, UserViewModel>()
-                   .ForMember(
-                   dest => dest.UserRoleId, opt => opt.MapFrom(x => x.Roles.FirstOrDefault().RoleId));
-        }
     }
 }

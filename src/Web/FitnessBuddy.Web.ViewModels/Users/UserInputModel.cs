@@ -12,6 +12,9 @@
 
     public class UserInputModel : IMapFrom<ApplicationUser>, IHaveCustomMappings
     {
+        [Required]
+        public string Username { get; set; }
+
         [EnumDataType(typeof(GenderType))]
         public GenderType Gender { get; set; }
 

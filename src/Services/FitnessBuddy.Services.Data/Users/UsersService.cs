@@ -50,6 +50,7 @@
 
             var cloundFolder = $"users/{user.UserName}";
 
+            user.UserName = model.Username;
             user.Gender = model.Gender;
             user.WeightInKg = model.WeightInKg;
             user.GoalWeightInKg = model.GoalWeightInKg;

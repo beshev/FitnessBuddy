@@ -61,7 +61,6 @@
             }
 
             viewModel.IsMyProfile = userId == loggedUserId;
-            viewModel.UserInfo.UserRole = (await this.roleManager.FindByIdAsync(viewModel.UserInfo.UserRoleId)).Name;
             viewModel.IsFollowingByUser = await this.usersFollowersService.IsFollowingByUserAsync(userId, this.User.GetUserId());
 
             return this.View(viewModel);
@@ -153,6 +152,11 @@
         [HttpPost]
         public async Task<IActionResult> Edit(UserInputModel model)
         {
+            if (await this.userService.IsUsernameExistAsync(model.Username))
+            {
+                this.ModelState.AddModelError("Username", "Username is taken");
+            }
+
             if (this.ModelState.IsValid == false)
             {
                 return this.View(model);

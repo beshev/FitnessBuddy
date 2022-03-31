@@ -7,6 +7,11 @@
     <div asp-validation-summary="All" class="text-danger"></div>
 
     <div class="form-grup">
+        <label asp-for="Username"></label>
+        <input asp-for="Username" class="form-control" />
+        <span asp-validation-for="Username" class="text-danger"></span>
+    </div>
+    <div class="form-grup">
         <label asp-for="Gender"></label>
         <select asp-for="Gender" asp-items="Html.GetEnumSelectList<GenderType>()" class="form-select">
         </select>
@@ -54,6 +59,6 @@
     </div>
 
     <div class="form-grup" style="margin-top: 2%;">
-        <input type="submit" class="btn btn-outline-primary form-control" value="Save" />
+        <input type="submit" class="btn btn-outline-primary" value="Save" />
     </div>
 </form>

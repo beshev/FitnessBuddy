@@ -124,6 +124,7 @@
 
             var expected = new UserInputModel
             {
+                Username = "Tester Edited!",
                 AboutMe = "Test me EDITED",
                 DailyProteinGoal = 3,
                 DailyCarbohydratesGoal = 6,
@@ -139,8 +140,15 @@
 
             var actual = list[0];
 
-            actual.Should().BeEquivalentTo(expected, opt => opt.Excluding(x => x.ProfilePicture));
+            actual.Should().BeEquivalentTo(expected, opt =>
+            {
+                opt.Excluding(x => x.ProfilePicture);
+                opt.Excluding(x => x.Username);
+
+                return opt;
+            });
             actual.ProfilePicture.Should().Be($"ImageUrl");
+            actual.UserName.Should().Be(expected.Username);
         }
 
         [Theory]
@@ -627,7 +635,6 @@
                     DailyFatGoal = 20,
                     AboutMe = "about test",
                     Gender = GenderType.Male.ToString(),
-                    UserRoleId = "RoleId",
                     FollowersCount = 0,
                     FollowingCount = 0,
                 },
