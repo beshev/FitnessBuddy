@@ -164,5 +164,48 @@
             actual.IsDeleted.Should().BeTrue();
             actual.DeletedOn.Should().Be(deletedOn);
         }
+
+        [Theory]
+        [InlineData(1, 2)]
+        [InlineData(2, 1)]
+        [InlineData(12, 12)]
+        public async Task GetQuantityShouldReturnFoodQuantityForGivenMeal(int foodId, int mealId)
+        {
+            var list = new List<MealFood>()
+            {
+                new MealFood
+                {
+                    Id = 1,
+                    FoodId = 1,
+                    MealId = 2,
+                    IsDeleted = false,
+                    QuantityInGrams = 137.5,
+                },
+                new MealFood
+                {
+                    Id = 2,
+                    FoodId = 2,
+                    MealId = 1,
+                    IsDeleted = false,
+                    QuantityInGrams = 300,
+                },
+            };
+
+            var mockRepo = MockRepo.MockDeletableRepository<MealFood>();
+            mockRepo
+                .Setup(x => x.AllAsNoTracking())
+                .Returns(list.AsQueryable().BuildMock());
+
+            var service = new MealsFoodsService(mockRepo.Object);
+
+            var actual = await service.GetQuantityAsync(foodId, mealId);
+
+            var expected = list
+                .Where(x => x.FoodId == foodId && x.MealId == mealId)
+                .Select(x => x.QuantityInGrams)
+                .FirstOrDefault();
+
+            actual.Should().Be(expected);
+        }
     }
 }
