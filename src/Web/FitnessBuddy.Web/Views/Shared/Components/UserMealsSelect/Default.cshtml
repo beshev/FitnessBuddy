@@ -4,7 +4,7 @@
     <label id="select-meal">For meal</label>
     <select id="select-meal" name="MealId"
             class="form-select"
-            asp-items="@(new SelectList(Model,"Id","Name",this.ViewData["Selected"]))">
+            asp-items="@(new SelectList(Model,"Id","Name",this.ViewData[GlobalConstants.NameOfSelected]))">
     </select>
 </div>
 

@@ -49,7 +49,7 @@
             viewModel.UserId = userId;
             viewModel.HasMeals = await this.usersService.HasMealAsync(userId);
 
-            this.ViewData["Selected"] = mealId;
+            this.ViewData[GlobalConstants.NameOfSelected] = mealId;
 
             return this.View(viewModel);
         }

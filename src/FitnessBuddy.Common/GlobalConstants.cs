@@ -28,6 +28,7 @@
         public const string NameOfArticle = "article";
         public const string NameOfPost = "post";
         public const string NameOfCategoryName = "categoryName";
+        public const string NameOfSelected = "selected";
 
         // CRUD messages
         public const string DeleteMessage = "The {0} was deleted successfully";
