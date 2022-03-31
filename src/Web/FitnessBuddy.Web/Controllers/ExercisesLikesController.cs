@@ -24,15 +24,20 @@
         [HttpPost]
         public async Task<ActionResult<ExerciseLikeReturnModel>> Post(int exerciseId)
         {
+            if (await this.exercisesService.IsExistAsync(exerciseId) == false)
+            {
+                return this.NotFound();
+            }
+
             var userId = this.User.GetUserId();
-            var isLike = await this.exercisesLikesService.IsExists(userId, exerciseId);
+            var isLike = await this.exercisesLikesService.IsExistsAsync(userId, exerciseId);
 
             if (isLike)
             {
                 await this.exercisesLikesService.UnLikeAsync(userId, exerciseId);
                 isLike = false;
             }
-            else if (await this.exercisesService.IsExistAsync(exerciseId) && isLike == false)
+            else
             {
                 await this.exercisesLikesService.LikeAsync(userId, exerciseId);
                 isLike = true;
