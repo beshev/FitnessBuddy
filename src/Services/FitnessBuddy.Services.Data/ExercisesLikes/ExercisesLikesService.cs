@@ -22,7 +22,7 @@
             .Where(x => x.ExerciseId == exerciseId)
             .CountAsync();
 
-        public async Task<bool> IsExists(string userId, int exerciseId)
+        public async Task<bool> IsExistsAsync(string userId, int exerciseId)
             => await this.exercisesLikesRepository
             .AllAsNoTracking()
             .AnyAsync(x => x.UserId == userId && x.ExerciseId == exerciseId);
