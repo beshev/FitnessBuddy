@@ -48,7 +48,7 @@
             var admin = new ApplicationUser
             {
                 Email = "admin@admin.com",
-                UserName = "admin",
+                UserName = "Admin",
                 ProfilePicture = string.Empty,
             };
 
