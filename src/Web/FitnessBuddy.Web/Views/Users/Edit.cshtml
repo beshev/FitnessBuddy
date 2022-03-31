@@ -1,6 +1,10 @@
 ﻿@using FitnessBuddy.Web.ViewModels.Users
 @model UserInputModel
 
+@{
+    this.ViewData["Title"] = "Edit profile";
+}
+
 <h1 class="text-center">Edit Profile</h1>
 
 <form asp-controller="Users" asp-action="Edit" class="col-lg-6 offset-lg-3 text-center" enctype="multipart/form-data">
