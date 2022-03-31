@@ -105,7 +105,7 @@
 
             var viewModel = await this.articleCategoriesService.GetCategoryArticlesAsync<ArticleViewModel>(categoryName);
 
-            this.ViewData["CategoryName"] = categoryName;
+            this.ViewData[GlobalConstants.NameOfCategoryName] = categoryName;
 
             return this.View(viewModel);
         }

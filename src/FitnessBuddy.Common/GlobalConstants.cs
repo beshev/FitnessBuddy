@@ -27,6 +27,7 @@
         public const string NameOfFood = "food";
         public const string NameOfArticle = "article";
         public const string NameOfPost = "post";
+        public const string NameOfCategoryName = "categoryName";
 
         // CRUD messages
         public const string DeleteMessage = "The {0} was deleted successfully";
