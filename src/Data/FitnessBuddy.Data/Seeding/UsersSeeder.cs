@@ -23,6 +23,7 @@
                 {
                     Email = "user@user.com",
                     UserName = "User",
+                    ProfilePicture = string.Empty,
                 };
 
                 user.Roles.Add(new IdentityUserRole<string>()
@@ -48,6 +49,7 @@
             {
                 Email = "admin@admin.com",
                 UserName = "admin",
+                ProfilePicture = string.Empty,
             };
 
             admin.Roles.Add(new IdentityUserRole<string>()
