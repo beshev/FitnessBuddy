@@ -11,13 +11,13 @@
     </form>
 </div>
 
-@if (this.ViewData[GlobalConstants.NameOfUsername] as string != string.Empty && Model.Users.Any() == false)
+@if (string.IsNullOrWhiteSpace(this.ViewData[GlobalConstants.NameOfUsername] as string) == false && Model.Users.Any() == false)
 {
     <h4 class="text-center">
         User '@this.ViewData[GlobalConstants.NameOfUsername]' does not exist!
     </h4>
 }
-else if (this.ViewData[GlobalConstants.NameOfUsername] as string == string.Empty && Model.Users.Any() == false)
+else if (string.IsNullOrWhiteSpace(this.ViewData[GlobalConstants.NameOfUsername] as string) && Model.Users.Any() == false)
 {
     <h4 class="text-center">
         There are no users.
