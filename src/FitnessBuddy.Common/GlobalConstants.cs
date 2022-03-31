@@ -18,17 +18,18 @@
         public const string RestrictionBan = "/Restrictions/Ban";
 
         // Names
-        public const string NameOfFollowers = "followers";
-        public const string NameOfFollowing = "following";
-        public const string NameOfTab = "tab";
-        public const string NameOfDelete = "delete";
-        public const string NameOfSuccess = "success";
-        public const string NameOfExercise = "exercise";
-        public const string NameOfFood = "food";
-        public const string NameOfArticle = "article";
-        public const string NameOfPost = "post";
-        public const string NameOfCategoryName = "categoryName";
-        public const string NameOfSelected = "selected";
+        public const string NameOfFollowers = "Followers";
+        public const string NameOfFollowing = "Following";
+        public const string NameOfTab = "Tab";
+        public const string NameOfDelete = "Delete";
+        public const string NameOfSuccess = "Success";
+        public const string NameOfExercise = "Exercise";
+        public const string NameOfFood = "Food";
+        public const string NameOfArticle = "Article";
+        public const string NameOfPost = "Post";
+        public const string NameOfCategoryName = "CategoryName";
+        public const string NameOfSelected = "Selected";
+        public const string NameOfCategory = "Category";
 
         // CRUD messages
         public const string DeleteMessage = "The {0} was deleted successfully";
@@ -37,6 +38,7 @@
         public const string RemoveFoodFromFavoriteMessage = "The food was removed successfully from favorites";
         public const string EditFoodMessage = "The food was edited successfully";
         public const string SentEmailMessage = "The email was sent successfully";
+        public const string InvalidCategoryMessage = "Invalid category!";
 
         // Format
         public const string DateTimeFormat = "MM/dd/yyyy HH:mm";

@@ -71,7 +71,7 @@
         {
             if (await this.postCategoriesService.IsExistAsync(model.CategoryId) == false)
             {
-                this.ModelState.AddModelError("Category", "Invalid category!");
+                this.ModelState.AddModelError(GlobalConstants.NameOfCategory, GlobalConstants.InvalidCategoryMessage);
             }
 
             if (this.ModelState.IsValid == false)
