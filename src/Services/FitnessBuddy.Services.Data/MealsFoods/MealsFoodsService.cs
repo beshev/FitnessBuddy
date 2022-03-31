@@ -61,5 +61,12 @@
 
             return mealFood;
         }
+
+        public async Task<double> GetQuantityAsync(int foodId, int mealId)
+            => await this.mealFoodRepository
+            .AllAsNoTracking()
+            .Where(x => x.FoodId == foodId && x.MealId == mealId)
+            .Select(x => x.QuantityInGrams)
+            .FirstOrDefaultAsync();
     }
 }

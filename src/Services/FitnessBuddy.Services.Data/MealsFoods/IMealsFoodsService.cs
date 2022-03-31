@@ -14,5 +14,7 @@
         public Task<MealFood> DeleteAsync(MealFood mealFood);
 
         public Task<MealFood> AddAsync(MealFoodInputModel model);
+
+        public Task<double> GetQuantityAsync(int foodId, int mealId);
     }
 }
