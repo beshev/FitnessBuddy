@@ -14,6 +14,7 @@
 -	Users can generate eating and workout plans (diaries) which can be edited and deleted.
 -	Users can create, edit, delete, search and see details about forum posts, forum post comments and blog articles. Before deletion a pop up window asks for confirmation
 -	Users can follow and unfollow another users. They can also send Emails to another users thanks to the integrated SendGrid client.
+-	Users can start conversation with other users thanks to the integrated SignalR chathub.
 -	The administrator has a special Admin Area from where he/she can create, update, delete and see details about users, foods, exercises, articles, forum posts and post replies. The administrator can also ban and unban users. A banned user cannot access the full functionallity of the application.
 -	The application has preloaded (seeded) user roles, users (admin and user), foods, exercises, exercise categories, exercise equipment, article categories and forum categories.
 <br/><br/>
