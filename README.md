@@ -43,6 +43,7 @@
 * [SignalR](https://github.com/SignalR/SignalR)
 * [CloudinaryDotNet](https://github.com/cloudinary/CloudinaryDotNet)
 * [HtmlSanitizer](https://github.com/mganss/HtmlSanitizer)
+* [Highcharts](https://github.com/highcharts/highcharts)
 <br/><br/>
 
 ## :pencil2: Code quality 
