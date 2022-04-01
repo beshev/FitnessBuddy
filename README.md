@@ -56,3 +56,18 @@
    * **AuthorizationFilterAttribute** to restrict the access to the full functionality of the application for logged-in but banned users.
    * Separate storage for **data constants**.
 <br/><br/>
+
+## :handshake: Credits
+- Using [ASP.NET Core Template](https://github.com/NikolayIT/ASP.NET-Core-Template) originally developed by:
+   * [Nikolay Kostov](https://github.com/NikolayIT)
+   * [Vladislav Karamfilov](https://github.com/vladislav-karamfilov)
+   * [Stoyan Shopov](https://github.com/StoyanShopov)
+<br/><br/>
+
+## :v: Leave a feedback
+Give a :star: if you like it.
+Thank you ❤️
+<br/><br/>
+
+## 📖 License
+See the [LICENSE](https://github.com/beshev/FitnessBuddy/blob/main/LICENSE) file for details
