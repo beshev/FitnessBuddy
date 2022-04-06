@@ -71,9 +71,10 @@
                     }
                 }
             </div>
+            <p id="writer-name"></p>
             <hr />
             <div class="text-center">
-                <textarea id="messageInput" rows="5" cols="100" placeholder="Type a message..."></textarea>
+                <textarea id="messageInput" rows="5" cols="100" oninput="getWriterName(this)" placeholder="Type a message..."></textarea>
             </div>
             <button id="sendButton" class="btn btn-primary offset-5">Send message</button>
         }
@@ -120,6 +121,7 @@
 
                 $('#messagesList').append(chatInfo);
                 $('#messagesList')[0].scrollTop = $('#messagesList')[0].scrollHeight;
+                $('#writer-name').text('');
           });
 
       connection.on("DeleteMessage",
@@ -131,6 +133,13 @@
               $messageSpan.innerHTML = 'This message was deleted';
           }
       )
+
+      connection.on("WhoIsWriting",
+        function(writes) {
+            $('#writer-name').html(writes);
+        }
+      )
+
       $("#sendButton").click(function() {
           var message = $.trim($('#messageInput').val());
             $('#messageInput').val('');
@@ -141,6 +150,11 @@
           connection.invoke('DeleteMessage', messageId);
 
           element.remove();
+      }
+
+      function getWriterName(element) {
+          let hasValue = element.value != '' && element.value != null;
+          connection.invoke("SayWhoIsWriting", '@Model.ReceiverId', hasValue);
       }
 
       connection

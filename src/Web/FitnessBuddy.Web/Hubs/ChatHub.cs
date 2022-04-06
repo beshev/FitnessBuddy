@@ -85,5 +85,20 @@
 
             await this.Clients.Group(groupName).SendAsync("DeleteMessage", new { Id = messageId });
         }
+
+        public async Task SayWhoIsWriting(string receiverId, bool hasValue)
+        {
+            var writes = hasValue
+                ? $"<strong><em>{this.Context.User.GetUsername()} is typing . . .</em></strong>"
+                : string.Empty;
+
+            var authorId = this.Context.User.GetUserId();
+
+            var groupName = this.groupNameProvider.GetGroupName(authorId, receiverId);
+
+            await this.Clients
+                .GroupExcept(groupName, this.Context.ConnectionId)
+                .SendAsync("WhoIsWriting", writes);
+        }
     }
 }
