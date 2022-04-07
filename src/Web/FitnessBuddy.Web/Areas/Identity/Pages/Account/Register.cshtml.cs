@@ -101,7 +101,6 @@
 
             [Display(Name = "About me")]
             public string AboutMe { get; set; }
-
         }
 
         public async Task OnGetAsync(string returnUrl = null)

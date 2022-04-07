@@ -180,7 +180,6 @@
             var actual = await service.GetFavoriteFoodsAsync<Food>(userId);
             var expected = list[0].FavoriteFoods;
 
-
             actual.Should().HaveCount(2);
             actual.Should().BeEquivalentTo(expected);
         }
@@ -219,7 +218,6 @@
             var expected = list[0].FavoriteFoods
                 .Skip(skip)
                 .Take(take);
-
 
             actual.Should().HaveCount(take);
             actual.Should().BeEquivalentTo(expected);
