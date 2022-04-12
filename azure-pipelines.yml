@@ -44,5 +44,5 @@ steps:
   displayName: 'Install .Net SDK version'
   inputs:
     packageType: sdk
-    version: 6
+    version: 3.1.x
     installationPath: $(Agent.ToolsDirectory)/dotnet
