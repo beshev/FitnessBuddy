@@ -2,6 +2,7 @@
 
 @{
     this.ViewData["Title"] = "Add food to meal";
+    var imageUrl = string.IsNullOrWhiteSpace(@Model.ImageUrl) ? "/images/foods/default-food.jpg" : Model.ImageUrl;
 }
 
 @if (@Model.HasMeals)
@@ -10,7 +11,7 @@
         <h1>
             @Model.FoodName
         </h1>
-        <img src="@Model.ImageUrl" alt="..." class="img-thumbnail db center mb3 br-100" width="250" height="130" style="height:120px!important;">
+        <img src="@imageUrl" alt="..." class="img-thumbnail db center mb3 br-100" width="250" height="130" style="height:120px!important;">
         <form asp-action="AddFood" asp-controller="MealsFoods" class="col-lg-6 offset-lg-3">
             <input asp-for="FoodId" type="hidden" />
             <div class="form-group">
